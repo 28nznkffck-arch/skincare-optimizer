@@ -1,7 +1,7 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, monthlyCost, evaluate, optimize, swaps} from './optimizer.js';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, evaluate, optimize, swaps} from './optimizer.js';
 
 const STORE_KEY='skincare-lab-v1';
-const DEFAULT={budget:5000, concerns:['pores','dullness'], priority:'simple', ingredient:'none', ingredientMode:'prefer', excluded:{}, locked:{}, overrides:{}, manual:null, swapCategory:'moisturizer', swapExtra:100, catalogOpen:false};
+const DEFAULT={budget:5000, concerns:['pores','dullness'], concernWeights:{}, skinType:'unknown', sensitiveSkin:false, finish:'any', priority:'simple', ingredient:'none', ingredientMode:'prefer', excluded:{}, locked:{}, overrides:{}, manual:null, swapCategory:'moisturizer', swapExtra:100, catalogOpen:false};
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
 const app=document.getElementById('app');
@@ -21,6 +21,7 @@ function humanMonth(p){return monthlyCost(p,state.overrides[p.id]);}
 function humanPrice(p){return Number(state.overrides[p.id]?.price??p.demoPrice);}
 function humanUses(p){return Number(state.overrides[p.id]?.uses??p.demoUses);}
 function nameOf(p){return p?`${p.brand} ${p.name}`:'';}
+function missingConcernLabels(){return unscoredConcerns(catalog,state.concerns).map(id=>CONCERNS[id]||id);}
 function findManual(){
   if(!state.manual?.length)return null;
   const ids=new Set(state.manual);
@@ -40,6 +41,7 @@ function pickCurrent(){
 
 function productCard(p){
   const locked=state.locked[p.category]===p.id;
+  const matchLabels=state.concerns.filter(id=>(p.scores?.[id]||0)>0).map(id=>CONCERNS[id]||id);
   return `<article class="product">
     <div class="product-visual ${p.category}" aria-hidden="true">✧</div>
     <div>
@@ -48,6 +50,8 @@ function productCard(p){
       <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${escape(humanUses(p))}回分（仮定） / 1日${escape(state.overrides[p.id]?.frequency??p.dailyUses)}回</div>
       <p class="product-description">${escape(p.explanation)}</p>
       <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
+      ${matchLabels.length?`<div class="fit-note">仮評価の対象：${matchLabels.map(escape).join('・')}</div>`:''}
+      ${state.sensitiveSkin && p.sensitiveSkin?'<div class="fit-note">敏感肌向けの設計情報を考慮</div>':''}
       <div class="product-actions">
         <button type="button" class="tiny-action ${locked?'active':''}" data-action="lock" data-id="${p.id}">${locked?'◆ 固定中':'◇ この商品を固定'}</button>
         <button type="button" class="tiny-action" data-action="exclude" data-id="${p.id}">合わない・除外</button>
@@ -65,9 +69,14 @@ function formHtml(){
       <input id="budget" data-field="budget" type="range" min="1500" max="15000" step="100" value="${state.budget}">
       <div class="range-label"><span>1,500円</span><span>15,000円</span></div>
     </div>
-    <div class="field"><span class="field-title">肌の悩み <small>複数選択可</small></span><div class="chips">
-      ${Object.entries(CONCERNS).map(([id,label])=>`<button class="chip ${state.concerns.includes(id)?'selected':''}" data-action="concern" data-id="${id}" aria-pressed="${state.concerns.includes(id)}">${label}</button>`).join('')}
-    </div></div>
+    <div class="field"><span class="field-title">肌の悩み <small>複数選択可</small></span>
+      <div class="concern-groups">${CONCERN_GROUPS.map(group=>`<details class="concern-group" ${Object.keys(group.items).some(id=>state.concerns.includes(id))?'open':''}><summary>${escape(group.label)} <span>${Object.keys(group.items).filter(id=>state.concerns.includes(id)).length||''}</span></summary><div class="chips">${Object.entries(group.items).map(([id,label])=>`<button class="chip ${state.concerns.includes(id)?'selected':''}" data-action="concern" data-id="${id}" aria-pressed="${state.concerns.includes(id)}">${escape(label)}</button>`).join('')}</div></details>`).join('')}</div>
+      ${state.concerns.length?`<div class="concern-priorities"><span class="micro muted">悩みごとの優先度</span>${state.concerns.map(id=>`<label class="priority-row"><span>${escape(CONCERNS[id]||id)}</span><select class="select" data-importance="${escape(id)}"><option value="high" ${state.concernWeights?.[id]==='high'?'selected':''}>最優先</option><option value="normal" ${!state.concernWeights?.[id]||state.concernWeights?.[id]==='normal'?'selected':''}>気になる</option><option value="low" ${state.concernWeights?.[id]==='low'?'selected':''}>軽く気になる</option></select></label>`).join('')}</div>`:''}
+    </div>
+    <div class="field"><label class="field-title" for="skinType">肌質</label><select id="skinType" class="select" data-field="skinType">${[['unknown','わからない・指定なし'],['dry','乾燥肌'],['oily','脂性肌'],['combination','混合肌'],['normal','普通肌']].map(([id,label])=>`<option value="${id}" ${state.skinType===id?'selected':''}>${label}</option>`).join('')}</select>
+      <label class="sensitive-check"><input type="checkbox" data-field="sensitiveSkin" ${state.sensitiveSkin?'checked':''}> 刺激を感じやすい・敏感肌</label><p class="note">敏感肌向けの商品を優先しますが、肌に合うことを保証するものではありません。</p>
+    </div>
+    <div class="field"><label class="field-title" for="finish">好みの使用感</label><select id="finish" class="select" data-field="finish">${[['any','こだわらない'],['light','さっぱり・みずみずしい'],['moist','しっとり'],['rich','とてもしっとり']].map(([id,label])=>`<option value="${id}" ${state.finish===id?'selected':''}>${label}</option>`).join('')}</select></div>
     <div class="field"><span class="field-title">何を優先する？</span><div class="segmented">
       ${[['simple','手軽さ'],['balance','バランス'],['cost','コスパ']].map(([v,l])=>`<button class="segment ${state.priority===v?'selected':''}" data-action="priority" data-id="${v}" aria-pressed="${state.priority===v}">${l}</button>`).join('')}
     </div></div>
@@ -82,11 +91,13 @@ function summaryHtml(){
   if(!current) return `<section class="panel summary"><span class="tag orange">条件に合う候補なし</span><h2>組み合わせを作れませんでした</h2><p class="summary-note">予算や「必須成分」、固定・除外条件を見直してみてください。条件を無断で緩めて商品を出すことはありません。</p></section>`;
   const used=Math.min(100,Math.round(current.monthly/state.budget*100));
   const optional=current.products.filter(p=>p.category==='toner'||p.category==='serum').length;
+  const missing=missingConcernLabels();
   return `<section class="panel summary">
     <div class="summary-top"><span class="eyebrow">YOUR BEST MATCH</span><span class="tag">月額予算内</span></div>
     <h2>おすすめの組み合わせ</h2><div class="summary-number">${yen(current.monthly)}<small> / 月</small></div>
     <div class="meter" role="progressbar" aria-label="予算使用率" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${used}"><span style="width:${used}%"></span></div>
     <div class="summary-note">残り予算 <strong>${yen(Math.max(0,state.budget-current.monthly))}</strong>。無理に予算を使い切りません。</div>
+    ${missing.length?`<div class="unscored-warning">データ未整備：${missing.map(escape).join('・')}。現在の15商品では根拠のある採点情報がなく、この項目は選定点数に反映していません。</div>`:''}
     <div class="summary-stats"><div><span class="stat-label">初回購入費（試算）</span><span class="stat-value">${yen(current.initial)}</span></div><div><span class="stat-label">選定商品数</span><span class="stat-value">${current.products.length}<small> 品</small></span></div><div><span class="stat-label">追加ステップ</span><span class="stat-value">${optional}<small> 個</small></span></div></div>
   </section>`;
 }
@@ -127,7 +138,7 @@ function catalogHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.1</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.2</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       <div class="warning"><strong>デモデータについて：</strong>${escape(meta.notice)} 肌への適合スコアは試作用で、効果を保証するものではありません。</div>
@@ -140,6 +151,7 @@ app.addEventListener('click',e=>{
   const {action,id}=btn.dataset;
   if(action==='concern') state.concerns=state.concerns.includes(id)?state.concerns.filter(x=>x!==id):[...state.concerns,id];
   if(action==='priority')state.priority=id;
+  if(action==='sensitivity')state.sensitiveSkin=!state.sensitiveSkin;
   if(action==='lock'){
     const p=catalog.find(p=>p.id===id);
     if(p){if(state.locked[p.category]===id)delete state.locked[p.category];else state.locked[p.category]=id;}
@@ -162,9 +174,15 @@ app.addEventListener('click',e=>{
 });
 
 app.addEventListener('change',e=>{
+  if(e.target.dataset.importance){
+    state.concernWeights??={};
+    state.concernWeights[e.target.dataset.importance]=e.target.value;
+    state.manual=null;
+  }
   const field=e.target.dataset.field;
   if(field){
     if(field==='budget')state.budget=Number(e.target.value);
+    else if(field==='sensitiveSkin')state.sensitiveSkin=e.target.checked;
     else if(field==='swapExtra')state.swapExtra=Number(e.target.value);
     else state[field]=e.target.value;
     if(!['swapCategory','swapExtra'].includes(field))state.manual=null;

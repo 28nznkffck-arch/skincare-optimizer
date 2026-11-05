@@ -2,7 +2,20 @@ export const CATEGORIES = ["cleanser", "toner", "serum", "moisturizer", "sunscre
 export const CATEGORY_LABELS = {
   cleanser: "洗顔", toner: "化粧水", serum: "美容液", moisturizer: "保湿", sunscreen: "日焼け止め"
 };
-export const CONCERNS = {pores:"毛穴", dullness:"くすみ", dryness:"乾燥"};
+export const CONCERN_GROUPS = [
+  {label:"毛穴", items:{pores:"毛穴の目立ち", blackheads:"黒ずみ・角栓"}},
+  {label:"肌の色", items:{dullness:"くすみ", spots:"シミ予防", freckles:"そばかす", unevenTone:"色ムラ"}},
+  {label:"エイジング", items:{wrinkles:"シワ", fineLines:"小ジワ", firmness:"ハリ不足"}},
+  {label:"皮脂", items:{oiliness:"ベタつき", shine:"テカリ"}},
+  {label:"肌荒れ", items:{acne:"ニキビ", redness:"赤み", irritation:"肌荒れ"}},
+  {label:"保湿", items:{dryness:"乾燥"}}
+];
+export const CONCERNS = Object.assign({}, ...CONCERN_GROUPS.map(group=>group.items));
+export const CONCERN_WEIGHTS = {high:1.6, normal:1, low:0.55};
+
+export function unscoredConcerns(catalog, concerns=[]) {
+  return concerns.filter(id=>!catalog.some(p=>(p.scores?.[id]||0)>0));
+}
 
 export function monthlyCost(product, override = {}) {
   const price = Number(override.price ?? product.demoPrice);
@@ -17,17 +30,26 @@ export function priceOf(product, override={}) {
 }
 
 export function scoreRoutine(products, options={}) {
-  const concerns = options.concerns?.length ? options.concerns : ["pores", "dullness"];
+  const concerns = Array.isArray(options.concerns) ? options.concerns : ["pores", "dullness"];
   let score = 0;
   for (const concern of concerns) {
     const ranked = products.map(p => p.scores?.[concern] || 0).sort((a,b)=>b-a);
-    score += (ranked[0]||0)*7 + (ranked[1]||0)*3 + (ranked[2]||0);
+    const importance=CONCERN_WEIGHTS[options.concernWeights?.[concern]] || 1;
+    score += ((ranked[0]||0)*7 + (ranked[1]||0)*3 + (ranked[2]||0))*importance;
   }
   // 化粧水・美容液は省略可能。ただし一律で高く減点すると、肌悩みの
   // 適合性が高い化粧水までほぼ必ず落選するので、少ない手順の利点は
   // 小さな「手間コスト」として扱い、悩みへの追加適合性と比較する。
   const stepPenalty = options.priority === "simple" ? 5 : options.priority === "cost" ? 4 : 2;
   score -= products.filter(p=>p.category==="toner" || p.category==="serum").length * stepPenalty;
+  // 肌質・使用感は商品DBの暫定的な適合情報で加点。刺激の有無を保証するものではない。
+  if(options.skinType==="dry") score+=Math.max(0,...products.map(p=>p.scores?.dryness||0))*1.8;
+  if(options.skinType==="oily") score+=Math.max(0,...products.map(p=>p.scores?.oiliness||0))*1.8;
+  if(options.skinType==="combination") score+=(Math.max(0,...products.map(p=>p.scores?.dryness||0))+Math.max(0,...products.map(p=>p.scores?.oiliness||0)))*0.9;
+  if(options.sensitiveSkin) score+=products.filter(p=>p.sensitiveSkin).length*3;
+  if(options.finish && options.finish!=="any") {
+    score+=products.filter(p=>["toner","moisturizer"].includes(p.category) && p.feel===options.finish).length*2;
+  }
   if (options.ingredient && options.ingredient !== "none") {
     const matches = products.filter(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)));
     score += matches.length ? (options.priority === "simple" ? 7 : 10) : 0;

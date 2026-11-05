@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": "0.1.0",
+    "version": "0.2.0",
     "checkedAt": "2026-11-05",
     "source": "花王公式 My Kao Mall / Kao Beauty Brands",
     "notice": "商品名・容量・JAN・主要成分はメーカー公式ページを参照。価格・使用可能回数は試算用の仮値で、メーカー公表値ではありません。全成分の確認は各公式リンクから行ってください。",
@@ -11,37 +11,37 @@
       "id":"biore-foam-smooth", "brand":"ビオレ", "name":"ザフェイス 泡洗顔料 スムースモイスチャー", "category":"cleanser", "jan":"4901301474407", "volume":200, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/biore/4901301474407/", "keyIngredients":["ヒアルロン酸Na","グリセリン","ココイルグリシンK"], "explanation":"泡で洗い、毛穴汚れが気になる部分にもなじませる洗顔料。", "scores":{"pores":2,"dullness":0,"dryness":1}, "demoPrice":1100, "demoUses":55, "dailyUses":1, "usage":"メーカー目安は4〜5プッシュ。使用回数は仮置き。", "tone":"軽い泡"
     },
     {
-      "id":"curel-foam", "brand":"キュレル", "name":"潤浸保湿 泡洗顔料", "category":"cleanser", "jan":"4901301269348", "volume":150, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301269348/", "keyIngredients":["グリチルリチン酸2K","グリセリン"], "explanation":"肌荒れ防止有効成分配合の薬用泡洗顔料。", "scores":{"pores":1,"dullness":0,"dryness":2}, "demoPrice":1540, "demoUses":65, "dailyUses":1, "usage":"1回のポンプ量が未検証のため回数は仮置き。", "tone":"やさしい泡"
+      "id":"curel-foam", "brand":"キュレル", "name":"潤浸保湿 泡洗顔料", "category":"cleanser", "jan":"4901301269348", "volume":150, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301269348/", "keyIngredients":["グリチルリチン酸2K","グリセリン"], "explanation":"肌荒れ防止有効成分配合の薬用泡洗顔料。", "scores":{"pores":1,"dullness":0,"dryness":2,"irritation":3}, "sensitiveSkin":true, "demoPrice":1540, "demoUses":65, "dailyUses":1, "usage":"1回のポンプ量が未検証のため回数は仮置き。", "tone":"やさしい泡"
     },
     {
-      "id":"curel-sebum-foam", "brand":"キュレル", "name":"皮脂トラブルケア 泡洗顔料", "category":"cleanser", "jan":"4901301264336", "volume":150, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301264336/", "keyIngredients":["グリチルリチン酸2K"], "explanation":"皮脂の多さが気になる方向けの薬用泡洗顔料。", "scores":{"pores":3,"dullness":0,"dryness":0}, "demoPrice":1650, "demoUses":65, "dailyUses":1, "usage":"使用回数は仮置き。", "tone":"皮脂ケア"
+      "id":"curel-sebum-foam", "brand":"キュレル", "name":"皮脂トラブルケア 泡洗顔料", "category":"cleanser", "jan":"4901301264336", "volume":150, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301264336/", "keyIngredients":["グリチルリチン酸2K"], "explanation":"皮脂の多さが気になる方向けの薬用泡洗顔料。", "scores":{"pores":3,"dullness":0,"dryness":0,"oiliness":3,"shine":2,"irritation":2}, "sensitiveSkin":true, "demoPrice":1650, "demoUses":65, "dailyUses":1, "usage":"使用回数は仮置き。", "tone":"皮脂ケア"
     },
     {
-      "id":"curel-toner-ii", "brand":"キュレル", "name":"潤浸保湿 化粧水 II しっとり", "category":"toner", "jan":"4901301236197", "volume":150, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301236197/", "keyIngredients":["アラントイン","セラミド機能成分","グリセリン"], "explanation":"アラントインを有効成分とし、乾燥を考えた薬用化粧水。", "scores":{"pores":1,"dullness":1,"dryness":3}, "demoPrice":2090, "demoUses":100, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"しっとり"
+      "id":"curel-toner-ii", "brand":"キュレル", "name":"潤浸保湿 化粧水 II しっとり", "category":"toner", "jan":"4901301236197", "volume":150, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301236197/", "keyIngredients":["アラントイン","セラミド機能成分","グリセリン"], "explanation":"アラントインを有効成分とし、乾燥を考えた薬用化粧水。", "scores":{"pores":1,"dullness":1,"dryness":3,"irritation":3}, "sensitiveSkin":true, "feel":"moist", "demoPrice":2090, "demoUses":100, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"しっとり"
     },
     {
-      "id":"curel-toner-iii", "brand":"キュレル", "name":"潤浸保湿 化粧水 III とてもしっとり", "category":"toner", "jan":"4901301236180", "volume":150, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301236180/", "keyIngredients":["アラントイン","セラミド機能成分"], "explanation":"よりしっとりした使用感の薬用化粧水。", "scores":{"pores":1,"dullness":1,"dryness":3}, "demoPrice":2090, "demoUses":100, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"とてもしっとり"
+      "id":"curel-toner-iii", "brand":"キュレル", "name":"潤浸保湿 化粧水 III とてもしっとり", "category":"toner", "jan":"4901301236180", "volume":150, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301236180/", "keyIngredients":["アラントイン","セラミド機能成分"], "explanation":"よりしっとりした使用感の薬用化粧水。", "scores":{"pores":1,"dullness":1,"dryness":3,"irritation":3}, "sensitiveSkin":true, "feel":"rich", "demoPrice":2090, "demoUses":100, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"とてもしっとり"
     },
     {
-      "id":"sofina-base-toner", "brand":"ソフィーナ iP", "name":"角層トリートメント 基礎化粧液", "category":"toner", "jan":"4901301422941", "volume":160, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301422941/", "keyIngredients":["アミジノプロリン","ヒアルロン酸Na","セチルPGヒドロキシエチルパルミタミド"], "explanation":"角層の保湿を目的とした基礎化粧液。", "scores":{"pores":1,"dullness":2,"dryness":3}, "demoPrice":2420, "demoUses":115, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"みずみずしい"
+      "id":"sofina-base-toner", "brand":"ソフィーナ iP", "name":"角層トリートメント 基礎化粧液", "category":"toner", "jan":"4901301422941", "volume":160, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301422941/", "keyIngredients":["アミジノプロリン","ヒアルロン酸Na","セチルPGヒドロキシエチルパルミタミド"], "explanation":"角層の保湿を目的とした基礎化粧液。", "scores":{"pores":1,"dullness":2,"dryness":3}, "feel":"light", "demoPrice":2420, "demoUses":115, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"みずみずしい"
     },
     {
-      "id":"sofina-niacinamide-toner", "brand":"ソフィーナ iP", "name":"薬用 角層トリートメント 深層化粧液", "category":"toner", "jan":"4901301472762", "volume":160, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301472762/", "keyIngredients":["ナイアシンアミド","グリセリン","セラミド機能成分"], "explanation":"ナイアシンアミドを有効成分とする薬用化粧液。", "scores":{"pores":1,"dullness":3,"dryness":3}, "demoPrice":3600, "demoUses":110, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"うるおい重視"
+      "id":"sofina-niacinamide-toner", "brand":"ソフィーナ iP", "name":"薬用 角層トリートメント 深層化粧液", "category":"toner", "jan":"4901301472762", "volume":160, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301472762/", "keyIngredients":["ナイアシンアミド","グリセリン","セラミド機能成分"], "explanation":"ナイアシンアミドを有効成分とする薬用化粧液。", "scores":{"pores":1,"dullness":3,"dryness":3}, "feel":"moist", "demoPrice":3600, "demoUses":110, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"うるおい重視"
     },
     {
-      "id":"sofina-toning-serum", "brand":"ソフィーナ iP", "name":"薬用 角層トーニングセラム", "category":"serum", "jan":"4901301460264", "volume":30, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301460264/", "keyIngredients":["ナイアシンアミド","グリチルリチン酸2K"], "explanation":"シミ予防、肌荒れ予防、乾燥によるくすみに着目した薬用美容液。", "scores":{"pores":1,"dullness":3,"dryness":2}, "demoPrice":6600, "demoUses":65, "dailyUses":1, "usage":"1日1回と仮定。商品価格は公式表示6,600円を参考にしたデモ値。", "tone":"集中ケア"
+      "id":"sofina-toning-serum", "brand":"ソフィーナ iP", "name":"薬用 角層トーニングセラム", "category":"serum", "jan":"4901301460264", "volume":30, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301460264/", "keyIngredients":["ナイアシンアミド","グリチルリチン酸2K"], "explanation":"シミ予防、肌荒れ予防、乾燥によるくすみに着目した薬用美容液。", "scores":{"pores":1,"dullness":3,"dryness":2,"spots":3,"irritation":2}, "demoPrice":6600, "demoUses":65, "dailyUses":1, "usage":"1日1回と仮定。商品価格は公式表示6,600円を参考にしたデモ値。", "tone":"集中ケア"
     },
     {
       "id":"sofina-base-serum", "brand":"ソフィーナ iP", "name":"ベースケア セラム〈土台美容液〉", "category":"serum", "jan":"4901301412829", "volume":90, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301412829/", "keyIngredients":["炭酸ガス","オタネニンジン根エキス"], "explanation":"泡状の導入美容液。乾燥してごわついた肌の保湿を目的とする。", "scores":{"pores":1,"dullness":1,"dryness":2}, "demoPrice":5500, "demoUses":80, "dailyUses":1, "usage":"1日1回と仮定。回数は仮置き。", "tone":"泡状"
     },
     {
-      "id":"nivea-soft", "brand":"ニベア", "name":"ニベアソフト スキンケアクリーム チューブ", "category":"moisturizer", "jan":"4901301043764", "volume":50, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/nivea/4901301043764/", "keyIngredients":["グリセリン","ホホバ種子油","酢酸トコフェロール"], "explanation":"顔にも使える保湿クリーム。", "scores":{"pores":0,"dullness":1,"dryness":2}, "demoPrice":480, "demoUses":75, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"クリーム"
+      "id":"nivea-soft", "brand":"ニベア", "name":"ニベアソフト スキンケアクリーム チューブ", "category":"moisturizer", "jan":"4901301043764", "volume":50, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/nivea/4901301043764/", "keyIngredients":["グリセリン","ホホバ種子油","酢酸トコフェロール"], "explanation":"顔にも使える保湿クリーム。", "scores":{"pores":0,"dullness":1,"dryness":2}, "feel":"moist", "demoPrice":480, "demoUses":75, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"クリーム"
     },
     {
-      "id":"curel-milk", "brand":"キュレル", "name":"潤浸保湿 乳液", "category":"moisturizer", "jan":"4901301236173", "volume":120, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301236173/", "keyIngredients":["アラントイン","セラミド機能成分","グリセリン"], "explanation":"アラントイン有効成分配合、乾燥性敏感肌向けの薬用乳液。", "scores":{"pores":1,"dullness":1,"dryness":3}, "demoPrice":2090, "demoUses":90, "dailyUses":2, "usage":"公式目安は3〜4プッシュ。使用回数は仮置き。", "tone":"乳液"
+      "id":"curel-milk", "brand":"キュレル", "name":"潤浸保湿 乳液", "category":"moisturizer", "jan":"4901301236173", "volume":120, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301236173/", "keyIngredients":["アラントイン","セラミド機能成分","グリセリン"], "explanation":"アラントイン有効成分配合、乾燥性敏感肌向けの薬用乳液。", "scores":{"pores":1,"dullness":1,"dryness":3,"irritation":3}, "sensitiveSkin":true, "feel":"moist", "demoPrice":2090, "demoUses":90, "dailyUses":2, "usage":"公式目安は3〜4プッシュ。使用回数は仮置き。", "tone":"乳液"
     },
     {
-      "id":"curel-cream", "brand":"キュレル", "name":"潤浸保湿 フェイスクリーム", "category":"moisturizer", "jan":"4901301236210", "volume":40, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301236210/", "keyIngredients":["アラントイン","セラミド機能成分","グリセリン"], "explanation":"セラミド機能成分を配合した薬用フェイスクリーム。", "scores":{"pores":1,"dullness":1,"dryness":3}, "demoPrice":2970, "demoUses":75, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"高保湿クリーム"
+      "id":"curel-cream", "brand":"キュレル", "name":"潤浸保湿 フェイスクリーム", "category":"moisturizer", "jan":"4901301236210", "volume":40, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301236210/", "keyIngredients":["アラントイン","セラミド機能成分","グリセリン"], "explanation":"セラミド機能成分を配合した薬用フェイスクリーム。", "scores":{"pores":1,"dullness":1,"dryness":3,"irritation":3}, "sensitiveSkin":true, "feel":"rich", "demoPrice":2970, "demoUses":75, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"高保湿クリーム"
     },
     {
       "id":"biore-uv-aqua", "brand":"ビオレUV", "name":"アクアリッチ ウォータリーエッセンス", "category":"sunscreen", "jan":"4901301447647", "volume":70, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/bioresarasarauv/4901301447647/", "keyIngredients":["紫外線吸収剤","ヒアルロン酸Na","アスコルビルグルコシド"], "explanation":"紫外線対策用。表示成分にビタミンC誘導体も含むが、美白効果を意味しない。", "scores":{"pores":0,"dullness":3,"dryness":1}, "demoPrice":1200, "demoUses":45, "dailyUses":1, "usage":"顔への塗布を想定した仮回数。塗り直し分は別途加算。", "tone":"みずみずしい"
@@ -50,7 +50,7 @@
       "id":"nivea-uv", "brand":"ニベアUV", "name":"ディープ プロテクト＆ケア エッセンス", "category":"sunscreen", "jan":"4901301390431", "volume":50, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/nivea/4901301390431/", "keyIngredients":["紫外線吸収剤","ヒアルロン酸Na","トレハロース"], "explanation":"保湿成分を配合した紫外線対策用エッセンス。", "scores":{"pores":0,"dullness":3,"dryness":2}, "demoPrice":1200, "demoUses":35, "dailyUses":1, "usage":"顔への塗布を想定した仮回数。塗り直し分は別途加算。", "tone":"美容液感覚"
     },
     {
-      "id":"curel-uv", "brand":"キュレル", "name":"潤浸保湿 UVエッセンス", "category":"sunscreen", "jan":"4901301413505", "volume":50, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301413505/", "keyIngredients":["グリチルリチン酸2K","微粒子酸化Ti","セラミド機能成分"], "explanation":"肌荒れを防ぐ薬用UVエッセンス。", "scores":{"pores":0,"dullness":3,"dryness":2}, "demoPrice":1760, "demoUses":35, "dailyUses":1, "usage":"顔への塗布を想定した仮回数。塗り直し分は別途加算。", "tone":"乾燥性敏感肌向け"
+      "id":"curel-uv", "brand":"キュレル", "name":"潤浸保湿 UVエッセンス", "category":"sunscreen", "jan":"4901301413505", "volume":50, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301413505/", "keyIngredients":["グリチルリチン酸2K","微粒子酸化Ti","セラミド機能成分"], "explanation":"肌荒れを防ぐ薬用UVエッセンス。", "scores":{"pores":0,"dullness":3,"dryness":2,"irritation":2}, "sensitiveSkin":true, "demoPrice":1760, "demoUses":35, "dailyUses":1, "usage":"顔への塗布を想定した仮回数。塗り直し分は別途加算。", "tone":"乾燥性敏感肌向け"
     }
   ]
 }

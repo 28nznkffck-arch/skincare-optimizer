@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {monthlyCost, optimize, swaps} from '../dist/optimizer.js';
+import {CONCERNS, monthlyCost, optimize, scoreRoutine, swaps, unscoredConcerns} from '../dist/optimizer.js';
 import fs from 'node:fs';
 
 const catalog=JSON.parse(fs.readFileSync(new URL('../dist/data/products.json',import.meta.url),'utf8')).products;
@@ -42,4 +42,26 @@ test('toner is not systematically excluded by the simplicity penalty',()=>{
   const recommendation=optimize(catalog,options)[0];
   assert.ok(recommendation.products.some(p=>p.category==='toner'));
   // 手軽さ重視でも、悩みへの追加適合性が勝れば化粧水を採用する。
+});
+
+test('expanded concern names are registered without inventing unsupported scores',()=>{
+  for(const key of ['oiliness','shine','irritation','wrinkles','freckles','blackheads']) assert.ok(CONCERNS[key]);
+  assert.deepEqual(unscoredConcerns(catalog,['oiliness','irritation','wrinkles','freckles']),['wrinkles','freckles']);
+});
+
+test('concern importance strengthens its influence on a routine',()=>{
+  const items=catalog.filter(p=>['curel-sebum-foam','nivea-soft','biore-uv-aqua'].includes(p.id));
+  const defaultScore=scoreRoutine(items,{concerns:['oiliness'],priority:'simple'});
+  const highScore=scoreRoutine(items,{concerns:['oiliness'],concernWeights:{oiliness:'high'},priority:'simple'});
+  const lowScore=scoreRoutine(items,{concerns:['oiliness'],concernWeights:{oiliness:'low'},priority:'simple'});
+  assert.ok(highScore>defaultScore && defaultScore>lowScore);
+});
+
+test('skin type, sensitivity and finish preferences affect results',()=>{
+  const items=catalog.filter(p=>['curel-foam','curel-toner-ii','curel-milk','curel-uv'].includes(p.id));
+  const base=scoreRoutine(items,{concerns:['dryness','irritation'],priority:'simple'});
+  const adapted=scoreRoutine(items,{concerns:['dryness','irritation'],priority:'simple',skinType:'dry',sensitiveSkin:true,finish:'moist'});
+  assert.ok(adapted>base);
+  const top=optimize(catalog,{budget:5000,concerns:['dryness','irritation'],priority:'simple',sensitiveSkin:true,finish:'moist'})[0];
+  assert.ok(top.products.some(p=>p.id==='curel-toner-ii'));
 });
