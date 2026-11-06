@@ -172,7 +172,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.3</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.4</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -182,6 +182,7 @@ function render(){
       <li>敏感肌向けと登録された商品でも、すべての人に合うわけではありません。合わなかった商品の除外は商品単位で、原因成分を特定するものではありません。</li>
       <li>商品の購入価格・1本の使用回数・使用頻度は初期状態では仮値です。実際の値に修正できます。日焼け止めの塗り直し費用は初期試算に含めていません。</li>
       <li>「手軽に」は任意の化粧水・美容液の追加手順を控えめに評価し、「しっかり」は有用な追加手順を許容します。価格は月予算を上限とし、同点時のみ安い候補を優先します。</li>
+      <li>公式情報が確認できた商品に、小さな情報透明性ボーナスを加えます。これは美容効果や成分濃度の高さを表すものではなく、配合量が未確認の商品を0％と評価することもありません。採点内訳は商品DBのデバッグ画面で確認できます。</li>
       <li>保存した組み合わせはブラウザ内にのみ保存します。端末やブラウザを変えると共有されず、ブラウザデータの消去で失われます。</li>
       <li>商品情報が改訂されることがあります。最終確認はメーカー公式ページまたは製品パッケージで行ってください。皮膚疾患の診断・治療を目的とするサービスではありません。</li></ul>
     </div></details><span>SKINCARE LAB — 個人開発プロトタイプ</span></footer></div>`;

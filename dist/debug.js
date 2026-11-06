@@ -1,4 +1,5 @@
-import {CATEGORY_LABELS, monthlyCost} from './optimizer.js';
+import {CATEGORY_LABELS, CONCERNS, monthlyCost, optimize} from './optimizer.js';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js';
 
 const STORE_KEY='skincare-lab-v1';
 const PAGE_SIZE=25;
@@ -6,11 +7,16 @@ const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
 let catalog=[];
 let page=0;
+let selectedId=null;
+let analysisOptions=null;
+let bestRoutine=null;
+const diagnosisCache=new Map();
 const search=document.getElementById('debugSearch');
 const category=document.getElementById('debugCategory');
 const items=document.getElementById('debugItems');
 const count=document.getElementById('debugCount');
 const pagination=document.getElementById('debugPagination');
+const debugContext=document.getElementById('debugContext');
 
 function getState(){
   try {return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')||{};}
@@ -18,11 +24,36 @@ function getState(){
 }
 function updateState(next){localStorage.setItem(STORE_KEY,JSON.stringify(next));}
 
+function getOptions(){
+  const state=getState();
+  return {
+    budget:Number(state.budget??5000),concerns:Array.isArray(state.concerns)?state.concerns:[],
+    concernWeights:state.concernWeights||{},skinType:state.skinType||'unknown',
+    sensitiveSkin:Boolean(state.sensitiveSkin),finish:state.finish||'any',
+    priority:['simple','any','thorough'].includes(state.priority)?state.priority:'any',
+    ingredient:state.ingredient||'none',ingredientMode:state.ingredientMode||'prefer',
+    excluded:Object.keys(state.excluded||{}),locked:state.locked||{},overrides:state.overrides||{}
+  };
+}
+
+function refreshAnalysis(){
+  analysisOptions=getOptions();
+  bestRoutine=analysisOptions.concerns.length?optimize(catalog,analysisOptions)[0]||null:null;
+  diagnosisCache.clear();
+  debugContext.innerHTML=renderContext(catalog,analysisOptions,bestRoutine);
+  renderRows();
+}
+
+function diagnosisFor(p){
+  if(!diagnosisCache.has(p.id))diagnosisCache.set(p.id,renderProductAnalysis(catalog,analysisOptions,p,bestRoutine));
+  return diagnosisCache.get(p.id);
+}
+
 function renderRows(){
   const q=search.value.trim().toLocaleLowerCase('ja-JP');
   const selected=category.value;
   const matching=catalog.filter(p=>(selected==='all'||p.category===selected) &&
-    (!q||[p.brand,p.name,p.jan,...(p.keyIngredients||[])].join(' ').toLocaleLowerCase('ja-JP').includes(q)));
+    (!q||[p.brand,p.name,p.jan,...(p.keyIngredients||[]),...(p.evidence?.activeIngredients||[])].join(' ').toLocaleLowerCase('ja-JP').includes(q)));
   const pages=Math.max(1,Math.ceil(matching.length/PAGE_SIZE));
   page=Math.min(page,pages-1);
   const visible=matching.slice(page*PAGE_SIZE,(page+1)*PAGE_SIZE);
@@ -32,8 +63,11 @@ function renderRows(){
     const v=state.overrides?.[p.id]||{};
     const price=v.price??p.demoPrice,uses=v.uses??p.demoUses,frequency=v.frequency??p.dailyUses;
     return `<article class="debug-item"><div class="debug-item-head"><div><small>${escape(p.brand)}・${escape(CATEGORY_LABELS[p.category])} / JAN ${escape(p.jan)}</small><h2>${escape(p.name)}</h2><p>${escape(p.keyIngredients.join('・'))}</p></div><a href="${escape(p.sourceUrl)}" class="source" target="_blank" rel="noopener noreferrer">メーカー公式 ↗</a></div>
+      ${renderEvidence(p)}
       <div class="debug-edit-fields"><label>購入価格（円）<input type="number" min="0" step="10" data-edit="price" data-id="${escape(p.id)}" value="${price}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-edit="uses" data-id="${escape(p.id)}" value="${uses}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-edit="frequency" data-id="${escape(p.id)}" value="${frequency}"></label><div class="debug-month">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>
-      <button type="button" class="link-button" data-reset="${escape(p.id)}" ${state.overrides?.[p.id]?'':'disabled'}>この商品の補正を解除</button>
+      <div class="debug-item-actions"><button type="button" class="button ${selectedId===p.id?'button-dark':''}" data-analyze="${escape(p.id)}">${selectedId===p.id?'検証結果を閉じる':'この商品の採否理由を検証'}</button><button type="button" class="link-button" data-reset="${escape(p.id)}" ${state.overrides?.[p.id]?'':'disabled'}>使用条件の補正を解除</button></div>
+      ${renderRawScores(p,analysisOptions)}
+      ${selectedId===p.id?diagnosisFor(p):''}
     </article>`;
   }).join('') || '<div class="empty">該当する商品はありません。</div>';
   pagination.innerHTML=`<button class="button" data-page="prev" ${page===0?'disabled':''}>前へ</button><span>${page+1} / ${pages}</span><button class="button" data-page="next" ${page>=pages-1?'disabled':''}>次へ</button>`;
@@ -52,14 +86,16 @@ items.addEventListener('change',e=>{
   const n=Number(e.target.value);
   if(!Number.isFinite(n)||n<(edit==='uses'?1:0)){renderRows();return;}
   const state=getState();state.overrides??={};state.overrides[id]??={};state.overrides[id][edit]=n;
-  updateState(state);renderRows();
+  updateState(state);refreshAnalysis();
 });
 items.addEventListener('click',e=>{
+  const analyze=e.target.closest('[data-analyze]');
+  if(analyze){selectedId=selectedId===analyze.dataset.analyze?null:analyze.dataset.analyze;renderRows();return;}
   const btn=e.target.closest('[data-reset]');if(!btn)return;
   const state=getState();if(state.overrides)delete state.overrides[btn.dataset.reset];
-  updateState(state);renderRows();
+  updateState(state);refreshAnalysis();
 });
-window.addEventListener('storage',e=>{if(e.key===STORE_KEY)renderRows();});
+window.addEventListener('storage',e=>{if(e.key===STORE_KEY)refreshAnalysis();});
 fetch('./data/products.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('商品DBを読み込めません');return r.json();}).then(db=>{
-  catalog=db.products;renderRows();
+  catalog=db.products;refreshAnalysis();
 }).catch(e=>{count.textContent=e.message;});

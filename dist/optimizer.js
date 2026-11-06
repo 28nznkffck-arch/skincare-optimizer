@@ -29,37 +29,64 @@ export function priceOf(product, override={}) {
   return Number(override.price ?? product.demoPrice);
 }
 
-export function scoreRoutine(products, options={}) {
+// 「情報が未確認」は「配合されていない」や「非公表」と同義ではない。
+// 濃度は出典付きの数値のみを認め、成分表の掲載順から推定しない。
+export function transparencyDetails(product) {
+  const evidence=product.evidence||{};
+  const official=Boolean(evidence.officialSource || /^https:\/\/(www\.)?kao-kirei\.com\//.test(product.sourceUrl||''));
+  const actives=Array.isArray(evidence.activeIngredients)?evidence.activeIngredients.filter(x=>typeof x==='string'&&x.trim()):[];
+  const concentrations=Array.isArray(evidence.concentrations)?evidence.concentrations.filter(x=>
+    x && typeof x.name==='string' && Number.isFinite(x.value) && x.value>0 &&
+    typeof x.unit==='string' && x.unit.trim() && /^https:\/\//.test(x.sourceUrl||'')
+  ):[];
+  const level=official?(concentrations.length?3:actives.length?2:1):0;
+  return {level,official,actives,concentrations,verifiedAt:evidence.verifiedAt||null};
+}
+
+const round2=n=>Math.round((n+Number.EPSILON)*100)/100;
+
+export function explainRoutineScore(products, options={}) {
   const concerns = Array.isArray(options.concerns) ? options.concerns : ["pores", "dullness"];
-  let score = 0;
+  const parts=[];
+  const push=(id,label,value,detail='')=>parts.push({id,label,value:round2(value),detail});
   for (const concern of concerns) {
-    const ranked = products.map(p => p.scores?.[concern] || 0).sort((a,b)=>b-a);
+    const ranked = products.map(p=>({name:`${p.brand} ${p.name}`,points:p.scores?.[concern]||0})).sort((a,b)=>b.points-a.points);
     const importance=CONCERN_WEIGHTS[options.concernWeights?.[concern]] || 1;
-    score += ((ranked[0]||0)*7 + (ranked[1]||0)*3 + (ranked[2]||0))*importance;
+    const factors=[7,3,1];
+    const points=ranked.slice(0,3).reduce((sum,p,i)=>sum+p.points*factors[i],0)*importance;
+    push(`concern:${concern}`,CONCERNS[concern]||concern,points,
+      ranked.slice(0,3).filter(p=>p.points).map(p=>`${p.name} ${p.points}点`).join(' / ')||'登録データに該当スコアなし');
   }
   // 化粧水・美容液は省略可能。ただし一律で高く減点すると、肌悩みの
   // 適合性が高い化粧水までほぼ必ず落選するので、少ない手順の利点は
   // 小さな「手間コスト」として扱い、悩みへの追加適合性と比較する。
   const stepPenalty = options.priority === "simple" ? 5 : options.priority === "thorough" ? 0 : 2;
-  score -= products.filter(p=>p.category==="toner" || p.category==="serum").length * stepPenalty;
+  push('steps','追加ステップの手間',-products.filter(p=>p.category==="toner" || p.category==="serum").length * stepPenalty,
+    `化粧水・美容液 1品あたり ${stepPenalty}点の手間コスト`);
   // 肌質・使用感は商品DBの暫定的な適合情報で加点。刺激の有無を保証するものではない。
-  if(options.skinType==="dry") score+=Math.max(0,...products.map(p=>p.scores?.dryness||0))*1.8;
-  if(options.skinType==="oily") score+=Math.max(0,...products.map(p=>p.scores?.oiliness||0))*1.8;
-  if(options.skinType==="combination") score+=(Math.max(0,...products.map(p=>p.scores?.dryness||0))+Math.max(0,...products.map(p=>p.scores?.oiliness||0)))*0.9;
-  if(options.sensitiveSkin) score+=products.filter(p=>p.sensitiveSkin).length*3;
+  if(options.skinType==="dry") push('skin','乾燥肌との適合',Math.max(0,...products.map(p=>p.scores?.dryness||0))*1.8);
+  if(options.skinType==="oily") push('skin','脂性肌との適合',Math.max(0,...products.map(p=>p.scores?.oiliness||0))*1.8);
+  if(options.skinType==="combination") push('skin','混合肌との適合',(Math.max(0,...products.map(p=>p.scores?.dryness||0))+Math.max(0,...products.map(p=>p.scores?.oiliness||0)))*0.9);
+  if(options.sensitiveSkin) push('sensitive','敏感肌向けの設計情報',products.filter(p=>p.sensitiveSkin).length*3);
   if(options.finish && options.finish!=="any") {
-    score+=products.filter(p=>["toner","moisturizer"].includes(p.category) && p.feel===options.finish).length*2;
+    push('finish','使用感の好み',products.filter(p=>["toner","moisturizer"].includes(p.category) && p.feel===options.finish).length*2);
   }
   if (options.ingredient && options.ingredient !== "none") {
     const matches = products.filter(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)));
-    score += matches.length ? 10 : 0;
+    push('ingredient','使ってみたい成分',matches.length ? 10 : 0,`${options.ingredient}：${matches.length}品該当`);
   }
   // 予算は optimize() 側の上限制約。費用を適合スコアに混ぜず、
   // 同点の候補だけ安いほうを先に並べる。
   const distinct = new Set(products.flatMap(p=>p.keyIngredients||[]));
-  score += Math.min(distinct.size,12) * 0.25;
-  return Math.round(score*100)/100;
+  push('diversity','成分の種類',Math.min(distinct.size,12) * 0.25,`登録された主要成分 ${distinct.size}種類`);
+  const meanTransparency=products.length?products.reduce((sum,p)=>sum+transparencyDetails(p).level,0)/products.length:0;
+  // 個数の多い組み合わせを有利にしないため「1品あたり平均」で小さく加点。
+  push('transparency','情報公開の確認状況',round2(meanTransparency*0.35),'公式情報や公表濃度の確認レベルの平均。効果の強さではありません');
+  const subtotal=round2(parts.filter(p=>p.id!=='transparency').reduce((sum,p)=>sum+p.value,0));
+  return {parts,subtotal,transparency:parts.at(-1).value,total:round2(subtotal+parts.at(-1).value)};
 }
+
+export function scoreRoutine(products, options={}) {return explainRoutineScore(products,options).total;}
 
 export function evaluate(products, options={}) {
   return {
@@ -97,6 +124,36 @@ export function optimize(catalog, options={}) {
   enumerate(0,[]);
   all.sort((a,b)=>b.score-a.score || a.monthly-b.monthly);
   return all;
+}
+
+// 商品単独の点数ではなく「その商品を採用した最良の組み合わせ」を比較する。
+// 高コストの再探索はデバッグ画面で商品を指定した時だけ実行する。
+export function diagnoseProduct(catalog,options={},productId,baseline=null) {
+  const product=catalog.find(p=>p.id===productId);
+  if(!product)return {status:'missing',reason:'商品DBに存在しません。'};
+  if(!options.concerns?.length)return {status:'no_concern',reason:'先にメイン画面で肌悩みを選択してください。'};
+  const excluded=new Set(options.excluded||[]);
+  if(excluded.has(productId))return {status:'excluded',reason:'ユーザーの「合わない・除外」設定で候補から外れています。'};
+  if(options.locked?.[product.category]&&options.locked[product.category]!==productId)
+    return {status:'locked',reason:'同じ品目で別の商品が固定されているため、候補に入れられません。'};
+  const best=baseline||optimize(catalog,options)[0]||null;
+  if(!best)return {status:'no_base',reason:'現在の予算・固定・必須成分の条件で成立する組み合わせがありません。'};
+  if(best.products.some(p=>p.id===productId))
+    return {status:'selected',reason:'自動選定の最良の組み合わせに採用されています。',best,forced:best,scoreGap:0,monthlyGap:0};
+  const forcedOptions={...options,locked:{...(options.locked||{}),[product.category]:productId}};
+  const forced=optimize(catalog,forcedOptions)[0]||null;
+  if(!forced){
+    const unconstrained=optimize(catalog,{...forcedOptions,budget:Number.MAX_SAFE_INTEGER});
+    const minimum=unconstrained.length?Math.min(...unconstrained.map(r=>r.monthly)):null;
+    if(minimum!==null && minimum>Number(options.budget??5000))
+      return {status:'budget',reason:`この商品を入れて必須品目を揃えるには最低でも月${minimum.toLocaleString('ja-JP')}円必要です。`,best,minimum};
+    return {status:'unavailable',reason:'現在の固定・除外・必須成分条件を満たす組み合わせが作れません。',best};
+  }
+  const scoreGap=round2(best.score-forced.score),monthlyGap=forced.monthly-best.monthly;
+  const reason=scoreGap>0.005?`採用すると組み合わせ全体の評価が${scoreGap.toFixed(2)}点低くなるため、今回は不採用です。`:
+    monthlyGap>0?`評価は同点ですが、月額が${monthlyGap.toLocaleString('ja-JP')}円高いため不採用です。`:
+    '他の同等候補が先に選ばれています。';
+  return {status:'not_selected',reason,best,forced,scoreGap,monthlyGap};
 }
 
 export function swaps(routine, catalog, category, options={}, extra=100) {

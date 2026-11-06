@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {CONCERNS, monthlyCost, optimize, scoreRoutine, swaps, unscoredConcerns} from '../dist/optimizer.js';
+import {CONCERNS, diagnoseProduct, explainRoutineScore, monthlyCost, optimize, scoreRoutine, swaps, transparencyDetails, unscoredConcerns} from '../dist/optimizer.js';
 import {createSavedPlan, savedPlanTotals, updateSavedUsage} from '../dist/plans.js';
 import fs from 'node:fs';
 
@@ -92,4 +92,81 @@ test('saved routines preserve independent prices, frequencies and budget',()=>{
   assert.equal(updateSavedUsage(plan,'missing','price',100),false);
   assert.equal(updateSavedUsage(plan,id,'frequency',0),true);
   assert.equal(monthlyCost(catalog.find(p=>p.id===id),plan.overrides[id]),0);
+});
+
+test('score breakdown adds exactly to the optimization score',()=>{
+  const options={budget:12000,concerns:['pores','dullness','dryness'],concernWeights:{pores:'high'},
+    priority:'thorough',skinType:'combination',sensitiveSkin:true,finish:'moist',ingredient:'ナイアシンアミド'};
+  const best=optimize(catalog,options)[0];
+  assert.ok(best);
+  const breakdown=explainRoutineScore(best.products,options);
+  assert.equal(breakdown.total,best.score);
+  assert.equal(breakdown.total,scoreRoutine(best.products,options));
+  assert.equal(breakdown.total,Math.round(breakdown.parts.reduce((sum,p)=>sum+p.value,0)*100)/100);
+  for(const key of ['concern:pores','steps','skin','sensitive','finish','ingredient','diversity','transparency'])
+    assert.ok(breakdown.parts.some(p=>p.id===key),`${key} is visible in the breakdown`);
+});
+
+test('official active ingredients are verified; unknown concentration is not zero',()=>{
+  const item=catalog.find(p=>p.id==='curel-toner-ii');
+  const evidence=transparencyDetails(item);
+  assert.equal(evidence.level,2);
+  assert.deepEqual(evidence.actives,['アラントイン']);
+  assert.deepEqual(evidence.concentrations,[]);
+  const unchecked=catalog.find(p=>p.id==='curel-foam');
+  assert.equal(transparencyDetails(unchecked).level,1);
+  assert.deepEqual(transparencyDetails(unchecked).actives,[]);
+  const imaginary={sourceUrl:'https://maker.example/product',evidence:{officialSource:true,activeIngredients:['成分X'],
+    concentrations:[{name:'成分X',value:1.5,unit:'%',sourceUrl:'https://maker.example/disclosure'}]}};
+  assert.equal(transparencyDetails(imaginary).level,3);
+  assert.equal(transparencyDetails({...imaginary,evidence:{...imaginary.evidence,
+    concentrations:[{name:'成分X',value:1.5,unit:'%'}]}}).level,2);
+});
+
+test('information transparency adds a small, product-count-neutral tie-breaker',()=>{
+  const product={brand:'A',name:'B',category:'toner',scores:{},keyIngredients:[],sourceUrl:'https://maker.example'};
+  const verified={...product,evidence:{officialSource:true,activeIngredients:['成分X']}};
+  const options={concerns:[],priority:'thorough'};
+  const plain=explainRoutineScore([product],options);
+  const trusted=explainRoutineScore([verified],options);
+  assert.equal(trusted.subtotal,plain.subtotal);
+  assert.ok(trusted.total>plain.total);
+  assert.ok(trusted.total-plain.total<=1.05);
+  assert.equal(explainRoutineScore([verified,verified],options).transparency,trusted.transparency);
+});
+
+test('diagnostic explains selected, excluded, competing locked and no-concern cases',()=>{
+  const options={budget:9000,concerns:['dryness','irritation'],priority:'thorough'};
+  const best=optimize(catalog,options)[0];
+  assert.ok(best);
+  const chosen=best.products.find(p=>p.category==='toner');
+  assert.ok(chosen);
+  assert.equal(diagnoseProduct(catalog,options,chosen.id,best).status,'selected');
+  assert.equal(diagnoseProduct(catalog,{...options,excluded:[chosen.id]},chosen.id,best).status,'excluded');
+  const rival=catalog.find(p=>p.category==='toner'&&p.id!==chosen.id);
+  assert.equal(diagnoseProduct(catalog,{...options,locked:{toner:chosen.id}},rival.id,best).status,'locked');
+  assert.equal(diagnoseProduct(catalog,{...options,concerns:[]},chosen.id,best).status,'no_concern');
+});
+
+test('diagnostic reruns a forced candidate, including its whole-routine cost',()=>{
+  const options={budget:9000,concerns:['pores','dullness'],priority:'thorough'};
+  const best=optimize(catalog,options)[0];
+  const challenger=catalog.find(p=>p.category==='toner'&&!best.products.some(x=>x.id===p.id));
+  assert.ok(challenger);
+  const diagnostic=diagnoseProduct(catalog,options,challenger.id,best);
+  assert.equal(diagnostic.status,'not_selected');
+  assert.ok(diagnostic.forced.products.some(p=>p.id===challenger.id));
+  assert.ok(diagnostic.forced.monthly<=options.budget);
+  assert.equal(diagnostic.scoreGap,Math.round((best.score-diagnostic.forced.score)*100)/100);
+  assert.ok(diagnostic.scoreGap>=0);
+});
+
+test('diagnostic distinguishes a budget failure from an ingredient incompatibility',()=>{
+  const options={budget:3500,concerns:['dryness'],priority:'simple'};
+  const best=optimize(catalog,options)[0];
+  assert.ok(best);
+  const expensive=catalog.find(p=>p.id==='sofina-toning-serum');
+  const diagnosis=diagnoseProduct(catalog,options,expensive.id,best);
+  assert.equal(diagnosis.status,'budget');
+  assert.ok(diagnosis.minimum>options.budget);
 });
