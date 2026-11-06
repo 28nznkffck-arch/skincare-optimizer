@@ -40,7 +40,7 @@ export function scoreRoutine(products, options={}) {
   // 化粧水・美容液は省略可能。ただし一律で高く減点すると、肌悩みの
   // 適合性が高い化粧水までほぼ必ず落選するので、少ない手順の利点は
   // 小さな「手間コスト」として扱い、悩みへの追加適合性と比較する。
-  const stepPenalty = options.priority === "simple" ? 5 : options.priority === "cost" ? 4 : 2;
+  const stepPenalty = options.priority === "simple" ? 5 : options.priority === "thorough" ? 0 : 2;
   score -= products.filter(p=>p.category==="toner" || p.category==="serum").length * stepPenalty;
   // 肌質・使用感は商品DBの暫定的な適合情報で加点。刺激の有無を保証するものではない。
   if(options.skinType==="dry") score+=Math.max(0,...products.map(p=>p.scores?.dryness||0))*1.8;
@@ -52,10 +52,10 @@ export function scoreRoutine(products, options={}) {
   }
   if (options.ingredient && options.ingredient !== "none") {
     const matches = products.filter(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)));
-    score += matches.length ? (options.priority === "simple" ? 7 : 10) : 0;
+    score += matches.length ? 10 : 0;
   }
-  const cost = products.reduce((sum,p)=>sum+monthlyCost(p, options.overrides?.[p.id]),0);
-  score -= cost * (options.priority === "cost" ? 0.005 : 0.0015);
+  // 予算は optimize() 側の上限制約。費用を適合スコアに混ぜず、
+  // 同点の候補だけ安いほうを先に並べる。
   const distinct = new Set(products.flatMap(p=>p.keyIngredients||[]));
   score += Math.min(distinct.size,12) * 0.25;
   return Math.round(score*100)/100;

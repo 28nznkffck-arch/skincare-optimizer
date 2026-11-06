@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f6f0">
+  <title>商品DBデバッグ｜SKINCARE LAB</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./debug.js"></script>
+</head>
+<body>
+  <main class="shell debug-page">
+    <header class="topbar"><div class="logo"><span class="logo-mark">✿</span><span>SKINCARE LAB</span></div><a href="./" class="source">アプリに戻る</a></header>
+    <section class="debug-heading"><span class="eyebrow">CATALOG DEBUG</span><h1>登録商品データ</h1><p>全商品を検索して、試算に使用する購入価格・1本の使用回数・1日使用回数を補正できます。</p></section>
+    <section class="panel debug-panel">
+      <div class="debug-filters"><label>商品検索<input id="debugSearch" class="select" type="search" placeholder="商品名・ブランド・JAN・主要成分"></label><label>品目<select id="debugCategory" class="select"><option value="all">すべて</option><option value="cleanser">洗顔</option><option value="toner">化粧水</option><option value="serum">美容液</option><option value="moisturizer">保湿</option><option value="sunscreen">日焼け止め</option></select></label></div>
+      <div id="debugCount" class="micro muted">読み込み中…</div>
+      <div id="debugItems" class="debug-items"></div>
+      <div id="debugPagination" class="debug-pagination"></div>
+    </section>
+    <footer class="footer">この画面は試作用の価格・使用回数を編集する開発者向け機能です。変更内容はブラウザ内に保存され、メイン画面の計算にも反映されます。保存済みの組み合わせは独立した記録のため、ここでの変更では書き換わりません。商品情報・採点は試作データです。</footer>
+  </main>
+</body>
+</html>
