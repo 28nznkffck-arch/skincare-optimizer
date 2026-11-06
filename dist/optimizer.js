@@ -174,26 +174,31 @@ export function diagnoseProduct(catalog,options={},productId,baseline=null) {
   if(best.products.some(p=>p.id===productId))
     return {status:'selected',reason:'自動選定の最良の組み合わせに採用されています。',best,forced:best,scoreGap:0,monthlyGap:0};
   const forcedOptions={...options,locked:{...(options.locked||{}),[product.category]:productId}};
+  // 予算内に組み直せた場合も、他の商品の入れ替えを伴わない純粋な1品交換を
+  // 別途採点する。安い組み合わせへ再探索したために高額アップグレードの
+  // 得点が隠れてしまう事態を避ける。
+  const prior=best.products.find(p=>p.category===product.category);
+  const next=prior?best.products.map(p=>p.id===prior.id?product:p):[...best.products,product];
+  const meetsIngredient=options.ingredientMode!=='required'||!options.ingredient||options.ingredient==='none'||next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)));
+  const singleChange=meetsIngredient?evaluate(next,options):null;
   const forced=optimize(catalog,{...forcedOptions,resultLimit:1})[0]||null;
   if(!forced){
     // 予算の判定を採点より後にする。高額だからという理由で評価点を消さない。
-    const prior=best.products.find(p=>p.category===product.category);
-    const next=prior?best.products.map(p=>p.id===prior.id?product:p):[...best.products,product];
-    if(options.ingredientMode==='required' && options.ingredient && options.ingredient!=='none' && !next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient))))
+    if(!singleChange)
       return {status:'unavailable',reason:'この1品の置き換えでは、必須成分の条件が成立しません。',best};
-    const preview=evaluate(next,options);
     const cheapest=optimize(catalog,{...forcedOptions,budget:Number.MAX_SAFE_INTEGER,resultLimit:1,objective:'minimumMonthly'})[0];
     const minimum=cheapest?.monthly??null;
     if(minimum!==null && minimum>Number(options.budget??5000))
-      return {status:'budget',reason:`元の組み合わせの${prior?'1品を入れ替え':'任意品目として追加'}ると月${preview.monthly.toLocaleString('ja-JP')}円で、現在の予算を超えます。評価点は予算に関係なく計算しています。`,
-        best,forced:preview,minimum,comparisonMode:'singleChange',scoreGap:round2(best.score-preview.score),monthlyGap:preview.monthly-best.monthly};
+      return {status:'budget',reason:`元の組み合わせの${prior?'1品を入れ替え':'任意品目として追加'}ると月${singleChange.monthly.toLocaleString('ja-JP')}円で、現在の予算を超えます。評価点は予算に関係なく計算しています。`,
+        best,forced:singleChange,minimum,comparisonMode:'singleChange',scoreGap:round2(best.score-singleChange.score),monthlyGap:singleChange.monthly-best.monthly};
     return {status:'unavailable',reason:'現在の固定・除外・必須成分条件を満たす組み合わせが作れません。',best};
   }
   const scoreGap=round2(best.score-forced.score),monthlyGap=forced.monthly-best.monthly;
   const reason=scoreGap>0.005?`採用すると組み合わせ全体の評価が${scoreGap.toFixed(2)}点低くなるため、今回は不採用です。`:
     monthlyGap>0?`評価は同点ですが、月額が${monthlyGap.toLocaleString('ja-JP')}円高いため不採用です。`:
     '他の同等候補が先に選ばれています。';
-  return {status:'not_selected',reason,best,forced,scoreGap,monthlyGap,comparisonMode:'reoptimized'};
+  return {status:'not_selected',reason,best,forced,scoreGap,monthlyGap,comparisonMode:'reoptimized',
+    overbudgetPreview:singleChange?.monthly>Number(options.budget??5000)?singleChange:null};
 }
 
 export function swaps(routine, catalog, category, options={}, extra=100) {

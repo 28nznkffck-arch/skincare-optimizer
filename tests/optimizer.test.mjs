@@ -131,6 +131,19 @@ test('real catalog can reveal a strictly better one-item upgrade only after incr
   assert.ok(upgrade.scoreDelta>0 && upgrade.monthly>options.budget && upgrade.monthly<=options.budget+1000);
 });
 
+test('diagnostic retains the over-budget one-item improvement even if cheaper reoptimization is possible',()=>{
+  const options={budget:5000,concerns:['dullness'],priority:'any'};
+  const baseline=optimize(catalog,{...options,resultLimit:1})[0];
+  const d=diagnoseProduct(catalog,options,'sofina-micro-foam-wash',baseline);
+  assert.equal(d.status,'not_selected');
+  assert.equal(d.comparisonMode,'reoptimized');
+  assert.ok(d.forced.monthly<=5000,'a cheaper routine can still contain the expensive cleanser');
+  assert.ok(d.forced.score<baseline.score,'reoptimized routine loses the toner and scores lower');
+  assert.ok(d.overbudgetPreview,'the direct one-item change must be shown separately');
+  assert.ok(d.overbudgetPreview.monthly>5000);
+  assert.ok(d.overbudgetPreview.score>baseline.score,'the same cleanser is in fact a beneficial upgrade');
+});
+
 test('no impossible routine returned under zero budget',()=>{
   assert.deepEqual(optimize(catalog,{budget:0}),[]);
 });

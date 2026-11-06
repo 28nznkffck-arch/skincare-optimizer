@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.7.1';
+import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.7.2';
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
@@ -66,6 +66,10 @@ export function renderProductAnalysis(catalog,options,product,best){
       <div class="micro muted">${isPreview?'他の商品を固定したまま当該品目だけ交換（該当品目がなければ追加）した参考採点です。予算を理由に得点を省略していません。':'固定した商品を含む予算内の組み合わせを再探索した結果です。'}差は商品単体の効能差ではなく、組み合わせ全体の評価差です。</div>
       <div class="micro">採用時の組み合わせ：${escape(names(d.forced))}</div>
       ${renderScoreTable(d.best,d.forced,options,baselineLabel)}`:''}
+    ${d.best&&d.overbudgetPreview?`<div class="unscored-warning"><strong>予算を増やして1品だけ交換する場合の参考採点</strong><p>予算内に組み直した上の候補とは別です。他の商品は元の最良候補のまま維持し、この品目だけ交換します。</p></div>
+      <div class="debug-diagnosis-cost"><span>元の組み合わせ：<strong>${d.best.score.toFixed(2)}点 / ${yen(d.best.monthly)}</strong></span><span>1品交換（現予算を超過）：<strong>${d.overbudgetPreview.score.toFixed(2)}点 / ${yen(d.overbudgetPreview.monthly)}</strong></span></div>
+      <p class="micro muted">全体評価差 ${signed(d.overbudgetPreview.score-d.best.score)}点 ／ 通常予算からの超過額 ${yen(d.overbudgetPreview.monthly-options.budget)}。評価が上がる場合に限り、追加予算を認める「1品だけ入れ替える」の候補になり得ます。</p>
+      ${renderScoreTable(d.best,d.overbudgetPreview,options,'元の最良候補')}`:''}
     ${d.status==='budget'&&d.minimum!=null?`<p class="micro muted">固定・除外・必須成分の条件を維持した最小月額：${yen(d.minimum)}</p>`:''}
   </section>`;
 }
