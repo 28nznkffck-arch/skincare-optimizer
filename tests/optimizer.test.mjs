@@ -40,6 +40,28 @@ test('product usage is only derived from cited duration; manual per-use amount o
   assert.equal(uncited.usageReference.doseDescription,'直径約3cm');
 });
 
+test('unverified per-use amounts use only averages of the same category and unit with at least two samples',()=>{
+  const group=catalog.filter(p=>p.category==='toner'&&p.unit==='mL'&&p.referenceUses);
+  assert.equal(group.length,9);
+  const mean=group.reduce((sum,p)=>sum+p.volume/p.referenceUses,0)/group.length;
+  const unknown=catalog.find(p=>p.id==='hadalabo-gokujun-lotion');
+  assert.ok(unknown,'existing hadalabo toner must remain');
+  assert.equal(unknown.referenceUses,null);
+  assert.equal(unknown.usageEstimate.kind,'categoryAverage');
+  assert.equal(unknown.usageEstimate.sampleCount,9);
+  assert.ok(Math.abs(usesOf(unknown)-unknown.volume/mean)<1e-9);
+  assert.ok(Math.abs(unitPerUse(unknown,{},usesOf(unknown))-mean)<1e-9);
+  const sunscreen=catalog.find(p=>p.category==='sunscreen');
+  assert.equal(sunscreen.usageEstimate.kind,'demo');
+  assert.equal(usesOf(sunscreen),sunscreen.demoUses,'no toner averages used for sunscreen');
+  const single=catalog.find(p=>p.id==='melanocc-premium-essence');
+  assert.equal(single.usageEstimate.kind,'demo','one reference sample cannot establish a category mean');
+  assert.equal(usesOf(single),single.demoUses);
+  const amount=unknown.usageEstimate.amountPerUse;
+  assert.ok(Math.abs(monthlyCost(unknown)-Math.round(priceOf(unknown)/usesOf(unknown)*unknown.dailyUses*30))<1e-9);
+  assert.ok(amount>0.7&&amount<1.0);
+});
+
 test('monthly estimate is rounded and usage-aware',()=>{
   const item={demoPrice:1500,demoUses:100,dailyUses:2};
   assert.equal(monthlyCost(item),900);
@@ -61,25 +83,52 @@ test('exclusions and fixed products are respected',()=>{
   assert.ok(result.every(r=>!r.products.some(p=>p.id==='biore-foam-smooth')));
 });
 
-test('swap never exceeds requested delta and budget',()=>{
+test('swap never exceeds enlarged budget and only offers real improvements',()=>{
   const options={budget:5000,concerns:['pores','dullness'],priority:'simple'};
   const result=optimize(catalog,options)[0];
   const category='sunscreen';
-  assert.ok(swaps(result,catalog,category,options,100).every(x=>x.delta<=100 && x.monthly<=5000));
+  assert.ok(swaps(result,catalog,category,options,100).every(x=>x.scoreDelta>0 && x.monthly<=5100));
 });
 
-test('one-item replacement offers transparent tradeoffs even from the global maximum',()=>{
+test('one-item replacement may return nothing when no actual improvement exists',()=>{
   const options={budget:15000,concerns:['pores','dryness'],priority:'thorough'};
   const best=optimize(catalog,{...options,resultLimit:1})[0];
   const alternatives=swaps(best,catalog,'cleanser',options,10000);
-  assert.ok(alternatives.length>0,'maximum-scoring routine must still offer alternatives');
   assert.ok(alternatives.every(a=>a.replacement.category==='cleanser'));
   assert.ok(alternatives.every(a=>a.products.filter(p=>p.category==='cleanser').length===1));
-  assert.ok(alternatives.every(a=>a.scoreDelta<=0.01),'none can improve upon the global maximum');
-  assert.ok(alternatives.every(a=>a.monthly<=options.budget));
+  assert.deepEqual(alternatives,[],'a global maximum cannot be improved even with unlimited budget');
   const original=best.products.find(p=>p.category==='cleanser');
   assert.deepEqual(swaps(best,catalog,'cleanser',{...options,locked:{cleanser:original.id}},10000),[]);
   assert.deepEqual(swaps(best,catalog,'wrong-category',options,10000),[]);
+});
+
+test('extra budget lifts the original budget ceiling, even when cost delta is larger than the extra',()=>{
+  const mk=(id,category,price,score)=>({id,brand:'TEST',name:id,category,demoPrice:price,demoUses:30,dailyUses:1,
+    keyIngredients:[],sourceUrl:'https://example.test/'+id,scores:{pores:score}});
+  const fixture=[mk('wash','cleanser',300,1),mk('basic','moisturizer',300,1),mk('upgrade','moisturizer',1900,3),mk('uv','sunscreen',300,1)];
+  const opts={budget:1500,concerns:['pores'],priority:'any'};
+  const best=optimize(fixture,{...opts,resultLimit:1})[0];
+  assert.equal(best.monthly,900);
+  const noExtra=swaps(best,fixture,'moisturizer',opts,999);
+  assert.deepEqual(noExtra,[],'candidate over 2499 must not be presented');
+  const upgrades=swaps(best,fixture,'moisturizer',opts,1000);
+  assert.equal(upgrades.length,1);
+  assert.equal(upgrades[0].replacement.id,'upgrade');
+  assert.equal(upgrades[0].monthly,2500);
+  assert.equal(upgrades[0].delta,1600,'delta is not the budget ceiling increase');
+  assert.ok(upgrades[0].scoreDelta>0);
+  assert.deepEqual(swaps(best,fixture,'moisturizer',{...opts,excluded:['upgrade']},1000),[]);
+});
+
+test('real catalog can reveal a strictly better one-item upgrade only after increasing the budget',()=>{
+  const options={budget:5000,concerns:['dullness'],priority:'any'};
+  const best=optimize(catalog,{...options,resultLimit:1})[0];
+  const noIncrease=swaps(best,catalog,'cleanser',options,0);
+  assert.deepEqual(noIncrease,[],'within the original ceiling the globally optimal combination cannot improve');
+  const moreBudget=swaps(best,catalog,'cleanser',options,1000);
+  const upgrade=moreBudget.find(item=>item.replacement.id==='sofina-micro-foam-wash');
+  assert.ok(upgrade,'actual product catalog must contain a reachable improvement');
+  assert.ok(upgrade.scoreDelta>0 && upgrade.monthly>options.budget && upgrade.monthly<=options.budget+1000);
 });
 
 test('no impossible routine returned under zero budget',()=>{
@@ -288,4 +337,21 @@ test('diagnostic distinguishes a budget failure from an ingredient incompatibili
   const diagnosis=diagnoseProduct(catalog,options,expensive.id,best);
   assert.equal(diagnosis.status,'budget');
   assert.ok(diagnosis.minimum>options.budget);
+  assert.equal(diagnosis.comparisonMode,'singleChange');
+  assert.ok(Number.isFinite(diagnosis.forced.score),'budget-over candidate is scored');
+  assert.ok(diagnosis.forced.monthly>options.budget);
+  assert.ok(diagnosis.forced.products.some(p=>p.id===expensive.id));
+});
+
+test('even when there is no budget-compliant routine, diagnostic can display a scored reference',()=>{
+  const mk=(id,category)=>({id,brand:'TEST',name:id,category,demoPrice:300,demoUses:30,dailyUses:1,
+    keyIngredients:[],sourceUrl:'https://example.test/'+id,scores:{pores:2}});
+  const items=[mk('wash','cleanser'),mk('milk','moisturizer'),mk('uv','sunscreen')];
+  const options={budget:500,concerns:['pores']};
+  assert.deepEqual(optimize(items,{...options,resultLimit:1}),[]);
+  const diagnosis=diagnoseProduct(items,options,'milk');
+  assert.equal(diagnosis.status,'budget');
+  assert.equal(diagnosis.comparisonMode,'unbudgetedExample');
+  assert.equal(diagnosis.forced.monthly,900);
+  assert.ok(Number.isFinite(diagnosis.forced.score));
 });

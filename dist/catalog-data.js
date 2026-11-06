@@ -3,7 +3,7 @@
 export function mergeCatalogData(products, pricing={}, usage={}) {
   const prices=pricing.prices||{};
   const usages=usage.usages||{};
-  return products.map(product=>{
+  const merged=products.map(product=>{
     const price=prices[product.id];
     const validPrice=price?.jan===product.jan && Number.isFinite(price.priceJPY) && price.priceJPY>=0 && /^https:\/\//.test(price.url||'');
     const amount=usages[product.id];
@@ -18,6 +18,26 @@ export function mergeCatalogData(products, pricing={}, usage={}) {
       usageReference:validUsage?amount:null,
       referenceUses
     };
+  });
+  // 実際の使用期間を確認した商品だけを母集団とし、品目と容量単位ごとに
+  // 1回量を平均する。異なる剤型を跨がない／サンプル1件を全体の標準としない。
+  const samples=new Map();
+  for(const product of merged){
+    if(!product.referenceUses || !Number.isFinite(Number(product.volume)) || Number(product.volume)<=0)continue;
+    const key=`${product.category}/${product.unit}`;
+    if(!samples.has(key))samples.set(key,[]);
+    samples.get(key).push(Number(product.volume)/product.referenceUses);
+  }
+  return merged.map(product=>{
+    if(product.referenceUses)return {...product,usageEstimate:{kind:'duration',sampleCount:1}};
+    const amounts=samples.get(`${product.category}/${product.unit}`)||[];
+    if(amounts.length<2)return {...product,estimatedUses:null,usageEstimate:{kind:'demo',sampleCount:amounts.length}};
+    const mean=amounts.reduce((sum,n)=>sum+n,0)/amounts.length;
+    const volume=Number(product.volume);
+    if(!Number.isFinite(volume)||volume<=0 || !Number.isFinite(mean)||mean<=0)
+      return {...product,estimatedUses:null,usageEstimate:{kind:'demo',sampleCount:amounts.length}};
+    return {...product,estimatedUses:volume/mean,
+      usageEstimate:{kind:'categoryAverage',sampleCount:amounts.length,amountPerUse:mean,category:product.category,unit:product.unit}};
   });
 }
 

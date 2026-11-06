@@ -1,6 +1,6 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.7.0';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.7.0';
-import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.0';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.7.1';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.7.1';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.1';
 
 const STORE_KEY='skincare-lab-v1';
 const PAGE_SIZE=25;
@@ -65,10 +65,11 @@ function renderRows(){
     const price=priceOf(p,v),uses=usesOf(p,v),frequency=v.frequency??p.dailyUses;
     const perUse=unitPerUse(p,v,uses);
     const priceSource=p.priceReference?`通販価格（税込）：<a href="${escape(p.priceReference.url)}" target="_blank" rel="noopener noreferrer">マツキヨココカラオンライン</a>（${escape(p.priceReference.verifiedAt)}確認）`:'価格：出典未確認の試算用仮値';
-    const useSource=p.usageReference?`1回の目安：${escape(p.usageReference.doseDescription||'公式の使用期間を参照')}。${p.referenceUses?`約${p.referenceUses}回分（${p.usageReference.durationDays}日 × 1日${p.usageReference.referenceDailyUses}回）`:'容器あたりの回数は未確認'}。<a href="${escape(p.usageReference.sourceUrl)}" target="_blank" rel="noopener noreferrer">使用量の根拠 ↗</a>`:'使用量：1本の回数は試算用仮値（公式使用量は未調査）';
+    const useSource=p.usageReference?`1回の目安：${escape(p.usageReference.doseDescription||'公式の使用期間を参照')}。${p.referenceUses?`約${p.referenceUses}回分（${p.usageReference.durationDays}日 × 1日${p.usageReference.referenceDailyUses}回）`:'容器あたりの回数は未確認'}。<a href="${escape(p.usageReference.sourceUrl)}" target="_blank" rel="noopener noreferrer">使用量の根拠 ↗</a>`:p.usageEstimate?.kind==='categoryAverage'?'この商品の使用量・使い切り期間は未確認。同品目・同単位の参考商品から仮推定しています。':'この商品の使用量・使い切り期間は未確認。1本の回数は従来の試算用仮値です。';
+    const estimate=p.referenceUses?'使い切り期間に基づく逆算値（品質の使用期限とは別）':p.usageEstimate?.kind==='categoryAverage'?`同品目・同単位の出典付き${p.usageEstimate.sampleCount}商品の1回量平均 ${p.usageEstimate.amountPerUse.toFixed(2)}${escape(p.unit)}/回を仮適用。個別商品の実測値ではありません。`:'同品目・同単位で参考例が2商品未満のため、従来の試算用仮回数を維持。';
     return `<article class="debug-item"><div class="debug-item-head"><div><small>${escape(p.brand)}・${escape(CATEGORY_LABELS[p.category])} / JAN ${escape(p.jan||'未確認')}</small><h2>${escape(p.name)}</h2><p>${escape(p.keyIngredients.join('・'))}</p></div><a href="${escape(p.sourceUrl)}" class="source" target="_blank" rel="noopener noreferrer">メーカー公式 ↗</a></div>
       ${renderEvidence(p)}
-      <div class="debug-provenance"><span>${priceSource}</span><span>${useSource}</span>${p.usageReference?.referenceBasis?`<small>${escape(p.usageReference.referenceBasis)}。1回あたりの${escape(p.unit)}は内容量からの逆算であり実測値ではありません。</small>`:''}</div>
+      <div class="debug-provenance"><span>${priceSource}</span><span>${useSource}</span><small>${estimate}${p.usageReference?.referenceBasis?` ${escape(p.usageReference.referenceBasis)}。`:''} 数値は仮推定や逆算を含みます。</small></div>
       <div class="debug-edit-fields"><label>購入価格（円）<input type="number" min="0" step="1" data-edit="price" data-id="${escape(p.id)}" value="${price}"></label><label>1回の量（${escape(p.unit)}）<input type="number" min="0.01" step="0.01" data-edit="amountPerUse" data-id="${escape(p.id)}" value="${perUse?.toFixed(2)??''}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-edit="uses" data-id="${escape(p.id)}" value="${Math.round(uses)}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-edit="frequency" data-id="${escape(p.id)}" value="${frequency}"></label><div class="debug-month">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>
       <div class="debug-item-actions"><button type="button" class="button ${selectedId===p.id?'button-dark':''}" data-analyze="${escape(p.id)}">${selectedId===p.id?'検証結果を閉じる':'この商品の採否理由を検証'}</button><button type="button" class="link-button" data-reset="${escape(p.id)}" ${state.overrides?.[p.id]?'':'disabled'}>使用条件の補正を解除</button></div>
       ${renderRawScores(p,analysisOptions)}

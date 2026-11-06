@@ -34,7 +34,7 @@ export function usesOf(product, override={}) {
   const volume=Number(product.volume);
   if(override.amountPerUse!=null && Number.isFinite(amount) && amount>0 && Number.isFinite(volume) && volume>0)
     return volume/amount;
-  return Number(override.uses ?? product.referenceUses ?? product.demoUses);
+  return Number(override.uses ?? product.referenceUses ?? product.estimatedUses ?? product.demoUses);
 }
 
 // 「情報が未確認」は「配合されていない」や「非公表」と同義ではない。
@@ -159,23 +159,41 @@ export function diagnoseProduct(catalog,options={},productId,baseline=null) {
   if(options.locked?.[product.category]&&options.locked[product.category]!==productId)
     return {status:'locked',reason:'同じ品目で別の商品が固定されているため、候補に入れられません。'};
   const best=baseline||optimize(catalog,{...options,resultLimit:1})[0]||null;
-  if(!best)return {status:'no_base',reason:'現在の予算・固定・必須成分の条件で成立する組み合わせがありません。'};
+  if(!best){
+    // 予算内で候補を作れなくても、費用最小の成立例については採点できる。
+    const cheapest=optimize(catalog,{...options,budget:Number.MAX_SAFE_INTEGER,resultLimit:1,objective:'minimumMonthly'})[0]||null;
+    if(!cheapest)return {status:'no_base',reason:'予算を外しても、現在の固定・除外・必須成分の条件を満たす組み合わせがありません。'};
+    const current=cheapest.products.find(p=>p.category===product.category);
+    const next=current?cheapest.products.map(p=>p.id===current.id?product:p):[...cheapest.products,product];
+    if(options.ingredientMode==='required' && options.ingredient && options.ingredient!=='none' && !next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient))))
+      return {status:'unavailable',reason:'この1品の置き換えでは、必須成分の条件が成立しません。'};
+    const preview=evaluate(next,options);
+    return {status:'budget',reason:`現予算内に成立する組み合わせはありませんが、予算を外して1品を置き換えた場合も評価できます。この例の月額は${preview.monthly.toLocaleString('ja-JP')}円です。`,
+      best:cheapest,forced:preview,comparisonMode:'unbudgetedExample'};
+  }
   if(best.products.some(p=>p.id===productId))
     return {status:'selected',reason:'自動選定の最良の組み合わせに採用されています。',best,forced:best,scoreGap:0,monthlyGap:0};
   const forcedOptions={...options,locked:{...(options.locked||{}),[product.category]:productId}};
   const forced=optimize(catalog,{...forcedOptions,resultLimit:1})[0]||null;
   if(!forced){
+    // 予算の判定を採点より後にする。高額だからという理由で評価点を消さない。
+    const prior=best.products.find(p=>p.category===product.category);
+    const next=prior?best.products.map(p=>p.id===prior.id?product:p):[...best.products,product];
+    if(options.ingredientMode==='required' && options.ingredient && options.ingredient!=='none' && !next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient))))
+      return {status:'unavailable',reason:'この1品の置き換えでは、必須成分の条件が成立しません。',best};
+    const preview=evaluate(next,options);
     const cheapest=optimize(catalog,{...forcedOptions,budget:Number.MAX_SAFE_INTEGER,resultLimit:1,objective:'minimumMonthly'})[0];
     const minimum=cheapest?.monthly??null;
     if(minimum!==null && minimum>Number(options.budget??5000))
-      return {status:'budget',reason:`この商品を入れて必須品目を揃えるには最低でも月${minimum.toLocaleString('ja-JP')}円必要です。`,best,minimum};
+      return {status:'budget',reason:`元の組み合わせの${prior?'1品を入れ替え':'任意品目として追加'}ると月${preview.monthly.toLocaleString('ja-JP')}円で、現在の予算を超えます。評価点は予算に関係なく計算しています。`,
+        best,forced:preview,minimum,comparisonMode:'singleChange',scoreGap:round2(best.score-preview.score),monthlyGap:preview.monthly-best.monthly};
     return {status:'unavailable',reason:'現在の固定・除外・必須成分条件を満たす組み合わせが作れません。',best};
   }
   const scoreGap=round2(best.score-forced.score),monthlyGap=forced.monthly-best.monthly;
   const reason=scoreGap>0.005?`採用すると組み合わせ全体の評価が${scoreGap.toFixed(2)}点低くなるため、今回は不採用です。`:
     monthlyGap>0?`評価は同点ですが、月額が${monthlyGap.toLocaleString('ja-JP')}円高いため不採用です。`:
     '他の同等候補が先に選ばれています。';
-  return {status:'not_selected',reason,best,forced,scoreGap,monthlyGap};
+  return {status:'not_selected',reason,best,forced,scoreGap,monthlyGap,comparisonMode:'reoptimized'};
 }
 
 export function swaps(routine, catalog, category, options={}, extra=100) {
@@ -184,12 +202,15 @@ export function swaps(routine, catalog, category, options={}, extra=100) {
   // 「入れ替える」は追加ではない。固定品を勝手に変更してもいけない。
   if(!current || options.locked?.[category]) return [];
   const excluded=new Set(options.excluded||[]);
+  const maxBudget=Number(options.budget??5000)+Math.max(0,Number(extra)||0);
   const output=[];
   for(const product of catalog.filter(p=>p.category===category && p.id!==current?.id && !excluded.has(p.id))){
     const next=current ? routine.products.map(p=>p.id===current.id?product:p) : [...routine.products,product];
     if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !next.some(p=>p.keyIngredients.some(k=>k.includes(options.ingredient)))) continue;
     const candidate=evaluate(next,options);
-    if(candidate.monthly<=Number(options.budget??5000) && candidate.monthly-routine.monthly<=extra){
+    // 通常予算内の最高得点を起点とするため、改善には予算上限の拡大が必要。
+    // 価格を採点前に足切りせず、採点→改善判定→拡張予算の順で選別する。
+    if(candidate.score>routine.score+0.005 && candidate.monthly<=maxBudget){
       output.push({...candidate,replacement:product,delta:candidate.monthly-routine.monthly,scoreDelta:candidate.score-routine.score});
     }
   }
