@@ -3,10 +3,38 @@
     "currency": "JPY",
     "taxIncluded": true,
     "priceKind": "retailerOnline",
-    "verifiedAt": "2026-11-06",
-    "notice": "JANで商品を照合したマツキヨココカラオンラインの税込販売価格。店舗販売価格ではなく、セール・在庫・価格は変動します。未確認の商品には商品DBの仮価格を適用。"
+    "verifiedAt": "2026-11-07",
+    "notice": "JAN一致で照合したマツキヨココカラオンライン・ツルハグループe-shopの税込販売価格。店舗価格ではなく、セール・在庫・価格は変動します。両店で見つからない数量限定品1商品は試算用仮価格。"
   },
   "prices": {
+    "biore-foam-smooth": {
+      "priceJPY": 968,
+      "jan": "4901301474407",
+      "url": "https://shop.tsuruha.co.jp/10187824.html",
+      "retailer": "ツルハグループe-shop",
+      "verifiedAt": "2026-11-07"
+    },
+    "skin-aqua-super-moisture-essence": {
+      "priceJPY": 678,
+      "jan": "4987241190874",
+      "url": "https://shop.tsuruha.co.jp/10156054.html",
+      "retailer": "ツルハグループe-shop",
+      "verifiedAt": "2026-11-07"
+    },
+    "ihada-moist-lotion": {
+      "priceJPY": 1650,
+      "jan": "4909978261238",
+      "url": "https://shop.tsuruha.co.jp/10183568.html",
+      "retailer": "ツルハグループe-shop",
+      "verifiedAt": "2026-11-07"
+    },
+    "ihada-moist-emulsion": {
+      "priceJPY": 1760,
+      "jan": "4909978261306",
+      "url": "https://shop.tsuruha.co.jp/10183572.html",
+      "retailer": "ツルハグループe-shop",
+      "verifiedAt": "2026-11-07"
+    },
     "curel-foam": {
       "priceJPY": 1760,
       "jan": "4901301269348",

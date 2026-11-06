@@ -1,6 +1,6 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.7.2';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.7.2';
-import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.2';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.7.3';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.7.3';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.3';
 
 const STORE_KEY='skincare-lab-v1';
 const SAVED_KEY='skincare-lab-saved-routines-v1';
@@ -69,7 +69,7 @@ function productCard(p){
       <div class="product-brand">${escape(p.brand)}　・　${escape(CATEGORY_LABELS[p.category])}</div>
       <div class="product-top"><h3 class="product-name">${escape(p.name)}</h3><div class="product-cost">${yen(humanMonth(p))}<small>月額試算</small></div></div>
       <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${Math.round(humanUses(p))}回分 / 1回約${humanUnit(p)}（${escape(useEstimateLabel(p))}） / 1日${escape(state.overrides[p.id]?.frequency??p.dailyUses)}回</div>
-      <div class="period">購入価格 ${yen(humanPrice(p))}（${state.overrides[p.id]?.price!=null?'ユーザー補正値':p.priceReference?'マツキヨココカラ通販・確認済み':'出典未確認の仮価格'}）</div>
+      <div class="period">購入価格 ${yen(humanPrice(p))}（${state.overrides[p.id]?.price!=null?'ユーザー補正値':p.priceReference?`${escape(p.priceReference.retailer)}・確認済み`:'出典未確認の仮価格'}）</div>
       <p class="product-description">${escape(p.explanation)}</p>
       <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
       ${matchLabels.length?`<div class="fit-note">関連する悩み：${matchLabels.map(escape).join('・')}</div>`:''}
@@ -123,8 +123,8 @@ function summaryHtml(){
     <div class="summary-top"><span class="eyebrow">${isManual?'YOUR CUSTOM ROUTINE':'YOUR BEST MATCH'}</span><span class="tag">${current.monthly>state.budget?'追加予算込み':'月額予算内'}</span></div>
     <h2>${isManual?'入れ替え後の組み合わせ':'おすすめの組み合わせ'}</h2><div class="summary-number">${yen(current.monthly)}<small> / 月</small></div>
     <div class="meter" role="progressbar" aria-label="予算使用率" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${used}"><span style="width:${used}%"></span></div>
-    <div class="summary-note">${isManual&&state.manualExtraBudget?`通常予算 ${yen(state.budget)} ＋ 追加上限 ${yen(state.manualExtraBudget)}。`:''}残り予算 <strong>${yen(Math.max(0,effectiveBudget-current.monthly))}</strong>。${isManual?'手動で選んだ組み合わせです。元の予算内での最高点とは限りません。':'無理に予算を使い切りません。'}</div>
-    ${missing.length?`<div class="unscored-warning">データ未整備：${missing.map(escape).join('・')}。現在の${catalog.length}商品では根拠のある採点情報がなく、この項目は選定点数に反映していません。</div>`:''}
+    <div class="summary-note">${isManual&&state.manualExtraBudget?`通常予算 ${yen(state.budget)} ＋ 追加上限 ${yen(state.manualExtraBudget)}。`:''}残り予算 <strong>${yen(Math.max(0,effectiveBudget-current.monthly))}</strong>。${isManual?'手動で選んだ組み合わせです。通常のおすすめとは異なる場合があります。':'無理に予算を使い切りません。'}</div>
+    ${missing.length?`<div class="unscored-warning">データ未整備：${missing.map(escape).join('・')}。現在の${catalog.length}商品では根拠となる情報がなく、この項目は選定に反映していません。</div>`:''}
     <div class="summary-stats"><div><span class="stat-label">初回購入費（試算）</span><span class="stat-value">${yen(current.initial)}</span></div><div><span class="stat-label">選定商品数</span><span class="stat-value">${current.products.length}<small> 品</small></span></div><div><span class="stat-label">追加ステップ</span><span class="stat-value">${optional}<small> 個</small></span></div></div>
     <button type="button" class="button button-dark save-routine" data-action="saveRoutine">この組み合わせを保存</button>
     ${isManual?'<button type="button" class="button save-routine" data-action="resetSwap">自動のおすすめに戻す</button>':''}
@@ -153,8 +153,8 @@ function swapHtml(){
   return `<section class="panel swap-panel">
     <div class="reco-head"><div><span class="eyebrow">03 / TINY UPGRADE</span><h2>1品だけ入れ替える</h2></div></div>
     <div class="swap-row"><label for="swapCategory">変更する品目</label><select id="swapCategory" class="select" data-field="swapCategory">${CATEGORIES.map(c=>`<option value="${c}" ${c===category?'selected':''}>${CATEGORY_LABELS[c]}</option>`).join('')}</select><label for="swapExtra">予算上限を増やす</label><select id="swapExtra" class="select" data-field="swapExtra">${[0,100,300,500,1000,2000,5000].map(n=>`<option value="${n}" ${state.swapExtra===n?'selected':''}>＋${yen(n)}/月</option>`).join('')}</select></div>
-    <p class="micro muted">通常予算 ${yen(state.budget)} → 今回の上限 ${yen(state.budget+state.swapExtra)}。${previous?`現在：${escape(nameOf(previous))}。`:'現在の組み合わせにこの品目はありません。'}組み合わせ全体の評価点が上がる1品交換だけを表示します。安くなるだけの候補は表示しません。</p>
-    ${isLocked?'<div class="empty">この品目の商品が固定されています。入れ替えるには上の「この商品を固定」を解除してください。</div>':!previous?'<div class="empty">入れ替え対象がありません。現在使っている品目を選択してください。</div>':alternatives.length?`<div class="swap-items">${alternatives.map(x=>`<div class="swap-item"><div><strong>${escape(nameOf(x.replacement))}</strong><span class="micro">月額 ${yen(x.monthly)}（現在との差額 ${x.delta>0?'＋':x.delta<0?'−':'±'}${yen(Math.abs(x.delta))}）</span><span class="micro">全体評価 ${x.score.toFixed(2)}点（＋${x.scoreDelta.toFixed(2)}点）</span></div><button class="button button-dark" data-action="swap" data-id="${x.replacement.id}">この商品に変更</button></div>`).join('')}</div>`:'<div class="empty">この品目には、追加予算を使っても評価が上がる1品交換はありません。商品DBにより良い選択肢がなければ表示しない仕様です。</div>'}
+    <p class="micro muted">通常予算 ${yen(state.budget)} → 今回の上限 ${yen(state.budget+state.swapExtra)}。${previous?`現在：${escape(nameOf(previous))}。`:'現在の組み合わせにこの品目はありません。'}条件との相性がより良くなる1品交換だけを表示します。</p>
+    ${isLocked?'<div class="empty">この品目の商品が固定されています。入れ替えるには上の「この商品を固定」を解除してください。</div>':!previous?'<div class="empty">入れ替え対象がありません。現在使っている品目を選択してください。</div>':alternatives.length?`<div class="swap-items">${alternatives.map(x=>`<div class="swap-item"><div><strong>${escape(nameOf(x.replacement))}</strong><span class="micro">月額 ${yen(x.monthly)}（現在との差額 ${x.delta>0?'＋':x.delta<0?'−':'±'}${yen(Math.abs(x.delta))}）</span></div><button class="button button-dark" data-action="swap" data-id="${x.replacement.id}">この商品に変更</button></div>`).join('')}</div>`:'<div class="empty">この品目には、追加予算を使っても評価が上がる1品交換はありません。商品DBにより良い選択肢がなければ表示しない仕様です。</div>'}
   </section>`;
 }
 
@@ -184,17 +184,17 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.7.2</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.7.3</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
     </div></div><footer class="footer"><details class="disclaimer"><summary>データ・試算についての注意事項</summary><div class="disclaimer-body">
       <p>${escape(meta.notice)}</p>
-      <ul><li>肌悩みの点数と使用感の相性は試作用の適合評価であり、実際の美容効果や安全性を予測・保証するものではありません。</li>
+      <ul><li>肌悩みや使用感との相性は試作用の適合評価であり、実際の美容効果や安全性を予測・保証するものではありません。</li>
       <li>敏感肌向けと登録された商品でも、すべての人に合うわけではありません。合わなかった商品の除外は商品単位で、原因成分を特定するものではありません。</li>
-      <li>購入価格はJAN一致で確認したマツキヨココカラ通販の税込価格を優先し、未確認品は仮値です。店頭価格や将来の価格とは異なることがあります。</li>
+      <li>購入価格はJAN一致で確認したマツキヨココカラ通販・ツルハグループe-shopの税込価格を使用し、未確認品は仮値です。店頭価格や将来の価格とは異なることがあります。</li>
       <li>1本の使用回数は「朝晩で約3か月」などの使い切り期間から逆算し、未確認品は同品目・同容量単位の2商品以上の参考値の平均を仮採用します。平均できない商品は旧来の仮値です。使用期限とは区別します。プッシュ数・泡の直径から容量を決めつけません。日焼け止めの塗り直し費用は初期試算に含めません。</li>
-      <li>「手軽に」は任意の化粧水・美容液の追加手順を控えめに評価し、「しっかり」は有用な追加手順を許容します。価格は月予算を上限とし、同点時のみ安い候補を優先します。</li>
+      <li>「手軽に」は任意の化粧水・美容液の追加手順を控えめに評価し、「しっかり」は有用な追加手順を許容します。価格は月予算を上限とし、評価が同等の場合のみ安い候補を優先します。</li>
       <li>公式情報が確認できた商品に、小さな情報透明性ボーナスを加えます。これは美容効果や成分濃度の高さを表すものではなく、配合量が未確認の商品を0％と評価することもありません。採点内訳は商品DBのデバッグ画面で確認できます。</li>
       <li>保存した組み合わせはブラウザ内にのみ保存します。端末やブラウザを変えると共有されず、ブラウザデータの消去で失われます。</li>
       <li>商品情報が改訂されることがあります。最終確認はメーカー公式ページまたは製品パッケージで行ってください。皮膚疾患の診断・治療を目的とするサービスではありません。</li></ul>

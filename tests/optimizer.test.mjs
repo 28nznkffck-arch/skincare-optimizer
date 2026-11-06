@@ -11,17 +11,23 @@ const usageDb=JSON.parse(fs.readFileSync(new URL('../dist/data/usage.json',impor
 const catalog=mergeCatalogData(productDb.products,priceDb,usageDb);
 
 test('retailer quotes are JAN-verified and unverified prices remain visibly provisional',()=>{
-  assert.equal(Object.keys(priceDb.prices).length,47);
+  assert.equal(Object.keys(priceDb.prices).length,51);
   const verified=catalog.filter(p=>p.priceReference);
-  assert.equal(verified.length,47);
+  assert.equal(verified.length,51);
   for(const p of verified){
     assert.equal(p.priceReference.jan,p.jan);
     assert.equal(priceOf(p),p.priceReference.priceJPY);
-    assert.equal(p.priceReference.verifiedAt,'2026-11-06');
+    assert.ok(['2026-11-06','2026-11-07'].includes(p.priceReference.verifiedAt));
   }
-  const demo=catalog.find(p=>p.id==='biore-foam-smooth');
+  const demo=catalog.find(p=>p.id==='biore-face-oil-control-plus');
   assert.equal(demo.priceReference,null);
   assert.equal(priceOf(demo),demo.demoPrice);
+  const tsuruha=catalog.filter(p=>p.priceReference?.retailer==='ツルハグループe-shop');
+  assert.equal(tsuruha.length,4);
+  assert.equal(catalog.find(p=>p.id==='biore-foam-smooth').referencePrice,968);
+  assert.equal(catalog.find(p=>p.id==='skin-aqua-super-moisture-essence').referencePrice,678);
+  assert.equal(catalog.find(p=>p.id==='ihada-moist-lotion').jan,'4909978261238');
+  assert.equal(catalog.find(p=>p.id==='ihada-moist-emulsion').jan,'4909978261306');
   assert.equal(priceOf(verified[0],{price:321}),321);
   assert.equal(mergeCatalogData([{id:'x',jan:'123',demoPrice:55,demoUses:3}],{prices:{x:{jan:'456',priceJPY:2,url:'https://test.example'}}})[0].referencePrice,null);
 });
@@ -42,13 +48,13 @@ test('product usage is only derived from cited duration; manual per-use amount o
 
 test('unverified per-use amounts use only averages of the same category and unit with at least two samples',()=>{
   const group=catalog.filter(p=>p.category==='toner'&&p.unit==='mL'&&p.referenceUses);
-  assert.equal(group.length,9);
+  assert.equal(group.length,10);
   const mean=group.reduce((sum,p)=>sum+p.volume/p.referenceUses,0)/group.length;
   const unknown=catalog.find(p=>p.id==='hadalabo-gokujun-lotion');
   assert.ok(unknown,'existing hadalabo toner must remain');
   assert.equal(unknown.referenceUses,null);
   assert.equal(unknown.usageEstimate.kind,'categoryAverage');
-  assert.equal(unknown.usageEstimate.sampleCount,9);
+  assert.equal(unknown.usageEstimate.sampleCount,10);
   assert.ok(Math.abs(usesOf(unknown)-unknown.volume/mean)<1e-9);
   assert.ok(Math.abs(unitPerUse(unknown,{},usesOf(unknown))-mean)<1e-9);
   const sunscreen=catalog.find(p=>p.category==='sunscreen');
@@ -59,7 +65,26 @@ test('unverified per-use amounts use only averages of the same category and unit
   assert.equal(usesOf(single),single.demoUses);
   const amount=unknown.usageEstimate.amountPerUse;
   assert.ok(Math.abs(monthlyCost(unknown)-Math.round(priceOf(unknown)/usesOf(unknown)*unknown.dailyUses*30))<1e-9);
-  assert.ok(amount>0.7&&amount<1.0);
+  assert.ok(amount>0.7&&amount<1.1);
+});
+
+test('IHADA manufacturer usage periods are consumption estimates, not shelf life',()=>{
+  const toner=catalog.find(p=>p.id==='ihada-moist-lotion');
+  const milk=catalog.find(p=>p.id==='ihada-moist-emulsion');
+  assert.equal(toner.referenceUses,150);
+  assert.equal(milk.referenceUses,180);
+  assert.ok(Math.abs(unitPerUse(toner,{},usesOf(toner))-1.2)<1e-9);
+  assert.ok(Math.abs(unitPerUse(milk,{},usesOf(milk))-0.75)<1e-9);
+  assert.equal(toner.usageEstimate.kind,'duration');
+  assert.equal(milk.usageEstimate.kind,'duration');
+});
+
+test('consumer page never exposes numerical evaluation scores',()=>{
+  const html=fs.readFileSync(new URL('../dist/app.js',import.meta.url),'utf8');
+  assert.ok(!html.includes('x.score.toFixed'));
+  assert.ok(!html.includes('x.scoreDelta.toFixed'));
+  assert.ok(!html.includes('安くなるだけの候補は表示しません。'));
+  assert.ok(html.includes('条件との相性がより良くなる1品交換'));
 });
 
 test('monthly estimate is rounded and usage-aware',()=>{
@@ -121,14 +146,14 @@ test('extra budget lifts the original budget ceiling, even when cost delta is la
 });
 
 test('real catalog can reveal a strictly better one-item upgrade only after increasing the budget',()=>{
-  const options={budget:5000,concerns:['dullness'],priority:'any'};
+  const options={budget:4000,concerns:['dullness'],priority:'any'};
   const best=optimize(catalog,{...options,resultLimit:1})[0];
   const noIncrease=swaps(best,catalog,'cleanser',options,0);
   assert.deepEqual(noIncrease,[],'within the original ceiling the globally optimal combination cannot improve');
-  const moreBudget=swaps(best,catalog,'cleanser',options,1000);
+  const moreBudget=swaps(best,catalog,'cleanser',options,2000);
   const upgrade=moreBudget.find(item=>item.replacement.id==='sofina-micro-foam-wash');
   assert.ok(upgrade,'actual product catalog must contain a reachable improvement');
-  assert.ok(upgrade.scoreDelta>0 && upgrade.monthly>options.budget && upgrade.monthly<=options.budget+1000);
+  assert.ok(upgrade.scoreDelta>0 && upgrade.monthly>options.budget && upgrade.monthly<=options.budget+2000);
 });
 
 test('diagnostic retains the over-budget one-item improvement even if cheaper reoptimization is possible',()=>{
@@ -149,7 +174,7 @@ test('no impossible routine returned under zero budget',()=>{
 });
 
 test('toner is not systematically excluded by the simplicity penalty',()=>{
-  const options={budget:5000,concerns:['pores','dullness'],priority:'simple'};
+  const options={budget:4000,concerns:['pores','dullness'],priority:'simple'};
   const recommendation=optimize(catalog,options)[0];
   assert.ok(recommendation.products.some(p=>p.category==='toner'));
   // 手軽さ重視でも、悩みへの追加適合性が勝れば化粧水を採用する。

@@ -2,9 +2,27 @@
   "meta": {
     "purpose": "容器内容量から1回あたりの使用量と消費回数を推定するための根拠",
     "notes": "ポンプ回数・直径表記だけではmL/gへ換算できない。使用期間がある場合のみ基準頻度で総使用回数に換算し、内容量÷使用回数を逆算した値として明示する。使用量・頻度は個人差あり。",
-    "verifiedAt": "2026-11-06"
+    "verifiedAt": "2026-11-07"
   },
   "usages": {
+    "ihada-moist-lotion": {
+      "doseDescription": "朝晩の適量使用（手に取って顔全体になじませる）",
+      "sourceUrl": "https://www.shiseido.co.jp/sw/onlinestore/products/H91202.html?brnd_cd=71&online_shohin_ctlg_kbn=1&shohin_pl_c_cd=H91202",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-07",
+      "durationDays": 75,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカー記載の使い切り目安約2.5か月・朝晩使用。開封後の品質上の使用期限ではない"
+    },
+    "ihada-moist-emulsion": {
+      "doseDescription": "朝晩の適量使用（化粧水の後に顔全体になじませる）",
+      "sourceUrl": "https://www.shiseido.co.jp/sw/onlinestore/products/H91302.html",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-07",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカー記載の使い切り目安約3か月・朝晩使用。開封後の品質上の使用期限ではない"
+    },
     "curel-foam": {
       "doseDescription": "2プッシュ程度",
       "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301269348",

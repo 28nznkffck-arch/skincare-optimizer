@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.7.2",
+    "version": "0.7.3",
     "checkedAt": "2026-11-06",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "商品名・容量・確認できたJAN・主要成分・医薬部外品の有効成分はメーカー公式ページを参照。価格はJANが一致したマツキヨココカラ通販の税込販売価格を優先（調査日2026-11-06）、未確認品のみ仮価格を使用。1本あたりの使用回数は出典付き使い切り期間から逆算し、それがない場合は同品目・同容量単位の参考商品2件以上の平均使用量を仮適用、平均できない品目は従来の仮値です。品質の使用期限とは区別しています。採点は独自の仮評価です。全成分は各公式リンクから確認してください。",
+    "notice": "商品名・容量・確認できたJAN・主要成分・医薬部外品の有効成分はメーカー公式ページを参照。価格はJAN一致で確認したマツキヨココカラ通販とツルハグループe-shopの税込販売価格を使用（2026-11-06〜07調査）、未確認の1商品のみ仮価格です。1本の使用回数はメーカー等の使い切り期間から逆算し、期間未確認の場合は同品目・同容量単位で2商品以上の使用量の平均を仮適用、参考不足は従来の仮回数です。使い切り期間は品質の使用期限とは異なります。選定の評価は独自の仮評価です。全成分は各公式リンクから確認してください。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -80,10 +80,10 @@
       "id":"skin-aqua-super-moisture-essence", "brand":"スキンアクア", "name":"スーパーモイスチャーUVエッセンス", "category":"sunscreen", "jan":"4987241190874", "volume":80, "unit":"g", "sourceUrl":"https://jp.rohto.com/skin-aqua/super-moisture-essence/", "keyIngredients":["紫外線吸収剤","ヒアルロン酸Na","アセチルヒアルロン酸Na"], "explanation":"SPF50+・PA++++の紫外線対策。既存のシミやくすみを消すという意味ではない。", "scores":{"spots":2,"freckles":2,"dryness":2}, "demoPrice":1155, "demoUses":50, "dailyUses":1, "usage":"顔への使用を想定。塗り直し分は別途加算。価格・回数は試算用。", "tone":"保湿UV", "evidence":{"officialSource":true,"verifiedAt":"2026-11-06"}
     },
     {
-      "id":"ihada-moist-lotion", "brand":"イハダ", "name":"薬用うるおいローション しっとり", "category":"toner", "jan":"", "volume":180, "unit":"mL", "sourceUrl":"https://www.shiseido.co.jp/ihada/products/skincare-lotion.html", "keyIngredients":["アラントイン","グリチルリチン酸ジカリウム","ワセリン"], "explanation":"肌荒れ・乾燥・ニキビの予防をうたう薬用化粧水。高精製ワセリン配合、敏感肌向け低刺激設計。", "scores":{"dryness":3,"irritation":3,"acne":2}, "sensitiveSkin":true, "feel":"moist", "demoPrice":1650, "demoUses":110, "dailyUses":2, "usage":"朝晩使用を仮定。価格は公式参考小売価格を参考にした試算値、回数は仮値。JAN未確認。", "tone":"低刺激設計", "evidence":{"officialSource":true,"activeIngredients":["アラントイン","グリチルリチン酸ジカリウム"],"verifiedAt":"2026-11-06"}
+      "id":"ihada-moist-lotion", "brand":"イハダ", "name":"薬用うるおいローション しっとり", "category":"toner", "jan":"4909978261238", "volume":180, "unit":"mL", "sourceUrl":"https://www.shiseido.co.jp/sw/onlinestore/products/H91202.html?brnd_cd=71&online_shohin_ctlg_kbn=1&shohin_pl_c_cd=H91202", "keyIngredients":["アラントイン","グリチルリチン酸ジカリウム","ワセリン"], "explanation":"肌荒れ・乾燥・ニキビの予防をうたう薬用化粧水。高精製ワセリン配合、敏感肌向け低刺激設計。", "scores":{"dryness":3,"irritation":3,"acne":2}, "sensitiveSkin":true, "feel":"moist", "demoPrice":1650, "demoUses":110, "dailyUses":2, "usage":"メーカーの使い切り目安は朝晩使用で約2.5か月。容量から1回量を概算。", "tone":"低刺激設計", "evidence":{"officialSource":true,"activeIngredients":["アラントイン","グリチルリチン酸ジカリウム"],"verifiedAt":"2026-11-07"}
     },
     {
-      "id":"ihada-moist-emulsion", "brand":"イハダ", "name":"薬用うるおいエマルジョン", "category":"moisturizer", "jan":"", "volume":135, "unit":"mL", "sourceUrl":"https://www.shiseido.co.jp/ihada/products/skincare-emulsion.html", "keyIngredients":["アラントイン","グリチルリチン酸ジカリウム","ワセリン"], "explanation":"肌荒れ・乾燥・ニキビを防ぐ薬用乳液。敏感肌を考えた低刺激設計。", "scores":{"dryness":3,"irritation":3,"acne":2}, "sensitiveSkin":true, "feel":"moist", "demoPrice":1760, "demoUses":100, "dailyUses":2, "usage":"朝晩使用を仮定。使用回数・価格は試算用。JAN未確認。", "tone":"低刺激設計", "evidence":{"officialSource":true,"activeIngredients":["アラントイン","グリチルリチン酸ジカリウム"],"verifiedAt":"2026-11-06"}
+      "id":"ihada-moist-emulsion", "brand":"イハダ", "name":"薬用うるおいエマルジョン", "category":"moisturizer", "jan":"4909978261306", "volume":135, "unit":"mL", "sourceUrl":"https://www.shiseido.co.jp/sw/onlinestore/products/H91302.html", "keyIngredients":["アラントイン","グリチルリチン酸ジカリウム","ワセリン"], "explanation":"肌荒れ・乾燥・ニキビを防ぐ薬用乳液。敏感肌を考えた低刺激設計。", "scores":{"dryness":3,"irritation":3,"acne":2}, "sensitiveSkin":true, "feel":"moist", "demoPrice":1760, "demoUses":100, "dailyUses":2, "usage":"メーカーの使い切り目安は朝晩使用で約3か月。容量から1回量を概算。", "tone":"低刺激設計", "evidence":{"officialSource":true,"activeIngredients":["アラントイン","グリチルリチン酸ジカリウム"],"verifiedAt":"2026-11-07"}
     },
     {
       "id":"minon-gentle-wash-whip", "brand":"ミノン アミノモイスト", "name":"ジェントルウォッシュ ホイップ", "category":"cleanser", "jan":"4987107670236", "volume":150, "unit":"mL", "sourceUrl":"https://online.daiichisankyo-hc.co.jp/shop/g/g670236/", "keyIngredients":["アミノ酸系洗浄成分","グリセリン"], "explanation":"乾燥肌・敏感肌向けの泡洗顔料。洗浄時のうるおいを守る設計。", "scores":{"dryness":2,"irritation":1}, "sensitiveSkin":true, "demoPrice":1650, "demoUses":65, "dailyUses":1, "usage":"1日1回と仮定。使用回数・価格は試算用。", "tone":"やさしい泡", "evidence":{"officialSource":true,"verifiedAt":"2026-11-06"}
