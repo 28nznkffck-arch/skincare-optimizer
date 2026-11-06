@@ -1,7 +1,7 @@
 import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, evaluate, optimize, swaps} from './optimizer.js';
 
 const STORE_KEY='skincare-lab-v1';
-const DEFAULT={budget:5000, concerns:['pores','dullness'], concernWeights:{}, skinType:'unknown', sensitiveSkin:false, finish:'any', priority:'simple', ingredient:'none', ingredientMode:'prefer', excluded:{}, locked:{}, overrides:{}, manual:null, swapCategory:'moisturizer', swapExtra:100, catalogOpen:false};
+const DEFAULT={budget:5000, concerns:[], concernWeights:{}, skinType:'unknown', sensitiveSkin:false, finish:'any', priority:'simple', ingredient:'none', ingredientMode:'prefer', excluded:{}, locked:{}, overrides:{}, manual:null, swapCategory:'moisturizer', swapExtra:100, catalogOpen:false};
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
 const app=document.getElementById('app');
@@ -34,6 +34,7 @@ function findManual(){
 }
 
 function pickCurrent(){
+  if(!state.concerns.length){current=null;return current;}
   const ranked=optimize(catalog,options());
   current=findManual()||ranked[0]||null;
   return current;
@@ -69,8 +70,8 @@ function formHtml(){
       <input id="budget" data-field="budget" type="range" min="1500" max="15000" step="100" value="${state.budget}">
       <div class="range-label"><span>1,500円</span><span>15,000円</span></div>
     </div>
-    <div class="field"><span class="field-title">肌の悩み <small>複数選択可</small></span>
-      <div class="concern-groups">${CONCERN_GROUPS.map(group=>`<details class="concern-group" ${Object.keys(group.items).some(id=>state.concerns.includes(id))?'open':''}><summary>${escape(group.label)} <span>${Object.keys(group.items).filter(id=>state.concerns.includes(id)).length||''}</span></summary><div class="chips">${Object.entries(group.items).map(([id,label])=>`<button class="chip ${state.concerns.includes(id)?'selected':''}" data-action="concern" data-id="${id}" aria-pressed="${state.concerns.includes(id)}">${escape(label)}</button>`).join('')}</div></details>`).join('')}</div>
+    <div class="field"><div class="concern-heading"><span class="field-title">肌の悩み <small>複数選択可</small></span>${state.concerns.length?'<button type="button" class="link-button" data-action="clearConcerns">選択をクリア</button>':''}</div>
+      <div class="concern-groups">${CONCERN_GROUPS.map((group,index)=>`<details class="concern-group" ${(index===0 && !state.concerns.length)||Object.keys(group.items).some(id=>state.concerns.includes(id))?'open':''}><summary>${escape(group.label)} <span>${Object.keys(group.items).filter(id=>state.concerns.includes(id)).length||''}</span></summary><div class="chips">${Object.entries(group.items).map(([id,label])=>`<button class="chip ${state.concerns.includes(id)?'selected':''}" data-action="concern" data-id="${id}" aria-pressed="${state.concerns.includes(id)}">${escape(label)}</button>`).join('')}</div></details>`).join('')}</div>
       ${state.concerns.length?`<div class="concern-priorities"><span class="micro muted">悩みごとの優先度</span>${state.concerns.map(id=>`<label class="priority-row"><span>${escape(CONCERNS[id]||id)}</span><select class="select" data-importance="${escape(id)}"><option value="high" ${state.concernWeights?.[id]==='high'?'selected':''}>最優先</option><option value="normal" ${!state.concernWeights?.[id]||state.concernWeights?.[id]==='normal'?'selected':''}>気になる</option><option value="low" ${state.concernWeights?.[id]==='low'?'selected':''}>軽く気になる</option></select></label>`).join('')}</div>`:''}
     </div>
     <div class="field"><label class="field-title" for="skinType">肌質</label><select id="skinType" class="select" data-field="skinType">${[['unknown','わからない・指定なし'],['dry','乾燥肌'],['oily','脂性肌'],['combination','混合肌'],['normal','普通肌']].map(([id,label])=>`<option value="${id}" ${state.skinType===id?'selected':''}>${label}</option>`).join('')}</select>
@@ -88,6 +89,7 @@ function formHtml(){
 }
 
 function summaryHtml(){
+  if(!state.concerns.length) return `<section class="panel summary"><span class="tag">まずは肌悩みを選択</span><h2>どんなお肌の悩みがある？</h2><p class="summary-note">左の「肌の悩み」から1つ以上選ぶと、予算や好みも考慮して組み合わせを提案します。最初から特定の悩みは選択していません。</p></section>`;
   if(!current) return `<section class="panel summary"><span class="tag orange">条件に合う候補なし</span><h2>組み合わせを作れませんでした</h2><p class="summary-note">予算や「必須成分」、固定・除外条件を見直してみてください。条件を無断で緩めて商品を出すことはありません。</p></section>`;
   const used=Math.min(100,Math.round(current.monthly/state.budget*100));
   const optional=current.products.filter(p=>p.category==='toner'||p.category==='serum').length;
@@ -115,6 +117,7 @@ function resultHtml(){
 }
 
 function swapHtml(){
+  if(!state.concerns.length)return '';
   const category=state.swapCategory;
   const items=current?swaps(current,catalog,category,options(),state.swapExtra):[];
   const improvement=items.filter(x=>x.scoreDelta>0.05).slice(0,3);
@@ -150,6 +153,7 @@ app.addEventListener('click',e=>{
   const btn=e.target.closest('[data-action]'); if(!btn)return;
   const {action,id}=btn.dataset;
   if(action==='concern') state.concerns=state.concerns.includes(id)?state.concerns.filter(x=>x!==id):[...state.concerns,id];
+  if(action==='clearConcerns'){state.concerns=[];state.concernWeights={};}
   if(action==='priority')state.priority=id;
   if(action==='sensitivity')state.sensitiveSkin=!state.sensitiveSkin;
   if(action==='lock'){
@@ -169,7 +173,7 @@ app.addEventListener('click',e=>{
   }
   if(action==='catalog')state.catalogOpen=!state.catalogOpen;
   if(action==='reset' && confirm('このブラウザに保存した条件・価格補正・商品除外を初期化しますか？'))state=structuredClone(DEFAULT);
-  if(['concern','priority','lock','exclude','unexclude','reset'].includes(action))state.manual=null;
+  if(['concern','clearConcerns','priority','lock','exclude','unexclude','reset'].includes(action))state.manual=null;
   save();render();
 });
 
