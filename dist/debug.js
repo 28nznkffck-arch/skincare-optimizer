@@ -60,6 +60,6 @@ items.addEventListener('click',e=>{
   updateState(state);renderRows();
 });
 window.addEventListener('storage',e=>{if(e.key===STORE_KEY)renderRows();});
-fetch('./data/products.json').then(r=>{if(!r.ok)throw Error('商品DBを読み込めません');return r.json();}).then(db=>{
+fetch('./data/products.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('商品DBを読み込めません');return r.json();}).then(db=>{
   catalog=db.products;renderRows();
 }).catch(e=>{count.textContent=e.message;});
