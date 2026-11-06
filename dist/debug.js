@@ -1,5 +1,5 @@
-import {CATEGORY_LABELS, CONCERNS, monthlyCost, optimize} from './optimizer.js';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js';
+import {CATEGORY_LABELS, monthlyCost, optimize} from './optimizer.js?v=0.4.1';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.4.1';
 
 const STORE_KEY='skincare-lab-v1';
 const PAGE_SIZE=25;
