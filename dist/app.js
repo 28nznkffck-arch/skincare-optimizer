@@ -1,5 +1,6 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, evaluate, optimize, swaps} from './optimizer.js?v=0.6.0';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.6.0';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.7.0';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.7.0';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.0';
 
 const STORE_KEY='skincare-lab-v1';
 const SAVED_KEY='skincare-lab-saved-routines-v1';
@@ -12,6 +13,7 @@ let meta={};
 let state=load();
 let savedPlans=loadSavedPlans();
 let current=null;
+let isManual=false;
 let pendingExclude=null;
 let expandedPlanId=null;
 
@@ -32,8 +34,9 @@ function loadSavedPlans(){
 function savePlans(){localStorage.setItem(SAVED_KEY,JSON.stringify(savedPlans));}
 function options(){return {...state,excluded:Object.keys(state.excluded||{})};}
 function humanMonth(p){return monthlyCost(p,state.overrides[p.id]);}
-function humanPrice(p){return Number(state.overrides[p.id]?.price??p.demoPrice);}
-function humanUses(p){return Number(state.overrides[p.id]?.uses??p.demoUses);}
+function humanPrice(p){return priceOf(p,state.overrides[p.id]);}
+function humanUses(p){return usesOf(p,state.overrides[p.id]);}
+function humanUnit(p){const n=unitPerUse(p,state.overrides[p.id],humanUses(p));return n==null?'—':`${n.toFixed(2)}${p.unit}`;}
 function nameOf(p){return p?`${p.brand} ${p.name}`:'';}
 function missingConcernLabels(){return unscoredConcerns(catalog,state.concerns).map(id=>CONCERNS[id]||id);}
 function findManual(){
@@ -48,9 +51,11 @@ function findManual(){
 }
 
 function pickCurrent(){
-  if(!state.concerns.length){current=null;return current;}
+  if(!state.concerns.length){current=null;isManual=false;return current;}
   const ranked=optimize(catalog,{...options(),resultLimit:1});
-  current=findManual()||ranked[0]||null;
+  const manual=findManual();
+  isManual=Boolean(manual);
+  current=manual||ranked[0]||null;
   return current;
 }
 
@@ -62,7 +67,8 @@ function productCard(p){
     <div>
       <div class="product-brand">${escape(p.brand)}　・　${escape(CATEGORY_LABELS[p.category])}</div>
       <div class="product-top"><h3 class="product-name">${escape(p.name)}</h3><div class="product-cost">${yen(humanMonth(p))}<small>月額試算</small></div></div>
-      <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${escape(humanUses(p))}回分 / 1日${escape(state.overrides[p.id]?.frequency??p.dailyUses)}回</div>
+      <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${Math.round(humanUses(p))}回分 / 1回約${humanUnit(p)}（${p.referenceUses?'使用期間から逆算':'仮推定'}） / 1日${escape(state.overrides[p.id]?.frequency??p.dailyUses)}回</div>
+      <div class="period">購入価格 ${yen(humanPrice(p))}（${state.overrides[p.id]?.price!=null?'ユーザー補正値':p.priceReference?'マツキヨココカラ通販・確認済み':'出典未確認の仮価格'}）</div>
       <p class="product-description">${escape(p.explanation)}</p>
       <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
       ${matchLabels.length?`<div class="fit-note">関連する悩み：${matchLabels.map(escape).join('・')}</div>`:''}
@@ -112,13 +118,14 @@ function summaryHtml(){
   const optional=current.products.filter(p=>p.category==='toner'||p.category==='serum').length;
   const missing=missingConcernLabels();
   return `<section class="panel summary">
-    <div class="summary-top"><span class="eyebrow">YOUR BEST MATCH</span><span class="tag">月額予算内</span></div>
-    <h2>おすすめの組み合わせ</h2><div class="summary-number">${yen(current.monthly)}<small> / 月</small></div>
+    <div class="summary-top"><span class="eyebrow">${isManual?'YOUR CUSTOM ROUTINE':'YOUR BEST MATCH'}</span><span class="tag">月額予算内</span></div>
+    <h2>${isManual?'入れ替え後の組み合わせ':'おすすめの組み合わせ'}</h2><div class="summary-number">${yen(current.monthly)}<small> / 月</small></div>
     <div class="meter" role="progressbar" aria-label="予算使用率" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${used}"><span style="width:${used}%"></span></div>
-    <div class="summary-note">残り予算 <strong>${yen(Math.max(0,state.budget-current.monthly))}</strong>。無理に予算を使い切りません。</div>
+    <div class="summary-note">残り予算 <strong>${yen(Math.max(0,state.budget-current.monthly))}</strong>。${isManual?'手動で選んだ組み合わせです。評価上の最高点とは限りません。':'無理に予算を使い切りません。'}</div>
     ${missing.length?`<div class="unscored-warning">データ未整備：${missing.map(escape).join('・')}。現在の${catalog.length}商品では根拠のある採点情報がなく、この項目は選定点数に反映していません。</div>`:''}
     <div class="summary-stats"><div><span class="stat-label">初回購入費（試算）</span><span class="stat-value">${yen(current.initial)}</span></div><div><span class="stat-label">選定商品数</span><span class="stat-value">${current.products.length}<small> 品</small></span></div><div><span class="stat-label">追加ステップ</span><span class="stat-value">${optional}<small> 個</small></span></div></div>
     <button type="button" class="button button-dark save-routine" data-action="saveRoutine">この組み合わせを保存</button>
+    ${isManual?'<button type="button" class="button save-routine" data-action="resetSwap">自動のおすすめに戻す</button>':''}
   </section>`;
 }
 
@@ -137,12 +144,15 @@ function resultHtml(){
 function swapHtml(){
   if(!state.concerns.length)return '';
   const category=state.swapCategory;
+  const previous=current?.products.find(p=>p.category===category);
+  const isLocked=Boolean(state.locked[category]);
   const items=current?swaps(current,catalog,category,options(),state.swapExtra):[];
-  const improvement=items.filter(x=>x.scoreDelta>0.05).slice(0,3);
+  const alternatives=items.slice(0,5);
   return `<section class="panel swap-panel">
     <div class="reco-head"><div><span class="eyebrow">03 / TINY UPGRADE</span><h2>1品だけ入れ替える</h2></div></div>
     <div class="swap-row"><label for="swapCategory">変更する品目</label><select id="swapCategory" class="select" data-field="swapCategory">${CATEGORIES.map(c=>`<option value="${c}" ${c===category?'selected':''}>${CATEGORY_LABELS[c]}</option>`).join('')}</select><label for="swapExtra">追加予算</label><select id="swapExtra" class="select" data-field="swapExtra">${[0,100,300,500,1000].map(n=>`<option value="${n}" ${state.swapExtra===n?'selected':''}>＋${yen(n)}/月</option>`).join('')}</select></div>
-    ${improvement.length?`<div class="swap-items">${improvement.map(x=>`<div class="swap-item"><div><strong>${escape(nameOf(x.replacement))}</strong><span class="micro">差額 ${x.delta<0?'−':'＋'}${yen(Math.abs(x.delta))} / 月　・　候補適合度 ${x.scoreDelta>0?'改善':'同等'}</span></div><button class="button button-dark" data-action="swap" data-id="${x.replacement.id}">入れ替え</button></div>`).join('')}</div>`:`<div class="empty">この条件で、適合度が改善する候補はありません。<br>変更せずに使い続ける選択もおすすめです。</div>`}
+    <p class="micro muted">${previous?`現在：${escape(nameOf(previous))}。`:'現在の組み合わせにこの品目はありません。'}差額と評価差を確認して、好みの代替品を選べます（得点が下がる場合もあります）。</p>
+    ${isLocked?'<div class="empty">この品目の商品が固定されています。入れ替えるには上の「この商品を固定」を解除してください。</div>':!previous?'<div class="empty">入れ替え対象がありません。現在使っている品目を選択してください。</div>':alternatives.length?`<div class="swap-items">${alternatives.map(x=>`<div class="swap-item"><div><strong>${escape(nameOf(x.replacement))}</strong><span class="micro">月額 ${yen(x.monthly)}（差額 ${x.delta>0?'＋':x.delta<0?'−':'±'}${yen(Math.abs(x.delta))}）</span><span class="micro">全体評価 ${x.score.toFixed(2)}点（${x.scoreDelta>0?'＋':x.scoreDelta<0?'−':'±'}${Math.abs(x.scoreDelta).toFixed(2)}点）</span></div><button class="button button-dark" data-action="swap" data-id="${x.replacement.id}">この商品に変更</button></div>`).join('')}</div>`:'<div class="empty">この品目には、予算と追加金額の条件を満たす別商品がありません。追加予算や固定・除外条件を確認してください。</div>'}
   </section>`;
 }
 
@@ -157,7 +167,7 @@ function savedPlansHtml(){
       ${expanded?`<div class="saved-plan-detail">
         <div class="saved-meta"><label>組み合わせ名<input type="text" class="select" maxlength="70" data-plan-name="${escape(plan.id)}" value="${escape(plan.name)}"></label><label>月予算（円）<input type="number" class="select" min="0" step="100" data-plan-budget="${escape(plan.id)}" value="${total.budget}"></label></div>
         <div class="saved-cost-summary"><span>月額合計 <strong>${yen(total.monthly)}</strong></span><span>初回購入額 <strong>${yen(total.initial)}</strong></span><span>予算との差 <strong>${total.remaining<0?'超過 '+yen(-total.remaining):'残り '+yen(total.remaining)}</strong></span></div>
-        <div class="saved-product-list">${total.items.map(p=>{const v=plan.overrides?.[p.id]||{};return `<div class="saved-product-row"><div class="saved-product-name"><strong>${escape(nameOf(p))}</strong><small>${escape(CATEGORY_LABELS[p.category])}</small></div><label>購入価格（円）<input type="number" min="0" step="10" data-plan-usage="price" data-plan-id="${escape(plan.id)}" data-product-id="${escape(p.id)}" value="${v.price??p.demoPrice}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-plan-usage="uses" data-plan-id="${escape(plan.id)}" data-product-id="${escape(p.id)}" value="${v.uses??p.demoUses}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-plan-usage="frequency" data-plan-id="${escape(plan.id)}" data-product-id="${escape(p.id)}" value="${v.frequency??p.dailyUses}"></label><div class="saved-item-total">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>`}).join('')}</div>
+        <div class="saved-product-list">${total.items.map(p=>{const v=plan.overrides?.[p.id]||{};const savedUses=usesOf(p,v);const amount=unitPerUse(p,v,savedUses);return `<div class="saved-product-row"><div class="saved-product-name"><strong>${escape(nameOf(p))}</strong><small>${escape(CATEGORY_LABELS[p.category])} / 1回約${amount?.toFixed(2)??'—'}${escape(p.unit)}（逆算）</small></div><label>購入価格（円）<input type="number" min="0" step="10" data-plan-usage="price" data-plan-id="${escape(plan.id)}" data-product-id="${escape(p.id)}" value="${v.price??priceOf(p)}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-plan-usage="uses" data-plan-id="${escape(plan.id)}" data-product-id="${escape(p.id)}" value="${Math.round(savedUses)}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-plan-usage="frequency" data-plan-id="${escape(plan.id)}" data-product-id="${escape(p.id)}" value="${v.frequency??p.dailyUses}"></label><div class="saved-item-total">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>`}).join('')}</div>
         ${total.missing.length?`<div class="unscored-warning">商品DBに見つからない商品ID：${total.missing.map(escape).join('、')}</div>`:''}
         <div class="saved-footer"><button type="button" class="link-button danger" data-action="deleteSaved" data-id="${escape(plan.id)}">この組み合わせを削除</button></div>
       </div>`:''}
@@ -172,7 +182,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.6.0</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.7.0</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -180,7 +190,8 @@ function render(){
       <p>${escape(meta.notice)}</p>
       <ul><li>肌悩みの点数と使用感の相性は試作用の適合評価であり、実際の美容効果や安全性を予測・保証するものではありません。</li>
       <li>敏感肌向けと登録された商品でも、すべての人に合うわけではありません。合わなかった商品の除外は商品単位で、原因成分を特定するものではありません。</li>
-      <li>商品の購入価格・1本の使用回数・使用頻度は初期状態では仮値です。実際の値に修正できます。日焼け止めの塗り直し費用は初期試算に含めていません。</li>
+      <li>購入価格はJAN一致で確認したマツキヨココカラ通販の税込価格を優先し、未確認品は仮値です。店頭価格や将来の価格とは異なることがあります。</li>
+      <li>1本の使用回数は「朝晩で約3か月」などのメーカー・販売店記載から逆算できる場合のみ置き換えました。それ以外は仮回数です。プッシュ数・泡の直径から容量を決めつけません。日焼け止めの塗り直し費用は初期試算に含めません。</li>
       <li>「手軽に」は任意の化粧水・美容液の追加手順を控えめに評価し、「しっかり」は有用な追加手順を許容します。価格は月予算を上限とし、同点時のみ安い候補を優先します。</li>
       <li>公式情報が確認できた商品に、小さな情報透明性ボーナスを加えます。これは美容効果や成分濃度の高さを表すものではなく、配合量が未確認の商品を0％と評価することもありません。採点内訳は商品DBのデバッグ画面で確認できます。</li>
       <li>保存した組み合わせはブラウザ内にのみ保存します。端末やブラウザを変えると共有されず、ブラウザデータの消去で失われます。</li>
@@ -210,6 +221,7 @@ app.addEventListener('click',e=>{
     const selected=catalog.find(p=>p.id===id);
     if(selected && current){state.manual=[...current.products.filter(p=>p.category!==selected.category).map(p=>p.id),selected.id];}
   }
+  if(action==='resetSwap')state.manual=null;
   if(action==='saveRoutine' && current){
     const plan=createSavedPlan(current,state,crypto.randomUUID(),new Date().toISOString());
     plan.name=`組み合わせ ${savedPlans.length+1}`;
@@ -280,8 +292,9 @@ document.getElementById('excludeForm').addEventListener('submit',e=>{
   document.getElementById('excludeDialog').close();pendingExclude=null;
 });
 
-fetch('./data/products.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('商品DBが読み込めません');return r.json();}).then(db=>{
-  catalog=db.products;meta=db.meta;
+const fetchJSON=url=>fetch(url,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(`商品データを読み込めません：${url}`);return r.json();});
+Promise.all([fetchJSON('./data/products.json'),fetchJSON('./data/pricing.json'),fetchJSON('./data/usage.json')]).then(([db,pricing,usage])=>{
+  catalog=mergeCatalogData(db.products,pricing,usage);meta=db.meta;
   // Persisted IDs no longer in the catalog are ignored safely.
   state.excluded??={};state.locked??={};state.overrides??={};
   render();

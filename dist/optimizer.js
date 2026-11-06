@@ -18,15 +18,23 @@ export function unscoredConcerns(catalog, concerns=[]) {
 }
 
 export function monthlyCost(product, override = {}) {
-  const price = Number(override.price ?? product.demoPrice);
-  const uses = Number(override.uses ?? product.demoUses);
+  const price = priceOf(product,override);
+  const uses = usesOf(product,override);
   const frequency = Number(override.frequency ?? product.dailyUses);
   if (!Number.isFinite(price) || price < 0 || !Number.isFinite(uses) || uses <= 0 || !Number.isFinite(frequency) || frequency < 0) return Infinity;
   return Math.round(price / uses * frequency * 30);
 }
 
 export function priceOf(product, override={}) {
-  return Number(override.price ?? product.demoPrice);
+  return Number(override.price ?? product.referencePrice ?? product.demoPrice);
+}
+
+export function usesOf(product, override={}) {
+  const amount=Number(override.amountPerUse);
+  const volume=Number(product.volume);
+  if(override.amountPerUse!=null && Number.isFinite(amount) && amount>0 && Number.isFinite(volume) && volume>0)
+    return volume/amount;
+  return Number(override.uses ?? product.referenceUses ?? product.demoUses);
 }
 
 // 「情報が未確認」は「配合されていない」や「非公表」と同義ではない。
@@ -173,13 +181,15 @@ export function diagnoseProduct(catalog,options={},productId,baseline=null) {
 export function swaps(routine, catalog, category, options={}, extra=100) {
   if (!routine) return [];
   const current = routine.products.find(p=>p.category===category);
+  // 「入れ替える」は追加ではない。固定品を勝手に変更してもいけない。
+  if(!current || options.locked?.[category]) return [];
   const excluded=new Set(options.excluded||[]);
   const output=[];
   for(const product of catalog.filter(p=>p.category===category && p.id!==current?.id && !excluded.has(p.id))){
     const next=current ? routine.products.map(p=>p.id===current.id?product:p) : [...routine.products,product];
     if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !next.some(p=>p.keyIngredients.some(k=>k.includes(options.ingredient)))) continue;
     const candidate=evaluate(next,options);
-    if(candidate.monthly<=Number(options.budget||5000) && candidate.monthly-routine.monthly<=extra){
+    if(candidate.monthly<=Number(options.budget??5000) && candidate.monthly-routine.monthly<=extra){
       output.push({...candidate,replacement:product,delta:candidate.monthly-routine.monthly,scoreDelta:candidate.score-routine.score});
     }
   }

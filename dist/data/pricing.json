@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "currency": "JPY",
+    "taxIncluded": true,
+    "priceKind": "retailerOnline",
+    "verifiedAt": "2026-11-06",
+    "notice": "JANで商品を照合したマツキヨココカラオンラインの税込販売価格。店舗販売価格ではなく、セール・在庫・価格は変動します。未確認の商品には商品DBの仮価格を適用。"
+  },
+  "prices": {
+    "curel-foam": {
+      "priceJPY": 1760,
+      "jan": "4901301269348",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301269348",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-sebum-foam": {
+      "priceJPY": 1760,
+      "jan": "4901301264336",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264336",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-toner-ii": {
+      "priceJPY": 2090,
+      "jan": "4901301236197",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236197",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-toner-iii": {
+      "priceJPY": 2090,
+      "jan": "4901301236180",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236180",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-base-toner": {
+      "priceJPY": 2640,
+      "jan": "4901301422941",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301422941",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-niacinamide-toner": {
+      "priceJPY": 3520,
+      "jan": "4901301472762",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301472762",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-toning-serum": {
+      "priceJPY": 6600,
+      "jan": "4901301460264",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301460264",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-base-serum": {
+      "priceJPY": 5500,
+      "jan": "4901301412829",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301412829",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-milk": {
+      "priceJPY": 2090,
+      "jan": "4901301236173",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236173",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-cream": {
+      "priceJPY": 2970,
+      "jan": "4901301236210",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236210",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-uv": {
+      "priceJPY": 1760,
+      "jan": "4901301413505",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301413505",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-toner-i": {
+      "priceJPY": 2090,
+      "jan": "4901301236043",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236043",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-sebum-toner": {
+      "priceJPY": 2090,
+      "jan": "4901301264343",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264343",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-sebum-gel": {
+      "priceJPY": 2090,
+      "jan": "4901301264350",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264350",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-bright-toner-i": {
+      "priceJPY": 2530,
+      "jan": "4901301240309",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301240309",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-bright-toner-iii": {
+      "priceJPY": 2530,
+      "jan": "4901301238801",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238801",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-bright-milk": {
+      "priceJPY": 2530,
+      "jan": "4901301238795",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238795",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-bright-serum": {
+      "priceJPY": 3850,
+      "jan": "4901301238825",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238825",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-bright-cream": {
+      "priceJPY": 3080,
+      "jan": "4901301238818",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238818",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-aging-toner": {
+      "priceJPY": 2530,
+      "jan": "4901301334510",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334510",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-aging-gel-cream": {
+      "priceJPY": 3080,
+      "jan": "4901301334527",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334527",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-aging-cream": {
+      "priceJPY": 3080,
+      "jan": "4901301334534",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334534",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "biore-face-moist": {
+      "priceJPY": 921,
+      "jan": "4901301408389",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301408389",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "biore-ouchi-gel-clear": {
+      "priceJPY": 990,
+      "jan": "4901301463890",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301463890",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "biore-ouchi-gel-moist": {
+      "priceJPY": 990,
+      "jan": "4901301463906",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301463906",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "biore-ouchi-deep-clay": {
+      "priceJPY": 1237,
+      "jan": "4901301464057",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301464057",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-micro-foam-wash": {
+      "priceJPY": 3520,
+      "jan": "4901301463968",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301463968",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-wrinkle-foam-serum": {
+      "priceJPY": 6380,
+      "jan": "4901301416483",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301416483",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-firming-serum": {
+      "priceJPY": 4730,
+      "jan": "4901301422750",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301422750",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-deep-milk": {
+      "priceJPY": 4070,
+      "jan": "4901301472793",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301472793",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-uv-dry": {
+      "priceJPY": 2970,
+      "jan": "4901301448637",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301448637",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-uv-oily": {
+      "priceJPY": 2970,
+      "jan": "4901301448644",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301448644",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "nivea-soft": {
+      "priceJPY": 272,
+      "jan": "4901301043764",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301043764",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "biore-uv-aqua": {
+      "priceJPY": 1185,
+      "jan": "4901301447647",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301447647",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "nivea-uv": {
+      "priceJPY": 1185,
+      "jan": "4901301390431",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301390431",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "hadalabo-gokujun-lotion": {
+      "priceJPY": 902,
+      "jan": "4987241155712",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241155712",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "hadalabo-shirojun-lotion": {
+      "priceJPY": 902,
+      "jan": "4987241157549",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241157549",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "hadalabo-aging-lotion": {
+      "priceJPY": 1221,
+      "jan": "4987241171255",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241171255",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "hadalabo-gokujun-milk": {
+      "priceJPY": 902,
+      "jan": "4987241127054",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241127054",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "hadalabo-aging-milk": {
+      "priceJPY": 1221,
+      "jan": "4987241171286",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241171286",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "melanocc-lotion": {
+      "priceJPY": 990,
+      "jan": "4987241198900",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241198900",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "melanocc-essence": {
+      "priceJPY": 1210,
+      "jan": "4987241169658",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241169658",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "melanocc-premium-essence": {
+      "priceJPY": 1628,
+      "jan": "4987241168583",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241168583",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "minon-gentle-wash-whip": {
+      "priceJPY": 1650,
+      "jan": "4987107670236",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987107670236",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "minon-moist-lotion-i": {
+      "priceJPY": 2200,
+      "jan": "4987107670335",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987107670335",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "minon-moist-lotion-ii": {
+      "priceJPY": 2200,
+      "jan": "4987107670397",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987107670397",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    },
+    "minon-moist-milk": {
+      "priceJPY": 2310,
+      "jan": "4987107670465",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987107670465",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-06"
+    }
+  }
+}

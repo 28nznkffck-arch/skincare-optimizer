@@ -1,5 +1,6 @@
-import {CATEGORY_LABELS, monthlyCost, optimize} from './optimizer.js?v=0.6.0';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.6.0';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.7.0';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.7.0';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.0';
 
 const STORE_KEY='skincare-lab-v1';
 const PAGE_SIZE=25;
@@ -61,10 +62,14 @@ function renderRows(){
   count.textContent=`${catalog.length}商品中 ${matching.length}件 / ${pages}ページ`;
   items.innerHTML=visible.map(p=>{
     const v=state.overrides?.[p.id]||{};
-    const price=v.price??p.demoPrice,uses=v.uses??p.demoUses,frequency=v.frequency??p.dailyUses;
+    const price=priceOf(p,v),uses=usesOf(p,v),frequency=v.frequency??p.dailyUses;
+    const perUse=unitPerUse(p,v,uses);
+    const priceSource=p.priceReference?`通販価格（税込）：<a href="${escape(p.priceReference.url)}" target="_blank" rel="noopener noreferrer">マツキヨココカラオンライン</a>（${escape(p.priceReference.verifiedAt)}確認）`:'価格：出典未確認の試算用仮値';
+    const useSource=p.usageReference?`1回の目安：${escape(p.usageReference.doseDescription||'公式の使用期間を参照')}。${p.referenceUses?`約${p.referenceUses}回分（${p.usageReference.durationDays}日 × 1日${p.usageReference.referenceDailyUses}回）`:'容器あたりの回数は未確認'}。<a href="${escape(p.usageReference.sourceUrl)}" target="_blank" rel="noopener noreferrer">使用量の根拠 ↗</a>`:'使用量：1本の回数は試算用仮値（公式使用量は未調査）';
     return `<article class="debug-item"><div class="debug-item-head"><div><small>${escape(p.brand)}・${escape(CATEGORY_LABELS[p.category])} / JAN ${escape(p.jan||'未確認')}</small><h2>${escape(p.name)}</h2><p>${escape(p.keyIngredients.join('・'))}</p></div><a href="${escape(p.sourceUrl)}" class="source" target="_blank" rel="noopener noreferrer">メーカー公式 ↗</a></div>
       ${renderEvidence(p)}
-      <div class="debug-edit-fields"><label>購入価格（円）<input type="number" min="0" step="10" data-edit="price" data-id="${escape(p.id)}" value="${price}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-edit="uses" data-id="${escape(p.id)}" value="${uses}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-edit="frequency" data-id="${escape(p.id)}" value="${frequency}"></label><div class="debug-month">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>
+      <div class="debug-provenance"><span>${priceSource}</span><span>${useSource}</span>${p.usageReference?.referenceBasis?`<small>${escape(p.usageReference.referenceBasis)}。1回あたりの${escape(p.unit)}は内容量からの逆算であり実測値ではありません。</small>`:''}</div>
+      <div class="debug-edit-fields"><label>購入価格（円）<input type="number" min="0" step="1" data-edit="price" data-id="${escape(p.id)}" value="${price}"></label><label>1回の量（${escape(p.unit)}）<input type="number" min="0.01" step="0.01" data-edit="amountPerUse" data-id="${escape(p.id)}" value="${perUse?.toFixed(2)??''}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-edit="uses" data-id="${escape(p.id)}" value="${Math.round(uses)}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-edit="frequency" data-id="${escape(p.id)}" value="${frequency}"></label><div class="debug-month">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>
       <div class="debug-item-actions"><button type="button" class="button ${selectedId===p.id?'button-dark':''}" data-analyze="${escape(p.id)}">${selectedId===p.id?'検証結果を閉じる':'この商品の採否理由を検証'}</button><button type="button" class="link-button" data-reset="${escape(p.id)}" ${state.overrides?.[p.id]?'':'disabled'}>使用条件の補正を解除</button></div>
       ${renderRawScores(p,analysisOptions)}
       ${selectedId===p.id?diagnosisFor(p):''}
@@ -84,8 +89,10 @@ items.addEventListener('change',e=>{
   if(!edit)return;
   const id=e.target.dataset.id;
   const n=Number(e.target.value);
-  if(!Number.isFinite(n)||n<(edit==='uses'?1:0)){renderRows();return;}
+  if(!Number.isFinite(n)||n<(['uses'].includes(edit)?1:edit==='amountPerUse'?0.01:0)){renderRows();return;}
   const state=getState();state.overrides??={};state.overrides[id]??={};state.overrides[id][edit]=n;
+  if(edit==='amountPerUse')delete state.overrides[id].uses;
+  if(edit==='uses')delete state.overrides[id].amountPerUse;
   updateState(state);refreshAnalysis();
 });
 items.addEventListener('click',e=>{
@@ -96,6 +103,7 @@ items.addEventListener('click',e=>{
   updateState(state);refreshAnalysis();
 });
 window.addEventListener('storage',e=>{if(e.key===STORE_KEY)refreshAnalysis();});
-fetch('./data/products.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('商品DBを読み込めません');return r.json();}).then(db=>{
-  catalog=db.products;refreshAnalysis();
+const fetchJSON=url=>fetch(url,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(`商品データを読み込めません：${url}`);return r.json();});
+Promise.all([fetchJSON('./data/products.json'),fetchJSON('./data/pricing.json'),fetchJSON('./data/usage.json')]).then(([db,pricing,usage])=>{
+  catalog=mergeCatalogData(db.products,pricing,usage);refreshAnalysis();
 }).catch(e=>{count.textContent=e.message;});

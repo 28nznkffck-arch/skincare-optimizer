@@ -1,0 +1,252 @@
+{
+  "meta": {
+    "purpose": "容器内容量から1回あたりの使用量と消費回数を推定するための根拠",
+    "notes": "ポンプ回数・直径表記だけではmL/gへ換算できない。使用期間がある場合のみ基準頻度で総使用回数に換算し、内容量÷使用回数を逆算した値として明示する。使用量・頻度は個人差あり。",
+    "verifiedAt": "2026-11-06"
+  },
+  "usages": {
+    "curel-foam": {
+      "doseDescription": "2プッシュ程度",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301269348",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-sebum-foam": {
+      "doseDescription": "2プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264336",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06"
+    },
+    "curel-toner-i": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236043",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-toner-ii": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236197",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-toner-iii": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236180",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-sebum-toner": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264343",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-sebum-gel": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264350",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-bright-toner-i": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301240309",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-bright-toner-iii": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238801",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-bright-milk": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238795",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 75,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-bright-serum": {
+      "doseDescription": "直径約1cm",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238825",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 45,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-bright-cream": {
+      "doseDescription": "直径約2cm",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238818",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 45,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-aging-toner": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334510",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-aging-gel-cream": {
+      "doseDescription": "直径約1.6cm",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334527",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 45,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-aging-cream": {
+      "doseDescription": "直径約2cm",
+      "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334534",
+      "sourceKind": "retailer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 45,
+      "referenceDailyUses": 2,
+      "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+    },
+    "curel-uv": {
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301413505/",
+      "doseDescription": "顔に直径約1cm（塗り直し分は別）",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06"
+    },
+    "biore-foam-smooth": {
+      "doseDescription": "4〜5プッシュ",
+      "sourceUrl": "https://www.kao.co.jp/biore/lineup/theface/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06"
+    },
+    "biore-ouchi-gel-clear": {
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301463890/",
+      "doseDescription": "直径約3cm",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06"
+    },
+    "biore-ouchi-gel-moist": {
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301463906/",
+      "doseDescription": "直径約3cm",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06"
+    },
+    "biore-ouchi-deep-clay": {
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301464057/",
+      "doseDescription": "直径約3cm",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-base-toner": {
+      "doseDescription": null,
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/treatmentlotion/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカーの朝晩使用時の目安"
+    },
+    "sofina-niacinamide-toner": {
+      "doseDescription": "直径約2.5cm",
+      "sourceUrl": "https://www.kao.com/jp/cosmetics_qa/detail/43183/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカーの朝晩使用時の目安"
+    },
+    "sofina-toning-serum": {
+      "doseDescription": "9〜10滴（直径約1.7cm）",
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/skintoningserum/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 30,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカーの朝晩使用時の目安"
+    },
+    "sofina-base-serum": {
+      "doseDescription": null,
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/basecareserum/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 45,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカーの朝晩使用時の目安"
+    },
+    "sofina-micro-foam-wash": {
+      "doseDescription": "直径約3cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/micromoussefacialwash/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 30,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカーの朝晩使用時の目安"
+    },
+    "sofina-wrinkle-foam-serum": {
+      "doseDescription": "直径約3cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/wrinklecaremousseserum/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 45,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカーの朝晩使用時の目安"
+    },
+    "sofina-firming-serum": {
+      "doseDescription": "2プッシュ",
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/enrichedfilleressence/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 45,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカーの朝晩使用時の目安"
+    },
+    "sofina-deep-milk": {
+      "doseDescription": null,
+      "sourceUrl": "https://www.kao.com/jp/cosmetics_qa/detail/43190/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06",
+      "durationDays": 60,
+      "referenceDailyUses": 2,
+      "referenceBasis": "メーカーの朝晩使用時の目安"
+    },
+    "sofina-uv-dry": {
+      "doseDescription": "顔に直径約1.2cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301448637/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06"
+    },
+    "sofina-uv-oily": {
+      "doseDescription": "顔に直径約2cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301448644/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-06"
+    }
+  }
+}

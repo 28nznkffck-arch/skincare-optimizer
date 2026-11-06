@@ -1,4 +1,4 @@
-import {monthlyCost, priceOf} from './optimizer.js?v=0.6.0';
+import {monthlyCost, priceOf, usesOf} from './optimizer.js?v=0.7.0';
 
 // 保存した組み合わせの使用条件は、その時点の値を個別に保持する。
 // 価格などの共通編集が、過去の保存プランを書き換えないようにするため。
@@ -11,8 +11,8 @@ export function createSavedPlan(routine, options, id, createdAt) {
     budget:Number(options.budget ?? 5000),
     productIds:routine.products.map(p=>p.id),
     overrides:Object.fromEntries(routine.products.map(p=>[p.id,{
-      price:Number(options.overrides?.[p.id]?.price ?? p.demoPrice),
-      uses:Number(options.overrides?.[p.id]?.uses ?? p.demoUses),
+      price:priceOf(p,options.overrides?.[p.id]),
+      uses:usesOf(p,options.overrides?.[p.id]),
       frequency:Number(options.overrides?.[p.id]?.frequency ?? p.dailyUses)
     }])),
     conditions:{

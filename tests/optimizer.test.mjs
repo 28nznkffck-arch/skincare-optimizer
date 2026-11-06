@@ -1,10 +1,44 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {CONCERNS, diagnoseProduct, explainRoutineScore, monthlyCost, optimize, scoreRoutine, swaps, transparencyDetails, unscoredConcerns} from '../dist/optimizer.js';
+import {CONCERNS, diagnoseProduct, explainRoutineScore, monthlyCost, priceOf, usesOf, optimize, scoreRoutine, swaps, transparencyDetails, unscoredConcerns} from '../dist/optimizer.js';
 import {createSavedPlan, savedPlanTotals, updateSavedUsage} from '../dist/plans.js';
+import {mergeCatalogData,unitPerUse} from '../dist/catalog-data.js';
 import fs from 'node:fs';
 
-const catalog=JSON.parse(fs.readFileSync(new URL('../dist/data/products.json',import.meta.url),'utf8')).products;
+const productDb=JSON.parse(fs.readFileSync(new URL('../dist/data/products.json',import.meta.url),'utf8'));
+const priceDb=JSON.parse(fs.readFileSync(new URL('../dist/data/pricing.json',import.meta.url),'utf8'));
+const usageDb=JSON.parse(fs.readFileSync(new URL('../dist/data/usage.json',import.meta.url),'utf8'));
+const catalog=mergeCatalogData(productDb.products,priceDb,usageDb);
+
+test('retailer quotes are JAN-verified and unverified prices remain visibly provisional',()=>{
+  assert.equal(Object.keys(priceDb.prices).length,47);
+  const verified=catalog.filter(p=>p.priceReference);
+  assert.equal(verified.length,47);
+  for(const p of verified){
+    assert.equal(p.priceReference.jan,p.jan);
+    assert.equal(priceOf(p),p.priceReference.priceJPY);
+    assert.equal(p.priceReference.verifiedAt,'2026-11-06');
+  }
+  const demo=catalog.find(p=>p.id==='biore-foam-smooth');
+  assert.equal(demo.priceReference,null);
+  assert.equal(priceOf(demo),demo.demoPrice);
+  assert.equal(priceOf(verified[0],{price:321}),321);
+  assert.equal(mergeCatalogData([{id:'x',jan:'123',demoPrice:55,demoUses:3}],{prices:{x:{jan:'456',priceJPY:2,url:'https://test.example'}}})[0].referencePrice,null);
+});
+
+test('product usage is only derived from cited duration; manual per-use amount overrides counts',()=>{
+  const toner=catalog.find(p=>p.id==='curel-toner-ii');
+  assert.equal(toner.referenceUses,180);
+  assert.equal(usesOf(toner),180);
+  assert.ok(Math.abs(unitPerUse(toner,{},usesOf(toner))-150/180)<1e-9);
+  assert.equal(usesOf(toner,{amountPerUse:1.5}),100);
+  assert.equal(monthlyCost(toner,{amountPerUse:1.5}),Math.round(priceOf(toner)/100*2*30));
+  assert.equal(usesOf(toner,{uses:35}),35);
+  const uncited=catalog.find(p=>p.id==='biore-ouchi-gel-clear');
+  assert.equal(uncited.referenceUses,null);
+  assert.equal(usesOf(uncited),uncited.demoUses);
+  assert.equal(uncited.usageReference.doseDescription,'直径約3cm');
+});
 
 test('monthly estimate is rounded and usage-aware',()=>{
   const item={demoPrice:1500,demoUses:100,dailyUses:2};
@@ -32,6 +66,20 @@ test('swap never exceeds requested delta and budget',()=>{
   const result=optimize(catalog,options)[0];
   const category='sunscreen';
   assert.ok(swaps(result,catalog,category,options,100).every(x=>x.delta<=100 && x.monthly<=5000));
+});
+
+test('one-item replacement offers transparent tradeoffs even from the global maximum',()=>{
+  const options={budget:15000,concerns:['pores','dryness'],priority:'thorough'};
+  const best=optimize(catalog,{...options,resultLimit:1})[0];
+  const alternatives=swaps(best,catalog,'cleanser',options,10000);
+  assert.ok(alternatives.length>0,'maximum-scoring routine must still offer alternatives');
+  assert.ok(alternatives.every(a=>a.replacement.category==='cleanser'));
+  assert.ok(alternatives.every(a=>a.products.filter(p=>p.category==='cleanser').length===1));
+  assert.ok(alternatives.every(a=>a.scoreDelta<=0.01),'none can improve upon the global maximum');
+  assert.ok(alternatives.every(a=>a.monthly<=options.budget));
+  const original=best.products.find(p=>p.category==='cleanser');
+  assert.deepEqual(swaps(best,catalog,'cleanser',{...options,locked:{cleanser:original.id}},10000),[]);
+  assert.deepEqual(swaps(best,catalog,'wrong-category',options,10000),[]);
 });
 
 test('no impossible routine returned under zero budget',()=>{
