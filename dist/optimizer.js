@@ -101,6 +101,10 @@ export function optimize(catalog, options={}) {
   const budget = Number(options.budget ?? 5000);
   const excluded = new Set(options.excluded||[]);
   const locked = options.locked || {};
+  // 通常画面・採否診断では首位候補のみ必要。全件の配列生成とソートを省き、
+  // 商品DB拡張後も選定結果の厳密性とモバイル操作の軽さを両立する。
+  const firstOnly=options.resultLimit===1;
+  const minimumMonthly=options.objective==='minimumMonthly';
   const grouped = CATEGORIES.map(cat=>{
     let choices = catalog.filter(p=>p.category===cat && !excluded.has(p.id));
     if (locked[cat]) choices=choices.filter(p=>p.id===locked[cat]);
@@ -111,18 +115,28 @@ export function optimize(catalog, options={}) {
   });
   if (grouped.some(x=>!x.length)) return [];
   const all=[];
-  function enumerate(index,chosen){
+  let best=null;
+  function enumerate(index,chosen,spent){
+    if(spent>budget || (firstOnly && minimumMonthly && best && spent>=best.monthly)) return;
     if (index===grouped.length) {
       const products=chosen.filter(Boolean);
       if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !products.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)))) return;
       const result=evaluate(products,options);
-      if (result.monthly<=budget) all.push(result);
+      if (result.monthly>budget) return;
+      if(firstOnly){
+        if(!best || (minimumMonthly ? result.monthly<best.monthly : result.score>best.score || (result.score===best.score && result.monthly<best.monthly))) best=result;
+      } else all.push(result);
       return;
     }
-    for(const product of grouped[index]) enumerate(index+1,[...chosen,product]);
+    for(const product of grouped[index]) {
+      chosen.push(product);
+      enumerate(index+1,chosen,spent+(product?monthlyCost(product,options.overrides?.[product.id]):0));
+      chosen.pop();
+    }
   }
-  enumerate(0,[]);
-  all.sort((a,b)=>b.score-a.score || a.monthly-b.monthly);
+  enumerate(0,[],0);
+  if(firstOnly) return best?[best]:[];
+  all.sort((a,b)=>minimumMonthly?a.monthly-b.monthly:b.score-a.score || a.monthly-b.monthly);
   return all;
 }
 
@@ -136,15 +150,15 @@ export function diagnoseProduct(catalog,options={},productId,baseline=null) {
   if(excluded.has(productId))return {status:'excluded',reason:'ユーザーの「合わない・除外」設定で候補から外れています。'};
   if(options.locked?.[product.category]&&options.locked[product.category]!==productId)
     return {status:'locked',reason:'同じ品目で別の商品が固定されているため、候補に入れられません。'};
-  const best=baseline||optimize(catalog,options)[0]||null;
+  const best=baseline||optimize(catalog,{...options,resultLimit:1})[0]||null;
   if(!best)return {status:'no_base',reason:'現在の予算・固定・必須成分の条件で成立する組み合わせがありません。'};
   if(best.products.some(p=>p.id===productId))
     return {status:'selected',reason:'自動選定の最良の組み合わせに採用されています。',best,forced:best,scoreGap:0,monthlyGap:0};
   const forcedOptions={...options,locked:{...(options.locked||{}),[product.category]:productId}};
-  const forced=optimize(catalog,forcedOptions)[0]||null;
+  const forced=optimize(catalog,{...forcedOptions,resultLimit:1})[0]||null;
   if(!forced){
-    const unconstrained=optimize(catalog,{...forcedOptions,budget:Number.MAX_SAFE_INTEGER});
-    const minimum=unconstrained.length?Math.min(...unconstrained.map(r=>r.monthly)):null;
+    const cheapest=optimize(catalog,{...forcedOptions,budget:Number.MAX_SAFE_INTEGER,resultLimit:1,objective:'minimumMonthly'})[0];
+    const minimum=cheapest?.monthly??null;
     if(minimum!==null && minimum>Number(options.budget??5000))
       return {status:'budget',reason:`この商品を入れて必須品目を揃えるには最低でも月${minimum.toLocaleString('ja-JP')}円必要です。`,best,minimum};
     return {status:'unavailable',reason:'現在の固定・除外・必須成分条件を満たす組み合わせが作れません。',best};

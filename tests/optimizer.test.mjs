@@ -49,7 +49,7 @@ test('expanded concern names are registered without inventing unsupported scores
   for(const key of ['oiliness','shine','irritation','wrinkles','freckles','blackheads']) assert.ok(CONCERNS[key]);
   assert.equal(CONCERNS.firmness,'ハリ不足・たるみ');
   assert.equal(CONCERNS.freckles,'そばかす予防');
-  assert.deepEqual(unscoredConcerns(catalog,['oiliness','irritation','wrinkles','freckles','blackheads']),['blackheads']);
+  assert.deepEqual(unscoredConcerns(catalog,['oiliness','irritation','wrinkles','freckles','blackheads']),[]);
 });
 
 test('concern importance strengthens its influence on a routine',()=>{
@@ -70,11 +70,18 @@ test('skin type, sensitivity and finish preferences affect results',()=>{
     '敏感肌・保湿の希望に合う化粧水の選択肢が増えても、特定の銘柄には固定しない');
 });
 
-test('expanded catalog is unique, traceable and covers multiple manufacturers',()=>{
-  assert.equal(catalog.length,30);
+test('expanded catalog keeps existing products and covers the three Kao priority brands',()=>{
+  assert.equal(catalog.length,52);
   assert.equal(new Set(catalog.map(p=>p.id)).size,catalog.length);
   assert.ok(new Set(catalog.map(p=>p.sourceUrl)).size===catalog.length);
+  assert.equal(new Set(catalog.map(p=>p.jan).filter(Boolean)).size,catalog.filter(p=>p.jan).length);
   assert.ok(new Set(catalog.map(p=>p.brand)).size>=9);
+  assert.equal(catalog.filter(p=>p.brand==='キュレル').length,18);
+  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,6);
+  assert.equal(catalog.filter(p=>p.brand==='ソフィーナ iP').length,10);
+  assert.ok(catalog.some(p=>p.id==='biore-foam-smooth'));
+  assert.ok(catalog.some(p=>p.id==='sofina-toning-serum'));
+  assert.ok(catalog.some(p=>p.id==='hadalabo-aging-lotion'));
   assert.ok(catalog.some(p=>p.brand==='メラノCC'&&p.category==='serum'));
   assert.ok(catalog.some(p=>p.brand==='イハダ'&&p.category==='toner'));
   assert.ok(catalog.some(p=>p.brand==='ミノン アミノモイスト'&&p.category==='cleanser'));
@@ -85,6 +92,37 @@ test('expanded catalog is unique, traceable and covers multiple manufacturers',(
     assert.ok(Number.isFinite(p.demoUses)&&p.demoUses>0,p.id);
     assert.ok(Number.isFinite(p.dailyUses)&&p.dailyUses>=0,p.id);
     assert.ok(Object.values(p.scores).every(n=>Number.isInteger(n)&&n>=0&&n<=3),p.id);
+  }
+});
+
+test('Kao medicinal actives, pore-cleansing and dry fine lines are represented separately',()=>{
+  const byId=id=>catalog.find(p=>p.id===id);
+  assert.deepEqual(transparencyDetails(byId('curel-sebum-toner')).actives,['アラントイン']);
+  assert.deepEqual(transparencyDetails(byId('curel-bright-toner-i')).actives,['L-アスコルビン酸2-グルコシド']);
+  assert.deepEqual(transparencyDetails(byId('curel-bright-milk')).actives,['カモミラET']);
+  assert.deepEqual(transparencyDetails(byId('sofina-wrinkle-foam-serum')).actives,['ナイアシンアミド']);
+  assert.deepEqual(transparencyDetails(byId('sofina-firming-serum')).actives,[]);
+  assert.equal(byId('curel-aging-cream').scores.wrinkles??0,0,'乾燥小じわ対策は薬用シワ改善ではない');
+  assert.ok(byId('curel-aging-cream').scores.fineLines>0);
+  assert.ok(byId('biore-ouchi-gel-clear').scores.blackheads>0);
+  assert.equal(byId('biore-ouchi-gel-clear').scores.spots??0,0);
+  assert.ok(catalog.filter(p=>p.id.startsWith('curel-')||p.id.startsWith('biore-')||p.id.startsWith('sofina-')).every(p=>transparencyDetails(p).concentrations.length===0),'未公表配合濃度を推定しない');
+});
+
+test('fast one-result optimization exactly matches exhaustive ranking across conditions',()=>{
+  const cases=[
+    {budget:5000,concerns:['pores','dullness'],priority:'simple'},
+    {budget:10000,concerns:['wrinkles','fineLines'],priority:'thorough',sensitiveSkin:true},
+    {budget:6500,concerns:['oiliness','blackheads'],priority:'simple',skinType:'oily'},
+    {budget:8500,concerns:['spots','freckles','dryness'],ingredient:'ナイアシンアミド',ingredientMode:'required'}
+  ];
+  for(const options of cases){
+    const all=optimize(catalog,options);
+    const fast=optimize(catalog,{...options,resultLimit:1});
+    assert.equal(fast.length,all.length?1:0);
+    assert.deepEqual(fast[0]?.products.map(p=>p.id),all[0]?.products.map(p=>p.id));
+    assert.equal(fast[0]?.monthly,all[0]?.monthly);
+    assert.equal(fast[0]?.score,all[0]?.score);
   }
 });
 

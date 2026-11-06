@@ -1,5 +1,5 @@
-import {CATEGORY_LABELS, monthlyCost, optimize} from './optimizer.js?v=0.5.0';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.5.0';
+import {CATEGORY_LABELS, monthlyCost, optimize} from './optimizer.js?v=0.6.0';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.6.0';
 
 const STORE_KEY='skincare-lab-v1';
 const PAGE_SIZE=25;
@@ -38,7 +38,7 @@ function getOptions(){
 
 function refreshAnalysis(){
   analysisOptions=getOptions();
-  bestRoutine=analysisOptions.concerns.length?optimize(catalog,analysisOptions)[0]||null:null;
+  bestRoutine=analysisOptions.concerns.length?optimize(catalog,{...analysisOptions,resultLimit:1})[0]||null:null;
   diagnosisCache.clear();
   debugContext.innerHTML=renderContext(catalog,analysisOptions,bestRoutine);
   renderRows();
