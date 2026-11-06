@@ -279,7 +279,7 @@ document.getElementById('excludeForm').addEventListener('submit',e=>{
   document.getElementById('excludeDialog').close();pendingExclude=null;
 });
 
-fetch('./data/products.json').then(r=>{if(!r.ok)throw Error('商品DBが読み込めません');return r.json();}).then(db=>{
+fetch('./data/products.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('商品DBが読み込めません');return r.json();}).then(db=>{
   catalog=db.products;meta=db.meta;
   // Persisted IDs no longer in the catalog are ignored safely.
   state.excluded??={};state.locked??={};state.overrides??={};
