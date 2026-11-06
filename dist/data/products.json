@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.7.3",
-    "checkedAt": "2026-11-06",
+    "version": "0.7.4",
+    "checkedAt": "2026-11-07",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "商品名・容量・確認できたJAN・主要成分・医薬部外品の有効成分はメーカー公式ページを参照。価格はJAN一致で確認したマツキヨココカラ通販とツルハグループe-shopの税込販売価格を使用（2026-11-06〜07調査）、未確認の1商品のみ仮価格です。1本の使用回数はメーカー等の使い切り期間から逆算し、期間未確認の場合は同品目・同容量単位で2商品以上の使用量の平均を仮適用、参考不足は従来の仮回数です。使い切り期間は品質の使用期限とは異なります。選定の評価は独自の仮評価です。全成分は各公式リンクから確認してください。",
+    "notice": "商品名・容量・確認できたJAN・主要成分・医薬部外品の有効成分はメーカー公式ページを参照。数量限定品を除いた51商品の税込販売価格をJAN一致で確認済み（マツキヨココカラ通販47件とツルハグループe-shop4件、2026-11-06〜07調査）。1本の使用回数はメーカー等の使い切り期間から逆算し、期間未確認の場合は同品目・同容量単位で2商品以上の使用量の平均を仮適用、参考不足は従来の仮回数です。使い切り期間は品質の使用期限とは異なります。選定の評価は独自の仮評価です。全成分は各公式リンクから確認してください。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -132,9 +132,6 @@
     },
     {
       "id":"biore-face-moist", "brand":"ビオレ", "name":"ザフェイス 泡洗顔料 モイスト", "category":"cleanser", "jan":"4901301408389", "volume":200, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/biore/4901301408389/", "keyIngredients":["グリセリン","ラウリン酸"], "explanation":"乾燥と皮脂の両方が気になる混合肌向けの保湿・皮脂バランス洗顔。", "scores":{"dryness":2,"oiliness":1,"pores":1}, "demoPrice":1050, "demoUses":55, "dailyUses":1, "usage":"1日1回と仮定。価格・回数は試算用。", "tone":"保湿泡", "evidence":{"officialSource":true,"verifiedAt":"2026-11-06"}
-    },
-    {
-      "id":"biore-face-oil-control-plus", "brand":"ビオレ", "name":"ザフェイス 泡洗顔料 オイルコントロール プラス", "category":"cleanser", "jan":"4901301453075", "volume":200, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/biore/4901301453075/", "keyIngredients":["炭酸水素Na","メントール"], "explanation":"古い角質・酸化皮脂まで洗浄し、皮脂によるベタつきとテカリをケアする泡洗顔料。", "scores":{"oiliness":3,"shine":3,"pores":1}, "demoPrice":1100, "demoUses":55, "dailyUses":1, "usage":"1日1回と仮定。価格・回数は試算用。メントール配合。", "tone":"すっきり泡", "evidence":{"officialSource":true,"verifiedAt":"2026-11-06"}
     },
     {
       "id":"biore-ouchi-gel-clear", "brand":"ビオレ", "name":"おうちdeエステ ジェル洗顔 肌なめらかクリア", "category":"cleanser", "jan":"4901301463890", "volume":180, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/biore/4901301463890/", "keyIngredients":["トロメタミン","ソルビトール"], "explanation":"洗浄剤トロメタミンで角栓を崩して洗うジェル洗顔。毛穴詰まりを洗い流す用途。", "scores":{"pores":3,"blackheads":3,"oiliness":2,"shine":1}, "demoPrice":1100, "demoUses":80, "dailyUses":1, "usage":"1日1回と仮定。価格・回数は試算用。", "tone":"角栓洗浄ジェル", "evidence":{"officialSource":true,"verifiedAt":"2026-11-06"}

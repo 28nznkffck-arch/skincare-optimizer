@@ -10,7 +10,7 @@ const priceDb=JSON.parse(fs.readFileSync(new URL('../dist/data/pricing.json',imp
 const usageDb=JSON.parse(fs.readFileSync(new URL('../dist/data/usage.json',import.meta.url),'utf8'));
 const catalog=mergeCatalogData(productDb.products,priceDb,usageDb);
 
-test('retailer quotes are JAN-verified and unverified prices remain visibly provisional',()=>{
+test('all active products have JAN-verified retailer quotes; limited edition is excluded',()=>{
   assert.equal(Object.keys(priceDb.prices).length,51);
   const verified=catalog.filter(p=>p.priceReference);
   assert.equal(verified.length,51);
@@ -19,9 +19,9 @@ test('retailer quotes are JAN-verified and unverified prices remain visibly prov
     assert.equal(priceOf(p),p.priceReference.priceJPY);
     assert.ok(['2026-11-06','2026-11-07'].includes(p.priceReference.verifiedAt));
   }
-  const demo=catalog.find(p=>p.id==='biore-face-oil-control-plus');
-  assert.equal(demo.priceReference,null);
-  assert.equal(priceOf(demo),demo.demoPrice);
+  assert.equal(catalog.length,51);
+  assert.ok(!catalog.some(p=>p.id==='biore-face-oil-control-plus'));
+  assert.ok(catalog.every(p=>p.priceReference),'no active item uses an unverified price');
   const tsuruha=catalog.filter(p=>p.priceReference?.retailer==='ツルハグループe-shop');
   assert.equal(tsuruha.length,4);
   assert.equal(catalog.find(p=>p.id==='biore-foam-smooth').referencePrice,968);
@@ -85,6 +85,11 @@ test('consumer page never exposes numerical evaluation scores',()=>{
   assert.ok(!html.includes('x.scoreDelta.toFixed'));
   assert.ok(!html.includes('安くなるだけの候補は表示しません。'));
   assert.ok(html.includes('条件との相性がより良くなる1品交換'));
+  assert.ok(html.includes("'仮推定'"),'short provisional label for consumers');
+  assert.ok(!html.includes('根拠未確認の仮推定'));
+  assert.ok(html.includes('※「仮推定」の試算方法'),'calculation explained in the footer');
+  assert.ok(html.includes('min="1000" max="15000" step="100"'),'budget slider starts at 1000 yen');
+  assert.ok(html.includes('<span>1,000円</span>'));
 });
 
 test('monthly estimate is rounded and usage-aware',()=>{
@@ -98,6 +103,13 @@ test('optimizer fits budget and covers mandatory categories',()=>{
   assert.ok(result.length>0);
   assert.ok(result[0].monthly<=5000);
   for (const category of ['cleanser','moisturizer','sunscreen']) assert.ok(result[0].products.some(p=>p.category===category));
+});
+
+test('lowest selectable 1000-yen budget can return a feasible routine',()=>{
+  const results=optimize(catalog,{budget:1000,concerns:['pores'],priority:'any'});
+  assert.ok(results.length>0);
+  assert.ok(results[0].monthly<=1000);
+  assert.deepEqual(['cleanser','moisturizer','sunscreen'].every(category=>results[0].products.some(p=>p.category===category)),true);
 });
 
 test('exclusions and fixed products are respected',()=>{
@@ -206,13 +218,13 @@ test('skin type, sensitivity and finish preferences affect results',()=>{
 });
 
 test('expanded catalog keeps existing products and covers the three Kao priority brands',()=>{
-  assert.equal(catalog.length,52);
+  assert.equal(catalog.length,51);
   assert.equal(new Set(catalog.map(p=>p.id)).size,catalog.length);
   assert.ok(new Set(catalog.map(p=>p.sourceUrl)).size===catalog.length);
   assert.equal(new Set(catalog.map(p=>p.jan).filter(Boolean)).size,catalog.filter(p=>p.jan).length);
   assert.ok(new Set(catalog.map(p=>p.brand)).size>=9);
   assert.equal(catalog.filter(p=>p.brand==='キュレル').length,18);
-  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,6);
+  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,5);
   assert.equal(catalog.filter(p=>p.brand==='ソフィーナ iP').length,10);
   assert.ok(catalog.some(p=>p.id==='biore-foam-smooth'));
   assert.ok(catalog.some(p=>p.id==='sofina-toning-serum'));

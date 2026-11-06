@@ -1,6 +1,6 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.7.3';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.7.3';
-import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.3';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.7.4';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.7.4';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.4';
 
 const STORE_KEY='skincare-lab-v1';
 const SAVED_KEY='skincare-lab-saved-routines-v1';
@@ -22,6 +22,7 @@ function load(){
     const saved=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');
     const merged={...structuredClone(DEFAULT),...saved};
     if(!['simple','any','thorough'].includes(merged.priority))merged.priority='any';
+    merged.budget=Math.max(1000,Math.min(15000,Number(merged.budget)||DEFAULT.budget));
     return merged;
   }
   catch {return structuredClone(DEFAULT);}
@@ -37,7 +38,7 @@ function humanMonth(p){return monthlyCost(p,state.overrides[p.id]);}
 function humanPrice(p){return priceOf(p,state.overrides[p.id]);}
 function humanUses(p){return usesOf(p,state.overrides[p.id]);}
 function humanUnit(p){const n=unitPerUse(p,state.overrides[p.id],humanUses(p));return n==null?'—':`${n.toFixed(2)}${p.unit}`;}
-function useEstimateLabel(p){return state.overrides[p.id]?.amountPerUse!=null||state.overrides[p.id]?.uses!=null?'ユーザー補正':p.referenceUses?'使い切り期間から逆算':p.usageEstimate?.kind==='categoryAverage'?`同品目の平均${p.usageEstimate.sampleCount}品による仮推定`:'根拠未確認の仮推定';}
+function useEstimateLabel(p){return state.overrides[p.id]?.amountPerUse!=null||state.overrides[p.id]?.uses!=null?'ユーザー補正':p.referenceUses?'使い切り期間から逆算':'仮推定';}
 function nameOf(p){return p?`${p.brand} ${p.name}`:'';}
 function missingConcernLabels(){return unscoredConcerns(catalog,state.concerns).map(id=>CONCERNS[id]||id);}
 function findManual(){
@@ -88,8 +89,8 @@ function formHtml(){
   return `<aside class="panel controls" aria-label="選定条件">
     <div class="section-heading"><h2>あなたの条件</h2><span class="step-number">01 / SETTINGS</span></div>
     <div class="field"><div class="budget-row"><label class="field-title" for="budget">月額予算</label><span class="budget-value">${yen(state.budget)}<small> / 月</small></span></div>
-      <input id="budget" data-field="budget" type="range" min="1500" max="15000" step="100" value="${state.budget}">
-      <div class="range-label"><span>1,500円</span><span>15,000円</span></div>
+      <input id="budget" data-field="budget" type="range" min="1000" max="15000" step="100" value="${state.budget}">
+      <div class="range-label"><span>1,000円</span><span>15,000円</span></div>
     </div>
     <div class="field"><div class="concern-heading"><span class="field-title">肌の悩み <small>複数選択可</small></span>${state.concerns.length?'<button type="button" class="link-button" data-action="clearConcerns">選択をクリア</button>':''}</div>
       <div class="concern-groups">${CONCERN_GROUPS.map((group,index)=>`<details class="concern-group" ${(index===0 && !state.concerns.length)||Object.keys(group.items).some(id=>state.concerns.includes(id))?'open':''}><summary>${escape(group.label)} <span>${Object.keys(group.items).filter(id=>state.concerns.includes(id)).length||''}</span></summary><div class="chips">${Object.entries(group.items).map(([id,label])=>`<button class="chip ${state.concerns.includes(id)?'selected':''}" data-action="concern" data-id="${id}" aria-pressed="${state.concerns.includes(id)}">${escape(label)}</button>`).join('')}</div></details>`).join('')}</div>
@@ -184,15 +185,17 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.7.3</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.7.4</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
-    </div></div><footer class="footer"><details class="disclaimer"><summary>データ・試算についての注意事項</summary><div class="disclaimer-body">
+    </div></div><footer class="footer">
+      <p class="estimate-note">※「仮推定」の試算方法：同じ品目・同じ単位（mL／g）で、使い切り期間が確認できる商品が2品以上あれば、それぞれの「内容量÷使用回数」で求めた1回量の平均を採用し、対象商品の内容量から使用回数を逆算します。比較できる商品が足りない場合は、試作時の仮の使用回数を使います。いずれも対象商品の実測値ではありません。</p>
+      <details class="disclaimer"><summary>データ・試算についての注意事項</summary><div class="disclaimer-body">
       <p>${escape(meta.notice)}</p>
       <ul><li>肌悩みや使用感との相性は試作用の適合評価であり、実際の美容効果や安全性を予測・保証するものではありません。</li>
       <li>敏感肌向けと登録された商品でも、すべての人に合うわけではありません。合わなかった商品の除外は商品単位で、原因成分を特定するものではありません。</li>
-      <li>購入価格はJAN一致で確認したマツキヨココカラ通販・ツルハグループe-shopの税込価格を使用し、未確認品は仮値です。店頭価格や将来の価格とは異なることがあります。</li>
+      <li>数量限定品を除いた51商品の購入価格は、JAN一致で確認したマツキヨココカラ通販・ツルハグループe-shopの税込価格です。店頭価格や将来の価格とは異なることがあります。</li>
       <li>1本の使用回数は「朝晩で約3か月」などの使い切り期間から逆算し、未確認品は同品目・同容量単位の2商品以上の参考値の平均を仮採用します。平均できない商品は旧来の仮値です。使用期限とは区別します。プッシュ数・泡の直径から容量を決めつけません。日焼け止めの塗り直し費用は初期試算に含めません。</li>
       <li>「手軽に」は任意の化粧水・美容液の追加手順を控えめに評価し、「しっかり」は有用な追加手順を許容します。価格は月予算を上限とし、評価が同等の場合のみ安い候補を優先します。</li>
       <li>公式情報が確認できた商品に、小さな情報透明性ボーナスを加えます。これは美容効果や成分濃度の高さを表すものではなく、配合量が未確認の商品を0％と評価することもありません。採点内訳は商品DBのデバッグ画面で確認できます。</li>

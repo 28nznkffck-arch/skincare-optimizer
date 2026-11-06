@@ -49,3 +49,4 @@
 .debug-breakdown-table tbody tr:nth-child(even){background:#f9fbf7}
 .debug-breakdown-table-total,.debug-breakdown-total{background:#e7f0e7!important;font-weight:800;color:#315a46}
 @media(max-width:680px){.debug-context{padding:17px}.debug-context-result strong{font-size:19px}.debug-diagnosis{padding:11px}.debug-breakdown-table{min-width:390px}.debug-breakdown-table th,.debug-breakdown-table td{padding:8px 7px}}
+.estimate-note{font-size:11px;line-height:1.8;color:#667b6d;margin:0 0 16px;max-width:960px}
