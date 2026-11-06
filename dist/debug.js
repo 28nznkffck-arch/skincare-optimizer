@@ -1,5 +1,5 @@
-import {CATEGORY_LABELS, monthlyCost, optimize} from './optimizer.js?v=0.4.1';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.4.1';
+import {CATEGORY_LABELS, monthlyCost, optimize} from './optimizer.js?v=0.5.0';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.5.0';
 
 const STORE_KEY='skincare-lab-v1';
 const PAGE_SIZE=25;
@@ -62,7 +62,7 @@ function renderRows(){
   items.innerHTML=visible.map(p=>{
     const v=state.overrides?.[p.id]||{};
     const price=v.price??p.demoPrice,uses=v.uses??p.demoUses,frequency=v.frequency??p.dailyUses;
-    return `<article class="debug-item"><div class="debug-item-head"><div><small>${escape(p.brand)}・${escape(CATEGORY_LABELS[p.category])} / JAN ${escape(p.jan)}</small><h2>${escape(p.name)}</h2><p>${escape(p.keyIngredients.join('・'))}</p></div><a href="${escape(p.sourceUrl)}" class="source" target="_blank" rel="noopener noreferrer">メーカー公式 ↗</a></div>
+    return `<article class="debug-item"><div class="debug-item-head"><div><small>${escape(p.brand)}・${escape(CATEGORY_LABELS[p.category])} / JAN ${escape(p.jan||'未確認')}</small><h2>${escape(p.name)}</h2><p>${escape(p.keyIngredients.join('・'))}</p></div><a href="${escape(p.sourceUrl)}" class="source" target="_blank" rel="noopener noreferrer">メーカー公式 ↗</a></div>
       ${renderEvidence(p)}
       <div class="debug-edit-fields"><label>購入価格（円）<input type="number" min="0" step="10" data-edit="price" data-id="${escape(p.id)}" value="${price}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-edit="uses" data-id="${escape(p.id)}" value="${uses}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-edit="frequency" data-id="${escape(p.id)}" value="${frequency}"></label><div class="debug-month">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>
       <div class="debug-item-actions"><button type="button" class="button ${selectedId===p.id?'button-dark':''}" data-analyze="${escape(p.id)}">${selectedId===p.id?'検証結果を閉じる':'この商品の採否理由を検証'}</button><button type="button" class="link-button" data-reset="${escape(p.id)}" ${state.overrides?.[p.id]?'':'disabled'}>使用条件の補正を解除</button></div>

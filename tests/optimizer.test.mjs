@@ -48,7 +48,8 @@ test('toner is not systematically excluded by the simplicity penalty',()=>{
 test('expanded concern names are registered without inventing unsupported scores',()=>{
   for(const key of ['oiliness','shine','irritation','wrinkles','freckles','blackheads']) assert.ok(CONCERNS[key]);
   assert.equal(CONCERNS.firmness,'ハリ不足・たるみ');
-  assert.deepEqual(unscoredConcerns(catalog,['oiliness','irritation','wrinkles','freckles']),['wrinkles','freckles']);
+  assert.equal(CONCERNS.freckles,'そばかす予防');
+  assert.deepEqual(unscoredConcerns(catalog,['oiliness','irritation','wrinkles','freckles','blackheads']),['blackheads']);
 });
 
 test('concern importance strengthens its influence on a routine',()=>{
@@ -65,7 +66,39 @@ test('skin type, sensitivity and finish preferences affect results',()=>{
   const adapted=scoreRoutine(items,{concerns:['dryness','irritation'],priority:'simple',skinType:'dry',sensitiveSkin:true,finish:'moist'});
   assert.ok(adapted>base);
   const top=optimize(catalog,{budget:5000,concerns:['dryness','irritation'],priority:'simple',sensitiveSkin:true,finish:'moist'})[0];
-  assert.ok(top.products.some(p=>p.id==='curel-toner-ii'));
+  assert.ok(top.products.some(p=>p.category==='toner'&&p.sensitiveSkin),
+    '敏感肌・保湿の希望に合う化粧水の選択肢が増えても、特定の銘柄には固定しない');
+});
+
+test('expanded catalog is unique, traceable and covers multiple manufacturers',()=>{
+  assert.equal(catalog.length,30);
+  assert.equal(new Set(catalog.map(p=>p.id)).size,catalog.length);
+  assert.ok(new Set(catalog.map(p=>p.sourceUrl)).size===catalog.length);
+  assert.ok(new Set(catalog.map(p=>p.brand)).size>=9);
+  assert.ok(catalog.some(p=>p.brand==='メラノCC'&&p.category==='serum'));
+  assert.ok(catalog.some(p=>p.brand==='イハダ'&&p.category==='toner'));
+  assert.ok(catalog.some(p=>p.brand==='ミノン アミノモイスト'&&p.category==='cleanser'));
+  for(const p of catalog){
+    assert.ok(p.sourceUrl.startsWith('https://'),`${p.id} must link to an official source`);
+    assert.ok(['cleanser','toner','serum','moisturizer','sunscreen'].includes(p.category),p.id);
+    assert.ok(Number.isFinite(p.demoPrice)&&p.demoPrice>=0,p.id);
+    assert.ok(Number.isFinite(p.demoUses)&&p.demoUses>0,p.id);
+    assert.ok(Number.isFinite(p.dailyUses)&&p.dailyUses>=0,p.id);
+    assert.ok(Object.values(p.scores).every(n=>Number.isInteger(n)&&n>=0&&n<=3),p.id);
+  }
+});
+
+test('catalog does not mistake UV prevention for improvement of existing dullness',()=>{
+  for(const uv of catalog.filter(p=>p.category==='sunscreen')){
+    assert.equal(uv.scores.dullness??0,0,uv.id);
+    assert.ok(uv.scores.spots>0&&uv.scores.freckles>0,uv.id);
+  }
+  for(const p of catalog.filter(p=>p.id.startsWith('minon-'))){
+    assert.deepEqual(transparencyDetails(p).actives,[],`${p.id} is a cosmetic, not a quasi-drug`);
+    assert.deepEqual(transparencyDetails(p).concentrations,[]);
+  }
+  assert.equal(transparencyDetails(catalog.find(p=>p.id==='hadalabo-aging-lotion')).level,2);
+  assert.equal(transparencyDetails(catalog.find(p=>p.id==='melanocc-premium-essence')).level,2);
 });
 
 test('care style controls optional steps without rewarding price alone',()=>{

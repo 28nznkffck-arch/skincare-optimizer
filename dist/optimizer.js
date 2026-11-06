@@ -4,7 +4,7 @@ export const CATEGORY_LABELS = {
 };
 export const CONCERN_GROUPS = [
   {label:"毛穴", items:{pores:"毛穴の目立ち", blackheads:"黒ずみ・角栓"}},
-  {label:"肌の色", items:{dullness:"くすみ", spots:"シミ予防", freckles:"そばかす", unevenTone:"色ムラ"}},
+  {label:"肌の色", items:{dullness:"くすみ", spots:"シミ予防", freckles:"そばかす予防", unevenTone:"色ムラ"}},
   {label:"エイジング", items:{wrinkles:"シワ", fineLines:"小ジワ", firmness:"ハリ不足・たるみ"}},
   {label:"皮脂", items:{oiliness:"ベタつき", shine:"テカリ"}},
   {label:"肌荒れ", items:{acne:"ニキビ", redness:"赤み", irritation:"肌荒れ"}},

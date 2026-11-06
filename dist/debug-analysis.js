@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.4.1';
+import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.5.0';
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
@@ -12,7 +12,7 @@ export function renderEvidence(product){
   return `<div class="debug-evidence"><strong>情報公開レベル ${e.level}/3</strong><span>${levelText}</span>
     <small>確認済み有効成分：${e.actives.length?e.actives.map(escape).join('・'):'未調査・未登録'}
     <span class="debug-evidence-sep">｜</span>配合濃度：${e.concentrations.length?e.concentrations.map(x=>`${escape(x.name)} ${escape(x.value)}${escape(x.unit)}`).join('・'):'数値未登録（非公表・無配合を意味しません）'}
-    ${e.verifiedAt?`<span class="debug-evidence-sep">｜</span>有効成分の公式確認日 ${escape(e.verifiedAt)}`:''}</small>
+    ${e.verifiedAt?`<span class="debug-evidence-sep">｜</span>公式製品情報の確認日 ${escape(e.verifiedAt)}`:''}</small>
   </div>`;
 }
 

@@ -1,5 +1,5 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, evaluate, optimize, swaps} from './optimizer.js?v=0.4.1';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.4.1';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, evaluate, optimize, swaps} from './optimizer.js?v=0.5.0';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.5.0';
 
 const STORE_KEY='skincare-lab-v1';
 const SAVED_KEY='skincare-lab-saved-routines-v1';
@@ -116,7 +116,7 @@ function summaryHtml(){
     <h2>おすすめの組み合わせ</h2><div class="summary-number">${yen(current.monthly)}<small> / 月</small></div>
     <div class="meter" role="progressbar" aria-label="予算使用率" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${used}"><span style="width:${used}%"></span></div>
     <div class="summary-note">残り予算 <strong>${yen(Math.max(0,state.budget-current.monthly))}</strong>。無理に予算を使い切りません。</div>
-    ${missing.length?`<div class="unscored-warning">データ未整備：${missing.map(escape).join('・')}。現在の15商品では根拠のある採点情報がなく、この項目は選定点数に反映していません。</div>`:''}
+    ${missing.length?`<div class="unscored-warning">データ未整備：${missing.map(escape).join('・')}。現在の${catalog.length}商品では根拠のある採点情報がなく、この項目は選定点数に反映していません。</div>`:''}
     <div class="summary-stats"><div><span class="stat-label">初回購入費（試算）</span><span class="stat-value">${yen(current.initial)}</span></div><div><span class="stat-label">選定商品数</span><span class="stat-value">${current.products.length}<small> 品</small></span></div><div><span class="stat-label">追加ステップ</span><span class="stat-value">${optional}<small> 個</small></span></div></div>
     <button type="button" class="button button-dark save-routine" data-action="saveRoutine">この組み合わせを保存</button>
   </section>`;
@@ -172,7 +172,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.4.1</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.5.0</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
