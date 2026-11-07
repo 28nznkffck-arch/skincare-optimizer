@@ -1,10 +1,10 @@
-export const CATEGORIES = ["cleanser", "toner", "serum", "moisturizer", "sunscreen"];
+export const CATEGORIES = ["cleanser", "toner", "serum", "moisturizer"];
 export const CATEGORY_LABELS = {
-  cleanser: "洗顔", toner: "化粧水", serum: "美容液", moisturizer: "保湿", sunscreen: "日焼け止め"
+  cleanser: "洗顔", toner: "化粧水", serum: "美容液", moisturizer: "保湿"
 };
 export const CONCERN_GROUPS = [
   {label:"毛穴", items:{pores:"毛穴の目立ち", blackheads:"黒ずみ・角栓"}},
-  {label:"肌の色", items:{dullness:"くすみ", spots:"シミ予防", freckles:"そばかす予防", unevenTone:"色ムラ"}},
+  {label:"肌の色", items:{dullness:"くすみ", spots:"シミ", freckles:"そばかす", unevenTone:"色ムラ"}},
   {label:"エイジング", items:{wrinkles:"シワ", fineLines:"小ジワ", firmness:"ハリ不足・たるみ"}},
   {label:"皮脂", items:{oiliness:"ベタつき", shine:"テカリ"}},
   {label:"肌荒れ", items:{acne:"ニキビ", redness:"赤み", irritation:"肌荒れ"}},

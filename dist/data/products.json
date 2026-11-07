@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.7.4",
+    "version": "0.7.5",
     "checkedAt": "2026-11-07",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "商品名・容量・確認できたJAN・主要成分・医薬部外品の有効成分はメーカー公式ページを参照。数量限定品を除いた51商品の税込販売価格をJAN一致で確認済み（マツキヨココカラ通販47件とツルハグループe-shop4件、2026-11-06〜07調査）。1本の使用回数はメーカー等の使い切り期間から逆算し、期間未確認の場合は同品目・同容量単位で2商品以上の使用量の平均を仮適用、参考不足は従来の仮回数です。使い切り期間は品質の使用期限とは異なります。選定の評価は独自の仮評価です。全成分は各公式リンクから確認してください。",
+    "notice": "商品名・容量・確認できたJAN・主要成分・医薬部外品の有効成分はメーカー公式ページを参照。登録45商品の税込販売価格をJAN一致で確認済み（マツキヨココカラ通販42件とツルハグループe-shop3件、2026-11-06〜07調査）。1本の使用回数はメーカー等の使い切り期間から逆算し、期間未確認の場合は同品目・同容量単位で2商品以上の使用量の平均を仮適用、参考不足は従来の仮回数です。使い切り期間は品質の使用期限とは異なります。選定の評価は独自の仮評価です。全成分は各公式リンクから確認してください。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -44,15 +44,6 @@
       "id":"curel-cream", "brand":"キュレル", "name":"潤浸保湿 フェイスクリーム", "category":"moisturizer", "jan":"4901301236210", "volume":40, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301236210/", "keyIngredients":["アラントイン","セラミド機能成分","グリセリン"], "explanation":"セラミド機能成分を配合した薬用フェイスクリーム。", "scores":{"pores":1,"dullness":1,"dryness":3,"irritation":3}, "sensitiveSkin":true, "feel":"rich", "demoPrice":2970, "demoUses":75, "dailyUses":2, "usage":"朝晩使用を想定。回数は仮置き。", "tone":"高保湿クリーム"
     },
     {
-      "id":"biore-uv-aqua", "brand":"ビオレUV", "name":"アクアリッチ ウォータリーエッセンス", "category":"sunscreen", "jan":"4901301447647", "volume":70, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/bioresarasarauv/4901301447647/", "keyIngredients":["紫外線吸収剤","ヒアルロン酸Na","アスコルビルグルコシド"], "explanation":"紫外線によるシミ・そばかすの予防用。既存のくすみやシミを改善する意味ではない。", "scores":{"spots":2,"freckles":2,"dryness":1}, "demoPrice":1200, "demoUses":45, "dailyUses":1, "usage":"顔への塗布を想定した仮回数。塗り直し分は別途加算。", "tone":"みずみずしい"
-    },
-    {
-      "id":"nivea-uv", "brand":"ニベアUV", "name":"ディープ プロテクト＆ケア エッセンス", "category":"sunscreen", "jan":"4901301390431", "volume":50, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/khg/nivea/4901301390431/", "keyIngredients":["紫外線吸収剤","ヒアルロン酸Na","トレハロース"], "explanation":"紫外線によるシミ・そばかすを防ぐ保湿成分入りUVエッセンス。", "scores":{"spots":2,"freckles":2,"dryness":2}, "demoPrice":1200, "demoUses":35, "dailyUses":1, "usage":"顔への塗布を想定した仮回数。塗り直し分は別途加算。", "tone":"美容液感覚"
-    },
-    {
-      "id":"curel-uv", "brand":"キュレル", "name":"潤浸保湿 UVエッセンス", "category":"sunscreen", "jan":"4901301413505", "volume":50, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/curel/4901301413505/", "keyIngredients":["グリチルリチン酸2K","微粒子酸化Ti","セラミド機能成分"], "explanation":"肌荒れを防ぎ、紫外線によるシミ・そばかすを予防する薬用UVエッセンス。", "scores":{"spots":2,"freckles":2,"dryness":2,"irritation":2}, "sensitiveSkin":true, "demoPrice":1760, "demoUses":35, "dailyUses":1, "usage":"顔への塗布を想定した仮回数。塗り直し分は別途加算。", "tone":"乾燥性敏感肌向け"
-    },
-    {
       "id":"hadalabo-gokujun-lotion", "brand":"肌ラボ", "name":"極潤ヒアルロン液", "category":"toner", "jan":"4987241155712", "volume":170, "unit":"mL", "sourceUrl":"https://jp.rohto.com/hadalabo/gokujun-lotion/", "keyIngredients":["ヒアルロン酸Na","アセチルヒアルロン酸Na","加水分解ヒアルロン酸","乳酸球菌／ヒアルロン酸発酵液"], "explanation":"4種のヒアルロン酸を配合した保湿化粧水。医薬部外品の有効成分ではない。", "scores":{"dryness":3}, "feel":"moist", "demoPrice":980, "demoUses":110, "dailyUses":2, "usage":"朝晩使用を仮定。使用回数・価格は試算用。", "tone":"やさしいとろみ", "evidence":{"officialSource":true,"verifiedAt":"2026-11-06"}
     },
     {
@@ -75,9 +66,6 @@
     },
     {
       "id":"melanocc-premium-essence", "brand":"メラノCC", "name":"薬用しみ集中対策 プレミアム美容液", "category":"serum", "jan":"4987241168583", "volume":20, "unit":"mL", "sourceUrl":"https://jp.rohto.com/melanocc/premium-essence/", "keyIngredients":["アスコルビン酸","ピリドキシン塩酸塩","イソプロピルメチルフェノール","アラントイン","ビタミンC誘導体"], "explanation":"活性型ビタミンCなど4つの有効成分を配合。シミ・そばかすとニキビを予防する薬用美容液。3種のビタミンC誘導体は保湿成分。", "scores":{"spots":3,"freckles":3,"acne":3,"dullness":1,"irritation":1}, "demoPrice":1800, "demoUses":150, "dailyUses":1, "usage":"公式は4〜5滴を1日1回で約5〜6か月。控えめに150回として試算、価格は仮値。", "tone":"集中ケア", "evidence":{"officialSource":true,"activeIngredients":["アスコルビン酸","ピリドキシン塩酸塩","イソプロピルメチルフェノール","アラントイン"],"verifiedAt":"2026-11-06"}
-    },
-    {
-      "id":"skin-aqua-super-moisture-essence", "brand":"スキンアクア", "name":"スーパーモイスチャーUVエッセンス", "category":"sunscreen", "jan":"4987241190874", "volume":80, "unit":"g", "sourceUrl":"https://jp.rohto.com/skin-aqua/super-moisture-essence/", "keyIngredients":["紫外線吸収剤","ヒアルロン酸Na","アセチルヒアルロン酸Na"], "explanation":"SPF50+・PA++++の紫外線対策。既存のシミやくすみを消すという意味ではない。", "scores":{"spots":2,"freckles":2,"dryness":2}, "demoPrice":1155, "demoUses":50, "dailyUses":1, "usage":"顔への使用を想定。塗り直し分は別途加算。価格・回数は試算用。", "tone":"保湿UV", "evidence":{"officialSource":true,"verifiedAt":"2026-11-06"}
     },
     {
       "id":"ihada-moist-lotion", "brand":"イハダ", "name":"薬用うるおいローション しっとり", "category":"toner", "jan":"4909978261238", "volume":180, "unit":"mL", "sourceUrl":"https://www.shiseido.co.jp/sw/onlinestore/products/H91202.html?brnd_cd=71&online_shohin_ctlg_kbn=1&shohin_pl_c_cd=H91202", "keyIngredients":["アラントイン","グリチルリチン酸ジカリウム","ワセリン"], "explanation":"肌荒れ・乾燥・ニキビの予防をうたう薬用化粧水。高精製ワセリン配合、敏感肌向け低刺激設計。", "scores":{"dryness":3,"irritation":3,"acne":2}, "sensitiveSkin":true, "feel":"moist", "demoPrice":1650, "demoUses":110, "dailyUses":2, "usage":"メーカーの使い切り目安は朝晩使用で約2.5か月。容量から1回量を概算。", "tone":"低刺激設計", "evidence":{"officialSource":true,"activeIngredients":["アラントイン","グリチルリチン酸ジカリウム"],"verifiedAt":"2026-11-07"}
@@ -153,12 +141,6 @@
     },
     {
       "id":"sofina-deep-milk", "brand":"ソフィーナ iP", "name":"薬用 角層トリートメント 深層美容乳液", "category":"moisturizer", "jan":"4901301472793", "volume":80, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301472793/", "keyIngredients":["ナイアシンアミド","グリセリン","セラミド機能成分"], "explanation":"ナイアシンアミドを有効成分とする薬用シワ改善乳液。保湿とハリ感にも配慮。", "scores":{"wrinkles":3,"fineLines":3,"firmness":2,"dryness":3}, "feel":"moist", "demoPrice":4070, "demoUses":85, "dailyUses":2, "usage":"朝晩使用を仮定。価格・回数は試算用。", "tone":"シワ改善乳液", "evidence":{"officialSource":true,"activeIngredients":["ナイアシンアミド"],"verifiedAt":"2026-11-06"}
-    },
-    {
-      "id":"sofina-uv-dry", "brand":"ソフィーナ iP", "name":"スキンケアUV 01 乾燥しがちな肌環境", "category":"sunscreen", "jan":"4901301448637", "volume":30, "unit":"g", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301448637/", "keyIngredients":["紫外線吸収剤","グリセリン","セラミド機能成分"], "explanation":"SPF50+・PA++++。乾燥しがちな肌の保湿と紫外線によるシミ・そばかすの予防を目的とする。", "scores":{"spots":2,"freckles":2,"dryness":3}, "demoPrice":2750, "demoUses":30, "dailyUses":1, "usage":"1日1回の顔への塗布を仮定。塗り直し分は別。価格・回数は試算用。", "tone":"保湿UV", "evidence":{"officialSource":true,"verifiedAt":"2026-11-06"}
-    },
-    {
-      "id":"sofina-uv-oily", "brand":"ソフィーナ iP", "name":"スキンケアUV 02 皮脂がでやすい肌環境", "category":"sunscreen", "jan":"4901301448644", "volume":30, "unit":"mL", "sourceUrl":"https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301448644/", "keyIngredients":["酸化亜鉛","酸化チタン","セラミド機能成分"], "explanation":"SPF50+・PA+++。皮脂による崩れを抑える処方。紫外線によるシミ・そばかすを予防する。", "scores":{"spots":2,"freckles":2,"oiliness":3,"shine":3,"dryness":1}, "demoPrice":2750, "demoUses":30, "dailyUses":1, "usage":"1日1回の顔への塗布を仮定。塗り直し分は別。価格・回数は試算用。", "tone":"皮脂崩れ対策UV", "evidence":{"officialSource":true,"verifiedAt":"2026-11-06"}
     }
   ]
 }

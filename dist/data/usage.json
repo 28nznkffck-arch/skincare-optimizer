@@ -152,12 +152,6 @@
       "referenceDailyUses": 2,
       "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
     },
-    "curel-uv": {
-      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301413505/",
-      "doseDescription": "顔に直径約1cm（塗り直し分は別）",
-      "sourceKind": "manufacturer",
-      "verifiedAt": "2026-11-06"
-    },
     "biore-foam-smooth": {
       "doseDescription": "4〜5プッシュ",
       "sourceUrl": "https://www.kao.co.jp/biore/lineup/theface/",
@@ -253,18 +247,6 @@
       "durationDays": 60,
       "referenceDailyUses": 2,
       "referenceBasis": "メーカーの朝晩使用時の目安"
-    },
-    "sofina-uv-dry": {
-      "doseDescription": "顔に直径約1.2cm",
-      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301448637/",
-      "sourceKind": "manufacturer",
-      "verifiedAt": "2026-11-06"
-    },
-    "sofina-uv-oily": {
-      "doseDescription": "顔に直径約2cm",
-      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301448644/",
-      "sourceKind": "manufacturer",
-      "verifiedAt": "2026-11-06"
     }
   }
 }

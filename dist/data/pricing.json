@@ -4,20 +4,13 @@
     "taxIncluded": true,
     "priceKind": "retailerOnline",
     "verifiedAt": "2026-11-07",
-    "notice": "数量限定商品を対象外とした51商品のJAN一致を確認済み。マツキヨココカラオンライン・ツルハグループe-shopの税込販売価格であり、店舗価格ではなく、セール・在庫・価格は変動します。ツルハ単独では最新のソフィーナiP 2商品が未掲載のため、マツキヨを基本にツルハで補完しています。"
+    "notice": "登録45商品のJAN一致を確認済み（マツキヨ42件・ツルハ3件）。マツキヨココカラオンライン・ツルハグループe-shopの税込販売価格であり、店舗価格ではなく、セール・在庫・価格は変動します。ツルハ単独では最新のソフィーナiP 2商品が未掲載のため、マツキヨを基本にツルハで補完しています。"
   },
   "prices": {
     "biore-foam-smooth": {
       "priceJPY": 968,
       "jan": "4901301474407",
       "url": "https://shop.tsuruha.co.jp/10187824.html",
-      "retailer": "ツルハグループe-shop",
-      "verifiedAt": "2026-11-07"
-    },
-    "skin-aqua-super-moisture-essence": {
-      "priceJPY": 678,
-      "jan": "4987241190874",
-      "url": "https://shop.tsuruha.co.jp/10156054.html",
       "retailer": "ツルハグループe-shop",
       "verifiedAt": "2026-11-07"
     },
@@ -102,13 +95,6 @@
       "priceJPY": 2970,
       "jan": "4901301236210",
       "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236210",
-      "retailer": "マツキヨココカラオンライン",
-      "verifiedAt": "2026-11-06"
-    },
-    "curel-uv": {
-      "priceJPY": 1760,
-      "jan": "4901301413505",
-      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301413505",
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-06"
     },
@@ -245,38 +231,10 @@
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-06"
     },
-    "sofina-uv-dry": {
-      "priceJPY": 2970,
-      "jan": "4901301448637",
-      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301448637",
-      "retailer": "マツキヨココカラオンライン",
-      "verifiedAt": "2026-11-06"
-    },
-    "sofina-uv-oily": {
-      "priceJPY": 2970,
-      "jan": "4901301448644",
-      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301448644",
-      "retailer": "マツキヨココカラオンライン",
-      "verifiedAt": "2026-11-06"
-    },
     "nivea-soft": {
       "priceJPY": 272,
       "jan": "4901301043764",
       "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301043764",
-      "retailer": "マツキヨココカラオンライン",
-      "verifiedAt": "2026-11-06"
-    },
-    "biore-uv-aqua": {
-      "priceJPY": 1185,
-      "jan": "4901301447647",
-      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301447647",
-      "retailer": "マツキヨココカラオンライン",
-      "verifiedAt": "2026-11-06"
-    },
-    "nivea-uv": {
-      "priceJPY": 1185,
-      "jan": "4901301390431",
-      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301390431",
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-06"
     },
