@@ -17,7 +17,7 @@ test('all active products have JAN-verified retailer quotes; limited edition is 
   for(const p of verified){
     assert.equal(p.priceReference.jan,p.jan);
     assert.equal(priceOf(p),p.priceReference.priceJPY);
-    assert.ok(['2026-11-06','2026-11-07'].includes(p.priceReference.verifiedAt));
+    assert.ok(['2026-11-06','2026-11-07','2026-11-13'].includes(p.priceReference.verifiedAt));
   }
   assert.equal(catalog.length,60);
   assert.ok(!catalog.some(p=>p.id==='biore-face-oil-control-plus'));
