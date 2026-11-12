@@ -1,6 +1,6 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.7.5';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.7.5';
-import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.5';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.7.6';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.7.6';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.6';
 
 const STORE_KEY='skincare-lab-v1';
 const PAGE_SIZE=25;

@@ -3,8 +3,8 @@
     "currency": "JPY",
     "taxIncluded": true,
     "priceKind": "retailerOnline",
-    "verifiedAt": "2026-11-07",
-    "notice": "登録45商品のJAN一致を確認済み（マツキヨ42件・ツルハ3件）。マツキヨココカラオンライン・ツルハグループe-shopの税込販売価格であり、店舗価格ではなく、セール・在庫・価格は変動します。ツルハ単独では最新のソフィーナiP 2商品が未掲載のため、マツキヨを基本にツルハで補完しています。"
+    "verifiedAt": "2026-11-13",
+    "notice": "登録60商品のJAN一致通販税込掲載価格（マツキヨ54・ツルハ6）。マツキヨ優先、価格確認不可の場合ツルハで補完。店頭価格・将来価格と異なる場合があり、自動更新は行いません。"
   },
   "prices": {
     "biore-foam-smooth": {
@@ -321,6 +321,111 @@
       "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987107670465",
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-06"
+    },
+    "biore-face-deepmoist": {
+      "priceJPY": 887,
+      "jan": "4901301408372",
+      "url": "https://shop.tsuruha.co.jp/10152991.html",
+      "retailer": "ツルハグループe-shop",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-face-oil": {
+      "priceJPY": 887,
+      "jan": "4901301408402",
+      "url": "https://shop.tsuruha.co.jp/10152982.html",
+      "retailer": "ツルハグループe-shop",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-face-smoothclear": {
+      "priceJPY": 822,
+      "jan": "4901301414380",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301414380",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-face-acne": {
+      "priceJPY": 822,
+      "jan": "4901301408396",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301408396",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-marshmallow-moist": {
+      "priceJPY": 778,
+      "jan": "4901301250162",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301250162",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-marshmallow-acne": {
+      "priceJPY": 778,
+      "jan": "4901301275080",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301275080",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-skincare-acne": {
+      "priceJPY": 525,
+      "jan": "4901301265678",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301265678",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-jelly-moist": {
+      "priceJPY": 998,
+      "jan": "4901301287656",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301287656",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-jelly-rich": {
+      "priceJPY": 858,
+      "jan": "4901301287663",
+      "url": "https://shop.tsuruha.co.jp/10085300.html",
+      "retailer": "ツルハグループe-shop",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-foam-mochi": {
+      "priceJPY": 602,
+      "jan": "4901301394996",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301394996",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-wash-rich": {
+      "priceJPY": 508,
+      "jan": "4901301335456",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301335456",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-wash-dull": {
+      "priceJPY": 508,
+      "jan": "4901301348616",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301348616",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-2way": {
+      "priceJPY": 968,
+      "jan": "4901301430205",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301430205",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-2way-acne": {
+      "priceJPY": 968,
+      "jan": "4901301451132",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301451132",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-cream-56": {
+      "priceJPY": 305,
+      "jan": "4901301008497",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301008497",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
     }
   }
 }

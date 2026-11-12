@@ -2,7 +2,7 @@
   "meta": {
     "purpose": "容器内容量から1回あたりの使用量と消費回数を推定するための根拠",
     "notes": "ポンプ回数・直径表記だけではmL/gへ換算できない。使用期間がある場合のみ基準頻度で総使用回数に換算し、内容量÷使用回数を逆算した値として明示する。使用量・頻度は個人差あり。",
-    "verifiedAt": "2026-11-07"
+    "verifiedAt": "2026-11-13"
   },
   "usages": {
     "ihada-moist-lotion": {
@@ -247,6 +247,78 @@
       "durationDays": 60,
       "referenceDailyUses": 2,
       "referenceBasis": "メーカーの朝晩使用時の目安"
+    },
+    "biore-face-deepmoist": {
+      "doseDescription": "4〜5プッシュ",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408372/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-face-oil": {
+      "doseDescription": "4〜5プッシュ",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408402/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-face-smoothclear": {
+      "doseDescription": "4〜5プッシュ",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301414380/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-face-acne": {
+      "doseDescription": "4〜5プッシュ",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408396/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-marshmallow-moist": {
+      "doseDescription": "2プッシュ",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301250162/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-marshmallow-acne": {
+      "doseDescription": "2プッシュ",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301275080/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-skincare-acne": {
+      "doseDescription": "約2〜3cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301265678/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-foam-mochi": {
+      "doseDescription": "2〜3プッシュ",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301394996/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-wash-rich": {
+      "doseDescription": "約2〜3cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301335456/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-wash-dull": {
+      "doseDescription": "約2〜3cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301348616/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-2way": {
+      "doseDescription": "通常洗顔2〜3cm、パック約2cm（週1〜2回）",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301430205/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-2way-acne": {
+      "doseDescription": "通常洗顔2〜3cm、パック約2cm（週1〜2回）",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301451132/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
     }
   }
 }
