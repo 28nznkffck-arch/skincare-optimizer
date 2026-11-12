@@ -11,15 +11,15 @@ const usageDb=JSON.parse(fs.readFileSync(new URL('../dist/data/usage.json',impor
 const catalog=mergeCatalogData(productDb.products,priceDb,usageDb);
 
 test('all active products have JAN-verified retailer quotes; limited edition is excluded',()=>{
-  assert.equal(Object.keys(priceDb.prices).length,78);
+  assert.equal(Object.keys(priceDb.prices).length,79);
   const verified=catalog.filter(p=>p.priceReference);
-  assert.equal(verified.length,78);
+  assert.equal(verified.length,79);
   for(const p of verified){
     assert.equal(p.priceReference.jan,p.jan);
     assert.equal(priceOf(p),p.priceReference.priceJPY);
     assert.ok(['2026-11-06','2026-11-07','2026-11-13'].includes(p.priceReference.verifiedAt));
   }
-  assert.equal(catalog.length,78);
+  assert.equal(catalog.length,79);
   assert.ok(!catalog.some(p=>p.id==='biore-face-oil-control-plus'));
   assert.ok(catalog.every(p=>p.priceReference),'no active item uses an unverified price');
   const tsuruha=catalog.filter(p=>p.priceReference?.retailer==='ツルハグループe-shop');
@@ -224,12 +224,12 @@ test('skin type, sensitivity and finish preferences affect results',()=>{
 });
 
 test('expanded catalog covers the three Kao priority brands without sunscreen',()=>{
-  assert.equal(catalog.length,78);
+  assert.equal(catalog.length,79);
   assert.equal(new Set(catalog.map(p=>p.id)).size,catalog.length);
   assert.ok(new Set(catalog.map(p=>p.sourceUrl)).size===catalog.length);
   assert.equal(new Set(catalog.map(p=>p.jan).filter(Boolean)).size,catalog.filter(p=>p.jan).length);
   assert.ok(new Set(catalog.map(p=>p.brand)).size>=8);
-  assert.equal(catalog.filter(p=>p.brand==='キュレル').length,26);
+  assert.equal(catalog.filter(p=>p.brand==='キュレル').length,27);
   assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,21);
   assert.equal(catalog.filter(p=>p.brand==='ソフィーナ iP').length,8);
   assert.ok(catalog.some(p=>p.id==='biore-foam-smooth'));
@@ -240,7 +240,7 @@ test('expanded catalog covers the three Kao priority brands without sunscreen',(
   assert.ok(catalog.some(p=>p.brand==='ミノン アミノモイスト'&&p.category==='cleanser'));
   for(const p of catalog){
     assert.ok(p.sourceUrl.startsWith('https://'),`${p.id} must link to an official source`);
-    assert.ok(['makeupRemover','cleanser','toner','serum','moisturizer'].includes(p.category),p.id);
+    assert.ok(['makeupRemover','cleanser','toner','serum','moisturizer','eyeCare'].includes(p.category),p.id);
     assert.ok(Number.isFinite(p.demoPrice)&&p.demoPrice>=0,p.id);
     assert.ok(Number.isFinite(p.demoUses)&&p.demoUses>0,p.id);
     assert.ok(Number.isFinite(p.dailyUses)&&p.dailyUses>=0,p.id);
@@ -409,7 +409,7 @@ test('even when there is no budget-compliant routine, diagnostic can display a s
 });
 
 test('15 new Kao products have matching price sources and face-appropriate categories',()=>{
- assert.equal(catalog.length,78);
+ assert.equal(catalog.length,79);
  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,21);
  assert.equal(catalog.filter(p=>p.brand==='ニベア').length,9);
  assert.equal(catalog.filter(p=>p.allInOne).length,2);
@@ -448,14 +448,14 @@ test('original five makeup removers retain their JAN and no-double-wash status',
  const items=catalog.filter(p=>ids.includes(p.id));
  assert.equal(items.length,5);
  assert.ok(items.every(p=>p.priceReference?.jan===p.jan && p.doubleCleanseNotNeeded));
- assert.equal(catalog.length,78);
+ assert.equal(catalog.length,79);
  assert.ok(!catalog.some(p=>p.category==='sunscreen'));
 });
 
 test('expanded Kao catalog has 12 correctly identified products with price evidence',()=>{
   const ids=["curel-foam-gel","curel-gel-makeup","curel-oil-makeup","curel-milk-makeup","curel-moist-spray-250","curel-gel-serum","curel-foam-serum","curel-barrier-serum","curel-oil-serum","biore-perfect-oil","biore-foam-cream-makeup","nivea-gel-cleanse"];
   assert.equal(ids.length,12);
-  assert.equal(catalog.length,78);
+  assert.equal(catalog.length,79);
   for(const id of ids){
     const p=catalog.find(p=>p.id===id);
     assert.ok(p, 'missing '+id);
@@ -510,4 +510,30 @@ test('regular Biore Black Gel uses JAN-matched Tsuruha quote and needs no W wash
   assert.equal(p.priceReference.retailer,'ツルハグループe-shop');
   assert.equal(p.priceReference.url,'https://shop.tsuruha.co.jp/10162529.html');
   assert.equal(p.doubleCleanseNotNeeded,true);
+});
+
+test('new eye concerns appear independently and unscored dark circles warn',()=>{
+ assert.equal(CONCERNS.eyeDryness,'目元の乾燥');
+ assert.equal(CONCERNS.darkCircles,'クマ');
+ assert.ok(unscoredConcerns(catalog,['darkCircles']).includes('darkCircles'));
+ assert.ok(!unscoredConcerns(catalog,['eyeDryness']).includes('eyeDryness'));
+});
+test('eye care appears only for eye dryness and cannot replace whole-face moisturizer',()=>{
+ const usual=optimize(catalog,{budget:10000,concerns:['dryness'],priority:'thorough',resultLimit:1})[0];
+ assert.ok(usual && !usual.products.some(p=>p.category==='eyeCare'));
+ const eye=optimize(catalog,{budget:10000,concerns:['eyeDryness'],priority:'thorough',resultLimit:1})[0];
+ assert.ok(eye && eye.products.some(p=>p.id==='curel-eye-cream'));
+ assert.ok(eye.products.some(p=>p.category==='moisturizer'));
+ assert.ok(eye.products.some(p=>p.category==='cleanser'));
+ assert.ok(eye.monthly<=10000);
+});
+test('eye cream has source-verified JAN price and is optional at low budget',()=>{
+ const p=catalog.find(p=>p.id==='curel-eye-cream');
+ assert.equal(p.jan,'4901301382528');
+ assert.equal(p.priceReference.jan,p.jan);
+ assert.equal(p.priceReference.priceJPY,3080);
+ assert.equal(monthlyCost(p),Math.round(3080/usesOf(p)*2*30));
+ const low=optimize(catalog,{budget:1000,concerns:['eyeDryness'],priority:'simple',resultLimit:1})[0];
+ assert.ok(low && low.monthly<=1000);
+ assert.ok(!low.products.some(p=>p.category==='eyeCare'));
 });

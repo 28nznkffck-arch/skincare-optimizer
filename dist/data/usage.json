@@ -440,6 +440,14 @@
       "sourceKind": "manufacturer-indexed-page",
       "verifiedAt": "2026-11-13",
       "usageCountStatus": "hypothetical"
+    },
+    "curel-eye-cream": {
+      "doseDescription": "片目につき直径約5mmを取り、目の下・上まぶたにやさしくなじませる。化粧水・乳液・クリームの後に使用。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/curel/movie/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical",
+      "note": "メーカー使い切り日数未確認。仮に150回使用と推定"
     }
   }
 }

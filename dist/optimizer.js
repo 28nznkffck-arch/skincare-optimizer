@@ -1,10 +1,11 @@
-export const CATEGORIES = ["makeupRemover", "cleanser", "toner", "serum", "moisturizer"];
+export const CATEGORIES = ["makeupRemover", "cleanser", "toner", "serum", "moisturizer", "eyeCare"];
 export const CATEGORY_LABELS = {
-  makeupRemover: "メイク落とし", cleanser: "洗顔", toner: "化粧水", serum: "美容液", moisturizer: "保湿"
+  makeupRemover: "メイク落とし", cleanser: "洗顔", toner: "化粧水", serum: "美容液", moisturizer: "保湿", eyeCare: "目元ケア"
 };
 export const CONCERN_GROUPS = [
   {label:"毛穴", items:{pores:"毛穴の目立ち", blackheads:"黒ずみ・角栓"}},
   {label:"肌の色", items:{dullness:"くすみ", spots:"シミ", freckles:"そばかす", unevenTone:"色ムラ"}},
+  {label:"目元", items:{eyeDryness:"目元の乾燥", darkCircles:"クマ"}},
   {label:"エイジング", items:{wrinkles:"シワ", fineLines:"小ジワ", firmness:"ハリ不足・たるみ"}},
   {label:"皮脂", items:{oiliness:"ベタつき", shine:"テカリ"}},
   {label:"肌荒れ", items:{acne:"ニキビ", redness:"赤み", irritation:"肌荒れ"}},
@@ -69,7 +70,7 @@ export function explainRoutineScore(products, options={}) {
   // 適合性が高い化粧水までほぼ必ず落選するので、少ない手順の利点は
   // 小さな「手間コスト」として扱い、悩みへの追加適合性と比較する。
   const stepPenalty = options.priority === "simple" ? 5 : options.priority === "thorough" ? 0 : 2;
-  push('steps','追加ステップの手間',-(products.filter(p=>p.category==="toner" || p.category==="serum").length + (options.useMakeupRemover && products.some(p=>p.category==="cleanser")?1:0)) * stepPenalty,
+  push('steps','追加ステップの手間',-(products.filter(p=>p.category==="toner" || p.category==="serum" || p.category==="eyeCare").length + (options.useMakeupRemover && products.some(p=>p.category==="cleanser")?1:0)) * stepPenalty,
     `化粧水・美容液 1品あたり ${stepPenalty}点の手間コスト`);
   // 肌質・使用感は商品DBの暫定的な適合情報で加点。刺激の有無を保証するものではない。
   if(options.skinType==="dry") push('skin','乾燥肌との適合',Math.max(0,...products.map(p=>p.scores?.dryness||0))*1.8);
@@ -118,6 +119,10 @@ export function optimize(catalog, options={}) {
     if (locked[cat]) choices=choices.filter(p=>p.id===locked[cat]);
     if (cat==="makeupRemover") {
       if (!options.useMakeupRemover) choices=[null];
+    } else if (cat==="eyeCare") {
+      // 目元乾燥を選択した人だけ部分ケアを任意追加する。
+      if (!options.concerns?.includes("eyeDryness")) choices=[null];
+      else if (!locked[cat]) choices=[null,...choices];
     } else if (cat==="cleanser" && options.useMakeupRemover) {
       // メイク落としで洗浄が完結する場合、洗顔は任意。手軽さ重視は省く。
       if (!locked[cat]) choices=options.priority==="simple"?[null]:[null,...choices];
