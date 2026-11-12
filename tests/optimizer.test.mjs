@@ -11,15 +11,15 @@ const usageDb=JSON.parse(fs.readFileSync(new URL('../dist/data/usage.json',impor
 const catalog=mergeCatalogData(productDb.products,priceDb,usageDb);
 
 test('all active products have JAN-verified retailer quotes; limited edition is excluded',()=>{
-  assert.equal(Object.keys(priceDb.prices).length,65);
+  assert.equal(Object.keys(priceDb.prices).length,77);
   const verified=catalog.filter(p=>p.priceReference);
-  assert.equal(verified.length,65);
+  assert.equal(verified.length,77);
   for(const p of verified){
     assert.equal(p.priceReference.jan,p.jan);
     assert.equal(priceOf(p),p.priceReference.priceJPY);
     assert.ok(['2026-11-06','2026-11-07','2026-11-13'].includes(p.priceReference.verifiedAt));
   }
-  assert.equal(catalog.length,65);
+  assert.equal(catalog.length,77);
   assert.ok(!catalog.some(p=>p.id==='biore-face-oil-control-plus'));
   assert.ok(catalog.every(p=>p.priceReference),'no active item uses an unverified price');
   const tsuruha=catalog.filter(p=>p.priceReference?.retailer==='ツルハグループe-shop');
@@ -224,13 +224,13 @@ test('skin type, sensitivity and finish preferences affect results',()=>{
 });
 
 test('expanded catalog covers the three Kao priority brands without sunscreen',()=>{
-  assert.equal(catalog.length,65);
+  assert.equal(catalog.length,77);
   assert.equal(new Set(catalog.map(p=>p.id)).size,catalog.length);
   assert.ok(new Set(catalog.map(p=>p.sourceUrl)).size===catalog.length);
   assert.equal(new Set(catalog.map(p=>p.jan).filter(Boolean)).size,catalog.filter(p=>p.jan).length);
   assert.ok(new Set(catalog.map(p=>p.brand)).size>=8);
-  assert.equal(catalog.filter(p=>p.brand==='キュレル').length,17);
-  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,18);
+  assert.equal(catalog.filter(p=>p.brand==='キュレル').length,26);
+  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,20);
   assert.equal(catalog.filter(p=>p.brand==='ソフィーナ iP').length,8);
   assert.ok(catalog.some(p=>p.id==='biore-foam-smooth'));
   assert.ok(catalog.some(p=>p.id==='sofina-toning-serum'));
@@ -409,9 +409,9 @@ test('even when there is no budget-compliant routine, diagnostic can display a s
 });
 
 test('15 new Kao products have matching price sources and face-appropriate categories',()=>{
- assert.equal(catalog.length,65);
- assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,18);
- assert.equal(catalog.filter(p=>p.brand==='ニベア').length,8);
+ assert.equal(catalog.length,77);
+ assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,20);
+ assert.equal(catalog.filter(p=>p.brand==='ニベア').length,9);
  assert.equal(catalog.filter(p=>p.allInOne).length,2);
  assert.ok(catalog.filter(p=>p.allInOne).every(p=>p.category==='moisturizer'));
  for(const p of catalog){assert.equal(priceDb.prices[p.id].jan,p.jan);assert.equal(priceOf(p),priceDb.prices[p.id].priceJPY);}
@@ -443,10 +443,60 @@ test('makeup-removal cost assumes one use per evening; thorough routine permits 
  const r=optimize(catalog,{budget:12000,concerns:['pores','dryness'],priority:'thorough',useMakeupRemover:true,resultLimit:1})[0];
  assert.ok(r && r.products.some(p=>p.category==='makeupRemover'));
 });
-test('all five makeups have JAN verified price and manufacturer W-wash guidance',()=>{
- const items=catalog.filter(p=>p.category==='makeupRemover');
+test('original five makeup removers retain their JAN and no-double-wash status',()=>{
+ const ids=['biore-cleansing-oil','biore-cleansing-oil-moist','biore-cleansing-liquid','biore-cleansing-paste','nivea-cleansing-beauty'];
+ const items=catalog.filter(p=>ids.includes(p.id));
  assert.equal(items.length,5);
  assert.ok(items.every(p=>p.priceReference?.jan===p.jan && p.doubleCleanseNotNeeded));
- assert.equal(catalog.length,65);
+ assert.equal(catalog.length,77);
  assert.ok(!catalog.some(p=>p.category==='sunscreen'));
+});
+
+test('expanded Kao catalog has 12 correctly identified products with price evidence',()=>{
+  const ids=["curel-foam-gel","curel-gel-makeup","curel-oil-makeup","curel-milk-makeup","curel-moist-spray-250","curel-gel-serum","curel-foam-serum","curel-barrier-serum","curel-oil-serum","biore-perfect-oil","biore-foam-cream-makeup","nivea-gel-cleanse"];
+  assert.equal(ids.length,12);
+  assert.equal(catalog.length,77);
+  for(const id of ids){
+    const p=catalog.find(p=>p.id===id);
+    assert.ok(p, 'missing '+id);
+    assert.equal(priceDb.prices[id].jan,p.jan);
+    assert.equal(priceOf(p),priceDb.prices[id].priceJPY);
+    assert.equal(priceDb.prices[id].retailer,'マツキヨココカラオンライン');
+    assert.ok(Number.isFinite(monthlyCost(p)) && monthlyCost(p)>0);
+    assert.ok(p.evidence.officialSource);
+  }
+});
+test('Curel gel and oil makeup removers require separate cleanser while milk does not',()=>{
+  const cases=[
+    ['curel-gel-makeup',false],
+    ['curel-oil-makeup',false],
+    ['curel-milk-makeup',true],
+    ['biore-perfect-oil',true],
+    ['nivea-gel-cleanse',true]
+  ];
+  for(const [id,notNeeded] of cases){
+    const p=catalog.find(x=>x.id===id);
+    assert.equal(p.doubleCleanseNotNeeded,notNeeded);
+    const options={budget:15000,concerns:['dryness'],useMakeupRemover:true,priority:'thorough',locked:{makeupRemover:id},resultLimit:1};
+    const best=optimize(catalog,options)[0];
+    assert.ok(best,'thorough routine should be feasible for '+id);
+    if(!notNeeded) assert.ok(best.products.some(x=>x.category==='cleanser'),'must W wash '+id);
+  }
+});
+test('simple makeup care will not propose mandatory-W-wash removers',()=>{
+ const options={budget:15000,concerns:['dryness'],priority:'simple',useMakeupRemover:true,resultLimit:1};
+ const best=optimize(catalog,options)[0];
+ assert.ok(best);
+ assert.ok(best.products.some(x=>x.category==='makeupRemover' && x.doubleCleanseNotNeeded));
+ assert.ok(!best.products.some(x=>x.category==='cleanser'));
+ const forced=optimize(catalog,{...options,locked:{makeupRemover:'curel-oil-makeup'}})[0];
+ assert.equal(forced,undefined,'required W cleanser is excluded from one-step recommendations');
+});
+test('swapping a one-step cleanser for a W-required remover cannot drop mandatory washing',()=>{
+ const subset=catalog.filter(p=>['curel-oil-makeup','curel-milk-makeup','curel-foam','curel-milk'].includes(p.id));
+ const opt={budget:10000,concerns:['dryness'],priority:'simple',useMakeupRemover:true,resultLimit:1};
+ const baseline=optimize(subset,opt)[0];
+ assert.ok(baseline);
+ const out=swaps(baseline,subset,'makeupRemover',opt,10000);
+ assert.ok(!out.some(c=>c.replacement.id==='curel-oil-makeup'));
 });

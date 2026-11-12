@@ -349,6 +349,90 @@
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301388902/",
       "sourceKind": "manufacturer",
       "verifiedAt": "2026-11-13"
+    },
+    "curel-foam-gel": {
+      "doseDescription": "直径約4cmの泡",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458964/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "curel-gel-makeup": {
+      "doseDescription": "直径約2cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236203/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "curel-oil-makeup": {
+      "doseDescription": "ポンプ4押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301346995/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "curel-milk-makeup": {
+      "doseDescription": "コットン1枚に3〜4プッシュ、汚れに応じて追加",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301422095/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "curel-moist-spray-250": {
+      "doseDescription": "顔から約20cm離して円を描くようにスプレー",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301379924/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "curel-gel-serum": {
+      "doseDescription": "直径約1.3cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301281715/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "curel-foam-serum": {
+      "doseDescription": "直径約2cmの泡",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458957/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "curel-barrier-serum": {
+      "doseDescription": "1スポイト分",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301463937/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "curel-oil-serum": {
+      "doseDescription": "1スポイト分",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301471338/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "biore-perfect-oil": {
+      "doseDescription": "ポンプ4押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301761385/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "biore-foam-cream-makeup": {
+      "doseDescription": "3〜4プッシュ",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301388063/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "nivea-gel-cleanse": {
+      "doseDescription": "直径約1.5cm、乾いた顔に使用",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301443182/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
     }
   }
 }

@@ -4,7 +4,7 @@
     "taxIncluded": true,
     "priceKind": "retailerOnline",
     "verifiedAt": "2026-11-13",
-    "notice": "登録65品のJAN一致の通販税込価格（マツキヨココカラ59件・ツルハ6件）。価格は自動更新ではなく将来変動する場合があります。"
+    "notice": "登録77品の税込通販掲載価格（マツキヨココカラ71件・ツルハ6件）。追加12品は検索インデックスに保存された掲載情報からJANと税込金額を照合しており、当日のライブ販売価格を保証しません。メンテナンス復旧後に再確認が必要です。"
   },
   "prices": {
     "biore-foam-smooth": {
@@ -461,6 +461,102 @@
       "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301388902",
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-13"
+    },
+    "curel-foam-gel": {
+      "priceJPY": 2090,
+      "jan": "4901301458964",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301458964",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "curel-gel-makeup": {
+      "priceJPY": 1100,
+      "jan": "4901301236203",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236203",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "curel-oil-makeup": {
+      "priceJPY": 1650,
+      "jan": "4901301346995",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301346995",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "curel-milk-makeup": {
+      "priceJPY": 1650,
+      "jan": "4901301422095",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301422095",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "curel-moist-spray-250": {
+      "priceJPY": 2750,
+      "jan": "4901301379924",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301379924",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "curel-gel-serum": {
+      "priceJPY": 2750,
+      "jan": "4901301281715",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301281715",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "curel-foam-serum": {
+      "priceJPY": 3850,
+      "jan": "4901301458957",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301458957",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "curel-barrier-serum": {
+      "priceJPY": 4950,
+      "jan": "4901301463937",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301463937",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "curel-oil-serum": {
+      "priceJPY": 4950,
+      "jan": "4901301471338",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301471338",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "biore-perfect-oil": {
+      "priceJPY": 1416,
+      "jan": "4901301761385",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301761385",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "biore-foam-cream-makeup": {
+      "priceJPY": 1188,
+      "jan": "4901301388063",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301388063",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "nivea-gel-cleanse": {
+      "priceJPY": 1870,
+      "jan": "4901301443182",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301443182",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
     }
   }
 }

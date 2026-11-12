@@ -1,6 +1,6 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.7.7';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.7.7';
-import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.7';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.7.8';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.7.8';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.8';
 
 const STORE_KEY='skincare-lab-v1';
 const SAVED_KEY='skincare-lab-saved-routines-v1';
@@ -190,7 +190,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.7.7</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.7.8</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -200,7 +200,7 @@ function render(){
       <p>${escape(meta.notice)}</p>
       <ul><li>肌悩みや使用感との相性は試作用の適合評価であり、実際の美容効果や安全性を予測・保証するものではありません。</li>
       <li>敏感肌向けと登録された商品でも、すべての人に合うわけではありません。合わなかった商品の除外は商品単位で、原因成分を特定するものではありません。</li>
-      <li>登録65商品の購入価格は、JAN一致で確認したマツキヨココカラ通販・ツルハグループe-shopの税込価格です。店頭価格や将来の価格とは異なることがあります。</li>
+      <li>登録77商品の購入価格は、JAN一致で確認したマツキヨココカラ通販・ツルハグループe-shopの税込価格です。店頭価格や将来の価格とは異なることがあります。</li>
       <li>1本の使用回数は「朝晩で約3か月」などの使い切り期間から逆算し、未確認品は同品目・同容量単位の2商品以上の参考値の平均を仮採用します。平均できない商品は旧来の仮値です。使用期限とは区別します。プッシュ数・泡の直径から容量を決めつけません。</li>
       <li>メイク落としはチェック時に毎晩使う前提。「手軽に」はW洗顔を省略、ほかの手間設定ではW洗顔も選択可能。花王の登録製品はW洗顔不要で、追加洗顔が必須とは限りません。化粧の濃さにより適合は変わります。</li>
       <li>「手軽に」は任意の化粧水・美容液の追加手順を控えめに評価し、「しっかり」は有用な追加手順を許容します。価格は月予算を上限とし、評価が同等の場合のみ安い候補を優先します。</li>

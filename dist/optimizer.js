@@ -135,6 +135,7 @@ export function optimize(catalog, options={}) {
       const products=chosen.filter(Boolean);
       if(options.useMakeupRemover && !products.some(p=>p.category==="makeupRemover")) return;
       if(options.useMakeupRemover && !products.some(p=>p.category==="cleanser") && products.some(p=>p.category==="makeupRemover" && !p.doubleCleanseNotNeeded)) return;
+      if(options.priority==="simple" && options.useMakeupRemover && !locked.cleanser && products.some(p=>p.category==="cleanser")) return;
       if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !products.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)))) return;
       const result=evaluate(products,options);
       if (result.monthly>budget) return;
@@ -219,6 +220,8 @@ export function swaps(routine, catalog, category, options={}, extra=100) {
   for(const product of catalog.filter(p=>p.category===category && p.id!==current?.id && !excluded.has(p.id))){
     const next=current ? routine.products.map(p=>p.id===current.id?product:p) : [...routine.products,product];
     if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !next.some(p=>p.keyIngredients.some(k=>k.includes(options.ingredient)))) continue;
+    // W洗顔がメーカー指定のクレンジングへの1品交換で、洗顔料を失うのを防ぐ。
+    if(options.useMakeupRemover && next.some(p=>p.category==="makeupRemover" && !p.doubleCleanseNotNeeded) && !next.some(p=>p.category==="cleanser")) continue;
     const candidate=evaluate(next,options);
     // 通常予算内の最高得点を起点とするため、改善には予算上限の拡大が必要。
     // 価格を採点前に足切りせず、採点→改善判定→拡張予算の順で選別する。

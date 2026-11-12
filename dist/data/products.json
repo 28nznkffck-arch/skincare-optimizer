@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.7.7",
+    "version": "0.7.8",
     "checkedAt": "2026-11-13",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "登録65商品の商品名・JAN・用途をメーカー公式情報と照合。税込通販掲載価格はマツキヨココカラ59品・ツルハ6品（2026-11-06〜13参照）。メイク落としはチェックした場合に毎晩1回使用する想定。1本の使用回数や肌悩みスコアには仮推定を含みます。数量限定品と日焼け止めは候補外。",
+    "notice": "登録77商品の商品名・JAN・用途はメーカー公式ページの取得済み情報を参照。価格はマツキヨ71件・ツルハ6件のJAN一致通販掲載情報（11月13日照合。ただしサイトメンテナンス等のため今回新規追加12件のライブ価格は未再確認）。使用回数と肌悩み点数は仮推定。メイク落としは商品ごとにW洗顔の要否を区別。日焼け止めと数量限定品は候補外。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -2097,6 +2097,434 @@
         "officialSource": true,
         "verifiedAt": "2026-11-13"
       }
+    },
+    {
+      "id": "curel-foam-gel",
+      "brand": "キュレル",
+      "name": "潤浸保湿 泡ジェル洗顔料",
+      "category": "cleanser",
+      "jan": "4901301458964",
+      "volume": 200,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458964/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "グリセリン",
+        "炭酸ガス"
+      ],
+      "explanation": "皮脂汚れによる肌にごりくすみを洗い落とす炭酸泡ジェル洗顔。肌荒れを防ぐ薬用処方。",
+      "scores": {
+        "dullness": 3,
+        "oiliness": 2,
+        "irritation": 3,
+        "dryness": 1
+      },
+      "demoPrice": 2090,
+      "demoUses": 60,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-gel-makeup",
+      "brand": "キュレル",
+      "name": "ジェルメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301236203",
+      "volume": 130,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236203/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "グリセリン",
+        "ソルビット液"
+      ],
+      "explanation": "セラミドを守りながらメイクを落とす薬用ジェル。使用後は洗顔料によるW洗顔が必要（メーカー指定）。",
+      "scores": {
+        "irritation": 2,
+        "dryness": 1
+      },
+      "demoPrice": 1100,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true,
+      "doubleCleanseNotNeeded": false,
+      "waterproof": false
+    },
+    {
+      "id": "curel-oil-makeup",
+      "brand": "キュレル",
+      "name": "オイルメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301346995",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301346995/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "流動イソパラフィン",
+        "セラミド機能成分"
+      ],
+      "explanation": "落ちにくいメイクにもなじみ、ウォータープルーフマスカラにも対応。使用後は洗顔料によるW洗顔が必要（メーカー指定）。",
+      "scores": {
+        "irritation": 2,
+        "dryness": 1
+      },
+      "demoPrice": 1650,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true,
+      "doubleCleanseNotNeeded": false,
+      "waterproof": true
+    },
+    {
+      "id": "curel-milk-makeup",
+      "brand": "キュレル",
+      "name": "潤浸保湿 乳液ケアメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301422095",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301422095/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "セラミド機能成分",
+        "ユーカリエキス"
+      ],
+      "explanation": "コットンでふき取る乳液タイプ。洗い流し・洗顔不要。落ちにくいアイメイクは別途専用リムーバー等が必要な場合あり（コットン代は未計算）。",
+      "scores": {
+        "dryness": 2,
+        "irritation": 2
+      },
+      "demoPrice": 1650,
+      "demoUses": 45,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true,
+      "doubleCleanseNotNeeded": true,
+      "waterproof": false
+    },
+    {
+      "id": "curel-moist-spray-250",
+      "brand": "キュレル",
+      "name": "ディープモイスチャースプレー 250g",
+      "category": "toner",
+      "jan": "4901301379924",
+      "volume": 250,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301379924/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "ユーカリエキス"
+      ],
+      "explanation": "顔にも使えるミスト状化粧水。セラミドの働きを補い潤いを与え、肌荒れを防ぐ。全身にも使用可能。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3
+      },
+      "demoPrice": 2750,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "アラントイン"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-gel-serum",
+      "brand": "キュレル",
+      "name": "潤浸保湿 ジェル美容液",
+      "category": "serum",
+      "jan": "4901301281715",
+      "volume": 40,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301281715/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "ショウキョウエキス",
+        "セラミド機能成分"
+      ],
+      "explanation": "肌荒れを防ぎ、乾燥による小じわを目立たなくする効能評価済みの薬用ジェル美容液。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3,
+        "fineLines": 3,
+        "firmness": 2
+      },
+      "demoPrice": 2750,
+      "demoUses": 85,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-foam-serum",
+      "brand": "キュレル",
+      "name": "潤浸保湿 泡美容液",
+      "category": "serum",
+      "jan": "4901301458957",
+      "volume": 120,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458957/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "セラミド機能成分",
+        "ユーカリエキス",
+        "炭酸ガス"
+      ],
+      "explanation": "乾燥によるざらつき・くすみを潤いでケアする炭酸泡の薬用美容液。肌荒れを防ぐ。",
+      "scores": {
+        "dryness": 3,
+        "dullness": 3,
+        "irritation": 3
+      },
+      "demoPrice": 3850,
+      "demoUses": 70,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-barrier-serum",
+      "brand": "キュレル",
+      "name": "潤浸保湿 角層深部バリア美容液",
+      "category": "serum",
+      "jan": "4901301463937",
+      "volume": 30,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301463937/",
+      "keyIngredients": [
+        "GABOB",
+        "セラミド機能成分",
+        "ユーカリエキス",
+        "ローマカミツレエキス"
+      ],
+      "explanation": "有効成分GABOB配合。ゆらぎやすい乾燥性敏感肌の肌荒れを防ぎ、角層の潤いを支えるウォーターベースの美容液。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3
+      },
+      "demoPrice": 4950,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "light",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "ガンマ-アミノ-ベータ-ヒドロキシ酪酸"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-oil-serum",
+      "brand": "キュレル",
+      "name": "潤浸保湿 定着保湿オイル美容液",
+      "category": "serum",
+      "jan": "4901301471338",
+      "volume": 30,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301471338/",
+      "keyIngredients": [
+        "カモミラET",
+        "グリチルレチン酸ステアリル",
+        "シュガースクワラン",
+        "セラミド機能成分"
+      ],
+      "explanation": "乾燥・ごわつきが気になる肌へ密着する薬用オイル美容液。セラミドの働きを補い、肌荒れを防ぐ。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3,
+        "firmness": 1
+      },
+      "demoPrice": 4950,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "rich",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "カモミラET",
+          "グリチルレチン酸ステアリル"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "biore-perfect-oil",
+      "brand": "ビオレ",
+      "name": "メイク落とし パーフェクトオイル",
+      "category": "makeupRemover",
+      "jan": "4901301761385",
+      "volume": 230,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301761385/",
+      "keyIngredients": [
+        "ミネラルオイル",
+        "ラウリン酸PEG-12",
+        "イソドデカン"
+      ],
+      "explanation": "ぬれた手でも使え、ウォータープルーフマスカラまで落とすオイル。W洗顔不要。",
+      "scores": {},
+      "demoPrice": 1416,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "light",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報"
+      },
+      "doubleCleanseNotNeeded": true,
+      "waterproof": true
+    },
+    {
+      "id": "biore-foam-cream-makeup",
+      "brand": "ビオレ",
+      "name": "おうちdeエステ 泡クリームメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301388063",
+      "volume": 210,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301388063/",
+      "keyIngredients": [
+        "グリセリン",
+        "炭酸水素Na",
+        "PPG-9ジグリセリル"
+      ],
+      "explanation": "泡がクリーム状に変化して毛穴のファンデ汚れを落とす。W洗顔不要。",
+      "scores": {
+        "pores": 1
+      },
+      "demoPrice": 1188,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "light",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報"
+      },
+      "doubleCleanseNotNeeded": true,
+      "waterproof": false
+    },
+    {
+      "id": "nivea-gel-cleanse",
+      "brand": "ニベア",
+      "name": "肌磨きジェルクレンズ",
+      "category": "makeupRemover",
+      "jan": "4901301443182",
+      "volume": 130,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301443182/",
+      "keyIngredients": [
+        "セラミドNG",
+        "スクワラン",
+        "ヒアルロン酸Na",
+        "グリセリン"
+      ],
+      "explanation": "メイク・毛穴の汚れと古い角質によるくすみを落とすジェルクレンズ。W洗顔不要。",
+      "scores": {
+        "dullness": 2,
+        "pores": 1,
+        "dryness": 1
+      },
+      "demoPrice": 1870,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報"
+      },
+      "doubleCleanseNotNeeded": true,
+      "waterproof": false
     }
   ]
 }
