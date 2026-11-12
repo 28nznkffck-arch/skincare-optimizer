@@ -448,6 +448,24 @@
       "verifiedAt": "2026-11-13",
       "usageCountStatus": "hypothetical",
       "note": "メーカー使い切り日数未確認。仮に150回使用と推定"
+    },
+    "sofina-basic-turbo-toner": {
+      "doseDescription": "洗顔後、直径2.5cmの円に広がる量を顔になじませる。",
+      "sourceUrl": "https://www.kao.com/jp/cosmetics_qa/detail/42395/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "花王Q&A：朝晩使用で約3か月分。参考30日/月で算出。品質保持期限ではない"
+    },
+    "sofina-basic-turbo-milk": {
+      "doseDescription": "化粧水の後、直径2cmの円に広がる量を顔になじませる。",
+      "sourceUrl": "https://www.kao.com/jp/cosmetics_qa/detail/42449/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "durationDays": 90,
+      "referenceDailyUses": 2,
+      "referenceBasis": "花王Q&A：朝晩使用で約3か月分。参考30日/月で算出。品質保持期限ではない"
     }
   }
 }

@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.7.9",
+    "version": "0.7.10",
     "checkedAt": "2026-11-13",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "登録79商品の商品名・JAN・用途はメーカー公式ページの取得済み情報を参照。価格はマツキヨ72件・ツルハ7件のJAN一致通販掲載情報（11月13日照合。ただしサイトメンテナンス等のため今回新規追加13件のライブ価格は未再確認）。使用回数と肌悩み点数は仮推定。メイク落としは商品ごとにW洗顔の要否を区別。日焼け止めと数量限定品は候補外。",
+    "notice": "登録81商品、花王67品・その他14品。税込価格はマツキヨ74品とツルハ7品のJAN対応販売情報から参照。新規SOFINA BASIC＋2品の価格はマツキヨ商品一覧情報、JANは@cosmeで確認。価格はリアルタイムの販売価格を保証しない。メーカー公表の使用期間を優先し、その他は仮推定。肌悩み点数は独自の仮評価。数量限定品と日焼け止めは対象外。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -2595,6 +2595,71 @@
           "アラントイン"
         ],
         "sourceAccess": "メーカー公式ページの取得済み情報。価格は販売店の検索インデックス情報"
+      }
+    },
+    {
+      "id": "sofina-basic-turbo-toner",
+      "brand": "SOFINA BASIC＋",
+      "name": "うるおいターボ化粧水",
+      "category": "toner",
+      "jan": "4901301466648",
+      "volume": 160,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-basic/",
+      "keyIngredients": [
+        "グリセリン",
+        "セリン",
+        "スクロース",
+        "セチルPGヒドロキシエチルパルミタミド",
+        "ユーカリ葉エキス"
+      ],
+      "explanation": "タンパク保水成分とセラミドケア成分e（保湿）を配合した化粧水。角層のうるおいを保ち、乾燥しがちな肌をしっとりなめらかに整える。",
+      "scores": {
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 1430,
+      "demoUses": 180,
+      "dailyUses": 2,
+      "usage": "花王公式Q&A記載の朝晩使用・約3ヶ月分に基づく約180回。開封後の品質保持期限ではない。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sensitiveSkinPatchTested": true
+      }
+    },
+    {
+      "id": "sofina-basic-turbo-milk",
+      "brand": "SOFINA BASIC＋",
+      "name": "うるおいターボ乳液",
+      "category": "moisturizer",
+      "jan": "4901301466679",
+      "volume": 120,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-basic/products/",
+      "keyIngredients": [
+        "グリセリン",
+        "セリン",
+        "スクロース",
+        "セチルPGヒドロキシエチルパルミタミド",
+        "スクワラン",
+        "ユーカリ葉エキス"
+      ],
+      "explanation": "タンパク保水成分とセラミドケア成分（保湿）を配合した乳液。角層のうるおいを保ち、乾燥から肌を守ってやわらかな肌に整える。",
+      "scores": {
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 1650,
+      "demoUses": 180,
+      "dailyUses": 2,
+      "usage": "花王公式Q&A記載の朝晩使用・約3ヶ月分に基づく約180回。開封後の品質保持期限ではない。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sensitiveSkinPatchTested": true
       }
     }
   ]

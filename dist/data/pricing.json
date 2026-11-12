@@ -4,7 +4,7 @@
     "taxIncluded": true,
     "priceKind": "retailerOnline",
     "verifiedAt": "2026-11-13",
-    "notice": "登録79品の税込通販掲載価格（マツキヨココカラ72件・ツルハ7件）。追加13品は検索インデックスに保存された掲載情報からJANと税込金額を照合しており、当日のライブ販売価格を保証しません。メンテナンス復旧後に再確認が必要です。"
+    "notice": "登録81商品、マツキヨ74件・ツルハ7件の掲載税込価格。新規2商品のマツキヨのブランド一覧掲載価格と@cosme SHOPPING掲載JANを照合。ライブの価格や在庫は保証しません。旧商品の一部も検索インデックスからの掲載情報です。"
   },
   "prices": {
     "biore-foam-smooth": {
@@ -573,6 +573,22 @@
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-13",
       "verificationMethod": "通販検索インデックス掲載価格。2026-11-13当日のライブ価格は未確認"
+    },
+    "sofina-basic-turbo-toner": {
+      "priceJPY": 1430,
+      "jan": "4901301466648",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/campaign/search/campaign_id/CP_5078/",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "マツキヨの商品一覧記載の容量・税込価格と、@cosme SHOPPING記載JANを照合。現在のライブ価格は未確認"
+    },
+    "sofina-basic-turbo-milk": {
+      "priceJPY": 1650,
+      "jan": "4901301466679",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/campaign/search/campaign_id/CP_5079/",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "マツキヨの商品一覧記載の容量・税込価格と、@cosme SHOPPING記載JANを照合。現在のライブ価格は未確認"
     }
   }
 }
