@@ -433,6 +433,13 @@
       "sourceKind": "manufacturer-indexed-page",
       "verifiedAt": "2026-11-13",
       "usageCountStatus": "hypothetical"
+    },
+    "biore-black-cleansing-gel": {
+      "doseDescription": "直径約3cmを顔全体になじませる",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301416919/",
+      "sourceKind": "manufacturer-indexed-page",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
     }
   }
 }

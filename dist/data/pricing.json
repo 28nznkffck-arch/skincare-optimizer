@@ -4,7 +4,7 @@
     "taxIncluded": true,
     "priceKind": "retailerOnline",
     "verifiedAt": "2026-11-13",
-    "notice": "登録77品の税込通販掲載価格（マツキヨココカラ71件・ツルハ6件）。追加12品は検索インデックスに保存された掲載情報からJANと税込金額を照合しており、当日のライブ販売価格を保証しません。メンテナンス復旧後に再確認が必要です。"
+    "notice": "登録78品の税込通販掲載価格（マツキヨココカラ71件・ツルハ7件）。追加13品は検索インデックスに保存された掲載情報からJANと税込金額を照合しており、当日のライブ販売価格を保証しません。メンテナンス復旧後に再確認が必要です。"
   },
   "prices": {
     "biore-foam-smooth": {
@@ -557,6 +557,14 @@
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-13",
       "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+    },
+    "biore-black-cleansing-gel": {
+      "priceJPY": 1098,
+      "jan": "4901301416919",
+      "url": "https://shop.tsuruha.co.jp/10162529.html",
+      "retailer": "ツルハグループe-shop",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "検索インデックスの商品ページに保存された表示価格"
     }
   }
 }

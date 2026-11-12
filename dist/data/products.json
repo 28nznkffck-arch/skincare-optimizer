@@ -3,7 +3,7 @@
     "version": "0.7.8",
     "checkedAt": "2026-11-13",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "登録77商品の商品名・JAN・用途はメーカー公式ページの取得済み情報を参照。価格はマツキヨ71件・ツルハ6件のJAN一致通販掲載情報（11月13日照合。ただしサイトメンテナンス等のため今回新規追加12件のライブ価格は未再確認）。使用回数と肌悩み点数は仮推定。メイク落としは商品ごとにW洗顔の要否を区別。日焼け止めと数量限定品は候補外。",
+    "notice": "登録78商品の商品名・JAN・用途はメーカー公式ページの取得済み情報を参照。価格はマツキヨ71件・ツルハ7件のJAN一致通販掲載情報（11月13日照合。ただしサイトメンテナンス等のため今回新規追加13件のライブ価格は未再確認）。使用回数と肌悩み点数は仮推定。メイク落としは商品ごとにW洗顔の要否を区別。日焼け止めと数量限定品は候補外。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -2525,6 +2525,39 @@
       },
       "doubleCleanseNotNeeded": true,
       "waterproof": false
+    },
+    {
+      "id": "biore-black-cleansing-gel",
+      "brand": "ビオレ",
+      "name": "おうちdeエステ メイク落とし ブラックジェル 200g",
+      "category": "makeupRemover",
+      "jan": "4901301416919",
+      "volume": 200,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301416919/",
+      "keyIngredients": [
+        "グリセリン",
+        "炭",
+        "イソノナン酸イソノニル"
+      ],
+      "explanation": "炭配合ジェルで毛穴のメイク汚れとウォータープルーフマスカラを落とす。W洗顔不要。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 1
+      },
+      "demoPrice": 1098,
+      "demoUses": 90,
+      "dailyUses": 1,
+      "usage": "使用回数は仮推定。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカー公式情報は検索インデックスに保存された掲載内容"
+      }
     }
   ]
 }
