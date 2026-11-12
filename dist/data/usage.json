@@ -319,6 +319,36 @@
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301451132/",
       "sourceKind": "manufacturer",
       "verifiedAt": "2026-11-13"
+    },
+    "biore-cleansing-oil": {
+      "doseDescription": "ポンプ3押し程度",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301417008/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-cleansing-oil-moist": {
+      "doseDescription": "ポンプ3押し程度",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301440365/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-cleansing-liquid": {
+      "doseDescription": "ポンプ2〜3押し程度",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301263049/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-cleansing-paste": {
+      "doseDescription": "約2cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301246769/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-cleansing-beauty": {
+      "doseDescription": "ポンプ3押し程度",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301388902/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13"
     }
   }
 }

@@ -11,15 +11,15 @@ const usageDb=JSON.parse(fs.readFileSync(new URL('../dist/data/usage.json',impor
 const catalog=mergeCatalogData(productDb.products,priceDb,usageDb);
 
 test('all active products have JAN-verified retailer quotes; limited edition is excluded',()=>{
-  assert.equal(Object.keys(priceDb.prices).length,60);
+  assert.equal(Object.keys(priceDb.prices).length,65);
   const verified=catalog.filter(p=>p.priceReference);
-  assert.equal(verified.length,60);
+  assert.equal(verified.length,65);
   for(const p of verified){
     assert.equal(p.priceReference.jan,p.jan);
     assert.equal(priceOf(p),p.priceReference.priceJPY);
     assert.ok(['2026-11-06','2026-11-07','2026-11-13'].includes(p.priceReference.verifiedAt));
   }
-  assert.equal(catalog.length,60);
+  assert.equal(catalog.length,65);
   assert.ok(!catalog.some(p=>p.id==='biore-face-oil-control-plus'));
   assert.ok(catalog.every(p=>p.priceReference),'no active item uses an unverified price');
   const tsuruha=catalog.filter(p=>p.priceReference?.retailer==='ツルハグループe-shop');
@@ -224,13 +224,13 @@ test('skin type, sensitivity and finish preferences affect results',()=>{
 });
 
 test('expanded catalog covers the three Kao priority brands without sunscreen',()=>{
-  assert.equal(catalog.length,60);
+  assert.equal(catalog.length,65);
   assert.equal(new Set(catalog.map(p=>p.id)).size,catalog.length);
   assert.ok(new Set(catalog.map(p=>p.sourceUrl)).size===catalog.length);
   assert.equal(new Set(catalog.map(p=>p.jan).filter(Boolean)).size,catalog.filter(p=>p.jan).length);
   assert.ok(new Set(catalog.map(p=>p.brand)).size>=8);
   assert.equal(catalog.filter(p=>p.brand==='キュレル').length,17);
-  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,14);
+  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,18);
   assert.equal(catalog.filter(p=>p.brand==='ソフィーナ iP').length,8);
   assert.ok(catalog.some(p=>p.id==='biore-foam-smooth'));
   assert.ok(catalog.some(p=>p.id==='sofina-toning-serum'));
@@ -240,7 +240,7 @@ test('expanded catalog covers the three Kao priority brands without sunscreen',(
   assert.ok(catalog.some(p=>p.brand==='ミノン アミノモイスト'&&p.category==='cleanser'));
   for(const p of catalog){
     assert.ok(p.sourceUrl.startsWith('https://'),`${p.id} must link to an official source`);
-    assert.ok(['cleanser','toner','serum','moisturizer'].includes(p.category),p.id);
+    assert.ok(['makeupRemover','cleanser','toner','serum','moisturizer'].includes(p.category),p.id);
     assert.ok(Number.isFinite(p.demoPrice)&&p.demoPrice>=0,p.id);
     assert.ok(Number.isFinite(p.demoUses)&&p.demoUses>0,p.id);
     assert.ok(Number.isFinite(p.dailyUses)&&p.dailyUses>=0,p.id);
@@ -409,9 +409,9 @@ test('even when there is no budget-compliant routine, diagnostic can display a s
 });
 
 test('15 new Kao products have matching price sources and face-appropriate categories',()=>{
- assert.equal(catalog.length,60);
- assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,14);
- assert.equal(catalog.filter(p=>p.brand==='ニベア').length,7);
+ assert.equal(catalog.length,65);
+ assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,18);
+ assert.equal(catalog.filter(p=>p.brand==='ニベア').length,8);
  assert.equal(catalog.filter(p=>p.allInOne).length,2);
  assert.ok(catalog.filter(p=>p.allInOne).every(p=>p.category==='moisturizer'));
  for(const p of catalog){assert.equal(priceDb.prices[p.id].jan,p.jan);assert.equal(priceOf(p),priceDb.prices[p.id].priceJPY);}
@@ -425,4 +425,28 @@ test('inexpensive cleanser and moisturizer are feasible at the minimum budget',(
  assert.ok(best&&best.monthly<=1000);
  assert.ok(best.products.some(p=>p.category==='cleanser'));
  assert.ok(best.products.some(p=>p.category==='moisturizer'));
+});
+
+test('makeup switch adds one night remover and omits W washing for simple care',()=>{
+ const off=optimize(catalog,{budget:3000,concerns:['dryness'],priority:'simple',useMakeupRemover:false,resultLimit:1})[0];
+ assert.ok(off?.products.some(p=>p.category==='cleanser'));
+ assert.ok(!off.products.some(p=>p.category==='makeupRemover'));
+ const on=optimize(catalog,{budget:3000,concerns:['dryness'],priority:'simple',useMakeupRemover:true,resultLimit:1})[0];
+ assert.ok(on && on.monthly<=3000);
+ assert.equal(on.products.filter(p=>p.category==='makeupRemover').length,1);
+ assert.ok(!on.products.some(p=>p.category==='cleanser'));
+ assert.ok(on.products.some(p=>p.category==='moisturizer'));
+});
+test('makeup-removal cost assumes one use per evening; thorough routine permits double cleansing',()=>{
+ const p=catalog.find(p=>p.id==='biore-cleansing-liquid');
+ assert.equal(monthlyCost(p),Math.round(priceOf(p)/usesOf(p)*30));
+ const r=optimize(catalog,{budget:12000,concerns:['pores','dryness'],priority:'thorough',useMakeupRemover:true,resultLimit:1})[0];
+ assert.ok(r && r.products.some(p=>p.category==='makeupRemover'));
+});
+test('all five makeups have JAN verified price and manufacturer W-wash guidance',()=>{
+ const items=catalog.filter(p=>p.category==='makeupRemover');
+ assert.equal(items.length,5);
+ assert.ok(items.every(p=>p.priceReference?.jan===p.jan && p.doubleCleanseNotNeeded));
+ assert.equal(catalog.length,65);
+ assert.ok(!catalog.some(p=>p.category==='sunscreen'));
 });

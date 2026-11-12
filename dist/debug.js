@@ -1,6 +1,6 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.7.6';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.7.6';
-import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.6';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.7.7';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.7.7';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.7';
 
 const STORE_KEY='skincare-lab-v1';
 const PAGE_SIZE=25;
@@ -28,7 +28,7 @@ function updateState(next){localStorage.setItem(STORE_KEY,JSON.stringify(next));
 function getOptions(){
   const state=getState();
   return {
-    budget:Number(state.budget??5000),concerns:Array.isArray(state.concerns)?state.concerns:[],
+    budget:Number(state.budget??5000),useMakeupRemover:Boolean(state.useMakeupRemover),concerns:Array.isArray(state.concerns)?state.concerns:[],
     concernWeights:state.concernWeights||{},skinType:state.skinType||'unknown',
     sensitiveSkin:Boolean(state.sensitiveSkin),finish:state.finish||'any',
     priority:['simple','any','thorough'].includes(state.priority)?state.priority:'any',

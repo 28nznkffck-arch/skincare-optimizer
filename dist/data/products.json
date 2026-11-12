@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.7.6",
+    "version": "0.7.7",
     "checkedAt": "2026-11-13",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "登録60商品の商品名・JAN・成分等はメーカー公式情報を参照。税込通販掲載価格はマツキヨ54件・ツルハ6件のJAN一致を照合（2026-11-06〜13参照）。価格は自動更新されません。使い切り期間未確認品は1回使用量・回数を仮推定。肌悩み別点数は独自の試作評価。薬用美白の『シミ』は主に発生予防を意味します。数量限定商品・日焼け止めは候補外。",
+    "notice": "登録65商品の商品名・JAN・用途をメーカー公式情報と照合。税込通販掲載価格はマツキヨココカラ59品・ツルハ6品（2026-11-06〜13参照）。メイク落としはチェックした場合に毎晩1回使用する想定。1本の使用回数や肌悩みスコアには仮推定を含みます。数量限定品と日焼け止めは候補外。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -1942,6 +1942,157 @@
       "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
       "tone": "とてもしっとり",
       "feel": "rich",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-cleansing-oil",
+      "brand": "ビオレ",
+      "name": "ザクレンズオイルメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301417008",
+      "volume": 190,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301417008/",
+      "keyIngredients": [
+        "イソノナン酸イソノニル",
+        "ミリスチン酸イソプロピル"
+      ],
+      "explanation": "落ちにくいマスカラや下地まで、なじませる手間をかけず落とすオイル。W洗顔不要。",
+      "scores": {},
+      "feel": "light",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 1581,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-cleansing-oil-moist",
+      "brand": "ビオレ",
+      "name": "ザクレンズオイルメイク落とし モイスト",
+      "category": "makeupRemover",
+      "jan": "4901301440365",
+      "volume": 190,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301440365/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "水溶性コラーゲン"
+      ],
+      "explanation": "保湿成分配合のオイルでメイクを落とす。W洗顔不要。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "moist",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 1581,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-cleansing-liquid",
+      "brand": "ビオレ",
+      "name": "うるおいクレンジングリキッド",
+      "category": "makeupRemover",
+      "jan": "4901301263049",
+      "volume": 230,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301263049/",
+      "keyIngredients": [
+        "グリセリン",
+        "BG",
+        "PPG-9ジグリセリル"
+      ],
+      "explanation": "水ベースのリキッドでウォータープルーフメイクも落とす。W洗顔不要。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "light",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 1139,
+      "demoUses": 80,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-cleansing-paste",
+      "brand": "ビオレ",
+      "name": "メイクも落とせる洗顔料 つるすべ美肌",
+      "category": "makeupRemover",
+      "jan": "4901301246769",
+      "volume": 210,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301246769/",
+      "keyIngredients": [
+        "ソルビトール",
+        "ヒアルロン酸Na",
+        "ローヤルゼリーエキス"
+      ],
+      "explanation": "メイク落としと洗顔を同時に行うペーストタイプ。落ちにくいメイクには増量が必要。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "moist",
+      "waterproof": false,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 778,
+      "demoUses": 90,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "nivea-cleansing-beauty",
+      "brand": "ニベア",
+      "name": "クレンジングオイル ビューティースキン",
+      "category": "makeupRemover",
+      "jan": "4901301388902",
+      "volume": 195,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301388902/",
+      "keyIngredients": [
+        "ミネラルオイル",
+        "スクワラン",
+        "ホホバ種子油"
+      ],
+      "explanation": "落ちにくいメイクと毛穴のメイク汚れを落とすオイル。公式Q&AでW洗顔不要と案内。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "moist",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 1430,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "しっとり",
       "evidence": {
         "officialSource": true,
         "verifiedAt": "2026-11-13"

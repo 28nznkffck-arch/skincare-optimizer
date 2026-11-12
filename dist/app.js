@@ -1,10 +1,10 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.7.6';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.7.6';
-import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.6';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.7.7';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.7.7';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.7.7';
 
 const STORE_KEY='skincare-lab-v1';
 const SAVED_KEY='skincare-lab-saved-routines-v1';
-const DEFAULT={budget:5000, concerns:[], concernWeights:{}, skinType:'unknown', sensitiveSkin:false, finish:'any', priority:'any', ingredient:'none', ingredientMode:'prefer', excluded:{}, locked:{}, overrides:{}, manual:null, manualExtraBudget:0, swapCategory:'moisturizer', swapExtra:100};
+const DEFAULT={budget:5000, useMakeupRemover:false, concerns:[], concernWeights:{}, skinType:'unknown', sensitiveSkin:false, finish:'any', priority:'any', ingredient:'none', ingredientMode:'prefer', excluded:{}, locked:{}, overrides:{}, manual:null, manualExtraBudget:0, swapCategory:'moisturizer', swapExtra:100};
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
 const app=document.getElementById('app');
@@ -47,7 +47,9 @@ function findManual(){
   const ids=new Set(state.manual);
   const products=catalog.filter(p=>ids.has(p.id));
   if(products.length!==ids.size || products.some(p=>state.excluded[p.id])) return null;
-  for(const mandatory of ['cleanser','moisturizer']) if(!products.some(p=>p.category===mandatory))return null;
+  for(const mandatory of [state.useMakeupRemover?'makeupRemover':'cleanser','moisturizer']) if(!products.some(p=>p.category===mandatory))return null;
+  if(!state.useMakeupRemover && products.some(p=>p.category==='makeupRemover'))return null;
+  if(state.useMakeupRemover && !products.some(p=>p.category==='cleanser') && products.some(p=>p.category==='makeupRemover' && !p.doubleCleanseNotNeeded))return null;
   if(products.some(p=>state.locked[p.category] && state.locked[p.category]!==p.id)) return null;
   const result=evaluate(products,options());
   return result.monthly<=state.budget+Math.max(0,Number(state.manualExtraBudget)||0)?result:null;
@@ -72,7 +74,7 @@ function productCard(p){
       <div class="product-top"><h3 class="product-name">${escape(p.name)}</h3><div class="product-cost">${yen(humanMonth(p))}<small>月額試算</small></div></div>
       <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${Math.round(humanUses(p))}回分 / 1回約${humanUnit(p)}（${escape(useEstimateLabel(p))}） / 1日${escape(state.overrides[p.id]?.frequency??p.dailyUses)}回</div>
       <div class="period">購入価格 ${yen(humanPrice(p))}（${state.overrides[p.id]?.price!=null?'ユーザー補正値':p.priceReference?`${escape(p.priceReference.retailer)}・確認済み`:'出典未確認の仮価格'}）</div>
-      <p class="product-description">${escape(p.explanation)}</p>
+      <p class="product-description">${escape(p.explanation)}</p>${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+(p.doubleCleanseNotNeeded?'W洗顔不要':'W洗顔が必要')+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
       <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
       ${matchLabels.length?`<div class="fit-note">関連する悩み：${matchLabels.map(escape).join('・')}</div>`:''}
       ${state.sensitiveSkin && p.sensitiveSkin?'<div class="fit-note">敏感肌向けの設計情報を考慮</div>':''}
@@ -97,6 +99,7 @@ function formHtml(){
       <div class="concern-groups">${CONCERN_GROUPS.map((group,index)=>`<details class="concern-group" ${(index===0 && !state.concerns.length)||Object.keys(group.items).some(id=>state.concerns.includes(id))?'open':''}><summary>${escape(group.label)} <span>${Object.keys(group.items).filter(id=>state.concerns.includes(id)).length||''}</span></summary><div class="chips">${Object.entries(group.items).map(([id,label])=>`<button class="chip ${state.concerns.includes(id)?'selected':''}" data-action="concern" data-id="${id}" aria-pressed="${state.concerns.includes(id)}">${escape(label)}</button>`).join('')}</div></details>`).join('')}</div>
       ${state.concerns.length?`<div class="concern-priorities"><span class="micro muted">悩みごとの優先度</span>${state.concerns.map(id=>`<label class="priority-row"><span>${escape(CONCERNS[id]||id)}</span><select class="select" data-importance="${escape(id)}"><option value="high" ${state.concernWeights?.[id]==='high'?'selected':''}>最優先</option><option value="normal" ${!state.concernWeights?.[id]||state.concernWeights?.[id]==='normal'?'selected':''}>気になる</option><option value="low" ${state.concernWeights?.[id]==='low'?'selected':''}>軽く気になる</option></select></label>`).join('')}</div>`:''}
     </div>
+    <div class="field"><span class="field-title">夜の洗浄</span><label class="sensitive-check"><input type="checkbox" data-field="useMakeupRemover" ${state.useMakeupRemover?'checked':''}> メイク落としを使う</label><div class="micro muted">チェック時は毎晩使う前提で試算します。「手軽に」はW洗顔を省きます。</div></div>
     <div class="field"><label class="field-title" for="skinType">肌質</label><select id="skinType" class="select" data-field="skinType">${[['unknown','わからない・指定なし'],['dry','乾燥肌'],['oily','脂性肌'],['combination','混合肌'],['normal','普通肌']].map(([id,label])=>`<option value="${id}" ${state.skinType===id?'selected':''}>${label}</option>`).join('')}</select>
       <label class="sensitive-check"><input type="checkbox" data-field="sensitiveSkin" ${state.sensitiveSkin?'checked':''}> 刺激を感じやすい・敏感肌</label>
     </div>
@@ -119,7 +122,7 @@ function summaryHtml(){
   if(!current) return `<section class="panel summary"><span class="tag orange">条件に合う候補なし</span><h2>組み合わせを作れませんでした</h2><p class="summary-note">予算や「必須成分」、固定・除外条件を見直してみてください。条件を無断で緩めて商品を出すことはありません。</p></section>`;
   const effectiveBudget=state.budget+(isManual?Math.max(0,Number(state.manualExtraBudget)||0):0);
   const used=Math.min(100,Math.round(current.monthly/effectiveBudget*100));
-  const optional=current.products.filter(p=>p.category==='toner'||p.category==='serum').length;
+  const optional=current.products.filter(p=>p.category==='toner'||p.category==='serum').length+(state.useMakeupRemover && current.products.some(p=>p.category==='cleanser')?1:0);
   const missing=missingConcernLabels();
   return `<section class="panel summary">
     <div class="summary-top"><span class="eyebrow">${isManual?'YOUR CUSTOM ROUTINE':'YOUR BEST MATCH'}</span><span class="tag">${current.monthly>state.budget?'追加予算込み':'月額予算内'}</span></div>
@@ -136,11 +139,12 @@ function summaryHtml(){
 function resultHtml(){
   if(!current) return '';
   const sorted=[...current.products].sort((a,b)=>CATEGORIES.indexOf(a.category)-CATEGORIES.indexOf(b.category));
-  const am=sorted.filter(p=>p.category!=='cleanser'&&(state.overrides[p.id]?.frequency??p.dailyUses)>1);
+  const am=sorted.filter(p=>!['makeupRemover','cleanser'].includes(p.category)&&(state.overrides[p.id]?.frequency??p.dailyUses)>1);
   const pm=sorted;
   return `<section class="panel recommendation">
     <div class="reco-head"><div><span class="eyebrow">02 / RECOMMENDATION</span><h2>朝と夜のルーティン</h2></div><span class="tag orange">試作版</span></div>
-    <p class="summary-note">朝：${am.map(p=>CATEGORY_LABELS[p.category]).join(' → ')}<br>夜：${pm.map(p=>CATEGORY_LABELS[p.category]).join(' → ')}</p>
+    <p class="summary-note">朝：${am.map(p=>CATEGORY_LABELS[p.category]).join(' → ')||'なし'}<br>夜：${pm.map(p=>CATEGORY_LABELS[p.category]).join(' → ')}</p>
+    ${state.useMakeupRemover?'<p class="micro muted">毎晩メイク落とし1回。洗顔料が続く場合はW洗顔ですが、メーカーが必須とする意味ではありません。</p>':''}
     <div class="product-list">${sorted.map(productCard).join('')}</div>
   </section>`;
 }
@@ -186,7 +190,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.7.6</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.7.7</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -196,8 +200,9 @@ function render(){
       <p>${escape(meta.notice)}</p>
       <ul><li>肌悩みや使用感との相性は試作用の適合評価であり、実際の美容効果や安全性を予測・保証するものではありません。</li>
       <li>敏感肌向けと登録された商品でも、すべての人に合うわけではありません。合わなかった商品の除外は商品単位で、原因成分を特定するものではありません。</li>
-      <li>登録60商品の購入価格は、JAN一致で確認したマツキヨココカラ通販・ツルハグループe-shopの税込価格です。店頭価格や将来の価格とは異なることがあります。</li>
+      <li>登録65商品の購入価格は、JAN一致で確認したマツキヨココカラ通販・ツルハグループe-shopの税込価格です。店頭価格や将来の価格とは異なることがあります。</li>
       <li>1本の使用回数は「朝晩で約3か月」などの使い切り期間から逆算し、未確認品は同品目・同容量単位の2商品以上の参考値の平均を仮採用します。平均できない商品は旧来の仮値です。使用期限とは区別します。プッシュ数・泡の直径から容量を決めつけません。</li>
+      <li>メイク落としはチェック時に毎晩使う前提。「手軽に」はW洗顔を省略、ほかの手間設定ではW洗顔も選択可能。花王の登録製品はW洗顔不要で、追加洗顔が必須とは限りません。化粧の濃さにより適合は変わります。</li>
       <li>「手軽に」は任意の化粧水・美容液の追加手順を控えめに評価し、「しっかり」は有用な追加手順を許容します。価格は月予算を上限とし、評価が同等の場合のみ安い候補を優先します。</li>
       <li>公式情報が確認できた商品に、小さな情報透明性ボーナスを加えます。これは美容効果や成分濃度の高さを表すものではなく、配合量が未確認の商品を0％と評価することもありません。採点内訳は商品DBのデバッグ画面で確認できます。</li>
       <li>保存した組み合わせはブラウザ内にのみ保存します。端末やブラウザを変えると共有されず、ブラウザデータの消去で失われます。</li>
@@ -278,7 +283,7 @@ app.addEventListener('change',e=>{
   const field=e.target.dataset.field;
   if(field){
     if(field==='budget')state.budget=Number(e.target.value);
-    else if(field==='sensitiveSkin')state.sensitiveSkin=e.target.checked;
+    else if(field==='sensitiveSkin'||field==='useMakeupRemover')state[field]=e.target.checked;
     else if(field==='swapExtra')state.swapExtra=Number(e.target.value);
     else state[field]=e.target.value;
     if(!['swapCategory','swapExtra'].includes(field))state.manual=null;

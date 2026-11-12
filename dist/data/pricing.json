@@ -4,7 +4,7 @@
     "taxIncluded": true,
     "priceKind": "retailerOnline",
     "verifiedAt": "2026-11-13",
-    "notice": "登録60商品のJAN一致通販税込掲載価格（マツキヨ54・ツルハ6）。マツキヨ優先、価格確認不可の場合ツルハで補完。店頭価格・将来価格と異なる場合があり、自動更新は行いません。"
+    "notice": "登録65品のJAN一致の通販税込価格（マツキヨココカラ59件・ツルハ6件）。価格は自動更新ではなく将来変動する場合があります。"
   },
   "prices": {
     "biore-foam-smooth": {
@@ -424,6 +424,41 @@
       "priceJPY": 305,
       "jan": "4901301008497",
       "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301008497",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-cleansing-oil": {
+      "priceJPY": 1581,
+      "jan": "4901301417008",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301417008",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-cleansing-oil-moist": {
+      "priceJPY": 1581,
+      "jan": "4901301440365",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301440365",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-cleansing-liquid": {
+      "priceJPY": 1139,
+      "jan": "4901301263049",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301263049",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "biore-cleansing-paste": {
+      "priceJPY": 778,
+      "jan": "4901301246769",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301246769",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13"
+    },
+    "nivea-cleansing-beauty": {
+      "priceJPY": 1430,
+      "jan": "4901301388902",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301388902",
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-13"
     }

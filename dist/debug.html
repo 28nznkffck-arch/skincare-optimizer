@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f5f6f0">
   <title>商品DBデバッグ｜SKINCARE LAB</title>
-  <link rel="stylesheet" href="./styles.css?v=0.7.6">
-  <script type="module" src="./debug.js?v=0.7.6"></script>
+  <link rel="stylesheet" href="./styles.css?v=0.7.7">
+  <script type="module" src="./debug.js?v=0.7.7"></script>
 </head>
 <body>
   <main class="shell debug-page">
@@ -14,7 +14,7 @@
     <section class="debug-heading"><span class="eyebrow">CATALOG &amp; SCORING DEBUG</span><h1>商品DB・選定ロジックの検証</h1><p>商品データの補正、登録スコアの確認、選ばれた理由・選ばれなかった理由の比較を行えます。</p></section>
     <section class="panel debug-context" id="debugContext" aria-label="現在の選定結果"></section>
     <section class="panel debug-panel">
-      <div class="debug-filters"><label>商品検索<input id="debugSearch" class="select" type="search" placeholder="商品名・ブランド・JAN・主要成分"></label><label>品目<select id="debugCategory" class="select"><option value="all">すべて</option><option value="cleanser">洗顔</option><option value="toner">化粧水</option><option value="serum">美容液</option><option value="moisturizer">保湿</option></select></label></div>
+      <div class="debug-filters"><label>商品検索<input id="debugSearch" class="select" type="search" placeholder="商品名・ブランド・JAN・主要成分"></label><label>品目<select id="debugCategory" class="select"><option value="all">すべて</option><option value="makeupRemover">メイク落とし</option><option value="cleanser">洗顔</option><option value="toner">化粧水</option><option value="serum">美容液</option><option value="moisturizer">保湿</option></select></label></div>
       <div id="debugCount" class="micro muted">読み込み中…</div>
       <div id="debugItems" class="debug-items"></div>
       <div id="debugPagination" class="debug-pagination"></div>

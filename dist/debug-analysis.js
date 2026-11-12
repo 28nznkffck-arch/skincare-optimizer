@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.7.6';
+import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.7.7';
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';

@@ -1,6 +1,6 @@
-export const CATEGORIES = ["cleanser", "toner", "serum", "moisturizer"];
+export const CATEGORIES = ["makeupRemover", "cleanser", "toner", "serum", "moisturizer"];
 export const CATEGORY_LABELS = {
-  cleanser: "洗顔", toner: "化粧水", serum: "美容液", moisturizer: "保湿"
+  makeupRemover: "メイク落とし", cleanser: "洗顔", toner: "化粧水", serum: "美容液", moisturizer: "保湿"
 };
 export const CONCERN_GROUPS = [
   {label:"毛穴", items:{pores:"毛穴の目立ち", blackheads:"黒ずみ・角栓"}},
@@ -69,7 +69,7 @@ export function explainRoutineScore(products, options={}) {
   // 適合性が高い化粧水までほぼ必ず落選するので、少ない手順の利点は
   // 小さな「手間コスト」として扱い、悩みへの追加適合性と比較する。
   const stepPenalty = options.priority === "simple" ? 5 : options.priority === "thorough" ? 0 : 2;
-  push('steps','追加ステップの手間',-products.filter(p=>p.category==="toner" || p.category==="serum").length * stepPenalty,
+  push('steps','追加ステップの手間',-(products.filter(p=>p.category==="toner" || p.category==="serum").length + (options.useMakeupRemover && products.some(p=>p.category==="cleanser")?1:0)) * stepPenalty,
     `化粧水・美容液 1品あたり ${stepPenalty}点の手間コスト`);
   // 肌質・使用感は商品DBの暫定的な適合情報で加点。刺激の有無を保証するものではない。
   if(options.skinType==="dry") push('skin','乾燥肌との適合',Math.max(0,...products.map(p=>p.scores?.dryness||0))*1.8);
@@ -116,7 +116,12 @@ export function optimize(catalog, options={}) {
   const grouped = CATEGORIES.map(cat=>{
     let choices = catalog.filter(p=>p.category===cat && !excluded.has(p.id));
     if (locked[cat]) choices=choices.filter(p=>p.id===locked[cat]);
-    if (cat==="toner" || cat==="serum") {
+    if (cat==="makeupRemover") {
+      if (!options.useMakeupRemover) choices=[null];
+    } else if (cat==="cleanser" && options.useMakeupRemover) {
+      // メイク落としで洗浄が完結する場合、洗顔は任意。手軽さ重視は省く。
+      if (!locked[cat]) choices=options.priority==="simple"?[null]:[null,...choices];
+    } else if (cat==="toner" || cat==="serum") {
       if (!locked[cat]) choices=[null,...choices];
     }
     return choices;
@@ -128,6 +133,8 @@ export function optimize(catalog, options={}) {
     if(spent>budget || (firstOnly && minimumMonthly && best && spent>=best.monthly)) return;
     if (index===grouped.length) {
       const products=chosen.filter(Boolean);
+      if(options.useMakeupRemover && !products.some(p=>p.category==="makeupRemover")) return;
+      if(options.useMakeupRemover && !products.some(p=>p.category==="cleanser") && products.some(p=>p.category==="makeupRemover" && !p.doubleCleanseNotNeeded)) return;
       if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !products.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)))) return;
       const result=evaluate(products,options);
       if (result.monthly>budget) return;
