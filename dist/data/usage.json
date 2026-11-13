@@ -716,6 +716,41 @@
       "sourceKind": "manufacturer",
       "verifiedAt": "2026-11-13",
       "usageCountStatus": "hypothetical"
+    },
+    "dew-honey-balm": {
+      "doseDescription": "乾いた手に直径約2.5cm。メイクとなじませ、少量の水で乳化させてすすぐ。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167503461/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-honey-balm-clear": {
+      "doseDescription": "乾いた手に直径約2.5cm。メイクとなじませ、少量の水で乳化させてすすぐ。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553022/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-sweet-chantilly-wash": {
+      "doseDescription": "顔をぬらし、手に直径約2cmをとって泡立てて洗い、すすぐ。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167511411/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-warm-hygge-oil": {
+      "doseDescription": "朝か夜に1回、化粧水の後に直径約2cm。容器を振ってから温めた手で顔全体になじませる。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167854143/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-moist-lift-essence": {
+      "doseDescription": "化粧水の後にポンプ1押しを顔全体になじませる。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167323939/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
     }
   }
 }

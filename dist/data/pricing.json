@@ -4,7 +4,7 @@
     "taxIncluded": true,
     "priceKind": "retailerOnline",
     "verifiedAt": "2026-11-13",
-    "notice": "登録115商品の税込掲載価格（マツキヨ107品＋ツルハ8品）。最新販売価格・在庫は保証せず。"
+    "notice": "登録120商品の税込掲載価格（マツキヨ112品＋ツルハ8品）。最新販売価格・在庫は保証せず。"
   },
   "prices": {
     "biore-foam-smooth": {
@@ -861,6 +861,46 @@
       "retailer": "ツルハグループe-shop",
       "verifiedAt": "2026-11-13",
       "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+    },
+    "dew-honey-balm": {
+      "priceJPY": 2750,
+      "jan": "4973167503461",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167503461",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
+    },
+    "dew-honey-balm-clear": {
+      "priceJPY": 2750,
+      "jan": "4973167553022",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167553022",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
+    },
+    "dew-sweet-chantilly-wash": {
+      "priceJPY": 2750,
+      "jan": "4973167511411",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167511411",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
+    },
+    "dew-warm-hygge-oil": {
+      "priceJPY": 3850,
+      "jan": "4973167854143",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167854143",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
+    },
+    "dew-moist-lift-essence": {
+      "priceJPY": 6380,
+      "jan": "4973167323939",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167323939",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
     }
   }
 }

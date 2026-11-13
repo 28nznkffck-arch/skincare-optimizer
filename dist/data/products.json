@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.8.2",
+    "version": "0.8.3",
     "checkedAt": "2026-11-13",
-    "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "登録115品（花王グループ101品・その他14品）。DEWの未登録テクスチャ6品とsuisaiクレンジングバター1品を追加。JANはメーカー、価格はマツキヨ6品・ツルハ1品の掲載情報を照合。掲載価格は最新のライブ価格ではなく、使用回数・肌悩み点数は仮推定。数量限定・製造終了・日焼け止めは対象外。",
+    "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・カネボウ化粧品・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
+    "notice": "登録120品（花王グループ106品・その他14品）。DEWのクレンジング2品・洗顔1品・美容液2品を追加。メーカーとマツキヨココカラのJAN・税込掲載価格を照合。使用回数と肌悩みへの適合点は仮推定。数量限定・製造終了・日焼け止めは対象外。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -3880,6 +3880,184 @@
       },
       "doubleCleanseNotNeeded": false,
       "cleansingGuidance": "W洗顔不要のメーカー記載が確認できないので、アプリでは洗顔料との組み合わせだけを候補にする。メーカーがW洗顔必須と断定したものではない。"
+    },
+    {
+      "id": "dew-honey-balm",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ハニーバームクレンジング",
+      "category": "makeupRemover",
+      "jan": "4973167503461",
+      "volume": 180,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167503461/",
+      "keyIngredients": [
+        "トリエチルヘキサノイン",
+        "ミネラルオイル",
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "ローヤルゼリーエキス"
+      ],
+      "explanation": "はちみつ状のバームでメイクや毛穴汚れを落とし、しっとり洗い上げる。",
+      "scores": {
+        "pores": 2,
+        "dryness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2750,
+      "demoUses": 90,
+      "dailyUses": 1,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "メーカーの商品情報でW洗顔不要の記載を確認できなかったため、アプリでは洗顔料との組み合わせを候補にする。"
+    },
+    {
+      "id": "dew-honey-balm-clear",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ハニーバームクレンジング クリア",
+      "category": "makeupRemover",
+      "jan": "4973167553022",
+      "volume": 180,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553022/",
+      "keyIngredients": [
+        "オリーブ果実油",
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "ローヤルゼリーエキス"
+      ],
+      "explanation": "メイクや毛穴汚れを落とすバーム。角栓を洗う成分としてオリーブ果実油を配合し、すっきり洗い上げる。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 2,
+        "dryness": 1
+      },
+      "feel": "light",
+      "demoPrice": 2750,
+      "demoUses": 90,
+      "dailyUses": 1,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "メーカーの商品情報でW洗顔不要の記載を確認できなかったため、アプリでは洗顔料との組み合わせを候補にする。"
+    },
+    {
+      "id": "dew-sweet-chantilly-wash",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "スイートシャンティウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167511411",
+      "volume": 125,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167511411/",
+      "keyIngredients": [
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "とろみのあるペーストを泡立てて使う洗顔料。濃密な泡で汚れを洗い、しっとりした洗い上がり。",
+      "scores": {
+        "dryness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2750,
+      "demoUses": 125,
+      "dailyUses": 2,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-warm-hygge-oil",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ウォームヒュッゲオイル",
+      "category": "serum",
+      "jan": "4973167854143",
+      "volume": 40,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167854143/",
+      "keyIngredients": [
+        "グリセリン",
+        "スクワラン",
+        "ヒアルロン酸Na",
+        "ワレモコウエキス",
+        "ローヤルゼリーエキス"
+      ],
+      "explanation": "化粧水の後に使う温感オイル美容液。マッサージするように顔全体になじませ、うるおいとツヤを与える。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2
+      },
+      "feel": "rich",
+      "demoPrice": 3850,
+      "demoUses": 80,
+      "dailyUses": 1,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-moist-lift-essence",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "モイストリフトエッセンス",
+      "category": "serum",
+      "jan": "4973167323939",
+      "volume": 45,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167323939/",
+      "keyIngredients": [
+        "ジメチコン",
+        "グリセリン",
+        "マカデミア種子油",
+        "アセチルグルコサミン",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "化粧水の後に顔全体に使うハリ美容液。うるおいを与え、弾むようなハリ感のある肌に整える。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 6380,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
     }
   ]
 }
