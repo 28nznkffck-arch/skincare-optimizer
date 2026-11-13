@@ -10,7 +10,11 @@ export function mergeCatalogData(products, pricing={}, usage={}) {
     const validUsage=amount && /^https:\/\//.test(amount.sourceUrl||'');
     const duration=Number(amount?.durationDays);
     const times=Number(amount?.referenceDailyUses);
-    const referenceUses=validUsage && Number.isFinite(duration) && duration>0 && Number.isFinite(times) && times>0 ? duration*times : null;
+    // 個包装に書かれた「1回分×32個」は使用期間でなく確定使用回数。
+    const packageUses=Number(amount?.verifiedUses);
+    const verifiedPackage=validUsage && Number.isInteger(packageUses) && packageUses>0;
+    const durationUses=validUsage && Number.isFinite(duration) && duration>0 && Number.isFinite(times) && times>0 ? duration*times : null;
+    const referenceUses=verifiedPackage?packageUses:durationUses;
     return {
       ...product,
       priceReference:validPrice?price:null,
@@ -23,13 +27,14 @@ export function mergeCatalogData(products, pricing={}, usage={}) {
   // 1回量を平均する。異なる剤型を跨がない／サンプル1件を全体の標準としない。
   const samples=new Map();
   for(const product of merged){
-    if(!product.referenceUses || !Number.isFinite(Number(product.volume)) || Number(product.volume)<=0)continue;
+    if(!product.referenceUses || product.usageReference?.excludeFromCategoryAverages ||
+      !Number.isFinite(Number(product.volume)) || Number(product.volume)<=0)continue;
     const key=`${product.category}/${product.unit}`;
     if(!samples.has(key))samples.set(key,[]);
     samples.get(key).push(Number(product.volume)/product.referenceUses);
   }
   return merged.map(product=>{
-    if(product.referenceUses)return {...product,usageEstimate:{kind:'duration',sampleCount:1}};
+    if(product.referenceUses)return {...product,usageEstimate:{kind:product.usageReference?.verifiedUses?'packageCount':'duration',sampleCount:1}};
     const amounts=samples.get(`${product.category}/${product.unit}`)||[];
     if(amounts.length<2)return {...product,estimatedUses:null,usageEstimate:{kind:'demo',sampleCount:amounts.length}};
     const mean=amounts.reduce((sum,n)=>sum+n,0)/amounts.length;

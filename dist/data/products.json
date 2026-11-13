@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.7.10",
+    "version": "0.8.0",
     "checkedAt": "2026-11-13",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "登録81商品、花王67品・その他14品。税込価格はマツキヨ74品とツルハ7品のJAN対応販売情報から参照。新規SOFINA BASIC＋2品の価格はマツキヨ商品一覧情報、JANは@cosmeで確認。価格はリアルタイムの販売価格を保証しない。メーカー公表の使用期間を優先し、その他は仮推定。肌悩み点数は独自の仮評価。数量限定品と日焼け止めは対象外。",
+    "notice": "登録97商品：花王グループ83商品（うちカネボウ化粧品16商品）、その他14商品。カネボウ新規16商品は通常販売品のメーカー公式製品説明とマツキヨ通販の商品ページでJAN・価格を照合。価格は確認時点の掲載値で自動更新なし。酵素洗顔カプセルは包装の実数（32回分）を採用し、一般の洗顔料の平均使用量には混ぜない。その他の未確認品は使用量・回数を仮推定。肌悩みスコアは独自の暫定評価であり効果を保証しない。freeplusはMy Kao Mall専用品のためドラッグストア価格対象外。数量限定品・日焼け止めは登録対象外。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -2660,6 +2660,578 @@
         "officialSource": true,
         "verifiedAt": "2026-11-13",
         "sensitiveSkinPatchTested": true
+      }
+    },
+    {
+      "id": "suisai-powder-n",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア パウダーウォッシュN",
+      "category": "cleanser",
+      "jan": "4973167823859",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167823859/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "毛穴の黒ずみ汚れ・角栓・古い角質を酵素とアミノ酸系洗浄成分で洗い落とす。洗浄による肌のくすみ対策。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "dullness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2090,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-powder-black",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ブラック パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167030141",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167030141/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "炭",
+        "モロッコ溶岩クレイ"
+      ],
+      "explanation": "酵素・炭・クレイで毛穴の黒ずみ汚れや過剰な皮脂を洗浄。テカリ・ベタつきが気になる肌向け。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "oiliness": 3,
+        "shine": 3,
+        "dullness": 1
+      },
+      "feel": "light",
+      "demoPrice": 2090,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-powder-pink",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ピンク パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167593905",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167593905/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "モモ果汁",
+        "ザクロ果実エキス",
+        "ホホバ種子油"
+      ],
+      "explanation": "カサつくのにテカる混合肌向け酵素洗顔。古い角質・皮脂汚れを洗い流し、うるおいを守る。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 2,
+        "oiliness": 2,
+        "dryness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2090,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-powder-green",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア グリーン パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167593868",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167593868/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "ツボクサ葉／茎エキス"
+      ],
+      "explanation": "ニキビができやすい肌向け。古い角質・過剰な皮脂を洗い落としてニキビを防ぐ化粧品の洗顔パウダー。薬用有効成分は標榜しない。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 2,
+        "oiliness": 2,
+        "acne": 2
+      },
+      "feel": "light",
+      "demoPrice": 2090,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-powder-gold",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ゴールド パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167079836",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167079836/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "ヒマワリ種子油",
+        "アボカド油",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "毛穴汚れ・角栓を洗い落としつつ保湿オイルを配合。洗顔後のつっぱりや乾燥感が気になる人向け。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 3,
+        "dryness": 2,
+        "dullness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 2530,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-paste",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ペーストウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167018156",
+      "volume": 120,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167018156/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "カオリン",
+        "モロッコ溶岩クレイ",
+        "グリセリン"
+      ],
+      "explanation": "毛穴の黒ずみ汚れ・角栓や古い角質を洗い落とす毎日用ペースト洗顔。泡立て洗顔・泡立てない洗顔の両方が可能。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "dullness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 1430,
+      "demoUses": 70,
+      "dailyUses": 1,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-peeling-powder",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ピーリング パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167535622",
+      "volume": 32,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167535622/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "炭酸水素Na",
+        "クエン酸",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "W酵素と水に触れて発泡する洗浄成分で角栓・古い角質を洗い落とすパウダー。通常の洗顔は毎日使用可能。パック洗顔は週1～2回が目安。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "dullness": 3
+      },
+      "feel": "light",
+      "demoPrice": 2750,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "dew-afterglow",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "アフターグロウドロップ",
+      "category": "toner",
+      "jan": "4973167074305",
+      "volume": 170,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167074305/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン",
+        "グリセリン"
+      ],
+      "explanation": "ヒアルロン酸を含む化粧液。肌に潤いを与え、しっとりした感触を長く保つ。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 3850,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "dew-bright-aura",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトオーラローション",
+      "category": "toner",
+      "jan": "4973167553046",
+      "volume": 170,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553046/",
+      "keyIngredients": [
+        "L-アスコルビン酸 2-グルコシド",
+        "グリチルリチン酸ジカリウム",
+        "加水分解ヒアルロン酸"
+      ],
+      "explanation": "薬用ブライトニング化粧液。ビタミンC誘導体でメラニン生成を抑え、シミ・ソバカスを防ぐ。肌荒れも防ぎ、潤いによる透明感を与える。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "irritation": 2,
+        "dullness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 4950,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "L-アスコルビン酸 2-グルコシド",
+          "グリチルリチン酸ジカリウム"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-bounce",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトバウンスミルク",
+      "category": "moisturizer",
+      "jan": "4973167019108",
+      "volume": 80,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167019108/",
+      "keyIngredients": [
+        "カモミラET",
+        "グリチルレチン酸ステアリル",
+        "ヒアルロン酸",
+        "グリセリン"
+      ],
+      "explanation": "薬用ブライトニング乳液。カモミラETでメラニンの生成を抑えシミ・ソバカスを防ぎ、肌荒れも防ぐ。潤いでふっくらハリ感を与える。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "irritation": 2,
+        "firmness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 5280,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "カモミラET",
+          "グリチルレチン酸ステアリル"
+        ]
+      }
+    },
+    {
+      "id": "dew-lotion-moist",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ローション しっとり",
+      "category": "toner",
+      "jan": "4973167251911",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251911/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "グリセリン",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "濃密なとろみが肌の角層に潤いを与え、もっちりとしたハリ感を保つ化粧水。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 3850,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "dew-milk-moist",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "エマルジョン しっとり",
+      "category": "moisturizer",
+      "jan": "4973167252512",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252512/",
+      "keyIngredients": [
+        "スクワラン",
+        "マカデミアナッツ油",
+        "ヒアルロン酸Na",
+        "グリセリン"
+      ],
+      "explanation": "肌の角層へ潤いを与えるしっとりタイプの乳液。乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "moist",
+      "demoPrice": 4180,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "dew-bright-lotion-moist",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングローション しっとり",
+      "category": "toner",
+      "jan": "4973167383551",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383551/",
+      "keyIngredients": [
+        "L-アスコルビン酸 2-グルコシド",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "薬用美白化粧水。メラニンの生成を抑え、シミ・ソバカスを防ぐ。潤いによるくすみ感にも配慮。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dullness": 2,
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 4400,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "L-アスコルビン酸 2-グルコシド"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-lotion-rich",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングローション とてもしっとり",
+      "category": "toner",
+      "jan": "4973167383575",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383575/",
+      "keyIngredients": [
+        "L-アスコルビン酸 2-グルコシド",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "薬用美白化粧水。シミ・ソバカスを予防しながらうるおいを与える、高保湿タイプ。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dullness": 2,
+        "dryness": 3
+      },
+      "feel": "rich",
+      "demoPrice": 4400,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "L-アスコルビン酸 2-グルコシド"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-milk-moist",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングエマルジョン しっとり",
+      "category": "moisturizer",
+      "jan": "4973167383452",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383452/",
+      "keyIngredients": [
+        "カモミラET",
+        "ヒアルロン酸Na",
+        "スクワラン"
+      ],
+      "explanation": "カモミラETの有効成分でメラニン生成を抑え、シミ・ソバカスを防ぐ薬用乳液。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "dullness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 4730,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "カモミラET"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-milk-rich",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングエマルジョン とてもしっとり",
+      "category": "moisturizer",
+      "jan": "4973167383476",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383476/",
+      "keyIngredients": [
+        "カモミラET",
+        "ヒアルロン酸Na",
+        "スクワラン"
+      ],
+      "explanation": "シミ・ソバカスを防ぐ薬用美白乳液。うるおい感の高いとてもしっとりタイプ。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "dullness": 1
+      },
+      "feel": "rich",
+      "demoPrice": 4730,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "カモミラET"
+        ]
       }
     }
   ]

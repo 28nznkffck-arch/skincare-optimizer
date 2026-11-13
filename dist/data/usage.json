@@ -466,6 +466,130 @@
       "durationDays": 90,
       "referenceDailyUses": 2,
       "referenceBasis": "花王Q&A：朝晩使用で約3か月分。参考30日/月で算出。品質保持期限ではない"
+    },
+    "suisai-powder-n": {
+      "doseDescription": "洗浄料1カプセル（0.4g）を水で泡立てる",
+      "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "verifiedUses": 32,
+      "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+      "excludeFromCategoryAverages": true
+    },
+    "suisai-powder-black": {
+      "doseDescription": "1カプセル（0.4g）で1回分",
+      "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "verifiedUses": 32,
+      "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+      "excludeFromCategoryAverages": true
+    },
+    "suisai-powder-pink": {
+      "doseDescription": "1カプセル（0.4g）で1回分",
+      "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "verifiedUses": 32,
+      "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+      "excludeFromCategoryAverages": true
+    },
+    "suisai-powder-green": {
+      "doseDescription": "1カプセル（0.4g）で1回分",
+      "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "verifiedUses": 32,
+      "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+      "excludeFromCategoryAverages": true
+    },
+    "suisai-powder-gold": {
+      "doseDescription": "1カプセル（0.4g）で1回分",
+      "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "verifiedUses": 32,
+      "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+      "excludeFromCategoryAverages": true
+    },
+    "suisai-paste": {
+      "doseDescription": "直径約3cmを泡立て、または顔になじませて洗う",
+      "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/paste_wash/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "suisai-peeling-powder": {
+      "doseDescription": "1包（1g）で1回分。パック洗顔のみ週1～2回",
+      "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/peeling_powder_wash/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "verifiedUses": 32,
+      "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+      "excludeFromCategoryAverages": true
+    },
+    "dew-afterglow": {
+      "doseDescription": "直径約2.5cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167074305/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-bright-aura": {
+      "doseDescription": "直径約3cm",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553046/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-bright-bounce": {
+      "doseDescription": "ポンプ1押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167019108/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-lotion-moist": {
+      "doseDescription": "ポンプ2押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251911/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-milk-moist": {
+      "doseDescription": "ポンプ1押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252512/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-bright-lotion-moist": {
+      "doseDescription": "ポンプ2押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383551/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-bright-lotion-rich": {
+      "doseDescription": "ポンプ2押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383575/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-bright-milk-moist": {
+      "doseDescription": "ポンプ1押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383452/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-bright-milk-rich": {
+      "doseDescription": "ポンプ1押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383476/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
     }
   }
 }

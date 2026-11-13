@@ -4,7 +4,7 @@
     "taxIncluded": true,
     "priceKind": "retailerOnline",
     "verifiedAt": "2026-11-13",
-    "notice": "登録81商品、マツキヨ74件・ツルハ7件の掲載税込価格。新規2商品のマツキヨのブランド一覧掲載価格と@cosme SHOPPING掲載JANを照合。ライブの価格や在庫は保証しません。旧商品の一部も検索インデックスからの掲載情報です。"
+    "notice": "計97商品のJAN一致・税込通販掲載価格（マツキヨ90件、ツルハ7件）。カネボウ16品はマツキヨ掲載価格を採用。実売価格や在庫は常時変動する可能性があり、自動更新は行っていない。"
   },
   "prices": {
     "biore-foam-smooth": {
@@ -589,6 +589,134 @@
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-13",
       "verificationMethod": "マツキヨの商品一覧記載の容量・税込価格と、@cosme SHOPPING記載JANを照合。現在のライブ価格は未確認"
+    },
+    "suisai-powder-n": {
+      "priceJPY": 2090,
+      "jan": "4973167823859",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167823859",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "suisai-powder-black": {
+      "priceJPY": 2090,
+      "jan": "4973167030141",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167030141",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "suisai-powder-pink": {
+      "priceJPY": 2090,
+      "jan": "4973167593905",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167593905",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "suisai-powder-green": {
+      "priceJPY": 2090,
+      "jan": "4973167593868",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167593868",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "suisai-powder-gold": {
+      "priceJPY": 2530,
+      "jan": "4973167079836",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167079836",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "suisai-paste": {
+      "priceJPY": 1430,
+      "jan": "4973167018156",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167018156",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "suisai-peeling-powder": {
+      "priceJPY": 2750,
+      "jan": "4973167535622",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167535622",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "dew-afterglow": {
+      "priceJPY": 3850,
+      "jan": "4973167074305",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167074305",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "dew-bright-aura": {
+      "priceJPY": 4950,
+      "jan": "4973167553046",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167553046",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "dew-bright-bounce": {
+      "priceJPY": 5280,
+      "jan": "4973167019108",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167019108",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "dew-lotion-moist": {
+      "priceJPY": 3850,
+      "jan": "4973167251911",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251911",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "dew-milk-moist": {
+      "priceJPY": 4180,
+      "jan": "4973167252512",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167252512",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "dew-bright-lotion-moist": {
+      "priceJPY": 4400,
+      "jan": "4973167383551",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383551",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "dew-bright-lotion-rich": {
+      "priceJPY": 4400,
+      "jan": "4973167383575",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383575",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "dew-bright-milk-moist": {
+      "priceJPY": 4730,
+      "jan": "4973167383452",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383452",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "dew-bright-milk-rich": {
+      "priceJPY": 4730,
+      "jan": "4973167383476",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383476",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
     }
   }
 }
