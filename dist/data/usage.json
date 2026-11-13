@@ -667,6 +667,55 @@
       "sourceKind": "manufacturer",
       "verifiedAt": "2026-11-13",
       "usageCountStatus": "hypothetical"
+    },
+    "dew-lotion-light": {
+      "doseDescription": "ポンプ2押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251645/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-lotion-rich": {
+      "doseDescription": "ポンプ2押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251935/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-milk-light": {
+      "doseDescription": "ポンプ1押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251683/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-milk-rich": {
+      "doseDescription": "ポンプ1押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252529/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-bright-lotion-light": {
+      "doseDescription": "ポンプ2押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167382264/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-bright-milk-light": {
+      "doseDescription": "ポンプ1押し",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383438/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "suisai-gold-cleansing-butter": {
+      "doseDescription": "付属スパチュラで適量",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167552995/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
     }
   }
 }

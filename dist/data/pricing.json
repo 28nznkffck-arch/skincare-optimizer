@@ -4,7 +4,7 @@
     "taxIncluded": true,
     "priceKind": "retailerOnline",
     "verifiedAt": "2026-11-13",
-    "notice": "計108品のJANに対応した税込通販掲載価格。マツキヨココカラ101件、ツルハ7件。実際の最新価格・在庫を保証せず、税込掲載データの取得日を記録。"
+    "notice": "登録115商品の税込掲載価格（マツキヨ107品＋ツルハ8品）。最新販売価格・在庫は保証せず。"
   },
   "prices": {
     "biore-foam-smooth": {
@@ -805,6 +805,62 @@
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-13",
       "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-lotion-light": {
+      "priceJPY": 3850,
+      "jan": "4973167251645",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251645",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+    },
+    "dew-lotion-rich": {
+      "priceJPY": 3850,
+      "jan": "4973167251935",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251935",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+    },
+    "dew-milk-light": {
+      "priceJPY": 4180,
+      "jan": "4973167251683",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251683",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+    },
+    "dew-milk-rich": {
+      "priceJPY": 4180,
+      "jan": "4973167252529",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167252529",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+    },
+    "dew-bright-lotion-light": {
+      "priceJPY": 4400,
+      "jan": "4973167382264",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167382264",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+    },
+    "dew-bright-milk-light": {
+      "priceJPY": 4730,
+      "jan": "4973167383438",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383438",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+    },
+    "suisai-gold-cleansing-butter": {
+      "priceJPY": 2750,
+      "jan": "4973167552995",
+      "url": "https://shop.tsuruha.co.jp/10172991.html",
+      "retailer": "ツルハグループe-shop",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
     }
   }
 }

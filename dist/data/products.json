@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.8.1",
+    "version": "0.8.2",
     "checkedAt": "2026-11-13",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "登録108商品、花王グループ94商品（うちカネボウ化粧品27）、その他14商品。価格はマツキヨ101件・ツルハ7件のJAN対応税込掲載情報。今回の追加はsuisai2品（拭き取り化粧水・スクラブ洗顔）とDEW9品（洗顔・クレンジング・クリーム・シワ改善美容液）。製造終了品・数量限定・日焼け止め・詰替えは対象外。未公表の使用回数と肌悩みの適合点は仮推定。W洗顔不要と確認できないメイク落としは洗顔料併用で提案。",
+    "notice": "登録115品（花王グループ101品・その他14品）。DEWの未登録テクスチャ6品とsuisaiクレンジングバター1品を追加。JANはメーカー、価格はマツキヨ6品・ツルハ1品の掲載情報を照合。掲載価格は最新のライブ価格ではなく、使用回数・肌悩み点数は仮推定。数量限定・製造終了・日焼け止めは対象外。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -3623,6 +3623,263 @@
           "ナイアシンアミド"
         ]
       }
+    },
+    {
+      "id": "dew-lotion-light",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ローション さっぱり",
+      "category": "toner",
+      "jan": "4973167251645",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251645/",
+      "keyIngredients": [
+        "グリセリン",
+        "アセチルグルコサミン",
+        "メチルセリン",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "さっぱりタイプの保湿化粧水。角層にうるおいを与え、ハリ感のある肌へ整える。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2
+      },
+      "feel": "light",
+      "demoPrice": 3850,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-lotion-rich",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ローション とてもしっとり",
+      "category": "toner",
+      "jan": "4973167251935",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251935/",
+      "keyIngredients": [
+        "グリセリン",
+        "アセチルグルコサミン",
+        "メチルセリン",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "とてもしっとりタイプの保湿化粧水。角層にうるおいを与え、しっとりとした肌へ整える。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2
+      },
+      "feel": "rich",
+      "demoPrice": 3850,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-milk-light",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "エマルジョン さっぱり",
+      "category": "moisturizer",
+      "jan": "4973167251683",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251683/",
+      "keyIngredients": [
+        "グリセリン",
+        "マカデミアナッツ油",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "さっぱりタイプの保湿乳液。角層にうるおいを与え、乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "light",
+      "demoPrice": 4180,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-milk-rich",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "エマルジョン とてもしっとり",
+      "category": "moisturizer",
+      "jan": "4973167252529",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252529/",
+      "keyIngredients": [
+        "グリセリン",
+        "マカデミアナッツ油",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "とてもしっとりタイプの保湿乳液。角層にうるおいを与え、乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "rich",
+      "demoPrice": 4180,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-bright-lotion-light",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングローション さっぱり",
+      "category": "toner",
+      "jan": "4973167382264",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167382264/",
+      "keyIngredients": [
+        "L-アスコルビン酸 2-グルコシド",
+        "グリチルリチン酸ジカリウム",
+        "濃グリセリン",
+        "ヒアルロン酸Na-2"
+      ],
+      "explanation": "薬用美白化粧水のさっぱりタイプ。メラニン生成を抑えてシミ・そばかすを防ぐ。既存のシミを消すものではない。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "irritation": 2,
+        "dullness": 2
+      },
+      "feel": "light",
+      "demoPrice": 4400,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。",
+        "activeIngredients": [
+          "L-アスコルビン酸 2-グルコシド",
+          "グリチルリチン酸ジカリウム"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-milk-light",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングエマルジョン さっぱり",
+      "category": "moisturizer",
+      "jan": "4973167383438",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383438/",
+      "keyIngredients": [
+        "カモミラET",
+        "濃グリセリン",
+        "マカデミアナッツ油",
+        "ヒアルロン酸Na-2"
+      ],
+      "explanation": "薬用美白乳液のさっぱりタイプ。メラニン生成を抑えてシミ・そばかすを防ぎ、うるおいを与える。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "dullness": 1
+      },
+      "feel": "light",
+      "demoPrice": 4730,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。",
+        "activeIngredients": [
+          "カモミラET"
+        ]
+      }
+    },
+    {
+      "id": "suisai-gold-cleansing-butter",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ゴールド クレンジングバター",
+      "category": "makeupRemover",
+      "jan": "4973167552995",
+      "volume": 90,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167552995/",
+      "keyIngredients": [
+        "シア脂",
+        "ヒマワリ種子油",
+        "アボカド油",
+        "ホホバ種子油"
+      ],
+      "explanation": "濃厚なバター状のメイク落とし。メイク汚れや毛穴のメイク汚れを落とす。W洗顔不要と確認できないため洗顔料と組み合わせる。",
+      "scores": {
+        "dryness": 2,
+        "pores": 2,
+        "blackheads": 1
+      },
+      "feel": "rich",
+      "demoPrice": 2750,
+      "demoUses": 45,
+      "dailyUses": 1,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "W洗顔不要のメーカー記載が確認できないので、アプリでは洗顔料との組み合わせだけを候補にする。メーカーがW洗顔必須と断定したものではない。"
     }
   ]
 }
