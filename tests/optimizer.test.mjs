@@ -2,13 +2,13 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {CONCERNS, diagnoseProduct, explainRoutineScore, monthlyCost, priceOf, usesOf, optimize, scoreRoutine, swaps, transparencyDetails, unscoredConcerns} from '../dist/optimizer.js';
 import {createSavedPlan, savedPlanTotals, updateSavedUsage} from '../dist/plans.js';
-import {mergeCatalogData,unitPerUse} from '../dist/catalog-data.js';
+import {mergeCatalogData, reconcileCatalogState, unitPerUse} from '../dist/catalog-data.js';
 import fs from 'node:fs';
 
-const productDb=JSON.parse(fs.readFileSync(new URL('../dist/data/products.json',import.meta.url),'utf8'));
-const priceDb=JSON.parse(fs.readFileSync(new URL('../dist/data/pricing.json',import.meta.url),'utf8'));
-const usageDb=JSON.parse(fs.readFileSync(new URL('../dist/data/usage.json',import.meta.url),'utf8'));
-const catalog=mergeCatalogData(productDb.products,priceDb,usageDb);
+// Keep calculation examples reproducible when the editable catalog's prices or products change.
+const fixture=JSON.parse(fs.readFileSync(new URL('./fixtures/catalog-v0.8.3.json',import.meta.url),'utf8'));
+const {pricing:priceDb, usage:usageDb}=fixture;
+const catalog=mergeCatalogData(fixture.products,priceDb,usageDb);
 
 test('all active products have JAN-verified retailer quotes; limited edition is excluded',()=>{
   assert.equal(Object.keys(priceDb.prices).length,120);
@@ -312,6 +312,29 @@ test('saved routines preserve independent prices, frequencies and budget',()=>{
   assert.equal(updateSavedUsage(plan,'missing','price',100),false);
   assert.equal(updateSavedUsage(plan,id,'frequency',0),true);
   assert.equal(monthlyCost(catalog.find(p=>p.id===id),plan.overrides[id]),0);
+});
+
+test('retiring a product clears its active selection and preserves its saved costs',()=>{
+  const retiring=catalog.find(p=>p.id==='biore-foam-smooth');
+  const keeping=catalog.find(p=>p.id==='nivea-soft');
+  const active=[keeping];
+  const plan=createSavedPlan({products:[retiring,keeping]},{},'old-plan','2026-11-13T00:00:00Z');
+  const previous=savedPlanTotals(plan,[retiring,keeping]);
+  const state=reconcileCatalogState({
+    locked:{cleanser:retiring.id,moisturizer:keeping.id},
+    excluded:{[retiring.id]:'合わない'},
+    manual:[retiring.id,keeping.id],
+    overrides:{[keeping.id]:{price:600}},
+  },active);
+  assert.deepEqual(state.locked,{moisturizer:keeping.id});
+  assert.deepEqual(state.excluded,{[retiring.id]:'合わない'});
+  assert.equal(state.manual,null);
+  assert.deepEqual(state.overrides,{[keeping.id]:{price:600}});
+  const archived={...retiring,referencePrice:5000};
+  const saved=savedPlanTotals(plan,[keeping,archived]);
+  assert.deepEqual(saved.missing,[]);
+  assert.equal(saved.monthly,previous.monthly);
+  assert.equal(saved.initial,previous.initial);
 });
 
 test('score breakdown adds exactly to the optimization score',()=>{

@@ -2,5 +2,9 @@
   "name": "skincare-optimizer-prototype",
   "private": true,
   "type": "module",
-  "scripts": { "test": "node --test tests/*.test.mjs" }
+  "scripts": {
+    "catalog:build": "python3 scripts/build_catalog.py",
+    "catalog:check": "python3 scripts/build_catalog.py --check",
+    "test": "npm run catalog:check && node --test tests/*.test.mjs"
+  }
 }

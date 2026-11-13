@@ -1,0 +1,5706 @@
+{
+  "products": [
+    {
+      "id": "biore-foam-smooth",
+      "brand": "ビオレ",
+      "name": "ザフェイス 泡洗顔料 スムースモイスチャー",
+      "category": "cleanser",
+      "jan": "4901301474407",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301474407/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "グリセリン",
+        "ココイルグリシンK"
+      ],
+      "explanation": "泡で洗い、毛穴汚れが気になる部分にもなじませる洗顔料。",
+      "scores": {
+        "pores": 2,
+        "dullness": 0,
+        "dryness": 1
+      },
+      "demoPrice": 1100,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "メーカー目安は4〜5プッシュ。使用回数は仮置き。",
+      "tone": "軽い泡"
+    },
+    {
+      "id": "curel-foam",
+      "brand": "キュレル",
+      "name": "潤浸保湿 泡洗顔料",
+      "category": "cleanser",
+      "jan": "4901301269348",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301269348/",
+      "keyIngredients": [
+        "グリチルリチン酸2K",
+        "グリセリン"
+      ],
+      "explanation": "肌荒れ防止有効成分配合の薬用泡洗顔料。",
+      "scores": {
+        "pores": 1,
+        "dullness": 0,
+        "dryness": 2,
+        "irritation": 3
+      },
+      "sensitiveSkin": true,
+      "demoPrice": 1540,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1回のポンプ量が未検証のため回数は仮置き。",
+      "tone": "やさしい泡"
+    },
+    {
+      "id": "curel-sebum-foam",
+      "brand": "キュレル",
+      "name": "皮脂トラブルケア 泡洗顔料",
+      "category": "cleanser",
+      "jan": "4901301264336",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301264336/",
+      "keyIngredients": [
+        "グリチルリチン酸2K"
+      ],
+      "explanation": "皮脂の多さが気になる方向けの薬用泡洗顔料。",
+      "scores": {
+        "pores": 3,
+        "dullness": 0,
+        "dryness": 0,
+        "oiliness": 3,
+        "shine": 2,
+        "irritation": 2
+      },
+      "sensitiveSkin": true,
+      "demoPrice": 1650,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "使用回数は仮置き。",
+      "tone": "皮脂ケア",
+      "evidence": {
+        "activeIngredients": [
+          "グリチルリチン酸2K"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-toner-ii",
+      "brand": "キュレル",
+      "name": "潤浸保湿 化粧水 II しっとり",
+      "category": "toner",
+      "jan": "4901301236197",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236197/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "グリセリン"
+      ],
+      "explanation": "アラントインを有効成分とし、乾燥を考えた薬用化粧水。",
+      "scores": {
+        "pores": 1,
+        "dullness": 1,
+        "dryness": 3,
+        "irritation": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "moist",
+      "demoPrice": 2090,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "朝晩使用を想定。回数は仮置き。",
+      "tone": "しっとり",
+      "evidence": {
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-toner-iii",
+      "brand": "キュレル",
+      "name": "潤浸保湿 化粧水 III とてもしっとり",
+      "category": "toner",
+      "jan": "4901301236180",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236180/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分"
+      ],
+      "explanation": "よりしっとりした使用感の薬用化粧水。",
+      "scores": {
+        "pores": 1,
+        "dullness": 1,
+        "dryness": 3,
+        "irritation": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "rich",
+      "demoPrice": 2090,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "朝晩使用を想定。回数は仮置き。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "sofina-base-toner",
+      "brand": "ソフィーナ iP",
+      "name": "角層トリートメント 基礎化粧液",
+      "category": "toner",
+      "jan": "4901301422941",
+      "volume": 160,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301422941/",
+      "keyIngredients": [
+        "アミジノプロリン",
+        "ヒアルロン酸Na",
+        "セチルPGヒドロキシエチルパルミタミド"
+      ],
+      "explanation": "角層の保湿を目的とした基礎化粧液。",
+      "scores": {
+        "pores": 1,
+        "dullness": 2,
+        "dryness": 3
+      },
+      "feel": "light",
+      "demoPrice": 2420,
+      "demoUses": 115,
+      "dailyUses": 2,
+      "usage": "朝晩使用を想定。回数は仮置き。",
+      "tone": "みずみずしい"
+    },
+    {
+      "id": "sofina-niacinamide-toner",
+      "brand": "ソフィーナ iP",
+      "name": "薬用 角層トリートメント 深層化粧液",
+      "category": "toner",
+      "jan": "4901301472762",
+      "volume": 160,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301472762/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "グリセリン",
+        "セラミド機能成分"
+      ],
+      "explanation": "ナイアシンアミドを有効成分とする薬用化粧液。",
+      "scores": {
+        "pores": 1,
+        "dullness": 3,
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 3600,
+      "demoUses": 110,
+      "dailyUses": 2,
+      "usage": "朝晩使用を想定。回数は仮置き。",
+      "tone": "うるおい重視",
+      "evidence": {
+        "activeIngredients": [
+          "ナイアシンアミド"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "sofina-toning-serum",
+      "brand": "ソフィーナ iP",
+      "name": "薬用 角層トーニングセラム",
+      "category": "serum",
+      "jan": "4901301460264",
+      "volume": 30,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301460264/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "グリチルリチン酸2K"
+      ],
+      "explanation": "シミ予防、肌荒れ予防、乾燥によるくすみに着目した薬用美容液。",
+      "scores": {
+        "pores": 1,
+        "dullness": 3,
+        "dryness": 2,
+        "spots": 3,
+        "irritation": 2
+      },
+      "demoPrice": 6600,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1日1回と仮定。商品価格は公式表示6,600円を参考にしたデモ値。",
+      "tone": "集中ケア",
+      "evidence": {
+        "activeIngredients": [
+          "ナイアシンアミド",
+          "グリチルリチン酸2K"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "sofina-base-serum",
+      "brand": "ソフィーナ iP",
+      "name": "ベースケア セラム〈土台美容液〉",
+      "category": "serum",
+      "jan": "4901301412829",
+      "volume": 90,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301412829/",
+      "keyIngredients": [
+        "炭酸ガス",
+        "オタネニンジン根エキス"
+      ],
+      "explanation": "泡状の導入美容液。乾燥してごわついた肌の保湿を目的とする。",
+      "scores": {
+        "pores": 1,
+        "dullness": 1,
+        "dryness": 2
+      },
+      "demoPrice": 5500,
+      "demoUses": 80,
+      "dailyUses": 1,
+      "usage": "1日1回と仮定。回数は仮置き。",
+      "tone": "泡状"
+    },
+    {
+      "id": "nivea-soft",
+      "brand": "ニベア",
+      "name": "ニベアソフト スキンケアクリーム チューブ",
+      "category": "moisturizer",
+      "jan": "4901301043764",
+      "volume": 50,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301043764/",
+      "keyIngredients": [
+        "グリセリン",
+        "ホホバ種子油",
+        "酢酸トコフェロール"
+      ],
+      "explanation": "顔にも使える保湿クリーム。",
+      "scores": {
+        "pores": 0,
+        "dullness": 1,
+        "dryness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 480,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "朝晩使用を想定。回数は仮置き。",
+      "tone": "クリーム"
+    },
+    {
+      "id": "curel-milk",
+      "brand": "キュレル",
+      "name": "潤浸保湿 乳液",
+      "category": "moisturizer",
+      "jan": "4901301236173",
+      "volume": 120,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236173/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "グリセリン"
+      ],
+      "explanation": "アラントイン有効成分配合、乾燥性敏感肌向けの薬用乳液。",
+      "scores": {
+        "pores": 1,
+        "dullness": 1,
+        "dryness": 3,
+        "irritation": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "moist",
+      "demoPrice": 2090,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "公式目安は3〜4プッシュ。使用回数は仮置き。",
+      "tone": "乳液",
+      "evidence": {
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-cream",
+      "brand": "キュレル",
+      "name": "潤浸保湿 フェイスクリーム",
+      "category": "moisturizer",
+      "jan": "4901301236210",
+      "volume": 40,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236210/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "グリセリン"
+      ],
+      "explanation": "セラミド機能成分を配合した薬用フェイスクリーム。",
+      "scores": {
+        "pores": 1,
+        "dullness": 1,
+        "dryness": 3,
+        "irritation": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "rich",
+      "demoPrice": 2970,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "朝晩使用を想定。回数は仮置き。",
+      "tone": "高保湿クリーム"
+    },
+    {
+      "id": "hadalabo-gokujun-lotion",
+      "brand": "肌ラボ",
+      "name": "極潤ヒアルロン液",
+      "category": "toner",
+      "jan": "4987241155712",
+      "volume": 170,
+      "unit": "mL",
+      "sourceUrl": "https://jp.rohto.com/hadalabo/gokujun-lotion/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "アセチルヒアルロン酸Na",
+        "加水分解ヒアルロン酸",
+        "乳酸球菌／ヒアルロン酸発酵液"
+      ],
+      "explanation": "4種のヒアルロン酸を配合した保湿化粧水。医薬部外品の有効成分ではない。",
+      "scores": {
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 980,
+      "demoUses": 110,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。使用回数・価格は試算用。",
+      "tone": "やさしいとろみ",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "hadalabo-shirojun-lotion",
+      "brand": "肌ラボ",
+      "name": "白潤薬用美白化粧水",
+      "category": "toner",
+      "jan": "4987241157549",
+      "volume": 170,
+      "unit": "mL",
+      "sourceUrl": "https://jp.rohto.com/hadalabo/shirojun-lotion",
+      "keyIngredients": [
+        "トラネキサム酸",
+        "アラントイン",
+        "ヒアルロン酸Na",
+        "ビタミンC誘導体"
+      ],
+      "explanation": "メラニン生成を抑えてシミ・そばかすを防ぐ薬用美白化粧水。肌荒れを防ぐ成分も配合。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 2,
+        "irritation": 2,
+        "acne": 1
+      },
+      "feel": "light",
+      "demoPrice": 990,
+      "demoUses": 110,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。使用回数・価格は試算用。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "トラネキサム酸",
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "hadalabo-aging-lotion",
+      "brand": "肌ラボ",
+      "name": "極潤 薬用ハリ化粧水",
+      "category": "toner",
+      "jan": "4987241171255",
+      "volume": 170,
+      "unit": "mL",
+      "sourceUrl": "https://jp.rohto.com/hadalabo/aging-lotion/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "ヒアルロン酸Na",
+        "アセチルヒアルロン酸Na"
+      ],
+      "explanation": "有効成分ナイアシンアミド配合。シワ改善と、メラニン生成を抑えたシミ予防をうたう薬用化粧水。",
+      "scores": {
+        "wrinkles": 3,
+        "fineLines": 3,
+        "firmness": 2,
+        "dryness": 3,
+        "spots": 2,
+        "freckles": 2
+      },
+      "feel": "rich",
+      "demoPrice": 1500,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。使用回数・価格は試算用。",
+      "tone": "高保湿",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "ナイアシンアミド"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "hadalabo-gokujun-milk",
+      "brand": "肌ラボ",
+      "name": "極潤 ヒアルロン乳液",
+      "category": "moisturizer",
+      "jan": "4987241127054",
+      "volume": 140,
+      "unit": "mL",
+      "sourceUrl": "https://jp.rohto.com/hadalabo/gokujun-milk/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "アセチルヒアルロン酸Na",
+        "加水分解ヒアルロン酸"
+      ],
+      "explanation": "ヒアルロン酸を配合した保湿乳液。",
+      "scores": {
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 980,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。使用回数・価格は試算用。",
+      "tone": "乳液",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "hadalabo-aging-milk",
+      "brand": "肌ラボ",
+      "name": "極潤 薬用ハリ乳液",
+      "category": "moisturizer",
+      "jan": "4987241171286",
+      "volume": 140,
+      "unit": "mL",
+      "sourceUrl": "https://jp.rohto.com/hadalabo/aging-milk/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "有効成分ナイアシンアミド配合。シワ改善・シミ予防をうたう薬用乳液。",
+      "scores": {
+        "wrinkles": 3,
+        "fineLines": 3,
+        "firmness": 2,
+        "dryness": 3,
+        "spots": 2,
+        "freckles": 2
+      },
+      "feel": "moist",
+      "demoPrice": 1500,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。使用回数・価格は試算用。",
+      "tone": "乳液",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "ナイアシンアミド"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "melanocc-lotion",
+      "brand": "メラノCC",
+      "name": "薬用しみ対策 美白化粧水",
+      "category": "toner",
+      "jan": "4987241198900",
+      "volume": 170,
+      "unit": "mL",
+      "sourceUrl": "https://jp.rohto.com/melanocc/lotion",
+      "keyIngredients": [
+        "L-アスコルビン酸2-グルコシド",
+        "グリチルリチン酸ジカリウム",
+        "D-パントテニルアルコール"
+      ],
+      "explanation": "美白有効成分と肌荒れ防止成分を配合した薬用化粧水。シミ・そばかす予防と保湿による毛穴の目立ちに対応。",
+      "scores": {
+        "pores": 2,
+        "spots": 3,
+        "freckles": 3,
+        "acne": 2,
+        "dullness": 1,
+        "dryness": 1
+      },
+      "feel": "light",
+      "demoPrice": 990,
+      "demoUses": 110,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。使用回数・価格は試算用。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "L-アスコルビン酸2-グルコシド",
+          "グリチルリチン酸ジカリウム",
+          "D-パントテニルアルコール"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "melanocc-essence",
+      "brand": "メラノCC",
+      "name": "薬用しみ集中対策美容液",
+      "category": "serum",
+      "jan": "4987241169658",
+      "volume": 20,
+      "unit": "mL",
+      "sourceUrl": "https://jp.rohto.com/melanocc/essence/",
+      "keyIngredients": [
+        "アスコルビン酸",
+        "イソプロピルメチルフェノール",
+        "グリチルリチン酸ジカリウム"
+      ],
+      "explanation": "ビタミンCの有効成分を配合。メラニン生成を抑えてシミ・そばかすを予防し、ニキビも防ぐ薬用美容液。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "acne": 2,
+        "dullness": 1
+      },
+      "demoPrice": 1300,
+      "demoUses": 130,
+      "dailyUses": 1,
+      "usage": "1日1回・1回数滴と仮定。価格・回数は試算用。",
+      "tone": "部分・全顔ケア",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アスコルビン酸",
+          "イソプロピルメチルフェノール",
+          "グリチルリチン酸ジカリウム"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "melanocc-premium-essence",
+      "brand": "メラノCC",
+      "name": "薬用しみ集中対策 プレミアム美容液",
+      "category": "serum",
+      "jan": "4987241168583",
+      "volume": 20,
+      "unit": "mL",
+      "sourceUrl": "https://jp.rohto.com/melanocc/premium-essence/",
+      "keyIngredients": [
+        "アスコルビン酸",
+        "ピリドキシン塩酸塩",
+        "イソプロピルメチルフェノール",
+        "アラントイン",
+        "ビタミンC誘導体"
+      ],
+      "explanation": "活性型ビタミンCなど4つの有効成分を配合。シミ・そばかすとニキビを予防する薬用美容液。3種のビタミンC誘導体は保湿成分。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "acne": 3,
+        "dullness": 1,
+        "irritation": 1
+      },
+      "demoPrice": 1800,
+      "demoUses": 150,
+      "dailyUses": 1,
+      "usage": "公式は4〜5滴を1日1回で約5〜6か月。控えめに150回として試算、価格は仮値。",
+      "tone": "集中ケア",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アスコルビン酸",
+          "ピリドキシン塩酸塩",
+          "イソプロピルメチルフェノール",
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "ihada-moist-lotion",
+      "brand": "イハダ",
+      "name": "薬用うるおいローション しっとり",
+      "category": "toner",
+      "jan": "4909978261238",
+      "volume": 180,
+      "unit": "mL",
+      "sourceUrl": "https://www.shiseido.co.jp/sw/onlinestore/products/H91202.html?brnd_cd=71&online_shohin_ctlg_kbn=1&shohin_pl_c_cd=H91202",
+      "keyIngredients": [
+        "アラントイン",
+        "グリチルリチン酸ジカリウム",
+        "ワセリン"
+      ],
+      "explanation": "肌荒れ・乾燥・ニキビの予防をうたう薬用化粧水。高精製ワセリン配合、敏感肌向け低刺激設計。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3,
+        "acne": 2
+      },
+      "sensitiveSkin": true,
+      "feel": "moist",
+      "demoPrice": 1650,
+      "demoUses": 110,
+      "dailyUses": 2,
+      "usage": "メーカーの使い切り目安は朝晩使用で約2.5か月。容量から1回量を概算。",
+      "tone": "低刺激設計",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アラントイン",
+          "グリチルリチン酸ジカリウム"
+        ],
+        "verifiedAt": "2026-11-07"
+      }
+    },
+    {
+      "id": "ihada-moist-emulsion",
+      "brand": "イハダ",
+      "name": "薬用うるおいエマルジョン",
+      "category": "moisturizer",
+      "jan": "4909978261306",
+      "volume": 135,
+      "unit": "mL",
+      "sourceUrl": "https://www.shiseido.co.jp/sw/onlinestore/products/H91302.html",
+      "keyIngredients": [
+        "アラントイン",
+        "グリチルリチン酸ジカリウム",
+        "ワセリン"
+      ],
+      "explanation": "肌荒れ・乾燥・ニキビを防ぐ薬用乳液。敏感肌を考えた低刺激設計。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3,
+        "acne": 2
+      },
+      "sensitiveSkin": true,
+      "feel": "moist",
+      "demoPrice": 1760,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカーの使い切り目安は朝晩使用で約3か月。容量から1回量を概算。",
+      "tone": "低刺激設計",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アラントイン",
+          "グリチルリチン酸ジカリウム"
+        ],
+        "verifiedAt": "2026-11-07"
+      }
+    },
+    {
+      "id": "minon-gentle-wash-whip",
+      "brand": "ミノン アミノモイスト",
+      "name": "ジェントルウォッシュ ホイップ",
+      "category": "cleanser",
+      "jan": "4987107670236",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://online.daiichisankyo-hc.co.jp/shop/g/g670236/",
+      "keyIngredients": [
+        "アミノ酸系洗浄成分",
+        "グリセリン"
+      ],
+      "explanation": "乾燥肌・敏感肌向けの泡洗顔料。洗浄時のうるおいを守る設計。",
+      "scores": {
+        "dryness": 2,
+        "irritation": 1
+      },
+      "sensitiveSkin": true,
+      "demoPrice": 1650,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1日1回と仮定。使用回数・価格は試算用。",
+      "tone": "やさしい泡",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "minon-moist-lotion-i",
+      "brand": "ミノン アミノモイスト",
+      "name": "モイストチャージ ローション I しっとりタイプ",
+      "category": "toner",
+      "jan": "4987107670335",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://online.daiichisankyo-hc.co.jp/shop/g/g670335/",
+      "keyIngredients": [
+        "グリセリン",
+        "アミノ酸",
+        "ポリクオタニウム-61",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "べたつきにくく水分を補う保湿化粧水。化粧品であり、医薬部外品の有効成分表示はない。",
+      "scores": {
+        "dryness": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "moist",
+      "demoPrice": 2200,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。使用回数・価格は試算用。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "minon-moist-lotion-ii",
+      "brand": "ミノン アミノモイスト",
+      "name": "モイストチャージ ローション II もっとしっとりタイプ",
+      "category": "toner",
+      "jan": "4987107670397",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://online.daiichisankyo-hc.co.jp/shop/g/g670397/",
+      "keyIngredients": [
+        "グリセリン",
+        "アミノ酸",
+        "ポリクオタニウム-61",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "乾燥が気になる方向けの高保湿化粧水。化粧品であり、医薬部外品の有効成分表示はない。",
+      "scores": {
+        "dryness": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "rich",
+      "demoPrice": 2200,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。使用回数・価格は試算用。",
+      "tone": "もっとしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "minon-moist-milk",
+      "brand": "ミノン アミノモイスト",
+      "name": "モイストチャージ ミルク",
+      "category": "moisturizer",
+      "jan": "4987107670465",
+      "volume": 100,
+      "unit": "g",
+      "sourceUrl": "https://online.daiichisankyo-hc.co.jp/shop/g/g670465/",
+      "keyIngredients": [
+        "グリセリン",
+        "アミノ酸",
+        "ポリクオタニウム-61",
+        "スクワラン"
+      ],
+      "explanation": "保湿成分を含む乳液。乾燥肌・敏感肌を考慮した商品。",
+      "scores": {
+        "dryness": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "moist",
+      "demoPrice": 2310,
+      "demoUses": 95,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。使用回数・価格は試算用。",
+      "tone": "しっとり乳液",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-toner-i",
+      "brand": "キュレル",
+      "name": "潤浸保湿 化粧水 I ややしっとり",
+      "category": "toner",
+      "jan": "4901301236043",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236043/",
+      "keyIngredients": [
+        "アラントイン",
+        "ユーカリエキス",
+        "グリセリン"
+      ],
+      "explanation": "アラントインを有効成分とする乾燥性敏感肌向けの薬用化粧水。しっとり感が軽めのタイプ。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "light",
+      "demoPrice": 2090,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "ややしっとり",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-sebum-toner",
+      "brand": "キュレル",
+      "name": "皮脂トラブルケア 化粧水",
+      "category": "toner",
+      "jan": "4901301264343",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301264343/",
+      "keyIngredients": [
+        "アラントイン",
+        "ユーカリエキス",
+        "10-ヒドロキシウンデカン酸"
+      ],
+      "explanation": "過剰な皮脂によるベタつきと肌荒れに配慮した薬用化粧水。ニキビを防ぐ。",
+      "scores": {
+        "oiliness": 3,
+        "shine": 2,
+        "acne": 2,
+        "irritation": 3,
+        "dryness": 1
+      },
+      "sensitiveSkin": true,
+      "feel": "light",
+      "demoPrice": 2090,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。公式の3〜4プッシュ目安とは別に回数は仮置き。",
+      "tone": "さらっとした使用感",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-sebum-gel",
+      "brand": "キュレル",
+      "name": "皮脂トラブルケア 保湿ジェル",
+      "category": "moisturizer",
+      "jan": "4901301264350",
+      "volume": 120,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301264350/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "ユーカリエキス"
+      ],
+      "explanation": "水ベースの保湿ジェル。表面はべたつきにくく、ニキビ・肌荒れを防ぐ薬用処方。",
+      "scores": {
+        "oiliness": 3,
+        "shine": 2,
+        "acne": 2,
+        "irritation": 3,
+        "dryness": 2
+      },
+      "sensitiveSkin": true,
+      "feel": "light",
+      "demoPrice": 1980,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "さっぱり保湿",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-bright-toner-i",
+      "brand": "キュレル",
+      "name": "シミ・ソバカス予防ケア 化粧水1 ややしっとり",
+      "category": "toner",
+      "jan": "4901301240309",
+      "volume": 140,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301240309/",
+      "keyIngredients": [
+        "L-アスコルビン酸2-グルコシド",
+        "ユーカリエキス",
+        "グリセリン"
+      ],
+      "explanation": "薬用ビタミンC誘導体がメラニン生成を抑えてシミ・そばかすを予防。既存の色素沈着を消す効果ではない。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 2,
+        "irritation": 1
+      },
+      "sensitiveSkin": true,
+      "feel": "light",
+      "demoPrice": 2530,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "ややしっとり",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "L-アスコルビン酸2-グルコシド"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-bright-toner-iii",
+      "brand": "キュレル",
+      "name": "シミ・ソバカス予防ケア 化粧水3 とてもしっとり",
+      "category": "toner",
+      "jan": "4901301238801",
+      "volume": 140,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301238801/",
+      "keyIngredients": [
+        "L-アスコルビン酸2-グルコシド",
+        "ユーカリエキス",
+        "グリセリン"
+      ],
+      "explanation": "シミ・そばかすを予防する薬用化粧水の高保湿タイプ。既存のシミを消す意味ではない。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "irritation": 1
+      },
+      "sensitiveSkin": true,
+      "feel": "rich",
+      "demoPrice": 2530,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "L-アスコルビン酸2-グルコシド"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-bright-milk",
+      "brand": "キュレル",
+      "name": "シミ・ソバカス予防ケア 乳液",
+      "category": "moisturizer",
+      "jan": "4901301238795",
+      "volume": 110,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301238795/",
+      "keyIngredients": [
+        "カモミラET",
+        "セラミド機能成分",
+        "ユーカリエキス"
+      ],
+      "explanation": "美白有効成分カモミラETでシミ・そばかすを予防しつつ保湿する薬用乳液。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "moist",
+      "demoPrice": 2530,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "保湿乳液",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "カモミラET"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-bright-serum",
+      "brand": "キュレル",
+      "name": "シミ・ソバカス予防ケア 美容液",
+      "category": "serum",
+      "jan": "4901301238825",
+      "volume": 30,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301238825/",
+      "keyIngredients": [
+        "カモミラET",
+        "ユーカリエキス"
+      ],
+      "explanation": "カモミラETを有効成分とするシミ・そばかす予防の薬用美容液。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 2
+      },
+      "sensitiveSkin": true,
+      "demoPrice": 3300,
+      "demoUses": 70,
+      "dailyUses": 1,
+      "usage": "1日1回使用を仮定。価格・回数は試算用。",
+      "tone": "美容液",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "カモミラET"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-bright-cream",
+      "brand": "キュレル",
+      "name": "シミ・ソバカス予防ケア フェイスクリーム",
+      "category": "moisturizer",
+      "jan": "4901301238818",
+      "volume": 40,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301238818/",
+      "keyIngredients": [
+        "カモミラET",
+        "セラミド機能成分",
+        "ユーカリエキス"
+      ],
+      "explanation": "カモミラETがメラニン生成を抑えてシミ・そばかすを予防。保湿を重視した薬用クリーム。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "rich",
+      "demoPrice": 3300,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "しっとりクリーム",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "カモミラET"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-aging-toner",
+      "brand": "キュレル",
+      "name": "エイジングケアシリーズ 化粧水",
+      "category": "toner",
+      "jan": "4901301334510",
+      "volume": 140,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301334510/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "アスナロエキス"
+      ],
+      "explanation": "乾燥性敏感肌のハリ・乾燥ケア向け薬用化粧水。有効成分アラントインは肌荒れ予防であり、シワ改善有効成分ではない。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3,
+        "firmness": 2,
+        "fineLines": 1
+      },
+      "sensitiveSkin": true,
+      "feel": "moist",
+      "demoPrice": 2530,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "ハリ・保湿",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-aging-gel-cream",
+      "brand": "キュレル",
+      "name": "エイジングケアシリーズ フェイスジェルクリーム",
+      "category": "moisturizer",
+      "jan": "4901301334527",
+      "volume": 40,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301334527/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "ショウキョウエキス"
+      ],
+      "explanation": "潤いによるハリ感と、乾燥による小じわを目立たなくするケア。医薬部外品のシワ改善とは区別。",
+      "scores": {
+        "fineLines": 2,
+        "firmness": 2,
+        "dryness": 3,
+        "irritation": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "moist",
+      "demoPrice": 3300,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "しっとりジェル",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "curel-aging-cream",
+      "brand": "キュレル",
+      "name": "エイジングケアシリーズ フェイスクリーム",
+      "category": "moisturizer",
+      "jan": "4901301334534",
+      "volume": 40,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301334534/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "ショウキョウエキス"
+      ],
+      "explanation": "保湿で乾燥小じわを目立たなくし、ハリ感を補う薬用クリーム。シワ改善有効成分の効能はうたわない。",
+      "scores": {
+        "fineLines": 2,
+        "firmness": 2,
+        "dryness": 3,
+        "irritation": 3
+      },
+      "sensitiveSkin": true,
+      "feel": "rich",
+      "demoPrice": 3300,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "biore-face-moist",
+      "brand": "ビオレ",
+      "name": "ザフェイス 泡洗顔料 モイスト",
+      "category": "cleanser",
+      "jan": "4901301408389",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408389/",
+      "keyIngredients": [
+        "グリセリン",
+        "ラウリン酸"
+      ],
+      "explanation": "乾燥と皮脂の両方が気になる混合肌向けの保湿・皮脂バランス洗顔。",
+      "scores": {
+        "dryness": 2,
+        "oiliness": 1,
+        "pores": 1
+      },
+      "demoPrice": 1050,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "1日1回と仮定。価格・回数は試算用。",
+      "tone": "保湿泡",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "biore-ouchi-gel-clear",
+      "brand": "ビオレ",
+      "name": "おうちdeエステ ジェル洗顔 肌なめらかクリア",
+      "category": "cleanser",
+      "jan": "4901301463890",
+      "volume": 180,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301463890/",
+      "keyIngredients": [
+        "トロメタミン",
+        "ソルビトール"
+      ],
+      "explanation": "洗浄剤トロメタミンで角栓を崩して洗うジェル洗顔。毛穴詰まりを洗い流す用途。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "oiliness": 2,
+        "shine": 1
+      },
+      "demoPrice": 1100,
+      "demoUses": 80,
+      "dailyUses": 1,
+      "usage": "1日1回と仮定。価格・回数は試算用。",
+      "tone": "角栓洗浄ジェル",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "biore-ouchi-gel-moist",
+      "brand": "ビオレ",
+      "name": "おうちdeエステ ジェル洗顔 肌やわらかモイスト",
+      "category": "cleanser",
+      "jan": "4901301463906",
+      "volume": 180,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301463906/",
+      "keyIngredients": [
+        "トロメタミン",
+        "ソルビトール",
+        "ヒアルロン酸"
+      ],
+      "explanation": "角栓洗浄と保湿成分配合を両立した乾燥肌向けジェル洗顔。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "dryness": 2
+      },
+      "demoPrice": 1100,
+      "demoUses": 80,
+      "dailyUses": 1,
+      "usage": "1日1回と仮定。価格・回数は試算用。",
+      "tone": "しっとりジェル",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "biore-ouchi-deep-clay",
+      "brand": "ビオレ",
+      "name": "おうちdeエステ ディープクレイ洗顔",
+      "category": "cleanser",
+      "jan": "4901301464057",
+      "volume": 180,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301464057/",
+      "keyIngredients": [
+        "トロメタミン",
+        "カオリン",
+        "ソルビトール"
+      ],
+      "explanation": "クレイ等の洗浄助剤を用いて角栓汚れを洗い流す洗顔料。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "oiliness": 2
+      },
+      "demoPrice": 1300,
+      "demoUses": 70,
+      "dailyUses": 1,
+      "usage": "1日1回と仮定。パック洗顔時の使用量は別途検証。",
+      "tone": "ディープクレイ",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "sofina-micro-foam-wash",
+      "brand": "ソフィーナ iP",
+      "name": "マイクロ泡セラム洗顔料",
+      "category": "cleanser",
+      "jan": "4901301463968",
+      "volume": 160,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301463968/",
+      "keyIngredients": [
+        "炭酸ガス",
+        "アミジノプロリン",
+        "セラミド機能成分"
+      ],
+      "explanation": "炭酸ガスを噴射剤に使う泡洗顔。古い角質によるくすみ・毛穴汚れを洗浄し、角層を保湿。",
+      "scores": {
+        "pores": 2,
+        "dullness": 2,
+        "dryness": 2
+      },
+      "demoPrice": 3300,
+      "demoUses": 60,
+      "dailyUses": 2,
+      "usage": "公式では朝晩使用で約1か月。価格は試算用の仮値。",
+      "tone": "炭酸泡",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "sofina-wrinkle-foam-serum",
+      "brand": "ソフィーナ iP",
+      "name": "薬用 シワ改善 泡セラム",
+      "category": "serum",
+      "jan": "4901301416483",
+      "volume": 90,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301416483/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "炭酸ガス"
+      ],
+      "explanation": "薬用有効成分ナイアシンアミドのシワ改善用泡セラム。炭酸ガスは噴射剤。",
+      "scores": {
+        "wrinkles": 3,
+        "fineLines": 3,
+        "firmness": 1
+      },
+      "demoPrice": 6380,
+      "demoUses": 80,
+      "dailyUses": 1,
+      "usage": "1日1回と仮定。本体税込6,380円は公式表示を参考、回数は仮置き。",
+      "tone": "シワ改善泡",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "ナイアシンアミド"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "sofina-firming-serum",
+      "brand": "ソフィーナ iP",
+      "name": "ハリ弾力注入美容液",
+      "category": "serum",
+      "jan": "4901301422750",
+      "volume": 40,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301422750/",
+      "keyIngredients": [
+        "ローズマリーエキス",
+        "ワレモコウエキス",
+        "ショウガ根エキス"
+      ],
+      "explanation": "角層保湿でハリ感を与え、潤いにより毛穴を目立ちにくくする美容液。薬用シワ改善ではない。",
+      "scores": {
+        "firmness": 3,
+        "pores": 2,
+        "dryness": 2
+      },
+      "feel": "rich",
+      "demoPrice": 4730,
+      "demoUses": 75,
+      "dailyUses": 1,
+      "usage": "1日1回と仮定。本体税込4,730円は公式表示を参考、回数は仮置き。",
+      "tone": "しっとり保湿美容液",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "sofina-deep-milk",
+      "brand": "ソフィーナ iP",
+      "name": "薬用 角層トリートメント 深層美容乳液",
+      "category": "moisturizer",
+      "jan": "4901301472793",
+      "volume": 80,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301472793/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "グリセリン",
+        "セラミド機能成分"
+      ],
+      "explanation": "ナイアシンアミドを有効成分とする薬用シワ改善乳液。保湿とハリ感にも配慮。",
+      "scores": {
+        "wrinkles": 3,
+        "fineLines": 3,
+        "firmness": 2,
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 4070,
+      "demoUses": 85,
+      "dailyUses": 2,
+      "usage": "朝晩使用を仮定。価格・回数は試算用。",
+      "tone": "シワ改善乳液",
+      "evidence": {
+        "officialSource": true,
+        "activeIngredients": [
+          "ナイアシンアミド"
+        ],
+        "verifiedAt": "2026-11-06"
+      }
+    },
+    {
+      "id": "biore-face-deepmoist",
+      "brand": "ビオレ",
+      "name": "ザフェイス 泡洗顔料 ディープモイスト",
+      "category": "cleanser",
+      "jan": "4901301408372",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408372/",
+      "keyIngredients": [
+        "グリセリン",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "乾燥が気になる肌向けの濃密泡洗顔。保湿成分配合でうるおいを守って洗う。",
+      "scores": {
+        "dryness": 3
+      },
+      "demoPrice": 887,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "しっとり",
+      "feel": "moist",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-face-oil",
+      "brand": "ビオレ",
+      "name": "ザフェイス 泡洗顔料 オイルコントロール",
+      "category": "cleanser",
+      "jan": "4901301408402",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408402/",
+      "keyIngredients": [
+        "グリセリン",
+        "ラウリン酸"
+      ],
+      "explanation": "古い角質・酸化皮脂による汚れを落とす、テカリやベタつき向けの泡洗顔。",
+      "scores": {
+        "oiliness": 3,
+        "shine": 3,
+        "pores": 1
+      },
+      "demoPrice": 887,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "さっぱり",
+      "feel": "light",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-face-smoothclear",
+      "brand": "ビオレ",
+      "name": "ザフェイス 泡洗顔料 スムースクリア",
+      "category": "cleanser",
+      "jan": "4901301414380",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301414380/",
+      "keyIngredients": [
+        "トロメタミン",
+        "グリセリン"
+      ],
+      "explanation": "角栓崩壊洗浄技術により毛穴の黒ずみ汚れ・ザラつきの一因の角栓を洗い落とす。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "oiliness": 1
+      },
+      "demoPrice": 822,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "さっぱり",
+      "feel": "light",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-face-acne",
+      "brand": "ビオレ",
+      "name": "ザフェイス 泡洗顔料 アクネケア",
+      "category": "cleanser",
+      "jan": "4901301408396",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408396/",
+      "keyIngredients": [
+        "イソプロピルメチルフェノール",
+        "グリチルリチン酸ジカリウム"
+      ],
+      "explanation": "殺菌・消炎の有効成分を配合し、ニキビを防ぐ薬用泡洗顔。",
+      "scores": {
+        "acne": 3,
+        "irritation": 2
+      },
+      "demoPrice": 822,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "さっぱり",
+      "feel": "light",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "イソプロピルメチルフェノール",
+          "グリチルリチン酸ジカリウム"
+        ]
+      }
+    },
+    {
+      "id": "biore-marshmallow-moist",
+      "brand": "ビオレ",
+      "name": "マシュマロホイップ モイスチャー",
+      "category": "cleanser",
+      "jan": "4901301250162",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301250162/",
+      "keyIngredients": [
+        "グリセリン"
+      ],
+      "explanation": "もっちり濃密な泡でうるおいを守って洗う洗顔料。",
+      "scores": {
+        "dryness": 2
+      },
+      "demoPrice": 778,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "しっとり",
+      "feel": "moist",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-marshmallow-acne",
+      "brand": "ビオレ",
+      "name": "マシュマロホイップ 薬用アクネケア",
+      "category": "cleanser",
+      "jan": "4901301275080",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301275080/",
+      "keyIngredients": [
+        "イソプロピルメチルフェノール",
+        "グリチルリチン酸ジカリウム"
+      ],
+      "explanation": "殺菌・消炎の有効成分を配合したニキビ予防の薬用泡洗顔。",
+      "scores": {
+        "acne": 3,
+        "irritation": 2
+      },
+      "demoPrice": 778,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "さっぱり",
+      "feel": "light",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "イソプロピルメチルフェノール",
+          "グリチルリチン酸ジカリウム"
+        ]
+      }
+    },
+    {
+      "id": "biore-skincare-acne",
+      "brand": "ビオレ",
+      "name": "スキンケア洗顔料 薬用アクネケア",
+      "category": "cleanser",
+      "jan": "4901301265678",
+      "volume": 130,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301265678/",
+      "keyIngredients": [
+        "イソプロピルメチルフェノール",
+        "グリチルリチン酸ジカリウム"
+      ],
+      "explanation": "ニキビを防ぎ、うるおいを守って洗う薬用洗顔料。",
+      "scores": {
+        "acne": 3,
+        "irritation": 2
+      },
+      "demoPrice": 525,
+      "demoUses": 75,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "しっとり",
+      "feel": "moist",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "イソプロピルメチルフェノール",
+          "グリチルリチン酸ジカリウム"
+        ]
+      }
+    },
+    {
+      "id": "biore-jelly-moist",
+      "brand": "ビオレ",
+      "name": "うるおいジェリー しっとり",
+      "category": "moisturizer",
+      "jan": "4901301287656",
+      "volume": 180,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301287656/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "水溶性コラーゲン",
+        "アルギニン"
+      ],
+      "explanation": "洗顔後これ1本で化粧水・乳液・美容液・パックを兼ねる保湿オールインワン。",
+      "scores": {
+        "dryness": 3
+      },
+      "demoPrice": 998,
+      "demoUses": 110,
+      "dailyUses": 2,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "しっとり",
+      "feel": "moist",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      },
+      "allInOne": true
+    },
+    {
+      "id": "biore-jelly-rich",
+      "brand": "ビオレ",
+      "name": "うるおいジェリー とてもしっとり",
+      "category": "moisturizer",
+      "jan": "4901301287663",
+      "volume": 180,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301287663/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "水溶性コラーゲン",
+        "アルギニン"
+      ],
+      "explanation": "特に乾燥が気になる肌向け。洗顔後これ1本でも使える高保湿オールインワン。",
+      "scores": {
+        "dryness": 3
+      },
+      "demoPrice": 858,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "とてもしっとり",
+      "feel": "rich",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      },
+      "allInOne": true
+    },
+    {
+      "id": "nivea-foam-mochi",
+      "brand": "ニベア",
+      "name": "クリアビューティー弱酸性泡洗顔 もっちり美肌",
+      "category": "cleanser",
+      "jan": "4901301394996",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301394996/",
+      "keyIngredients": [
+        "ココイルグルタミン酸Na",
+        "ホホバ種子油",
+        "スクワラン",
+        "グリセリン"
+      ],
+      "explanation": "アミノ酸系マイルド洗浄成分と保湿成分配合の弱酸性泡洗顔。",
+      "scores": {
+        "dryness": 2
+      },
+      "demoPrice": 602,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "しっとり",
+      "feel": "moist",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "nivea-wash-rich",
+      "brand": "ニベア",
+      "name": "クリアビューティー洗顔料 とてもしっとり美肌",
+      "category": "cleanser",
+      "jan": "4901301335456",
+      "volume": 130,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301335456/",
+      "keyIngredients": [
+        "ココイルグルタミン酸Na",
+        "ホホバ種子油",
+        "スクワラン",
+        "グリセリン"
+      ],
+      "explanation": "うるおいを守り、しっとりした洗い上がりを重視した洗顔料。",
+      "scores": {
+        "dryness": 3
+      },
+      "demoPrice": 508,
+      "demoUses": 75,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "とてもしっとり",
+      "feel": "rich",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "nivea-wash-dull",
+      "brand": "ニベア",
+      "name": "クリアビューティー洗顔料 くすみクリア美肌",
+      "category": "cleanser",
+      "jan": "4901301348616",
+      "volume": 130,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301348616/",
+      "keyIngredients": [
+        "ココイルグルタミン酸Na",
+        "ホホバ種子油",
+        "スクワラン"
+      ],
+      "explanation": "古い角質や毛穴の汚れによるくすみを洗い落とす洗顔料。",
+      "scores": {
+        "dullness": 2,
+        "pores": 1,
+        "dryness": 1
+      },
+      "demoPrice": 508,
+      "demoUses": 75,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "しっとり",
+      "feel": "moist",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "nivea-2way",
+      "brand": "ニベア",
+      "name": "2WAY美容洗顔",
+      "category": "cleanser",
+      "jan": "4901301430205",
+      "volume": 120,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301430205/",
+      "keyIngredients": [
+        "タナクラクレイ",
+        "カオリン",
+        "ホホバ種子油"
+      ],
+      "explanation": "毛穴汚れによるザラつきに。毎日の泡洗顔と週1〜2回のパック洗顔を使い分ける。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 2,
+        "dullness": 2
+      },
+      "demoPrice": 968,
+      "demoUses": 70,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "さっぱり",
+      "feel": "light",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "nivea-2way-acne",
+      "brand": "ニベア",
+      "name": "2WAY美容洗顔 ニキビ予防",
+      "category": "cleanser",
+      "jan": "4901301451132",
+      "volume": 120,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301451132/",
+      "keyIngredients": [
+        "タナクラクレイ",
+        "カオリン",
+        "炭",
+        "ユーカリ葉エキス"
+      ],
+      "explanation": "古い角質・皮脂汚れを洗ってニキビを防ぐ2WAY美容洗顔。薬用有効成分としては登録しない。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 2,
+        "oiliness": 2,
+        "acne": 2
+      },
+      "demoPrice": 968,
+      "demoUses": 70,
+      "dailyUses": 1,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "さっぱり",
+      "feel": "light",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "nivea-cream-56",
+      "brand": "ニベア",
+      "name": "ニベアクリーム 中缶",
+      "category": "moisturizer",
+      "jan": "4901301008497",
+      "volume": 56,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301008497/",
+      "keyIngredients": [
+        "スクワラン",
+        "ホホバ種子油"
+      ],
+      "explanation": "顔にも使える保湿クリーム。乾燥から肌を守り、うるおいを保つ。",
+      "scores": {
+        "dryness": 3
+      },
+      "demoPrice": 305,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "1本あたり使用回数は仮推定。プッシュ数や長さから容量を断定していません。",
+      "tone": "とてもしっとり",
+      "feel": "rich",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-cleansing-oil",
+      "brand": "ビオレ",
+      "name": "ザクレンズオイルメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301417008",
+      "volume": 190,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301417008/",
+      "keyIngredients": [
+        "イソノナン酸イソノニル",
+        "ミリスチン酸イソプロピル"
+      ],
+      "explanation": "落ちにくいマスカラや下地まで、なじませる手間をかけず落とすオイル。W洗顔不要。",
+      "scores": {},
+      "feel": "light",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 1581,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-cleansing-oil-moist",
+      "brand": "ビオレ",
+      "name": "ザクレンズオイルメイク落とし モイスト",
+      "category": "makeupRemover",
+      "jan": "4901301440365",
+      "volume": 190,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301440365/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "水溶性コラーゲン"
+      ],
+      "explanation": "保湿成分配合のオイルでメイクを落とす。W洗顔不要。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "moist",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 1581,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-cleansing-liquid",
+      "brand": "ビオレ",
+      "name": "うるおいクレンジングリキッド",
+      "category": "makeupRemover",
+      "jan": "4901301263049",
+      "volume": 230,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301263049/",
+      "keyIngredients": [
+        "グリセリン",
+        "BG",
+        "PPG-9ジグリセリル"
+      ],
+      "explanation": "水ベースのリキッドでウォータープルーフメイクも落とす。W洗顔不要。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "light",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 1139,
+      "demoUses": 80,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "biore-cleansing-paste",
+      "brand": "ビオレ",
+      "name": "メイクも落とせる洗顔料 つるすべ美肌",
+      "category": "makeupRemover",
+      "jan": "4901301246769",
+      "volume": 210,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301246769/",
+      "keyIngredients": [
+        "ソルビトール",
+        "ヒアルロン酸Na",
+        "ローヤルゼリーエキス"
+      ],
+      "explanation": "メイク落としと洗顔を同時に行うペーストタイプ。落ちにくいメイクには増量が必要。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "moist",
+      "waterproof": false,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 778,
+      "demoUses": 90,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "nivea-cleansing-beauty",
+      "brand": "ニベア",
+      "name": "クレンジングオイル ビューティースキン",
+      "category": "makeupRemover",
+      "jan": "4901301388902",
+      "volume": 195,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301388902/",
+      "keyIngredients": [
+        "ミネラルオイル",
+        "スクワラン",
+        "ホホバ種子油"
+      ],
+      "explanation": "落ちにくいメイクと毛穴のメイク汚れを落とすオイル。公式Q&AでW洗顔不要と案内。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "moist",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "demoPrice": 1430,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "毎晩1回使用。1本の回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "curel-foam-gel",
+      "brand": "キュレル",
+      "name": "潤浸保湿 泡ジェル洗顔料",
+      "category": "cleanser",
+      "jan": "4901301458964",
+      "volume": 200,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458964/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "グリセリン",
+        "炭酸ガス"
+      ],
+      "explanation": "皮脂汚れによる肌にごりくすみを洗い落とす炭酸泡ジェル洗顔。肌荒れを防ぐ薬用処方。",
+      "scores": {
+        "dullness": 3,
+        "oiliness": 2,
+        "irritation": 3,
+        "dryness": 1
+      },
+      "demoPrice": 2090,
+      "demoUses": 60,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-gel-makeup",
+      "brand": "キュレル",
+      "name": "ジェルメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301236203",
+      "volume": 130,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236203/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "グリセリン",
+        "ソルビット液"
+      ],
+      "explanation": "セラミドを守りながらメイクを落とす薬用ジェル。使用後は洗顔料によるW洗顔が必要（メーカー指定）。",
+      "scores": {
+        "irritation": 2,
+        "dryness": 1
+      },
+      "demoPrice": 1100,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true,
+      "doubleCleanseNotNeeded": false,
+      "waterproof": false
+    },
+    {
+      "id": "curel-oil-makeup",
+      "brand": "キュレル",
+      "name": "オイルメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301346995",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301346995/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "流動イソパラフィン",
+        "セラミド機能成分"
+      ],
+      "explanation": "落ちにくいメイクにもなじみ、ウォータープルーフマスカラにも対応。使用後は洗顔料によるW洗顔が必要（メーカー指定）。",
+      "scores": {
+        "irritation": 2,
+        "dryness": 1
+      },
+      "demoPrice": 1650,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true,
+      "doubleCleanseNotNeeded": false,
+      "waterproof": true
+    },
+    {
+      "id": "curel-milk-makeup",
+      "brand": "キュレル",
+      "name": "潤浸保湿 乳液ケアメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301422095",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301422095/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "セラミド機能成分",
+        "ユーカリエキス"
+      ],
+      "explanation": "コットンでふき取る乳液タイプ。洗い流し・洗顔不要。落ちにくいアイメイクは別途専用リムーバー等が必要な場合あり（コットン代は未計算）。",
+      "scores": {
+        "dryness": 2,
+        "irritation": 2
+      },
+      "demoPrice": 1650,
+      "demoUses": 45,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true,
+      "doubleCleanseNotNeeded": true,
+      "waterproof": false
+    },
+    {
+      "id": "curel-moist-spray-250",
+      "brand": "キュレル",
+      "name": "ディープモイスチャースプレー 250g",
+      "category": "toner",
+      "jan": "4901301379924",
+      "volume": 250,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301379924/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "ユーカリエキス"
+      ],
+      "explanation": "顔にも使えるミスト状化粧水。セラミドの働きを補い潤いを与え、肌荒れを防ぐ。全身にも使用可能。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3
+      },
+      "demoPrice": 2750,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "アラントイン"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-gel-serum",
+      "brand": "キュレル",
+      "name": "潤浸保湿 ジェル美容液",
+      "category": "serum",
+      "jan": "4901301281715",
+      "volume": 40,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301281715/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "ショウキョウエキス",
+        "セラミド機能成分"
+      ],
+      "explanation": "肌荒れを防ぎ、乾燥による小じわを目立たなくする効能評価済みの薬用ジェル美容液。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3,
+        "fineLines": 3,
+        "firmness": 2
+      },
+      "demoPrice": 2750,
+      "demoUses": 85,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-foam-serum",
+      "brand": "キュレル",
+      "name": "潤浸保湿 泡美容液",
+      "category": "serum",
+      "jan": "4901301458957",
+      "volume": 120,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458957/",
+      "keyIngredients": [
+        "グリチルリチン酸ジカリウム",
+        "セラミド機能成分",
+        "ユーカリエキス",
+        "炭酸ガス"
+      ],
+      "explanation": "乾燥によるざらつき・くすみを潤いでケアする炭酸泡の薬用美容液。肌荒れを防ぐ。",
+      "scores": {
+        "dryness": 3,
+        "dullness": 3,
+        "irritation": 3
+      },
+      "demoPrice": 3850,
+      "demoUses": 70,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "グリチルリチン酸ジカリウム"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-barrier-serum",
+      "brand": "キュレル",
+      "name": "潤浸保湿 角層深部バリア美容液",
+      "category": "serum",
+      "jan": "4901301463937",
+      "volume": 30,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301463937/",
+      "keyIngredients": [
+        "GABOB",
+        "セラミド機能成分",
+        "ユーカリエキス",
+        "ローマカミツレエキス"
+      ],
+      "explanation": "有効成分GABOB配合。ゆらぎやすい乾燥性敏感肌の肌荒れを防ぎ、角層の潤いを支えるウォーターベースの美容液。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3
+      },
+      "demoPrice": 4950,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "light",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "ガンマ-アミノ-ベータ-ヒドロキシ酪酸"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "curel-oil-serum",
+      "brand": "キュレル",
+      "name": "潤浸保湿 定着保湿オイル美容液",
+      "category": "serum",
+      "jan": "4901301471338",
+      "volume": 30,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301471338/",
+      "keyIngredients": [
+        "カモミラET",
+        "グリチルレチン酸ステアリル",
+        "シュガースクワラン",
+        "セラミド機能成分"
+      ],
+      "explanation": "乾燥・ごわつきが気になる肌へ密着する薬用オイル美容液。セラミドの働きを補い、肌荒れを防ぐ。",
+      "scores": {
+        "dryness": 3,
+        "irritation": 3,
+        "firmness": 1
+      },
+      "demoPrice": 4950,
+      "demoUses": 75,
+      "dailyUses": 2,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "rich",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報",
+        "activeIngredients": [
+          "カモミラET",
+          "グリチルレチン酸ステアリル"
+        ]
+      },
+      "sensitiveSkin": true
+    },
+    {
+      "id": "biore-perfect-oil",
+      "brand": "ビオレ",
+      "name": "メイク落とし パーフェクトオイル",
+      "category": "makeupRemover",
+      "jan": "4901301761385",
+      "volume": 230,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301761385/",
+      "keyIngredients": [
+        "ミネラルオイル",
+        "ラウリン酸PEG-12",
+        "イソドデカン"
+      ],
+      "explanation": "ぬれた手でも使え、ウォータープルーフマスカラまで落とすオイル。W洗顔不要。",
+      "scores": {},
+      "demoPrice": 1416,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "light",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報"
+      },
+      "doubleCleanseNotNeeded": true,
+      "waterproof": true
+    },
+    {
+      "id": "biore-foam-cream-makeup",
+      "brand": "ビオレ",
+      "name": "おうちdeエステ 泡クリームメイク落とし",
+      "category": "makeupRemover",
+      "jan": "4901301388063",
+      "volume": 210,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301388063/",
+      "keyIngredients": [
+        "グリセリン",
+        "炭酸水素Na",
+        "PPG-9ジグリセリル"
+      ],
+      "explanation": "泡がクリーム状に変化して毛穴のファンデ汚れを落とす。W洗顔不要。",
+      "scores": {
+        "pores": 1
+      },
+      "demoPrice": 1188,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "light",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報"
+      },
+      "doubleCleanseNotNeeded": true,
+      "waterproof": false
+    },
+    {
+      "id": "nivea-gel-cleanse",
+      "brand": "ニベア",
+      "name": "肌磨きジェルクレンズ",
+      "category": "makeupRemover",
+      "jan": "4901301443182",
+      "volume": 130,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301443182/",
+      "keyIngredients": [
+        "セラミドNG",
+        "スクワラン",
+        "ヒアルロン酸Na",
+        "グリセリン"
+      ],
+      "explanation": "メイク・毛穴の汚れと古い角質によるくすみを落とすジェルクレンズ。W洗顔不要。",
+      "scores": {
+        "dullness": 2,
+        "pores": 1,
+        "dryness": 1
+      },
+      "demoPrice": 1870,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "1本の使用回数は仮推定。使用量のメーカー表示は、容積の直接推定には使用していません。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "検索サービスに保存されたメーカー公式ページの掲載情報"
+      },
+      "doubleCleanseNotNeeded": true,
+      "waterproof": false
+    },
+    {
+      "id": "biore-black-cleansing-gel",
+      "brand": "ビオレ",
+      "name": "おうちdeエステ メイク落とし ブラックジェル 200g",
+      "category": "makeupRemover",
+      "jan": "4901301416919",
+      "volume": 200,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301416919/",
+      "keyIngredients": [
+        "グリセリン",
+        "炭",
+        "イソノナン酸イソノニル"
+      ],
+      "explanation": "炭配合ジェルで毛穴のメイク汚れとウォータープルーフマスカラを落とす。W洗顔不要。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 1
+      },
+      "demoPrice": 1098,
+      "demoUses": 90,
+      "dailyUses": 1,
+      "usage": "使用回数は仮推定。",
+      "feel": "moist",
+      "tone": "しっとり",
+      "waterproof": true,
+      "doubleCleanseNotNeeded": true,
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカー公式情報は検索インデックスに保存された掲載内容"
+      }
+    },
+    {
+      "id": "curel-eye-cream",
+      "brand": "キュレル",
+      "name": "潤浸保湿 モイストリペアアイクリーム",
+      "category": "eyeCare",
+      "jan": "4901301382528",
+      "volume": 25,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301382528/",
+      "keyIngredients": [
+        "アラントイン",
+        "セラミド機能成分",
+        "ユーカリエキス",
+        "グリセリン"
+      ],
+      "explanation": "目元の乾燥を保湿し、肌荒れを防ぐ薬用アイクリーム。乾燥による小じわを目立たなくする効能評価済み。化粧水・乳液・クリームの後に使う部分ケア。",
+      "scores": {
+        "eyeDryness": 3,
+        "dryness": 1,
+        "fineLines": 2,
+        "irritation": 2
+      },
+      "sensitiveSkin": true,
+      "demoPrice": 3080,
+      "demoUses": 150,
+      "dailyUses": 2,
+      "usage": "メーカーは片目あたり直径約5mmの使用量を案内。150回の使い切り回数は仮推定（メーカー公表ではありません）。",
+      "tone": "目元用濃密クリーム",
+      "feel": "rich",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "アラントイン"
+        ],
+        "sourceAccess": "メーカー公式ページの取得済み情報。価格は販売店の検索インデックス情報"
+      }
+    },
+    {
+      "id": "sofina-basic-turbo-toner",
+      "brand": "SOFINA BASIC＋",
+      "name": "うるおいターボ化粧水",
+      "category": "toner",
+      "jan": "4901301466648",
+      "volume": 160,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-basic/",
+      "keyIngredients": [
+        "グリセリン",
+        "セリン",
+        "スクロース",
+        "セチルPGヒドロキシエチルパルミタミド",
+        "ユーカリ葉エキス"
+      ],
+      "explanation": "タンパク保水成分とセラミドケア成分e（保湿）を配合した化粧水。角層のうるおいを保ち、乾燥しがちな肌をしっとりなめらかに整える。",
+      "scores": {
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 1430,
+      "demoUses": 180,
+      "dailyUses": 2,
+      "usage": "花王公式Q&A記載の朝晩使用・約3ヶ月分に基づく約180回。開封後の品質保持期限ではない。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sensitiveSkinPatchTested": true
+      }
+    },
+    {
+      "id": "sofina-basic-turbo-milk",
+      "brand": "SOFINA BASIC＋",
+      "name": "うるおいターボ乳液",
+      "category": "moisturizer",
+      "jan": "4901301466679",
+      "volume": 120,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-basic/products/",
+      "keyIngredients": [
+        "グリセリン",
+        "セリン",
+        "スクロース",
+        "セチルPGヒドロキシエチルパルミタミド",
+        "スクワラン",
+        "ユーカリ葉エキス"
+      ],
+      "explanation": "タンパク保水成分とセラミドケア成分（保湿）を配合した乳液。角層のうるおいを保ち、乾燥から肌を守ってやわらかな肌に整える。",
+      "scores": {
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 1650,
+      "demoUses": 180,
+      "dailyUses": 2,
+      "usage": "花王公式Q&A記載の朝晩使用・約3ヶ月分に基づく約180回。開封後の品質保持期限ではない。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sensitiveSkinPatchTested": true
+      }
+    },
+    {
+      "id": "suisai-powder-n",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア パウダーウォッシュN",
+      "category": "cleanser",
+      "jan": "4973167823859",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167823859/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "毛穴の黒ずみ汚れ・角栓・古い角質を酵素とアミノ酸系洗浄成分で洗い落とす。洗浄による肌のくすみ対策。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "dullness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2090,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-powder-black",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ブラック パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167030141",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167030141/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "炭",
+        "モロッコ溶岩クレイ"
+      ],
+      "explanation": "酵素・炭・クレイで毛穴の黒ずみ汚れや過剰な皮脂を洗浄。テカリ・ベタつきが気になる肌向け。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "oiliness": 3,
+        "shine": 3,
+        "dullness": 1
+      },
+      "feel": "light",
+      "demoPrice": 2090,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-powder-pink",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ピンク パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167593905",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167593905/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "モモ果汁",
+        "ザクロ果実エキス",
+        "ホホバ種子油"
+      ],
+      "explanation": "カサつくのにテカる混合肌向け酵素洗顔。古い角質・皮脂汚れを洗い流し、うるおいを守る。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 2,
+        "oiliness": 2,
+        "dryness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2090,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-powder-green",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア グリーン パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167593868",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167593868/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "ツボクサ葉／茎エキス"
+      ],
+      "explanation": "ニキビができやすい肌向け。古い角質・過剰な皮脂を洗い落としてニキビを防ぐ化粧品の洗顔パウダー。薬用有効成分は標榜しない。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 2,
+        "oiliness": 2,
+        "acne": 2
+      },
+      "feel": "light",
+      "demoPrice": 2090,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-powder-gold",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ゴールド パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167079836",
+      "volume": 12.8,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167079836/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "ヒマワリ種子油",
+        "アボカド油",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "毛穴汚れ・角栓を洗い落としつつ保湿オイルを配合。洗顔後のつっぱりや乾燥感が気になる人向け。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 3,
+        "dryness": 2,
+        "dullness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 2530,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-paste",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ペーストウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167018156",
+      "volume": 120,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167018156/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "カオリン",
+        "モロッコ溶岩クレイ",
+        "グリセリン"
+      ],
+      "explanation": "毛穴の黒ずみ汚れ・角栓や古い角質を洗い落とす毎日用ペースト洗顔。泡立て洗顔・泡立てない洗顔の両方が可能。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "dullness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 1430,
+      "demoUses": 70,
+      "dailyUses": 1,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "suisai-peeling-powder",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ピーリング パウダーウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167535622",
+      "volume": 32,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167535622/",
+      "keyIngredients": [
+        "プロテアーゼ",
+        "リパーゼ",
+        "炭酸水素Na",
+        "クエン酸",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "W酵素と水に触れて発泡する洗浄成分で角栓・古い角質を洗い落とすパウダー。通常の洗顔は毎日使用可能。パック洗顔は週1～2回が目安。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "dullness": 3
+      },
+      "feel": "light",
+      "demoPrice": 2750,
+      "demoUses": 32,
+      "dailyUses": 1,
+      "usage": "メーカーが1回分×32個と明記。1回1個・1日1回の参考月額。肌状態に応じて使用頻度を調整。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "dew-afterglow",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "アフターグロウドロップ",
+      "category": "toner",
+      "jan": "4973167074305",
+      "volume": 170,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167074305/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン",
+        "グリセリン"
+      ],
+      "explanation": "ヒアルロン酸を含む化粧液。肌に潤いを与え、しっとりした感触を長く保つ。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 3850,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "dew-bright-aura",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトオーラローション",
+      "category": "toner",
+      "jan": "4973167553046",
+      "volume": 170,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553046/",
+      "keyIngredients": [
+        "L-アスコルビン酸 2-グルコシド",
+        "グリチルリチン酸ジカリウム",
+        "加水分解ヒアルロン酸"
+      ],
+      "explanation": "薬用ブライトニング化粧液。ビタミンC誘導体でメラニン生成を抑え、シミ・ソバカスを防ぐ。肌荒れも防ぎ、潤いによる透明感を与える。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "irritation": 2,
+        "dullness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 4950,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "L-アスコルビン酸 2-グルコシド",
+          "グリチルリチン酸ジカリウム"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-bounce",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトバウンスミルク",
+      "category": "moisturizer",
+      "jan": "4973167019108",
+      "volume": 80,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167019108/",
+      "keyIngredients": [
+        "カモミラET",
+        "グリチルレチン酸ステアリル",
+        "ヒアルロン酸",
+        "グリセリン"
+      ],
+      "explanation": "薬用ブライトニング乳液。カモミラETでメラニンの生成を抑えシミ・ソバカスを防ぎ、肌荒れも防ぐ。潤いでふっくらハリ感を与える。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "irritation": 2,
+        "firmness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 5280,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "カモミラET",
+          "グリチルレチン酸ステアリル"
+        ]
+      }
+    },
+    {
+      "id": "dew-lotion-moist",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ローション しっとり",
+      "category": "toner",
+      "jan": "4973167251911",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251911/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "グリセリン",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "濃密なとろみが肌の角層に潤いを与え、もっちりとしたハリ感を保つ化粧水。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 3850,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "dew-milk-moist",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "エマルジョン しっとり",
+      "category": "moisturizer",
+      "jan": "4973167252512",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252512/",
+      "keyIngredients": [
+        "スクワラン",
+        "マカデミアナッツ油",
+        "ヒアルロン酸Na",
+        "グリセリン"
+      ],
+      "explanation": "肌の角層へ潤いを与えるしっとりタイプの乳液。乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "moist",
+      "demoPrice": 4180,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13"
+      }
+    },
+    {
+      "id": "dew-bright-lotion-moist",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングローション しっとり",
+      "category": "toner",
+      "jan": "4973167383551",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383551/",
+      "keyIngredients": [
+        "L-アスコルビン酸 2-グルコシド",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "薬用美白化粧水。メラニンの生成を抑え、シミ・ソバカスを防ぐ。潤いによるくすみ感にも配慮。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dullness": 2,
+        "dryness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 4400,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "L-アスコルビン酸 2-グルコシド"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-lotion-rich",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングローション とてもしっとり",
+      "category": "toner",
+      "jan": "4973167383575",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383575/",
+      "keyIngredients": [
+        "L-アスコルビン酸 2-グルコシド",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "薬用美白化粧水。シミ・ソバカスを予防しながらうるおいを与える、高保湿タイプ。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dullness": 2,
+        "dryness": 3
+      },
+      "feel": "rich",
+      "demoPrice": 4400,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "L-アスコルビン酸 2-グルコシド"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-milk-moist",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングエマルジョン しっとり",
+      "category": "moisturizer",
+      "jan": "4973167383452",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383452/",
+      "keyIngredients": [
+        "カモミラET",
+        "ヒアルロン酸Na",
+        "スクワラン"
+      ],
+      "explanation": "カモミラETの有効成分でメラニン生成を抑え、シミ・ソバカスを防ぐ薬用乳液。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "dullness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 4730,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "カモミラET"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-milk-rich",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングエマルジョン とてもしっとり",
+      "category": "moisturizer",
+      "jan": "4973167383476",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383476/",
+      "keyIngredients": [
+        "カモミラET",
+        "ヒアルロン酸Na",
+        "スクワラン"
+      ],
+      "explanation": "シミ・ソバカスを防ぐ薬用美白乳液。うるおい感の高いとてもしっとりタイプ。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "dullness": 1
+      },
+      "feel": "rich",
+      "demoPrice": 4730,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー推奨の1回量を参照。1本の使用回数は仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "activeIngredients": [
+          "カモミラET"
+        ]
+      }
+    },
+    {
+      "id": "suisai-black-scrub-wash",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ブラックスクラブウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167531198",
+      "volume": 130,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167531198/",
+      "keyIngredients": [
+        "グリセリン",
+        "モロッコ溶岩クレイ",
+        "セルロース",
+        "炭"
+      ],
+      "explanation": "崩れるスクラブを含む洗顔料。毛穴の汚れ・古い角質や角栓を洗浄する。目の周りを避けて使用。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "oiliness": 2,
+        "shine": 2,
+        "dullness": 1
+      },
+      "feel": "light",
+      "demoPrice": 1980,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "suisai-refining-toner",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "リファイニングトナー",
+      "category": "toner",
+      "jan": "4973167024485",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167024485/",
+      "keyIngredients": [
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "アンズ果汁"
+      ],
+      "explanation": "2026年発売のふき取り化粧水。毛穴の皮脂汚れや古い角質をコットンで取り除く。通常の保湿化粧水とは用途が異なり、コットン代は月額に含まない。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 2,
+        "dullness": 2
+      },
+      "feel": "light",
+      "demoPrice": 2200,
+      "demoUses": 100,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      },
+      "wipeOff": true
+    },
+    {
+      "id": "dew-cleansing-oil",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "クレンジングオイル",
+      "category": "makeupRemover",
+      "jan": "4973167251607",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251607/",
+      "keyIngredients": [
+        "ミネラルオイル",
+        "イソノナン酸イソノニル",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "とろみのあるオイルでメイク汚れを落とす。濡れた手でも使用可。W洗顔不要の明記がないため洗顔料と組み合わせて提案。",
+      "scores": {},
+      "feel": "light",
+      "demoPrice": 2750,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "公式にW洗顔不要の表示が確認できないため、洗顔料との組み合わせで扱う（個別商品についてメーカーがW洗顔必須と断定したものではありません）"
+    },
+    {
+      "id": "dew-cleansing-cream",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "クレンジングクリーム",
+      "category": "makeupRemover",
+      "jan": "4973167251584",
+      "volume": 125,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251584/",
+      "keyIngredients": [
+        "ミネラルオイル",
+        "イソノナン酸イソノニル",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "やわらかなクリームでメイク汚れを包み、洗い流すかふき取る。W洗顔不要の明記がないため洗顔料と組み合わせて提案。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 2750,
+      "demoUses": 45,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "公式にW洗顔不要の表示が確認できないため、洗顔料との組み合わせで扱う（個別商品についてメーカーがW洗顔必須と断定したものではありません）"
+    },
+    {
+      "id": "dew-cream-soap",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "クリームソープ",
+      "category": "cleanser",
+      "jan": "4973167251614",
+      "volume": 125,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251614/",
+      "keyIngredients": [
+        "グリセリン",
+        "スクワラン",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "濃密な泡で汚れを洗い流し、しっとりなめらかな肌へ整えるクリームタイプの洗顔料。",
+      "scores": {
+        "dryness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2750,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "dew-cream",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "クリーム",
+      "category": "moisturizer",
+      "jan": "4973167251720",
+      "volume": 30,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251720/",
+      "keyIngredients": [
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "肌の乾燥を防ぎ、ハリを与える濃密クリーム。乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "rich",
+      "demoPrice": 5500,
+      "demoUses": 70,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "dew-bright-cream",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングクリーム",
+      "category": "moisturizer",
+      "jan": "4973167376164",
+      "volume": 30,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167376164/",
+      "keyIngredients": [
+        "カモミラET",
+        "ヒアルロン酸Na-2",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "薬用美白クリーム。カモミラETがメラニン生成を抑えてシミ・そばかすを防ぐ。乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "spots": 3,
+        "freckles": 3,
+        "dullness": 1,
+        "firmness": 1,
+        "fineLines": 2
+      },
+      "feel": "rich",
+      "demoPrice": 6050,
+      "demoUses": 70,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合",
+        "activeIngredients": [
+          "カモミラET"
+        ]
+      }
+    },
+    {
+      "id": "dew-tantan-wrinkle-cream",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "タンタンリンクルクリーム",
+      "category": "moisturizer",
+      "jan": "4973167040980",
+      "volume": 55,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167040980/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "ヒアルロン酸Na-2",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "2026年発売の薬用シワ改善クリーム。ナイアシンアミドでシワを改善し、メラニンの生成を抑えてシミ・そばかすを予防する。",
+      "scores": {
+        "wrinkles": 3,
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "firmness": 3
+      },
+      "feel": "rich",
+      "demoPrice": 7480,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合",
+        "activeIngredients": [
+          "ナイアシンアミド"
+        ]
+      }
+    },
+    {
+      "id": "dew-glamast-milk-drop",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "グラマストミルクドロップ",
+      "category": "moisturizer",
+      "jan": "4973167550601",
+      "volume": 80,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167550601/",
+      "keyIngredients": [
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "メチルセリン",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "乾燥によるしぼみ肌印象にうるおいを与える濃密セラム乳液。乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "moist",
+      "demoPrice": 4180,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "dew-tantan-conk-alpha",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "タンタンコンクドロップα",
+      "category": "moisturizer",
+      "jan": "4973167022726",
+      "volume": 55,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167022726/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "メチルセリン",
+        "ブクリョウタケエキス"
+      ],
+      "explanation": "密着する塗膜で水分蒸散を防ぐ、フェイスラインのハリ感向け保湿クリーム。薬用シワ改善の効能は標榜していない。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 3
+      },
+      "feel": "rich",
+      "demoPrice": 5280,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "dew-wrinkle-smash",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "リンクルスマッシュ",
+      "category": "serum",
+      "jan": "4973167864920",
+      "volume": 20,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167864920/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "ヒアルロン酸Na-2",
+        "ワレモコウエキス"
+      ],
+      "explanation": "薬用シワ改善美容液。目元・口元・額・首などの気になる部位へお手入れの最後に塗布。有効成分ナイアシンアミドでシワを改善。",
+      "scores": {
+        "wrinkles": 3,
+        "dryness": 1,
+        "firmness": 1,
+        "eyeDryness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 6380,
+      "demoUses": 180,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合",
+        "activeIngredients": [
+          "ナイアシンアミド"
+        ]
+      }
+    },
+    {
+      "id": "dew-lotion-light",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ローション さっぱり",
+      "category": "toner",
+      "jan": "4973167251645",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251645/",
+      "keyIngredients": [
+        "グリセリン",
+        "アセチルグルコサミン",
+        "メチルセリン",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "さっぱりタイプの保湿化粧水。角層にうるおいを与え、ハリ感のある肌へ整える。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2
+      },
+      "feel": "light",
+      "demoPrice": 3850,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-lotion-rich",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ローション とてもしっとり",
+      "category": "toner",
+      "jan": "4973167251935",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251935/",
+      "keyIngredients": [
+        "グリセリン",
+        "アセチルグルコサミン",
+        "メチルセリン",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "とてもしっとりタイプの保湿化粧水。角層にうるおいを与え、しっとりとした肌へ整える。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2
+      },
+      "feel": "rich",
+      "demoPrice": 3850,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-milk-light",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "エマルジョン さっぱり",
+      "category": "moisturizer",
+      "jan": "4973167251683",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251683/",
+      "keyIngredients": [
+        "グリセリン",
+        "マカデミアナッツ油",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "さっぱりタイプの保湿乳液。角層にうるおいを与え、乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "light",
+      "demoPrice": 4180,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-milk-rich",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "エマルジョン とてもしっとり",
+      "category": "moisturizer",
+      "jan": "4973167252529",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252529/",
+      "keyIngredients": [
+        "グリセリン",
+        "マカデミアナッツ油",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "とてもしっとりタイプの保湿乳液。角層にうるおいを与え、乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "rich",
+      "demoPrice": 4180,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-bright-lotion-light",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングローション さっぱり",
+      "category": "toner",
+      "jan": "4973167382264",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167382264/",
+      "keyIngredients": [
+        "L-アスコルビン酸 2-グルコシド",
+        "グリチルリチン酸ジカリウム",
+        "濃グリセリン",
+        "ヒアルロン酸Na-2"
+      ],
+      "explanation": "薬用美白化粧水のさっぱりタイプ。メラニン生成を抑えてシミ・そばかすを防ぐ。既存のシミを消すものではない。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "irritation": 2,
+        "dullness": 2
+      },
+      "feel": "light",
+      "demoPrice": 4400,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。",
+        "activeIngredients": [
+          "L-アスコルビン酸 2-グルコシド",
+          "グリチルリチン酸ジカリウム"
+        ]
+      }
+    },
+    {
+      "id": "dew-bright-milk-light",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングエマルジョン さっぱり",
+      "category": "moisturizer",
+      "jan": "4973167383438",
+      "volume": 100,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383438/",
+      "keyIngredients": [
+        "カモミラET",
+        "濃グリセリン",
+        "マカデミアナッツ油",
+        "ヒアルロン酸Na-2"
+      ],
+      "explanation": "薬用美白乳液のさっぱりタイプ。メラニン生成を抑えてシミ・そばかすを防ぎ、うるおいを与える。",
+      "scores": {
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "dullness": 1
+      },
+      "feel": "light",
+      "demoPrice": 4730,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。",
+        "activeIngredients": [
+          "カモミラET"
+        ]
+      }
+    },
+    {
+      "id": "suisai-gold-cleansing-butter",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ゴールド クレンジングバター",
+      "category": "makeupRemover",
+      "jan": "4973167552995",
+      "volume": 90,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167552995/",
+      "keyIngredients": [
+        "シア脂",
+        "ヒマワリ種子油",
+        "アボカド油",
+        "ホホバ種子油"
+      ],
+      "explanation": "濃厚なバター状のメイク落とし。メイク汚れや毛穴のメイク汚れを落とす。W洗顔不要と確認できないため洗顔料と組み合わせる。",
+      "scores": {
+        "dryness": 2,
+        "pores": 2,
+        "blackheads": 1
+      },
+      "feel": "rich",
+      "demoPrice": 2750,
+      "demoUses": 45,
+      "dailyUses": 1,
+      "usage": "メーカー案内の使用量を参考にするが、1本の消費回数はメーカー未確認の仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーJANとドラッグストア税込掲載価格を照合。現在価格・在庫は未確認。"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "W洗顔不要のメーカー記載が確認できないので、アプリでは洗顔料との組み合わせだけを候補にする。メーカーがW洗顔必須と断定したものではない。"
+    },
+    {
+      "id": "dew-honey-balm",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ハニーバームクレンジング",
+      "category": "makeupRemover",
+      "jan": "4973167503461",
+      "volume": 180,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167503461/",
+      "keyIngredients": [
+        "トリエチルヘキサノイン",
+        "ミネラルオイル",
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "ローヤルゼリーエキス"
+      ],
+      "explanation": "はちみつ状のバームでメイクや毛穴汚れを落とし、しっとり洗い上げる。",
+      "scores": {
+        "pores": 2,
+        "dryness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2750,
+      "demoUses": 90,
+      "dailyUses": 1,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "メーカーの商品情報でW洗顔不要の記載を確認できなかったため、アプリでは洗顔料との組み合わせを候補にする。"
+    },
+    {
+      "id": "dew-honey-balm-clear",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ハニーバームクレンジング クリア",
+      "category": "makeupRemover",
+      "jan": "4973167553022",
+      "volume": 180,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553022/",
+      "keyIngredients": [
+        "オリーブ果実油",
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "ローヤルゼリーエキス"
+      ],
+      "explanation": "メイクや毛穴汚れを落とすバーム。角栓を洗う成分としてオリーブ果実油を配合し、すっきり洗い上げる。",
+      "scores": {
+        "pores": 2,
+        "blackheads": 2,
+        "dryness": 1
+      },
+      "feel": "light",
+      "demoPrice": 2750,
+      "demoUses": 90,
+      "dailyUses": 1,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "メーカーの商品情報でW洗顔不要の記載を確認できなかったため、アプリでは洗顔料との組み合わせを候補にする。"
+    },
+    {
+      "id": "dew-sweet-chantilly-wash",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "スイートシャンティウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167511411",
+      "volume": 125,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167511411/",
+      "keyIngredients": [
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "とろみのあるペーストを泡立てて使う洗顔料。濃密な泡で汚れを洗い、しっとりした洗い上がり。",
+      "scores": {
+        "dryness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2750,
+      "demoUses": 125,
+      "dailyUses": 2,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-warm-hygge-oil",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ウォームヒュッゲオイル",
+      "category": "serum",
+      "jan": "4973167854143",
+      "volume": 40,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167854143/",
+      "keyIngredients": [
+        "グリセリン",
+        "スクワラン",
+        "ヒアルロン酸Na",
+        "ワレモコウエキス",
+        "ローヤルゼリーエキス"
+      ],
+      "explanation": "化粧水の後に使う温感オイル美容液。マッサージするように顔全体になじませ、うるおいとツヤを与える。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2
+      },
+      "feel": "rich",
+      "demoPrice": 3850,
+      "demoUses": 80,
+      "dailyUses": 1,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    },
+    {
+      "id": "dew-moist-lift-essence",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "モイストリフトエッセンス",
+      "category": "serum",
+      "jan": "4973167323939",
+      "volume": 45,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167323939/",
+      "keyIngredients": [
+        "ジメチコン",
+        "グリセリン",
+        "マカデミア種子油",
+        "アセチルグルコサミン",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "化粧水の後に顔全体に使うハリ美容液。うるおいを与え、弾むようなハリ感のある肌に整える。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 3
+      },
+      "feel": "moist",
+      "demoPrice": 6380,
+      "demoUses": 90,
+      "dailyUses": 2,
+      "usage": "メーカーの1回量の目安あり。1本の使用回数は仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "メーカーの商品情報とマツキヨココカラのJAN・税込掲載価格を照合。現在価格・在庫は未確認。"
+      }
+    }
+  ],
+  "pricing": {
+    "prices": {
+      "biore-foam-smooth": {
+        "priceJPY": 968,
+        "jan": "4901301474407",
+        "url": "https://shop.tsuruha.co.jp/10187824.html",
+        "retailer": "ツルハグループe-shop",
+        "verifiedAt": "2026-11-07"
+      },
+      "ihada-moist-lotion": {
+        "priceJPY": 1650,
+        "jan": "4909978261238",
+        "url": "https://shop.tsuruha.co.jp/10183568.html",
+        "retailer": "ツルハグループe-shop",
+        "verifiedAt": "2026-11-07"
+      },
+      "ihada-moist-emulsion": {
+        "priceJPY": 1760,
+        "jan": "4909978261306",
+        "url": "https://shop.tsuruha.co.jp/10183572.html",
+        "retailer": "ツルハグループe-shop",
+        "verifiedAt": "2026-11-07"
+      },
+      "curel-foam": {
+        "priceJPY": 1760,
+        "jan": "4901301269348",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301269348",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-sebum-foam": {
+        "priceJPY": 1760,
+        "jan": "4901301264336",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264336",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-toner-ii": {
+        "priceJPY": 2090,
+        "jan": "4901301236197",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236197",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-toner-iii": {
+        "priceJPY": 2090,
+        "jan": "4901301236180",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236180",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "sofina-base-toner": {
+        "priceJPY": 2640,
+        "jan": "4901301422941",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301422941",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "sofina-niacinamide-toner": {
+        "priceJPY": 3520,
+        "jan": "4901301472762",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301472762",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "sofina-toning-serum": {
+        "priceJPY": 6600,
+        "jan": "4901301460264",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301460264",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "sofina-base-serum": {
+        "priceJPY": 5500,
+        "jan": "4901301412829",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301412829",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-milk": {
+        "priceJPY": 2090,
+        "jan": "4901301236173",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236173",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-cream": {
+        "priceJPY": 2970,
+        "jan": "4901301236210",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236210",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-toner-i": {
+        "priceJPY": 2090,
+        "jan": "4901301236043",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236043",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-sebum-toner": {
+        "priceJPY": 2090,
+        "jan": "4901301264343",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264343",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-sebum-gel": {
+        "priceJPY": 2090,
+        "jan": "4901301264350",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264350",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-bright-toner-i": {
+        "priceJPY": 2530,
+        "jan": "4901301240309",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301240309",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-bright-toner-iii": {
+        "priceJPY": 2530,
+        "jan": "4901301238801",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238801",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-bright-milk": {
+        "priceJPY": 2530,
+        "jan": "4901301238795",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238795",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-bright-serum": {
+        "priceJPY": 3850,
+        "jan": "4901301238825",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238825",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-bright-cream": {
+        "priceJPY": 3080,
+        "jan": "4901301238818",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238818",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-aging-toner": {
+        "priceJPY": 2530,
+        "jan": "4901301334510",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334510",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-aging-gel-cream": {
+        "priceJPY": 3080,
+        "jan": "4901301334527",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334527",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-aging-cream": {
+        "priceJPY": 3080,
+        "jan": "4901301334534",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334534",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "biore-face-moist": {
+        "priceJPY": 921,
+        "jan": "4901301408389",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301408389",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "biore-ouchi-gel-clear": {
+        "priceJPY": 990,
+        "jan": "4901301463890",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301463890",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "biore-ouchi-gel-moist": {
+        "priceJPY": 990,
+        "jan": "4901301463906",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301463906",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "biore-ouchi-deep-clay": {
+        "priceJPY": 1237,
+        "jan": "4901301464057",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301464057",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "sofina-micro-foam-wash": {
+        "priceJPY": 3520,
+        "jan": "4901301463968",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301463968",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "sofina-wrinkle-foam-serum": {
+        "priceJPY": 6380,
+        "jan": "4901301416483",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301416483",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "sofina-firming-serum": {
+        "priceJPY": 4730,
+        "jan": "4901301422750",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301422750",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "sofina-deep-milk": {
+        "priceJPY": 4070,
+        "jan": "4901301472793",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301472793",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "nivea-soft": {
+        "priceJPY": 272,
+        "jan": "4901301043764",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301043764",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "hadalabo-gokujun-lotion": {
+        "priceJPY": 902,
+        "jan": "4987241155712",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241155712",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "hadalabo-shirojun-lotion": {
+        "priceJPY": 902,
+        "jan": "4987241157549",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241157549",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "hadalabo-aging-lotion": {
+        "priceJPY": 1221,
+        "jan": "4987241171255",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241171255",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "hadalabo-gokujun-milk": {
+        "priceJPY": 902,
+        "jan": "4987241127054",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241127054",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "hadalabo-aging-milk": {
+        "priceJPY": 1221,
+        "jan": "4987241171286",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241171286",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "melanocc-lotion": {
+        "priceJPY": 990,
+        "jan": "4987241198900",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241198900",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "melanocc-essence": {
+        "priceJPY": 1210,
+        "jan": "4987241169658",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241169658",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "melanocc-premium-essence": {
+        "priceJPY": 1628,
+        "jan": "4987241168583",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987241168583",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "minon-gentle-wash-whip": {
+        "priceJPY": 1650,
+        "jan": "4987107670236",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987107670236",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "minon-moist-lotion-i": {
+        "priceJPY": 2200,
+        "jan": "4987107670335",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987107670335",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "minon-moist-lotion-ii": {
+        "priceJPY": 2200,
+        "jan": "4987107670397",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987107670397",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "minon-moist-milk": {
+        "priceJPY": 2310,
+        "jan": "4987107670465",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4987107670465",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-06"
+      },
+      "biore-face-deepmoist": {
+        "priceJPY": 887,
+        "jan": "4901301408372",
+        "url": "https://shop.tsuruha.co.jp/10152991.html",
+        "retailer": "ツルハグループe-shop",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-face-oil": {
+        "priceJPY": 887,
+        "jan": "4901301408402",
+        "url": "https://shop.tsuruha.co.jp/10152982.html",
+        "retailer": "ツルハグループe-shop",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-face-smoothclear": {
+        "priceJPY": 822,
+        "jan": "4901301414380",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301414380",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-face-acne": {
+        "priceJPY": 822,
+        "jan": "4901301408396",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301408396",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-marshmallow-moist": {
+        "priceJPY": 778,
+        "jan": "4901301250162",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301250162",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-marshmallow-acne": {
+        "priceJPY": 778,
+        "jan": "4901301275080",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301275080",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-skincare-acne": {
+        "priceJPY": 525,
+        "jan": "4901301265678",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301265678",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-jelly-moist": {
+        "priceJPY": 998,
+        "jan": "4901301287656",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301287656",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-jelly-rich": {
+        "priceJPY": 858,
+        "jan": "4901301287663",
+        "url": "https://shop.tsuruha.co.jp/10085300.html",
+        "retailer": "ツルハグループe-shop",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-foam-mochi": {
+        "priceJPY": 602,
+        "jan": "4901301394996",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301394996",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-wash-rich": {
+        "priceJPY": 508,
+        "jan": "4901301335456",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301335456",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-wash-dull": {
+        "priceJPY": 508,
+        "jan": "4901301348616",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301348616",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-2way": {
+        "priceJPY": 968,
+        "jan": "4901301430205",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301430205",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-2way-acne": {
+        "priceJPY": 968,
+        "jan": "4901301451132",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301451132",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-cream-56": {
+        "priceJPY": 305,
+        "jan": "4901301008497",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301008497",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-cleansing-oil": {
+        "priceJPY": 1581,
+        "jan": "4901301417008",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301417008",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-cleansing-oil-moist": {
+        "priceJPY": 1581,
+        "jan": "4901301440365",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301440365",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-cleansing-liquid": {
+        "priceJPY": 1139,
+        "jan": "4901301263049",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301263049",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-cleansing-paste": {
+        "priceJPY": 778,
+        "jan": "4901301246769",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301246769",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-cleansing-beauty": {
+        "priceJPY": 1430,
+        "jan": "4901301388902",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301388902",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13"
+      },
+      "curel-foam-gel": {
+        "priceJPY": 2090,
+        "jan": "4901301458964",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301458964",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "curel-gel-makeup": {
+        "priceJPY": 1100,
+        "jan": "4901301236203",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236203",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "curel-oil-makeup": {
+        "priceJPY": 1650,
+        "jan": "4901301346995",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301346995",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "curel-milk-makeup": {
+        "priceJPY": 1650,
+        "jan": "4901301422095",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301422095",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "curel-moist-spray-250": {
+        "priceJPY": 2750,
+        "jan": "4901301379924",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301379924",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "curel-gel-serum": {
+        "priceJPY": 2750,
+        "jan": "4901301281715",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301281715",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "curel-foam-serum": {
+        "priceJPY": 3850,
+        "jan": "4901301458957",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301458957",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "curel-barrier-serum": {
+        "priceJPY": 4950,
+        "jan": "4901301463937",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301463937",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "curel-oil-serum": {
+        "priceJPY": 4950,
+        "jan": "4901301471338",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301471338",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "biore-perfect-oil": {
+        "priceJPY": 1416,
+        "jan": "4901301761385",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301761385",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "biore-foam-cream-makeup": {
+        "priceJPY": 1188,
+        "jan": "4901301388063",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301388063",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "nivea-gel-cleanse": {
+        "priceJPY": 1870,
+        "jan": "4901301443182",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301443182",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスに保存された通販商品情報（ライブ価格の再確認は未実施）"
+      },
+      "biore-black-cleansing-gel": {
+        "priceJPY": 1098,
+        "jan": "4901301416919",
+        "url": "https://shop.tsuruha.co.jp/10162529.html",
+        "retailer": "ツルハグループe-shop",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "検索インデックスの商品ページに保存された表示価格"
+      },
+      "curel-eye-cream": {
+        "priceJPY": 3080,
+        "jan": "4901301382528",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301382528",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "通販検索インデックス掲載価格。2026-11-13当日のライブ価格は未確認"
+      },
+      "sofina-basic-turbo-toner": {
+        "priceJPY": 1430,
+        "jan": "4901301466648",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/campaign/search/campaign_id/CP_5078/",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "マツキヨの商品一覧記載の容量・税込価格と、@cosme SHOPPING記載JANを照合。現在のライブ価格は未確認"
+      },
+      "sofina-basic-turbo-milk": {
+        "priceJPY": 1650,
+        "jan": "4901301466679",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/campaign/search/campaign_id/CP_5079/",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "マツキヨの商品一覧記載の容量・税込価格と、@cosme SHOPPING記載JANを照合。現在のライブ価格は未確認"
+      },
+      "suisai-powder-n": {
+        "priceJPY": 2090,
+        "jan": "4973167823859",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167823859",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "suisai-powder-black": {
+        "priceJPY": 2090,
+        "jan": "4973167030141",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167030141",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "suisai-powder-pink": {
+        "priceJPY": 2090,
+        "jan": "4973167593905",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167593905",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "suisai-powder-green": {
+        "priceJPY": 2090,
+        "jan": "4973167593868",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167593868",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "suisai-powder-gold": {
+        "priceJPY": 2530,
+        "jan": "4973167079836",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167079836",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "suisai-paste": {
+        "priceJPY": 1430,
+        "jan": "4973167018156",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167018156",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "suisai-peeling-powder": {
+        "priceJPY": 2750,
+        "jan": "4973167535622",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167535622",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "dew-afterglow": {
+        "priceJPY": 3850,
+        "jan": "4973167074305",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167074305",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "dew-bright-aura": {
+        "priceJPY": 4950,
+        "jan": "4973167553046",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167553046",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "dew-bright-bounce": {
+        "priceJPY": 5280,
+        "jan": "4973167019108",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167019108",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "dew-lotion-moist": {
+        "priceJPY": 3850,
+        "jan": "4973167251911",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251911",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "dew-milk-moist": {
+        "priceJPY": 4180,
+        "jan": "4973167252512",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167252512",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "dew-bright-lotion-moist": {
+        "priceJPY": 4400,
+        "jan": "4973167383551",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383551",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "dew-bright-lotion-rich": {
+        "priceJPY": 4400,
+        "jan": "4973167383575",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383575",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "dew-bright-milk-moist": {
+        "priceJPY": 4730,
+        "jan": "4973167383452",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383452",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "dew-bright-milk-rich": {
+        "priceJPY": 4730,
+        "jan": "4973167383476",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383476",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+      },
+      "suisai-black-scrub-wash": {
+        "priceJPY": 1980,
+        "jan": "4973167531198",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167531198",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "suisai-refining-toner": {
+        "priceJPY": 2200,
+        "jan": "4973167024485",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167024485",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-cleansing-oil": {
+        "priceJPY": 2750,
+        "jan": "4973167251607",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251607",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-cleansing-cream": {
+        "priceJPY": 2750,
+        "jan": "4973167251584",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251584",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-cream-soap": {
+        "priceJPY": 2750,
+        "jan": "4973167251614",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251614",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-cream": {
+        "priceJPY": 5500,
+        "jan": "4973167251720",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251720",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-bright-cream": {
+        "priceJPY": 6050,
+        "jan": "4973167376164",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167376164",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-tantan-wrinkle-cream": {
+        "priceJPY": 7480,
+        "jan": "4973167040980",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167040980",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-glamast-milk-drop": {
+        "priceJPY": 4180,
+        "jan": "4973167550601",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167550601",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-tantan-conk-alpha": {
+        "priceJPY": 5280,
+        "jan": "4973167022726",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167022726",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-wrinkle-smash": {
+        "priceJPY": 6380,
+        "jan": "4973167864920",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167864920",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+      },
+      "dew-lotion-light": {
+        "priceJPY": 3850,
+        "jan": "4973167251645",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251645",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+      },
+      "dew-lotion-rich": {
+        "priceJPY": 3850,
+        "jan": "4973167251935",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251935",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+      },
+      "dew-milk-light": {
+        "priceJPY": 4180,
+        "jan": "4973167251683",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251683",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+      },
+      "dew-milk-rich": {
+        "priceJPY": 4180,
+        "jan": "4973167252529",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167252529",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+      },
+      "dew-bright-lotion-light": {
+        "priceJPY": 4400,
+        "jan": "4973167382264",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167382264",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+      },
+      "dew-bright-milk-light": {
+        "priceJPY": 4730,
+        "jan": "4973167383438",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167383438",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+      },
+      "suisai-gold-cleansing-butter": {
+        "priceJPY": 2750,
+        "jan": "4973167552995",
+        "url": "https://shop.tsuruha.co.jp/10172991.html",
+        "retailer": "ツルハグループe-shop",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "公式のJAN・商品名と販売店の検索インデックスにある税込掲載価格を照合。ライブ価格ではない。"
+      },
+      "dew-honey-balm": {
+        "priceJPY": 2750,
+        "jan": "4973167503461",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167503461",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
+      },
+      "dew-honey-balm-clear": {
+        "priceJPY": 2750,
+        "jan": "4973167553022",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167553022",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
+      },
+      "dew-sweet-chantilly-wash": {
+        "priceJPY": 2750,
+        "jan": "4973167511411",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167511411",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
+      },
+      "dew-warm-hygge-oil": {
+        "priceJPY": 3850,
+        "jan": "4973167854143",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167854143",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
+      },
+      "dew-moist-lift-essence": {
+        "priceJPY": 6380,
+        "jan": "4973167323939",
+        "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167323939",
+        "retailer": "マツキヨココカラオンライン",
+        "verifiedAt": "2026-11-13",
+        "verificationMethod": "販売店の商品ページのJAN・税込掲載価格を照合。ライブ価格は未確認。"
+      }
+    }
+  },
+  "usage": {
+    "usages": {
+      "ihada-moist-lotion": {
+        "doseDescription": "朝晩の適量使用（手に取って顔全体になじませる）",
+        "sourceUrl": "https://www.shiseido.co.jp/sw/onlinestore/products/H91202.html?brnd_cd=71&online_shohin_ctlg_kbn=1&shohin_pl_c_cd=H91202",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-07",
+        "durationDays": 75,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカー記載の使い切り目安約2.5か月・朝晩使用。開封後の品質上の使用期限ではない"
+      },
+      "ihada-moist-emulsion": {
+        "doseDescription": "朝晩の適量使用（化粧水の後に顔全体になじませる）",
+        "sourceUrl": "https://www.shiseido.co.jp/sw/onlinestore/products/H91302.html",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-07",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカー記載の使い切り目安約3か月・朝晩使用。開封後の品質上の使用期限ではない"
+      },
+      "curel-foam": {
+        "doseDescription": "2プッシュ程度",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301269348",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-sebum-foam": {
+        "doseDescription": "2プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264336",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06"
+      },
+      "curel-toner-i": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236043",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-toner-ii": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236197",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-toner-iii": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301236180",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-sebum-toner": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264343",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-sebum-gel": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301264350",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-bright-toner-i": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301240309",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-bright-toner-iii": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238801",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-bright-milk": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238795",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 75,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-bright-serum": {
+        "doseDescription": "直径約1cm",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238825",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 45,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-bright-cream": {
+        "doseDescription": "直径約2cm",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301238818",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 45,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-aging-toner": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334510",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-aging-gel-cream": {
+        "doseDescription": "直径約1.6cm",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334527",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 45,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "curel-aging-cream": {
+        "doseDescription": "直径約2cm",
+        "sourceUrl": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4901301334534",
+        "sourceKind": "retailer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 45,
+        "referenceDailyUses": 2,
+        "referenceBasis": "販売サイト記載の使い切り期間を朝晩使用と仮定した参考換算"
+      },
+      "biore-foam-smooth": {
+        "doseDescription": "4〜5プッシュ",
+        "sourceUrl": "https://www.kao.co.jp/biore/lineup/theface/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06"
+      },
+      "biore-ouchi-gel-clear": {
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301463890/",
+        "doseDescription": "直径約3cm",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06"
+      },
+      "biore-ouchi-gel-moist": {
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301463906/",
+        "doseDescription": "直径約3cm",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06"
+      },
+      "biore-ouchi-deep-clay": {
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301464057/",
+        "doseDescription": "直径約3cm",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06"
+      },
+      "sofina-base-toner": {
+        "doseDescription": null,
+        "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/treatmentlotion/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカーの朝晩使用時の目安"
+      },
+      "sofina-niacinamide-toner": {
+        "doseDescription": "直径約2.5cm",
+        "sourceUrl": "https://www.kao.com/jp/cosmetics_qa/detail/43183/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカーの朝晩使用時の目安"
+      },
+      "sofina-toning-serum": {
+        "doseDescription": "9〜10滴（直径約1.7cm）",
+        "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/skintoningserum/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 30,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカーの朝晩使用時の目安"
+      },
+      "sofina-base-serum": {
+        "doseDescription": null,
+        "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/basecareserum/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 45,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカーの朝晩使用時の目安"
+      },
+      "sofina-micro-foam-wash": {
+        "doseDescription": "直径約3cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/micromoussefacialwash/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 30,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカーの朝晩使用時の目安"
+      },
+      "sofina-wrinkle-foam-serum": {
+        "doseDescription": "直径約3cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/wrinklecaremousseserum/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 45,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカーの朝晩使用時の目安"
+      },
+      "sofina-firming-serum": {
+        "doseDescription": "2プッシュ",
+        "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-ip/products/enrichedfilleressence/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 45,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカーの朝晩使用時の目安"
+      },
+      "sofina-deep-milk": {
+        "doseDescription": null,
+        "sourceUrl": "https://www.kao.com/jp/cosmetics_qa/detail/43190/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-06",
+        "durationDays": 60,
+        "referenceDailyUses": 2,
+        "referenceBasis": "メーカーの朝晩使用時の目安"
+      },
+      "biore-face-deepmoist": {
+        "doseDescription": "4〜5プッシュ",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408372/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-face-oil": {
+        "doseDescription": "4〜5プッシュ",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408402/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-face-smoothclear": {
+        "doseDescription": "4〜5プッシュ",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301414380/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-face-acne": {
+        "doseDescription": "4〜5プッシュ",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408396/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-marshmallow-moist": {
+        "doseDescription": "2プッシュ",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301250162/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-marshmallow-acne": {
+        "doseDescription": "2プッシュ",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301275080/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-skincare-acne": {
+        "doseDescription": "約2〜3cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301265678/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-foam-mochi": {
+        "doseDescription": "2〜3プッシュ",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301394996/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-wash-rich": {
+        "doseDescription": "約2〜3cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301335456/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-wash-dull": {
+        "doseDescription": "約2〜3cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301348616/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-2way": {
+        "doseDescription": "通常洗顔2〜3cm、パック約2cm（週1〜2回）",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301430205/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-2way-acne": {
+        "doseDescription": "通常洗顔2〜3cm、パック約2cm（週1〜2回）",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301451132/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-cleansing-oil": {
+        "doseDescription": "ポンプ3押し程度",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301417008/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-cleansing-oil-moist": {
+        "doseDescription": "ポンプ3押し程度",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301440365/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-cleansing-liquid": {
+        "doseDescription": "ポンプ2〜3押し程度",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301263049/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "biore-cleansing-paste": {
+        "doseDescription": "約2cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301246769/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "nivea-cleansing-beauty": {
+        "doseDescription": "ポンプ3押し程度",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301388902/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13"
+      },
+      "curel-foam-gel": {
+        "doseDescription": "直径約4cmの泡",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458964/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "curel-gel-makeup": {
+        "doseDescription": "直径約2cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236203/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "curel-oil-makeup": {
+        "doseDescription": "ポンプ4押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301346995/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "curel-milk-makeup": {
+        "doseDescription": "コットン1枚に3〜4プッシュ、汚れに応じて追加",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301422095/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "curel-moist-spray-250": {
+        "doseDescription": "顔から約20cm離して円を描くようにスプレー",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301379924/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "curel-gel-serum": {
+        "doseDescription": "直径約1.3cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301281715/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "curel-foam-serum": {
+        "doseDescription": "直径約2cmの泡",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458957/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "curel-barrier-serum": {
+        "doseDescription": "1スポイト分",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301463937/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "curel-oil-serum": {
+        "doseDescription": "1スポイト分",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301471338/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "biore-perfect-oil": {
+        "doseDescription": "ポンプ4押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301761385/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "biore-foam-cream-makeup": {
+        "doseDescription": "3〜4プッシュ",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301388063/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "nivea-gel-cleanse": {
+        "doseDescription": "直径約1.5cm、乾いた顔に使用",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301443182/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "biore-black-cleansing-gel": {
+        "doseDescription": "直径約3cmを顔全体になじませる",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301416919/",
+        "sourceKind": "manufacturer-indexed-page",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "curel-eye-cream": {
+        "doseDescription": "片目につき直径約5mmを取り、目の下・上まぶたにやさしくなじませる。化粧水・乳液・クリームの後に使用。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/official/curel/movie/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical",
+        "note": "メーカー使い切り日数未確認。仮に150回使用と推定"
+      },
+      "sofina-basic-turbo-toner": {
+        "doseDescription": "洗顔後、直径2.5cmの円に広がる量を顔になじませる。",
+        "sourceUrl": "https://www.kao.com/jp/cosmetics_qa/detail/42395/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "花王Q&A：朝晩使用で約3か月分。参考30日/月で算出。品質保持期限ではない"
+      },
+      "sofina-basic-turbo-milk": {
+        "doseDescription": "化粧水の後、直径2cmの円に広がる量を顔になじませる。",
+        "sourceUrl": "https://www.kao.com/jp/cosmetics_qa/detail/42449/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "durationDays": 90,
+        "referenceDailyUses": 2,
+        "referenceBasis": "花王Q&A：朝晩使用で約3か月分。参考30日/月で算出。品質保持期限ではない"
+      },
+      "suisai-powder-n": {
+        "doseDescription": "洗浄料1カプセル（0.4g）を水で泡立てる",
+        "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "verifiedUses": 32,
+        "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+        "excludeFromCategoryAverages": true
+      },
+      "suisai-powder-black": {
+        "doseDescription": "1カプセル（0.4g）で1回分",
+        "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "verifiedUses": 32,
+        "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+        "excludeFromCategoryAverages": true
+      },
+      "suisai-powder-pink": {
+        "doseDescription": "1カプセル（0.4g）で1回分",
+        "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "verifiedUses": 32,
+        "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+        "excludeFromCategoryAverages": true
+      },
+      "suisai-powder-green": {
+        "doseDescription": "1カプセル（0.4g）で1回分",
+        "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "verifiedUses": 32,
+        "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+        "excludeFromCategoryAverages": true
+      },
+      "suisai-powder-gold": {
+        "doseDescription": "1カプセル（0.4g）で1回分",
+        "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/powder_wash/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "verifiedUses": 32,
+        "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+        "excludeFromCategoryAverages": true
+      },
+      "suisai-paste": {
+        "doseDescription": "直径約3cmを泡立て、または顔になじませて洗う",
+        "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/paste_wash/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "suisai-peeling-powder": {
+        "doseDescription": "1包（1g）で1回分。パック洗顔のみ週1～2回",
+        "sourceUrl": "https://www.kanebo-cosmetics.jp/suisai/products/peeling_powder_wash/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "verifiedUses": 32,
+        "referenceBasis": "メーカー公式の1回分×32包／個。容器実数に基づく確定回数（実際の使用日数ではない）。",
+        "excludeFromCategoryAverages": true
+      },
+      "dew-afterglow": {
+        "doseDescription": "直径約2.5cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167074305/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-bright-aura": {
+        "doseDescription": "直径約3cm",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553046/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-bright-bounce": {
+        "doseDescription": "ポンプ1押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167019108/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-lotion-moist": {
+        "doseDescription": "ポンプ2押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251911/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-milk-moist": {
+        "doseDescription": "ポンプ1押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252512/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-bright-lotion-moist": {
+        "doseDescription": "ポンプ2押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383551/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-bright-lotion-rich": {
+        "doseDescription": "ポンプ2押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383575/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-bright-milk-moist": {
+        "doseDescription": "ポンプ1押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383452/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-bright-milk-rich": {
+        "doseDescription": "ポンプ1押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383476/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "suisai-black-scrub-wash": {
+        "doseDescription": "顔全体で直径約2cm。泡立てずに広げ、水を加え泡立ててすすぐ。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167531198/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "suisai-refining-toner": {
+        "doseDescription": "洗顔後にコットンへ直径約3cmをとり、やさしくふき取る。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167024485/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-cleansing-oil": {
+        "doseDescription": "ポンプ3押しをメイクになじませて水で洗い流す。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251607/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-cleansing-cream": {
+        "doseDescription": "乾いた手で直径約2.5cmを顔全体になじませ、洗い流すかふき取る。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251584/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-cream-soap": {
+        "doseDescription": "直径約2cmを手に取り水で泡立てて洗い、すすぐ。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251614/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-cream": {
+        "doseDescription": "スキンケアの最後に直径約1cmを顔全体になじませる。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251720/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-bright-cream": {
+        "doseDescription": "化粧水・乳液の後に直径約1cmを顔全体になじませる。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167376164/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-tantan-wrinkle-cream": {
+        "doseDescription": "化粧水・乳液等の後、直径約1cm（添付スパチュラ約1杯）を顔全体へ。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167040980/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-glamast-milk-drop": {
+        "doseDescription": "化粧水の後に適量を顔全体へなじませる。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167550601/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-tantan-conk-alpha": {
+        "doseDescription": "スパチュラ約1杯（直径約1cm）を顔全体・フェイスラインへ。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167022726/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-wrinkle-smash": {
+        "doseDescription": "朝晩、お手入れの最後。片側の目元で直径約5mm（約0.05g）。他の部位は適量。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167864920/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-lotion-light": {
+        "doseDescription": "ポンプ2押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251645/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-lotion-rich": {
+        "doseDescription": "ポンプ2押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251935/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-milk-light": {
+        "doseDescription": "ポンプ1押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251683/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-milk-rich": {
+        "doseDescription": "ポンプ1押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252529/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-bright-lotion-light": {
+        "doseDescription": "ポンプ2押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167382264/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-bright-milk-light": {
+        "doseDescription": "ポンプ1押し",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383438/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "suisai-gold-cleansing-butter": {
+        "doseDescription": "付属スパチュラで適量",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167552995/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-honey-balm": {
+        "doseDescription": "乾いた手に直径約2.5cm。メイクとなじませ、少量の水で乳化させてすすぐ。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167503461/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-honey-balm-clear": {
+        "doseDescription": "乾いた手に直径約2.5cm。メイクとなじませ、少量の水で乳化させてすすぐ。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553022/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-sweet-chantilly-wash": {
+        "doseDescription": "顔をぬらし、手に直径約2cmをとって泡立てて洗い、すすぐ。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167511411/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-warm-hygge-oil": {
+        "doseDescription": "朝か夜に1回、化粧水の後に直径約2cm。容器を振ってから温めた手で顔全体になじませる。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167854143/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      },
+      "dew-moist-lift-essence": {
+        "doseDescription": "化粧水の後にポンプ1押しを顔全体になじませる。",
+        "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167323939/",
+        "sourceKind": "manufacturer",
+        "verifiedAt": "2026-11-13",
+        "usageCountStatus": "hypothetical"
+      }
+    }
+  }
+}

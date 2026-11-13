@@ -51,3 +51,15 @@ export function unitPerUse(product, override={}, effectiveUses) {
   if(!Number.isFinite(volume) || volume<=0 || !Number.isFinite(effectiveUses) || effectiveUses<=0)return null;
   return volume/effectiveUses;
 }
+
+// 掲載終了や品目変更で無効になった固定・手動選択を候補の探索に持ち込まない。
+export function reconcileCatalogState(state, catalog) {
+  const categories = new Map(catalog.map(product => [product.id, product.category]));
+  const locked = Object.fromEntries(Object.entries(state.locked ?? {}).filter(
+    ([category, id]) => categories.get(id) === category
+  ));
+  const manualCategories = Array.isArray(state.manual) ? state.manual.map(id => categories.get(id)) : [];
+  const manual = manualCategories.length && !manualCategories.includes(undefined)
+    && new Set(manualCategories).size === manualCategories.length ? state.manual : null;
+  return {...state, locked, manual, excluded: state.excluded ?? {}, overrides: state.overrides ?? {}};
+}

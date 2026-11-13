@@ -1,6 +1,6 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.3';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.3';
-import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.8.3';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.4';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.4';
+import {mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.4';
 
 const STORE_KEY='skincare-lab-v1';
 const SAVED_KEY='skincare-lab-saved-routines-v1';
@@ -9,6 +9,8 @@ const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
 const app=document.getElementById('app');
 let catalog=[];
+let savedPlanCatalog=[];
+let catalogLoaded=false;
 let meta={};
 let state=load();
 let savedPlans=loadSavedPlans();
@@ -90,6 +92,7 @@ function productCard(p){
 
 function formHtml(){
   const ingredients=['none','ナイアシンアミド','セラミド機能成分','アラントイン','ヒアルロン酸Na','グリチルリチン酸2K'];
+  const excluded=catalog.filter(product=>Object.hasOwn(state.excluded,product.id));
   return `<aside class="panel controls" aria-label="選定条件">
     <div class="section-heading"><h2>あなたの条件</h2><span class="step-number">01 / SETTINGS</span></div>
     <div class="field"><div class="budget-row"><label class="field-title" for="budget">月額予算</label><span class="budget-value">${yen(state.budget)}<small> / 月</small></span></div>
@@ -112,7 +115,7 @@ function formHtml(){
       ${ingredients.map(x=>`<option value="${escape(x)}" ${state.ingredient===x?'selected':''}>${x==='none'?'指定なし':escape(x)}</option>`).join('')}
     </select><div class="radio-line"><label><input type="radio" name="ingredientMode" value="prefer" ${state.ingredientMode==='prefer'?'checked':''}> 優先</label><label><input type="radio" name="ingredientMode" value="required" ${state.ingredientMode==='required'?'checked':''}> 必須</label></div></div>
     <div class="controls-foot">
-      ${Object.keys(state.excluded).length?`<div class="excluded-list"><strong>除外中の商品：${Object.keys(state.excluded).length}品</strong>${Object.entries(state.excluded).map(([id,reason])=>{const p=catalog.find(x=>x.id===id);return p?`<div>${escape(nameOf(p))}（${escape(reason)}） <button class="link-button" data-action="unexclude" data-id="${escape(id)}">解除</button></div>`:''}).join('')}</div>`:''}
+      ${excluded.length?`<div class="excluded-list"><strong>除外中の商品：${excluded.length}品</strong>${excluded.map(p=>`<div>${escape(nameOf(p))}（${escape(state.excluded[p.id])}） <button class="link-button" data-action="unexclude" data-id="${escape(p.id)}">解除</button></div>`).join('')}</div>`:''}
       <button class="link-button" data-action="reset">選定条件を初期化</button>
     </div>
   </aside>`;
@@ -167,7 +170,7 @@ function swapHtml(){
 
 function savedPlansHtml(){
   const plans=savedPlans.map((plan,index)=>{
-    const total=savedPlanTotals(plan,catalog);
+    const total=savedPlanTotals(plan,savedPlanCatalog);
     const expanded=expandedPlanId===plan.id || (expandedPlanId===null && index===0);
     const budgetTag=total.remaining>=0?'<span class="tag">予算内</span>':'<span class="tag orange">予算超過</span>';
     return `<article class="saved-plan">
@@ -177,6 +180,7 @@ function savedPlansHtml(){
         <div class="saved-meta"><label>組み合わせ名<input type="text" class="select" maxlength="70" data-plan-name="${escape(plan.id)}" value="${escape(plan.name)}"></label><label>月予算（円）<input type="number" class="select" min="0" step="100" data-plan-budget="${escape(plan.id)}" value="${total.budget}"></label></div>
         <div class="saved-cost-summary"><span>月額合計 <strong>${yen(total.monthly)}</strong></span><span>初回購入額 <strong>${yen(total.initial)}</strong></span><span>予算との差 <strong>${total.remaining<0?'超過 '+yen(-total.remaining):'残り '+yen(total.remaining)}</strong></span></div>
         <div class="saved-product-list">${total.items.map(p=>{const v=plan.overrides?.[p.id]||{};const savedUses=usesOf(p,v);const amount=unitPerUse(p,v,savedUses);return `<div class="saved-product-row"><div class="saved-product-name"><strong>${escape(nameOf(p))}</strong><small>${escape(CATEGORY_LABELS[p.category])} / 1回約${amount?.toFixed(2)??'—'}${escape(p.unit)}（逆算）</small></div><label>購入価格（円）<input type="number" min="0" step="10" data-plan-usage="price" data-plan-id="${escape(plan.id)}" data-product-id="${escape(p.id)}" value="${v.price??priceOf(p)}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-plan-usage="uses" data-plan-id="${escape(plan.id)}" data-product-id="${escape(p.id)}" value="${Math.round(savedUses)}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-plan-usage="frequency" data-plan-id="${escape(plan.id)}" data-product-id="${escape(p.id)}" value="${v.frequency??p.dailyUses}"></label><div class="saved-item-total">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>`}).join('')}</div>
+        ${total.items.some(p=>p.archived)?`<p class="micro muted">掲載終了した商品：${total.items.filter(p=>p.archived).map(p=>escape(nameOf(p))).join('、')}</p>`:''}
         ${total.missing.length?`<div class="unscored-warning">商品DBに見つからない商品ID：${total.missing.map(escape).join('、')}</div>`:''}
         <div class="saved-footer"><button type="button" class="link-button danger" data-action="deleteSaved" data-id="${escape(plan.id)}">この組み合わせを削除</button></div>
       </div>`:''}
@@ -191,7 +195,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.3</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.4</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -311,12 +315,16 @@ document.getElementById('excludeForm').addEventListener('submit',e=>{
 const fetchJSON=url=>fetch(url,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(`商品データを読み込めません：${url}`);return r.json();});
 Promise.all([fetchJSON('./data/products.json'),fetchJSON('./data/pricing.json'),fetchJSON('./data/usage.json')]).then(([db,pricing,usage])=>{
   catalog=mergeCatalogData(db.products,pricing,usage);meta=db.meta;
-  // Persisted IDs no longer in the catalog are ignored safely.
-  state.excluded??={};state.locked??={};state.overrides??={};
+  const archived=mergeCatalogData(db.archivedProducts??[],pricing,usage);
+  savedPlanCatalog=[...catalog,...archived.map(product=>({...product,archived:true}))];
+  state=reconcileCatalogState(load(),catalog);
+  savedPlans=loadSavedPlans();
+  catalogLoaded=true;
   render();
 }).catch(error=>{app.innerHTML=`<main class="error">商品データを読み込めませんでした。<br>${escape(error.message)}</main>`;});
 
 window.addEventListener('storage',e=>{
-  if(e.key===STORE_KEY){state=load();if(catalog.length)render();}
-  if(e.key===SAVED_KEY){savedPlans=loadSavedPlans();if(catalog.length)render();}
+  if(!catalogLoaded)return;
+  if(e.key===STORE_KEY){state=reconcileCatalogState(load(),catalog);render();}
+  if(e.key===SAVED_KEY){savedPlans=loadSavedPlans();render();}
 });
