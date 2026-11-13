@@ -4,7 +4,7 @@
     "taxIncluded": true,
     "priceKind": "retailerOnline",
     "verifiedAt": "2026-11-13",
-    "notice": "計97商品のJAN一致・税込通販掲載価格（マツキヨ90件、ツルハ7件）。カネボウ16品はマツキヨ掲載価格を採用。実売価格や在庫は常時変動する可能性があり、自動更新は行っていない。"
+    "notice": "計108品のJANに対応した税込通販掲載価格。マツキヨココカラ101件、ツルハ7件。実際の最新価格・在庫を保証せず、税込掲載データの取得日を記録。"
   },
   "prices": {
     "biore-foam-smooth": {
@@ -717,6 +717,94 @@
       "retailer": "マツキヨココカラオンライン",
       "verifiedAt": "2026-11-13",
       "verificationMethod": "2026-11-13調査。メーカー商品情報とマツキヨの商品ページのJAN・税込掲載価格を照合。取得済み掲載情報であり将来価格は保証しない。"
+    },
+    "suisai-black-scrub-wash": {
+      "priceJPY": 1980,
+      "jan": "4973167531198",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167531198",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "suisai-refining-toner": {
+      "priceJPY": 2200,
+      "jan": "4973167024485",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167024485",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-cleansing-oil": {
+      "priceJPY": 2750,
+      "jan": "4973167251607",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251607",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-cleansing-cream": {
+      "priceJPY": 2750,
+      "jan": "4973167251584",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251584",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-cream-soap": {
+      "priceJPY": 2750,
+      "jan": "4973167251614",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251614",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-cream": {
+      "priceJPY": 5500,
+      "jan": "4973167251720",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167251720",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-bright-cream": {
+      "priceJPY": 6050,
+      "jan": "4973167376164",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167376164",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-tantan-wrinkle-cream": {
+      "priceJPY": 7480,
+      "jan": "4973167040980",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167040980",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-glamast-milk-drop": {
+      "priceJPY": 4180,
+      "jan": "4973167550601",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167550601",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-tantan-conk-alpha": {
+      "priceJPY": 5280,
+      "jan": "4973167022726",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167022726",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
+    },
+    "dew-wrinkle-smash": {
+      "priceJPY": 6380,
+      "jan": "4973167864920",
+      "url": "https://www.matsukiyococokara-online.com/store/catalog/product/view/id/4973167864920",
+      "retailer": "マツキヨココカラオンライン",
+      "verifiedAt": "2026-11-13",
+      "verificationMethod": "JAN一致のマツキヨココカラ商品ページ・検索インデックスの税込表示を確認（リアルタイム価格の保証ではない）"
     }
   }
 }

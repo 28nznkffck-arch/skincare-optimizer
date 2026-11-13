@@ -1,6 +1,6 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.0';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.0';
-import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.8.0';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.1';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.1';
+import {mergeCatalogData,unitPerUse} from './catalog-data.js?v=0.8.1';
 
 const STORE_KEY='skincare-lab-v1';
 const SAVED_KEY='skincare-lab-saved-routines-v1';
@@ -75,7 +75,7 @@ function productCard(p){
       <div class="product-top"><h3 class="product-name">${escape(p.name)}</h3><div class="product-cost">${yen(humanMonth(p))}<small>月額試算</small></div></div>
       <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${Math.round(humanUses(p))}回分 / 1回約${humanUnit(p)}（${escape(useEstimateLabel(p))}） / 1日${escape(state.overrides[p.id]?.frequency??p.dailyUses)}回</div>
       <div class="period">購入価格 ${yen(humanPrice(p))}（${state.overrides[p.id]?.price!=null?'ユーザー補正値':p.priceReference?`${escape(p.priceReference.retailer)}・確認済み`:'出典未確認の仮価格'}）</div>
-      <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?'<div class="fit-note">部分ケア・顔全体の保湿の後に使用</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+(p.doubleCleanseNotNeeded?'W洗顔不要':'W洗顔が必要')+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
+      <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?'<div class="fit-note">部分ケア・顔全体の保湿の後に使用</div>':''}${p.wipeOff?'<div class="fit-note">ふき取りタイプ・コットン代は月額に含みません</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+(p.doubleCleanseNotNeeded?'W洗顔不要':'W洗顔が必要')+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
       <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
       ${matchLabels.length?`<div class="fit-note">関連する悩み：${matchLabels.map(escape).join('・')}</div>`:''}
       ${state.sensitiveSkin && p.sensitiveSkin?'<div class="fit-note">敏感肌向けの設計情報を考慮</div>':''}
@@ -191,7 +191,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.0</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.1</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}

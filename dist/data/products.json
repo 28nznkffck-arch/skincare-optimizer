@@ -1,9 +1,9 @@
 {
   "meta": {
-    "version": "0.8.0",
+    "version": "0.8.1",
     "checkedAt": "2026-11-13",
     "source": "花王（キュレル・ビオレ・ソフィーナiP・ニベア）・ロート製薬・資生堂・第一三共ヘルスケアのメーカー公式製品情報",
-    "notice": "登録97商品：花王グループ83商品（うちカネボウ化粧品16商品）、その他14商品。カネボウ新規16商品は通常販売品のメーカー公式製品説明とマツキヨ通販の商品ページでJAN・価格を照合。価格は確認時点の掲載値で自動更新なし。酵素洗顔カプセルは包装の実数（32回分）を採用し、一般の洗顔料の平均使用量には混ぜない。その他の未確認品は使用量・回数を仮推定。肌悩みスコアは独自の暫定評価であり効果を保証しない。freeplusはMy Kao Mall専用品のためドラッグストア価格対象外。数量限定品・日焼け止めは登録対象外。",
+    "notice": "登録108商品、花王グループ94商品（うちカネボウ化粧品27）、その他14商品。価格はマツキヨ101件・ツルハ7件のJAN対応税込掲載情報。今回の追加はsuisai2品（拭き取り化粧水・スクラブ洗顔）とDEW9品（洗顔・クレンジング・クリーム・シワ改善美容液）。製造終了品・数量限定・日焼け止め・詰替えは対象外。未公表の使用回数と肌悩みの適合点は仮推定。W洗顔不要と確認できないメイク落としは洗顔料併用で提案。",
     "priceType": "retailer-verified-or-demo"
   },
   "products": [
@@ -3231,6 +3231,396 @@
         "verifiedAt": "2026-11-13",
         "activeIngredients": [
           "カモミラET"
+        ]
+      }
+    },
+    {
+      "id": "suisai-black-scrub-wash",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ビューティクリア ブラックスクラブウォッシュ",
+      "category": "cleanser",
+      "jan": "4973167531198",
+      "volume": 130,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167531198/",
+      "keyIngredients": [
+        "グリセリン",
+        "モロッコ溶岩クレイ",
+        "セルロース",
+        "炭"
+      ],
+      "explanation": "崩れるスクラブを含む洗顔料。毛穴の汚れ・古い角質や角栓を洗浄する。目の周りを避けて使用。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 3,
+        "oiliness": 2,
+        "shine": 2,
+        "dullness": 1
+      },
+      "feel": "light",
+      "demoPrice": 1980,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "suisai-refining-toner",
+      "brand": "suisai",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "リファイニングトナー",
+      "category": "toner",
+      "jan": "4973167024485",
+      "volume": 200,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167024485/",
+      "keyIngredients": [
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "アンズ果汁"
+      ],
+      "explanation": "2026年発売のふき取り化粧水。毛穴の皮脂汚れや古い角質をコットンで取り除く。通常の保湿化粧水とは用途が異なり、コットン代は月額に含まない。",
+      "scores": {
+        "pores": 3,
+        "blackheads": 2,
+        "dullness": 2
+      },
+      "feel": "light",
+      "demoPrice": 2200,
+      "demoUses": 100,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      },
+      "wipeOff": true
+    },
+    {
+      "id": "dew-cleansing-oil",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "クレンジングオイル",
+      "category": "makeupRemover",
+      "jan": "4973167251607",
+      "volume": 150,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251607/",
+      "keyIngredients": [
+        "ミネラルオイル",
+        "イソノナン酸イソノニル",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "とろみのあるオイルでメイク汚れを落とす。濡れた手でも使用可。W洗顔不要の明記がないため洗顔料と組み合わせて提案。",
+      "scores": {},
+      "feel": "light",
+      "demoPrice": 2750,
+      "demoUses": 55,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "さっぱり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "公式にW洗顔不要の表示が確認できないため、洗顔料との組み合わせで扱う（個別商品についてメーカーがW洗顔必須と断定したものではありません）"
+    },
+    {
+      "id": "dew-cleansing-cream",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "クレンジングクリーム",
+      "category": "makeupRemover",
+      "jan": "4973167251584",
+      "volume": 125,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251584/",
+      "keyIngredients": [
+        "ミネラルオイル",
+        "イソノナン酸イソノニル",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "やわらかなクリームでメイク汚れを包み、洗い流すかふき取る。W洗顔不要の明記がないため洗顔料と組み合わせて提案。",
+      "scores": {
+        "dryness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 2750,
+      "demoUses": 45,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      },
+      "doubleCleanseNotNeeded": false,
+      "cleansingGuidance": "公式にW洗顔不要の表示が確認できないため、洗顔料との組み合わせで扱う（個別商品についてメーカーがW洗顔必須と断定したものではありません）"
+    },
+    {
+      "id": "dew-cream-soap",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "クリームソープ",
+      "category": "cleanser",
+      "jan": "4973167251614",
+      "volume": 125,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251614/",
+      "keyIngredients": [
+        "グリセリン",
+        "スクワラン",
+        "ヒアルロン酸Na"
+      ],
+      "explanation": "濃密な泡で汚れを洗い流し、しっとりなめらかな肌へ整えるクリームタイプの洗顔料。",
+      "scores": {
+        "dryness": 2
+      },
+      "feel": "moist",
+      "demoPrice": 2750,
+      "demoUses": 65,
+      "dailyUses": 1,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "dew-cream",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "クリーム",
+      "category": "moisturizer",
+      "jan": "4973167251720",
+      "volume": 30,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251720/",
+      "keyIngredients": [
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "アセチルグルコサミン",
+        "メチルセリン"
+      ],
+      "explanation": "肌の乾燥を防ぎ、ハリを与える濃密クリーム。乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "rich",
+      "demoPrice": 5500,
+      "demoUses": 70,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "dew-bright-cream",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "ブライトニングクリーム",
+      "category": "moisturizer",
+      "jan": "4973167376164",
+      "volume": 30,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167376164/",
+      "keyIngredients": [
+        "カモミラET",
+        "ヒアルロン酸Na-2",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "薬用美白クリーム。カモミラETがメラニン生成を抑えてシミ・そばかすを防ぐ。乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "spots": 3,
+        "freckles": 3,
+        "dullness": 1,
+        "firmness": 1,
+        "fineLines": 2
+      },
+      "feel": "rich",
+      "demoPrice": 6050,
+      "demoUses": 70,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合",
+        "activeIngredients": [
+          "カモミラET"
+        ]
+      }
+    },
+    {
+      "id": "dew-tantan-wrinkle-cream",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "タンタンリンクルクリーム",
+      "category": "moisturizer",
+      "jan": "4973167040980",
+      "volume": 55,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167040980/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "ヒアルロン酸Na-2",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "2026年発売の薬用シワ改善クリーム。ナイアシンアミドでシワを改善し、メラニンの生成を抑えてシミ・そばかすを予防する。",
+      "scores": {
+        "wrinkles": 3,
+        "spots": 3,
+        "freckles": 3,
+        "dryness": 3,
+        "firmness": 3
+      },
+      "feel": "rich",
+      "demoPrice": 7480,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合",
+        "activeIngredients": [
+          "ナイアシンアミド"
+        ]
+      }
+    },
+    {
+      "id": "dew-glamast-milk-drop",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "グラマストミルクドロップ",
+      "category": "moisturizer",
+      "jan": "4973167550601",
+      "volume": 80,
+      "unit": "mL",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167550601/",
+      "keyIngredients": [
+        "グリセリン",
+        "ヒアルロン酸Na",
+        "メチルセリン",
+        "アセチルグルコサミン"
+      ],
+      "explanation": "乾燥によるしぼみ肌印象にうるおいを与える濃密セラム乳液。乾燥による小じわを目立たなくする効能評価済み。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 2,
+        "fineLines": 2
+      },
+      "feel": "moist",
+      "demoPrice": 4180,
+      "demoUses": 100,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "dew-tantan-conk-alpha",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "タンタンコンクドロップα",
+      "category": "moisturizer",
+      "jan": "4973167022726",
+      "volume": 55,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167022726/",
+      "keyIngredients": [
+        "ヒアルロン酸Na",
+        "メチルセリン",
+        "ブクリョウタケエキス"
+      ],
+      "explanation": "密着する塗膜で水分蒸散を防ぐ、フェイスラインのハリ感向け保湿クリーム。薬用シワ改善の効能は標榜していない。",
+      "scores": {
+        "dryness": 3,
+        "firmness": 3
+      },
+      "feel": "rich",
+      "demoPrice": 5280,
+      "demoUses": 105,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "とてもしっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合"
+      }
+    },
+    {
+      "id": "dew-wrinkle-smash",
+      "brand": "DEW",
+      "manufacturer": "カネボウ化粧品",
+      "makerGroup": "花王グループ",
+      "name": "リンクルスマッシュ",
+      "category": "serum",
+      "jan": "4973167864920",
+      "volume": 20,
+      "unit": "g",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167864920/",
+      "keyIngredients": [
+        "ナイアシンアミド",
+        "ヒアルロン酸Na-2",
+        "ワレモコウエキス"
+      ],
+      "explanation": "薬用シワ改善美容液。目元・口元・額・首などの気になる部位へお手入れの最後に塗布。有効成分ナイアシンアミドでシワを改善。",
+      "scores": {
+        "wrinkles": 3,
+        "dryness": 1,
+        "firmness": 1,
+        "eyeDryness": 1
+      },
+      "feel": "moist",
+      "demoPrice": 6380,
+      "demoUses": 180,
+      "dailyUses": 2,
+      "usage": "メーカー指定の適量をもとに使用。1本の使い切り回数はメーカーの確認情報がなく、仮推定。",
+      "tone": "しっとり",
+      "evidence": {
+        "officialSource": true,
+        "verifiedAt": "2026-11-13",
+        "sourceAccess": "花王・カネボウ公式商品情報およびマツキヨ商品情報を照合",
+        "activeIngredients": [
+          "ナイアシンアミド"
         ]
       }
     }

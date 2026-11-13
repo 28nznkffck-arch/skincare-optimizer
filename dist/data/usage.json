@@ -590,6 +590,83 @@
       "sourceKind": "manufacturer",
       "verifiedAt": "2026-11-13",
       "usageCountStatus": "hypothetical"
+    },
+    "suisai-black-scrub-wash": {
+      "doseDescription": "顔全体で直径約2cm。泡立てずに広げ、水を加え泡立ててすすぐ。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167531198/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "suisai-refining-toner": {
+      "doseDescription": "洗顔後にコットンへ直径約3cmをとり、やさしくふき取る。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167024485/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-cleansing-oil": {
+      "doseDescription": "ポンプ3押しをメイクになじませて水で洗い流す。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251607/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-cleansing-cream": {
+      "doseDescription": "乾いた手で直径約2.5cmを顔全体になじませ、洗い流すかふき取る。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251584/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-cream-soap": {
+      "doseDescription": "直径約2cmを手に取り水で泡立てて洗い、すすぐ。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251614/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-cream": {
+      "doseDescription": "スキンケアの最後に直径約1cmを顔全体になじませる。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251720/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-bright-cream": {
+      "doseDescription": "化粧水・乳液の後に直径約1cmを顔全体になじませる。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167376164/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-tantan-wrinkle-cream": {
+      "doseDescription": "化粧水・乳液等の後、直径約1cm（添付スパチュラ約1杯）を顔全体へ。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167040980/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-glamast-milk-drop": {
+      "doseDescription": "化粧水の後に適量を顔全体へなじませる。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167550601/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-tantan-conk-alpha": {
+      "doseDescription": "スパチュラ約1杯（直径約1cm）を顔全体・フェイスラインへ。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167022726/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
+    },
+    "dew-wrinkle-smash": {
+      "doseDescription": "朝晩、お手入れの最後。片側の目元で直径約5mm（約0.05g）。他の部位は適量。",
+      "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167864920/",
+      "sourceKind": "manufacturer",
+      "verifiedAt": "2026-11-13",
+      "usageCountStatus": "hypothetical"
     }
   }
 }

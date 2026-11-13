@@ -11,15 +11,15 @@ const usageDb=JSON.parse(fs.readFileSync(new URL('../dist/data/usage.json',impor
 const catalog=mergeCatalogData(productDb.products,priceDb,usageDb);
 
 test('all active products have JAN-verified retailer quotes; limited edition is excluded',()=>{
-  assert.equal(Object.keys(priceDb.prices).length,97);
+  assert.equal(Object.keys(priceDb.prices).length,108);
   const verified=catalog.filter(p=>p.priceReference);
-  assert.equal(verified.length,97);
+  assert.equal(verified.length,108);
   for(const p of verified){
     assert.equal(p.priceReference.jan,p.jan);
     assert.equal(priceOf(p),p.priceReference.priceJPY);
     assert.ok(['2026-11-06','2026-11-07','2026-11-13'].includes(p.priceReference.verifiedAt));
   }
-  assert.equal(catalog.length,97);
+  assert.equal(catalog.length,108);
   assert.ok(!catalog.some(p=>p.id==='biore-face-oil-control-plus'));
   assert.ok(catalog.every(p=>p.priceReference),'no active item uses an unverified price');
   const tsuruha=catalog.filter(p=>p.priceReference?.retailer==='ツルハグループe-shop');
@@ -224,7 +224,7 @@ test('skin type, sensitivity and finish preferences affect results',()=>{
 });
 
 test('expanded catalog covers the three Kao priority brands without sunscreen',()=>{
-  assert.equal(catalog.length,97);
+  assert.equal(catalog.length,108);
   assert.equal(new Set(catalog.map(p=>p.id)).size,catalog.length);
   assert.ok(new Set(catalog.map(p=>p.sourceUrl)).size===catalog.length);
   assert.equal(new Set(catalog.map(p=>p.jan).filter(Boolean)).size,catalog.filter(p=>p.jan).length);
@@ -409,7 +409,7 @@ test('even when there is no budget-compliant routine, diagnostic can display a s
 });
 
 test('15 new Kao products have matching price sources and face-appropriate categories',()=>{
- assert.equal(catalog.length,97);
+ assert.equal(catalog.length,108);
  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,21);
  assert.equal(catalog.filter(p=>p.brand==='ニベア').length,9);
  assert.equal(catalog.filter(p=>p.allInOne).length,2);
@@ -448,14 +448,14 @@ test('original five makeup removers retain their JAN and no-double-wash status',
  const items=catalog.filter(p=>ids.includes(p.id));
  assert.equal(items.length,5);
  assert.ok(items.every(p=>p.priceReference?.jan===p.jan && p.doubleCleanseNotNeeded));
- assert.equal(catalog.length,97);
+ assert.equal(catalog.length,108);
  assert.ok(!catalog.some(p=>p.category==='sunscreen'));
 });
 
 test('expanded Kao catalog has 12 correctly identified products with price evidence',()=>{
   const ids=["curel-foam-gel","curel-gel-makeup","curel-oil-makeup","curel-milk-makeup","curel-moist-spray-250","curel-gel-serum","curel-foam-serum","curel-barrier-serum","curel-oil-serum","biore-perfect-oil","biore-foam-cream-makeup","nivea-gel-cleanse"];
   assert.equal(ids.length,12);
-  assert.equal(catalog.length,97);
+  assert.equal(catalog.length,108);
   for(const id of ids){
     const p=catalog.find(p=>p.id===id);
     assert.ok(p, 'missing '+id);
@@ -564,9 +564,9 @@ test('SOFINA BASIC plus products can be recommended with a separate mandatory cl
 
 test('16 Kanebo cosmetics products from suisai and DEW have unique JAN and quoted price',()=>{
  const k=catalog.filter(p=>p.manufacturer==='カネボウ化粧品');
- assert.equal(k.length,16);
- assert.equal(k.filter(p=>p.brand==='suisai').length,7);
- assert.equal(k.filter(p=>p.brand==='DEW').length,9);
+ assert.equal(k.length,27);
+ assert.equal(k.filter(p=>p.brand==='suisai').length,9);
+ assert.equal(k.filter(p=>p.brand==='DEW').length,18);
  assert.ok(k.every(p=>p.priceReference?.jan===p.jan && p.priceReference.retailer==='マツキヨココカラオンライン'));
  assert.ok(k.every(p=>p.sourceUrl.startsWith('https://www.kao-kirei.com/ja/item/kbb/')));
  assert.ok(k.every(p=>p.evidence.officialSource));
@@ -605,4 +605,51 @@ test('Kanebo products are usable in feasible scored routines while 1000 yen budg
  assert.ok(bright&&bright.monthly<=10000);
  assert.ok(bright.products.some(p=>p.category==='cleanser'));
  assert.ok(bright.products.some(p=>p.category==='moisturizer'));
+});
+
+test('eleven more Kanebo products have distinct JAN and Matsukiyo reference prices',()=>{
+ const ids=["suisai-black-scrub-wash","suisai-refining-toner","dew-cleansing-oil","dew-cleansing-cream","dew-cream-soap","dew-cream","dew-bright-cream","dew-tantan-wrinkle-cream","dew-glamast-milk-drop","dew-tantan-conk-alpha","dew-wrinkle-smash"];
+ assert.equal(ids.length,11);
+ assert.equal(catalog.length,108);
+ const items=catalog.filter(p=>ids.includes(p.id));
+ assert.equal(items.length,11);
+ assert.ok(items.every(p=>p.priceReference?.jan===p.jan));
+ assert.ok(items.every(p=>p.priceReference?.retailer==='マツキヨココカラオンライン'));
+ assert.ok(items.every(p=>p.manufacturer==='カネボウ化粧品'));
+ assert.equal(new Set(catalog.map(p=>p.jan)).size,catalog.length);
+});
+test('DEW cleansing products are only proposed with face wash and not one-step simple makeup care',()=>{
+ for(const id of ['dew-cleansing-oil','dew-cleansing-cream']){
+  const p=catalog.find(p=>p.id===id);
+  assert.equal(p.doubleCleanseNotNeeded,false);
+  const simple=optimize(catalog,{budget:15000,concerns:['dryness'],useMakeupRemover:true,priority:'simple',locked:{makeupRemover:id},resultLimit:1})[0];
+  assert.equal(simple,undefined);
+  const thorough=optimize(catalog,{budget:15000,concerns:['dryness'],useMakeupRemover:true,priority:'thorough',locked:{makeupRemover:id},resultLimit:1})[0];
+  assert.ok(thorough && thorough.products.some(p=>p.category==='cleanser'));
+ }
+});
+test('preventive whitening and actual wrinkle improvement are kept separate',()=>{
+ const c=catalog.find(p=>p.id==='dew-bright-cream');
+ assert.equal(c.scores.wrinkles||0,0);
+ assert.equal(c.scores.fineLines,2);
+ assert.deepEqual(c.evidence.activeIngredients,['カモミラET']);
+ const w=catalog.find(p=>p.id==='dew-tantan-wrinkle-cream');
+ assert.equal(w.scores.wrinkles,3);
+ assert.ok(w.evidence.activeIngredients.includes('ナイアシンアミド'));
+ const wrinkle=catalog.find(p=>p.id==='dew-wrinkle-smash');
+ assert.equal(wrinkle.category,'serum');
+ assert.equal(wrinkle.scores.wrinkles,3);
+});
+test('refining toner is identified as wipe-off rather than normal hydrating toner',()=>{
+ const p=catalog.find(p=>p.id==='suisai-refining-toner');
+ assert.equal(p.category,'toner');
+ assert.equal(p.wipeOff,true);
+ assert.ok(p.explanation.includes('保湿化粧水とは用途が異なり'));
+ assert.equal(p.scores.dryness||0,0);
+});
+test('new 108-product catalog retains a feasible 1000 yen routine',()=>{
+ const p=optimize(catalog,{budget:1000,concerns:['dryness'],priority:'simple',resultLimit:1})[0];
+ assert.ok(p && p.monthly<=1000);
+ assert.ok(p.products.some(x=>x.category==='cleanser'));
+ assert.ok(p.products.some(x=>x.category==='moisturizer'));
 });
