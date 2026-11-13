@@ -209,7 +209,6 @@ def retailer_order(quote):
 
 def build_catalog(folder):
     metadata = read_json(folder / 'metadata.json')
-    legacy_ids = read_json(folder / 'legacy-ids.json')
     products, usages, retired = {}, {}, set()
     required = ('brand', 'name', 'category', 'volume', 'unit', 'sourceUrl', 'dailyUses')
     for jan, row, location in table(folder, 'products.csv', PRODUCT_COLUMNS):
@@ -220,8 +219,7 @@ def build_catalog(folder):
             raise ValueError(f'{location}: 掲載状態は「掲載中」か「掲載終了」です')
         if status == '掲載終了':
             retired.add(jan)
-        product_id = legacy_ids.get(jan, jan)
-        product = {'id': product_id, 'jan': jan, **read_fields(row, PRODUCT_FIELDS, location, required)}
+        product = {'jan': jan, **read_fields(row, PRODUCT_FIELDS, location, required)}
         product.setdefault('keyIngredients', [])
         evidence = read_fields(row, EVIDENCE_FIELDS, location)
         if evidence:
@@ -234,15 +232,12 @@ def build_catalog(folder):
                 raise ValueError(f'{location}: 使用量の出典URLが空欄です')
             if ('durationDays' in usage) != ('referenceDailyUses' in usage):
                 raise ValueError(f'{location}: 使い切り日数と基準回数は一緒に入力してください')
-            usages[product_id] = {'doseDescription': None, **usage}
+            usages[jan] = {'doseDescription': None, **usage}
         count = usage.get('verifiedUses') or usage.get('durationDays', 0) * usage.get('referenceDailyUses', 0)
         if count:
             product.setdefault('demoUses', count)
         if 'demoUses' not in product:
             raise ValueError(f'{location}: 使用回数を出典から算出できない場合は1本の仮使用回数を入力してください')
-
-    if len({p['id'] for p in products.values()}) != len(products):
-        raise ValueError('公開用IDが重複しています。既存IDの対応表を確認してください')
 
     quotes = {}
     for jan, row, location in table(folder, 'prices.csv', PRICE_COLUMNS):
@@ -271,7 +266,7 @@ def build_catalog(folder):
     for jan, product in products.items():
         quote = min(quotes.get(jan, {}).values(), key=retailer_order, default=None)
         if quote is not None:
-            prices[product['id']] = quote
+            prices[jan] = quote
             product.setdefault('demoPrice', quote['priceJPY'])
         if 'demoPrice' not in product:
             raise ValueError(f'JAN {jan} の販売店価格または試算価格を入力してください')

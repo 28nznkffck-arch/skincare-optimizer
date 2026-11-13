@@ -1,4 +1,4 @@
-import {monthlyCost, priceOf, usesOf} from './optimizer.js?v=0.8.4';
+import {monthlyCost, priceOf, usesOf} from './optimizer.js?v=0.8.5';
 
 // 保存した組み合わせの使用条件は、その時点の値を個別に保持する。
 // 価格などの共通編集が、過去の保存プランを書き換えないようにするため。
@@ -9,11 +9,11 @@ export function createSavedPlan(routine, options, id, createdAt) {
     name:'組み合わせ',
     createdAt,
     budget:Number(options.budget ?? 5000),
-    productIds:routine.products.map(p=>p.id),
-    overrides:Object.fromEntries(routine.products.map(p=>[p.id,{
-      price:priceOf(p,options.overrides?.[p.id]),
-      uses:usesOf(p,options.overrides?.[p.id]),
-      frequency:Number(options.overrides?.[p.id]?.frequency ?? p.dailyUses)
+    productJans:routine.products.map(p=>p.jan),
+    overrides:Object.fromEntries(routine.products.map(p=>[p.jan,{
+      price:priceOf(p,options.overrides?.[p.jan]),
+      uses:usesOf(p,options.overrides?.[p.jan]),
+      frequency:Number(options.overrides?.[p.jan]?.frequency ?? p.dailyUses)
     }])),
     conditions:{
       concerns:[...(options.concerns||[])],
@@ -29,20 +29,20 @@ export function createSavedPlan(routine, options, id, createdAt) {
 }
 
 export function savedPlanTotals(plan, catalog) {
-  const lookup=new Map(catalog.map(p=>[p.id,p]));
-  const items=plan.productIds.map(id=>lookup.get(id)).filter(Boolean);
-  const missing=plan.productIds.filter(id=>!lookup.has(id));
-  const monthly=items.reduce((sum,p)=>sum+monthlyCost(p,plan.overrides?.[p.id]),0);
-  const initial=items.reduce((sum,p)=>sum+priceOf(p,plan.overrides?.[p.id]),0);
+  const lookup=new Map(catalog.map(p=>[p.jan,p]));
+  const items=plan.productJans.map(id=>lookup.get(id)).filter(Boolean);
+  const missing=plan.productJans.filter(id=>!lookup.has(id));
+  const monthly=items.reduce((sum,p)=>sum+monthlyCost(p,plan.overrides?.[p.jan]),0);
+  const initial=items.reduce((sum,p)=>sum+priceOf(p,plan.overrides?.[p.jan]),0);
   return {items,missing,monthly,initial,budget:Number(plan.budget),remaining:Number(plan.budget)-monthly};
 }
 
-export function updateSavedUsage(plan, productId, field, value) {
+export function updateSavedUsage(plan, productJan, field, value) {
   const number=Number(value);
-  if (!plan.productIds.includes(productId) || !['price','uses','frequency'].includes(field)) return false;
+  if (!plan.productJans.includes(productJan) || !['price','uses','frequency'].includes(field)) return false;
   if (!Number.isFinite(number) || number<(field==='uses'?1:0)) return false;
   plan.overrides??={};
-  plan.overrides[productId]??={};
-  plan.overrides[productId][field]=number;
+  plan.overrides[productJan]??={};
+  plan.overrides[productJan][field]=number;
   return true;
 }

@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.8.4';
+import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.8.5';
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
@@ -55,7 +55,7 @@ export function renderContext(catalog,options,best){
 }
 
 export function renderProductAnalysis(catalog,options,product,best){
-  const d=diagnoseProduct(catalog,options,product.id,best);
+  const d=diagnoseProduct(catalog,options,product.jan,best);
   const statusLabel={selected:'採用中',not_selected:'不採用',excluded:'除外設定',locked:'他商品を固定中',budget:'予算超過',unavailable:'条件不成立',no_concern:'悩み未指定',no_base:'候補なし',missing:'商品不明'}[d.status]||d.status;
   const showCompared=Boolean(d.best&&d.forced);
   const isPreview=d.comparisonMode==='singleChange'||d.comparisonMode==='unbudgetedExample';

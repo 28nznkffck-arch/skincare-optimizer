@@ -4,9 +4,9 @@ export function mergeCatalogData(products, pricing={}, usage={}) {
   const prices=pricing.prices||{};
   const usages=usage.usages||{};
   const merged=products.map(product=>{
-    const price=prices[product.id];
+    const price=prices[product.jan];
     const validPrice=price?.jan===product.jan && Number.isFinite(price.priceJPY) && price.priceJPY>=0 && /^https:\/\//.test(price.url||'');
-    const amount=usages[product.id];
+    const amount=usages[product.jan];
     const validUsage=amount && /^https:\/\//.test(amount.sourceUrl||'');
     const duration=Number(amount?.durationDays);
     const times=Number(amount?.referenceDailyUses);
@@ -54,7 +54,7 @@ export function unitPerUse(product, override={}, effectiveUses) {
 
 // 掲載終了や品目変更で無効になった固定・手動選択を候補の探索に持ち込まない。
 export function reconcileCatalogState(state, catalog) {
-  const categories = new Map(catalog.map(product => [product.id, product.category]));
+  const categories = new Map(catalog.map(product => [product.jan, product.category]));
   const locked = Object.fromEntries(Object.entries(state.locked ?? {}).filter(
     ([category, id]) => categories.get(id) === category
   ));

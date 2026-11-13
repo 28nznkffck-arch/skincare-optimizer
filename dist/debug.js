@@ -1,8 +1,8 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.4';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.4';
-import {mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.4';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.5';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.5';
+import {mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.5';
 
-const STORE_KEY='skincare-lab-v1';
+const STORE_KEY='skincare-lab-settings-jan';
 const PAGE_SIZE=25;
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
@@ -33,7 +33,7 @@ function getOptions(){
     sensitiveSkin:Boolean(state.sensitiveSkin),finish:state.finish||'any',
     priority:['simple','any','thorough'].includes(state.priority)?state.priority:'any',
     ingredient:state.ingredient||'none',ingredientMode:state.ingredientMode||'prefer',
-    excluded:catalog.filter(p=>Object.hasOwn(state.excluded,p.id)).map(p=>p.id),
+    excluded:catalog.filter(p=>Object.hasOwn(state.excluded,p.jan)).map(p=>p.jan),
     locked:state.locked,overrides:state.overrides
   };
 }
@@ -47,8 +47,8 @@ function refreshAnalysis(){
 }
 
 function diagnosisFor(p){
-  if(!diagnosisCache.has(p.id))diagnosisCache.set(p.id,renderProductAnalysis(catalog,analysisOptions,p,bestRoutine));
-  return diagnosisCache.get(p.id);
+  if(!diagnosisCache.has(p.jan))diagnosisCache.set(p.jan,renderProductAnalysis(catalog,analysisOptions,p,bestRoutine));
+  return diagnosisCache.get(p.jan);
 }
 
 function renderRows(){
@@ -62,7 +62,7 @@ function renderRows(){
   const state=getState();
   count.textContent=`${catalog.length}商品中 ${matching.length}件 / ${pages}ページ`;
   items.innerHTML=visible.map(p=>{
-    const v=state.overrides?.[p.id]||{};
+    const v=state.overrides?.[p.jan]||{};
     const price=priceOf(p,v),uses=usesOf(p,v),frequency=v.frequency??p.dailyUses;
     const perUse=unitPerUse(p,v,uses);
     const priceSource=p.priceReference?`通販価格（税込）：<a href="${escape(p.priceReference.url)}" target="_blank" rel="noopener noreferrer">${escape(p.priceReference.retailer)}</a>（${escape(p.priceReference.verifiedAt)}確認）`:'価格：出典未確認の試算用仮値';
@@ -71,10 +71,10 @@ function renderRows(){
     return `<article class="debug-item"><div class="debug-item-head"><div><small>${escape(p.brand)}・${escape(CATEGORY_LABELS[p.category])} / JAN ${escape(p.jan||'未確認')}</small><h2>${escape(p.name)}</h2><p>${escape(p.keyIngredients.join('・'))}</p></div><a href="${escape(p.sourceUrl)}" class="source" target="_blank" rel="noopener noreferrer">メーカー公式 ↗</a></div>
       ${renderEvidence(p)}
       <div class="debug-provenance"><span>${priceSource}</span><span>${useSource}</span><small>${estimate}${p.usageReference?.referenceBasis?` ${escape(p.usageReference.referenceBasis)}。`:''} 数値は仮推定や逆算を含みます。</small></div>
-      <div class="debug-edit-fields"><label>購入価格（円）<input type="number" min="0" step="1" data-edit="price" data-id="${escape(p.id)}" value="${price}"></label><label>1回の量（${escape(p.unit)}）<input type="number" min="0.01" step="0.01" data-edit="amountPerUse" data-id="${escape(p.id)}" value="${perUse?.toFixed(2)??''}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-edit="uses" data-id="${escape(p.id)}" value="${Math.round(uses)}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-edit="frequency" data-id="${escape(p.id)}" value="${frequency}"></label><div class="debug-month">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>
-      <div class="debug-item-actions"><button type="button" class="button ${selectedId===p.id?'button-dark':''}" data-analyze="${escape(p.id)}">${selectedId===p.id?'検証結果を閉じる':'この商品の採否理由を検証'}</button><button type="button" class="link-button" data-reset="${escape(p.id)}" ${state.overrides?.[p.id]?'':'disabled'}>使用条件の補正を解除</button></div>
+      <div class="debug-edit-fields"><label>購入価格（円）<input type="number" min="0" step="1" data-edit="price" data-id="${escape(p.jan)}" value="${price}"></label><label>1回の量（${escape(p.unit)}）<input type="number" min="0.01" step="0.01" data-edit="amountPerUse" data-id="${escape(p.jan)}" value="${perUse?.toFixed(2)??''}"></label><label>1本の使用回数<input type="number" min="1" step="1" data-edit="uses" data-id="${escape(p.jan)}" value="${Math.round(uses)}"></label><label>1日使用回数<input type="number" min="0" step="0.5" data-edit="frequency" data-id="${escape(p.jan)}" value="${frequency}"></label><div class="debug-month">${yen(monthlyCost(p,v))}<small> / 月</small></div></div>
+      <div class="debug-item-actions"><button type="button" class="button ${selectedId===p.jan?'button-dark':''}" data-analyze="${escape(p.jan)}">${selectedId===p.jan?'検証結果を閉じる':'この商品の採否理由を検証'}</button><button type="button" class="link-button" data-reset="${escape(p.jan)}" ${state.overrides?.[p.jan]?'':'disabled'}>使用条件の補正を解除</button></div>
       ${renderRawScores(p,analysisOptions)}
-      ${selectedId===p.id?diagnosisFor(p):''}
+      ${selectedId===p.jan?diagnosisFor(p):''}
     </article>`;
   }).join('') || '<div class="empty">該当する商品はありません。</div>';
   pagination.innerHTML=`<button class="button" data-page="prev" ${page===0?'disabled':''}>前へ</button><span>${page+1} / ${pages}</span><button class="button" data-page="next" ${page>=pages-1?'disabled':''}>次へ</button>`;

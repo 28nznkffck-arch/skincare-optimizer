@@ -20,29 +20,29 @@ test('all active products have JAN-verified retailer quotes; limited edition is 
     assert.ok(['2026-11-06','2026-11-07','2026-11-13'].includes(p.priceReference.verifiedAt));
   }
   assert.equal(catalog.length,120);
-  assert.ok(!catalog.some(p=>p.id==='biore-face-oil-control-plus'));
+  assert.ok(!catalog.some(p=>p.name.includes('オイルコントロール') && p.name.includes('プラス')));
   assert.ok(catalog.every(p=>p.priceReference),'no active item uses an unverified price');
   const tsuruha=catalog.filter(p=>p.priceReference?.retailer==='ツルハグループe-shop');
   assert.equal(tsuruha.length,8);
-  assert.equal(catalog.find(p=>p.id==='biore-foam-smooth').referencePrice,968);
+  assert.equal(catalog.find(p=>p.jan==='4901301474407').referencePrice,968);
   assert.ok(!catalog.some(p=>p.category==='sunscreen'));
-  assert.ok(!Object.keys(priceDb.prices).some(id=>/uv|skin-aqua/.test(id)));
-  assert.ok(!Object.keys(usageDb.usages).some(id=>/uv|skin-aqua/.test(id)));
-  assert.equal(catalog.find(p=>p.id==='ihada-moist-lotion').jan,'4909978261238');
-  assert.equal(catalog.find(p=>p.id==='ihada-moist-emulsion').jan,'4909978261306');
+  assert.ok(Object.keys(priceDb.prices).every(jan=>catalog.some(p=>p.jan===jan)));
+  assert.ok(Object.keys(usageDb.usages).every(jan=>catalog.some(p=>p.jan===jan)));
+  assert.equal(catalog.find(p=>p.jan==='4909978261238').jan,'4909978261238');
+  assert.equal(catalog.find(p=>p.jan==='4909978261306').jan,'4909978261306');
   assert.equal(priceOf(verified[0],{price:321}),321);
-  assert.equal(mergeCatalogData([{id:'x',jan:'123',demoPrice:55,demoUses:3}],{prices:{x:{jan:'456',priceJPY:2,url:'https://test.example'}}})[0].referencePrice,null);
+  assert.equal(mergeCatalogData([{jan:'123',demoPrice:55,demoUses:3}],{prices:{'123':{jan:'456',priceJPY:2,url:'https://test.example'}}})[0].referencePrice,null);
 });
 
 test('product usage is only derived from cited duration; manual per-use amount overrides counts',()=>{
-  const toner=catalog.find(p=>p.id==='curel-toner-ii');
+  const toner=catalog.find(p=>p.jan==='4901301236197');
   assert.equal(toner.referenceUses,180);
   assert.equal(usesOf(toner),180);
   assert.ok(Math.abs(unitPerUse(toner,{},usesOf(toner))-150/180)<1e-9);
   assert.equal(usesOf(toner,{amountPerUse:1.5}),100);
   assert.equal(monthlyCost(toner,{amountPerUse:1.5}),Math.round(priceOf(toner)/100*2*30));
   assert.equal(usesOf(toner,{uses:35}),35);
-  const uncited=catalog.find(p=>p.id==='biore-ouchi-gel-clear');
+  const uncited=catalog.find(p=>p.jan==='4901301463890');
   assert.equal(uncited.referenceUses,null);
   assert.equal(usesOf(uncited),uncited.demoUses);
   assert.equal(uncited.usageReference.doseDescription,'直径約3cm');
@@ -52,14 +52,14 @@ test('unverified per-use amounts use only averages of the same category and unit
   const group=catalog.filter(p=>p.category==='toner'&&p.unit==='mL'&&p.referenceUses);
   assert.equal(group.length,11);
   const mean=group.reduce((sum,p)=>sum+p.volume/p.referenceUses,0)/group.length;
-  const unknown=catalog.find(p=>p.id==='hadalabo-gokujun-lotion');
+  const unknown=catalog.find(p=>p.jan==='4987241155712');
   assert.ok(unknown,'existing hadalabo toner must remain');
   assert.equal(unknown.referenceUses,null);
   assert.equal(unknown.usageEstimate.kind,'categoryAverage');
   assert.equal(unknown.usageEstimate.sampleCount,11);
   assert.ok(Math.abs(usesOf(unknown)-unknown.volume/mean)<1e-9);
   assert.ok(Math.abs(unitPerUse(unknown,{},usesOf(unknown))-mean)<1e-9);
-  const single=catalog.find(p=>p.id==='melanocc-premium-essence');
+  const single=catalog.find(p=>p.jan==='4987241168583');
   assert.equal(single.usageEstimate.kind,'demo','one reference sample cannot establish a category mean');
   assert.equal(usesOf(single),single.demoUses);
   const amount=unknown.usageEstimate.amountPerUse;
@@ -68,8 +68,8 @@ test('unverified per-use amounts use only averages of the same category and unit
 });
 
 test('IHADA manufacturer usage periods are consumption estimates, not shelf life',()=>{
-  const toner=catalog.find(p=>p.id==='ihada-moist-lotion');
-  const milk=catalog.find(p=>p.id==='ihada-moist-emulsion');
+  const toner=catalog.find(p=>p.jan==='4909978261238');
+  const milk=catalog.find(p=>p.jan==='4909978261306');
   assert.equal(toner.referenceUses,150);
   assert.equal(milk.referenceUses,180);
   assert.ok(Math.abs(unitPerUse(toner,{},usesOf(toner))-1.2)<1e-9);
@@ -123,11 +123,11 @@ test('a single spots concern can recommend a complete routine without requiring 
 });
 
 test('exclusions and fixed products are respected',()=>{
-  const options={budget:12000,concerns:['pores','dullness'],priority:'balance',excluded:['biore-foam-smooth'],locked:{toner:'curel-toner-ii'}};
+  const options={budget:12000,concerns:['pores','dullness'],priority:'balance',excluded:['4901301474407'],locked:{toner:'4901301236197'}};
   const result=optimize(catalog,options);
   assert.ok(result.length>0);
-  assert.ok(result.every(r=>r.products.some(p=>p.id==='curel-toner-ii')));
-  assert.ok(result.every(r=>!r.products.some(p=>p.id==='biore-foam-smooth')));
+  assert.ok(result.every(r=>r.products.some(p=>p.jan==='4901301236197')));
+  assert.ok(result.every(r=>!r.products.some(p=>p.jan==='4901301474407')));
 });
 
 test('swap never exceeds enlarged budget and only offers real improvements',()=>{
@@ -145,12 +145,12 @@ test('one-item replacement may return nothing when no actual improvement exists'
   assert.ok(alternatives.every(a=>a.products.filter(p=>p.category==='cleanser').length===1));
   assert.deepEqual(alternatives,[],'a global maximum cannot be improved even with unlimited budget');
   const original=best.products.find(p=>p.category==='cleanser');
-  assert.deepEqual(swaps(best,catalog,'cleanser',{...options,locked:{cleanser:original.id}},10000),[]);
+  assert.deepEqual(swaps(best,catalog,'cleanser',{...options,locked:{cleanser:original.jan}},10000),[]);
   assert.deepEqual(swaps(best,catalog,'wrong-category',options,10000),[]);
 });
 
 test('extra budget lifts the original budget ceiling, even when cost delta is larger than the extra',()=>{
-  const mk=(id,category,price,score)=>({id,brand:'TEST',name:id,category,demoPrice:price,demoUses:30,dailyUses:1,
+  const mk=(id,category,price,score)=>({jan:id,brand:'TEST',name:id,category,demoPrice:price,demoUses:30,dailyUses:1,
     keyIngredients:[],sourceUrl:'https://example.test/'+id,scores:{pores:score}});
   const fixture=[mk('wash','cleanser',300,1),mk('basic','moisturizer',300,1),mk('upgrade','moisturizer',1900,3)];
   const opts={budget:1200,concerns:['pores'],priority:'any'};
@@ -160,7 +160,7 @@ test('extra budget lifts the original budget ceiling, even when cost delta is la
   assert.deepEqual(noExtra,[],'candidate over 2199 must not be presented');
   const upgrades=swaps(best,fixture,'moisturizer',opts,1000);
   assert.equal(upgrades.length,1);
-  assert.equal(upgrades[0].replacement.id,'upgrade');
+  assert.equal(upgrades[0].replacement.jan,'upgrade');
   assert.equal(upgrades[0].monthly,2200);
   assert.equal(upgrades[0].delta,1600,'delta is not the budget ceiling increase');
   assert.ok(upgrades[0].scoreDelta>0);
@@ -180,7 +180,7 @@ test('real catalog can reveal a strictly better one-item upgrade only after incr
 test('diagnostic retains the over-budget one-item improvement even if cheaper reoptimization is possible',()=>{
   const options={budget:4000,concerns:['dullness'],priority:'any'};
   const baseline=optimize(catalog,{...options,resultLimit:1})[0];
-  const d=diagnoseProduct(catalog,options,'sofina-micro-foam-wash',baseline);
+  const d=diagnoseProduct(catalog,options,'4901301463968',baseline);
   assert.ok(['selected','not_selected','budget'].includes(d.status));
   if(d.status==='not_selected'&&d.overbudgetPreview)assert.ok(Number.isFinite(d.overbudgetPreview.score)&&d.overbudgetPreview.monthly>4000);
   if(d.status==='budget')assert.ok(Number.isFinite(d.forced.score));
@@ -206,7 +206,7 @@ test('expanded concern names are registered without inventing unsupported scores
 });
 
 test('concern importance strengthens its influence on a routine',()=>{
-  const items=catalog.filter(p=>['curel-sebum-foam','nivea-soft'].includes(p.id));
+  const items=catalog.filter(p=>['4901301264336','4901301043764'].includes(p.jan));
   const defaultScore=scoreRoutine(items,{concerns:['oiliness'],priority:'simple'});
   const highScore=scoreRoutine(items,{concerns:['oiliness'],concernWeights:{oiliness:'high'},priority:'simple'});
   const lowScore=scoreRoutine(items,{concerns:['oiliness'],concernWeights:{oiliness:'low'},priority:'simple'});
@@ -214,7 +214,7 @@ test('concern importance strengthens its influence on a routine',()=>{
 });
 
 test('skin type, sensitivity and finish preferences affect results',()=>{
-  const items=catalog.filter(p=>['curel-foam','curel-toner-ii','curel-milk'].includes(p.id));
+  const items=catalog.filter(p=>['4901301269348','4901301236197','4901301236173'].includes(p.jan));
   const base=scoreRoutine(items,{concerns:['dryness','irritation'],priority:'simple'});
   const adapted=scoreRoutine(items,{concerns:['dryness','irritation'],priority:'simple',skinType:'dry',sensitiveSkin:true,finish:'moist'});
   assert.ok(adapted>base);
@@ -225,41 +225,41 @@ test('skin type, sensitivity and finish preferences affect results',()=>{
 
 test('expanded catalog covers the three Kao priority brands without sunscreen',()=>{
   assert.equal(catalog.length,120);
-  assert.equal(new Set(catalog.map(p=>p.id)).size,catalog.length);
+  assert.ok(catalog.every(p=>/^\d{13}$/.test(p.jan) && !Object.hasOwn(p,'id')));
   assert.ok(new Set(catalog.map(p=>p.sourceUrl)).size===catalog.length);
   assert.equal(new Set(catalog.map(p=>p.jan).filter(Boolean)).size,catalog.filter(p=>p.jan).length);
   assert.ok(new Set(catalog.map(p=>p.brand)).size>=8);
   assert.equal(catalog.filter(p=>p.brand==='キュレル').length,27);
   assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,21);
   assert.equal(catalog.filter(p=>p.brand==='ソフィーナ iP').length,8);
-  assert.ok(catalog.some(p=>p.id==='biore-foam-smooth'));
-  assert.ok(catalog.some(p=>p.id==='sofina-toning-serum'));
-  assert.ok(catalog.some(p=>p.id==='hadalabo-aging-lotion'));
+  assert.ok(catalog.some(p=>p.jan==='4901301474407'));
+  assert.ok(catalog.some(p=>p.jan==='4901301460264'));
+  assert.ok(catalog.some(p=>p.jan==='4987241171255'));
   assert.ok(catalog.some(p=>p.brand==='メラノCC'&&p.category==='serum'));
   assert.ok(catalog.some(p=>p.brand==='イハダ'&&p.category==='toner'));
   assert.ok(catalog.some(p=>p.brand==='ミノン アミノモイスト'&&p.category==='cleanser'));
   for(const p of catalog){
-    assert.ok(p.sourceUrl.startsWith('https://'),`${p.id} must link to an official source`);
-    assert.ok(['makeupRemover','cleanser','toner','serum','moisturizer','eyeCare'].includes(p.category),p.id);
-    assert.ok(Number.isFinite(p.demoPrice)&&p.demoPrice>=0,p.id);
-    assert.ok(Number.isFinite(p.demoUses)&&p.demoUses>0,p.id);
-    assert.ok(Number.isFinite(p.dailyUses)&&p.dailyUses>=0,p.id);
-    assert.ok(Object.values(p.scores).every(n=>Number.isInteger(n)&&n>=0&&n<=3),p.id);
+    assert.ok(p.sourceUrl.startsWith('https://'),`${p.jan} must link to an official source`);
+    assert.ok(['makeupRemover','cleanser','toner','serum','moisturizer','eyeCare'].includes(p.category),p.jan);
+    assert.ok(Number.isFinite(p.demoPrice)&&p.demoPrice>=0,p.jan);
+    assert.ok(Number.isFinite(p.demoUses)&&p.demoUses>0,p.jan);
+    assert.ok(Number.isFinite(p.dailyUses)&&p.dailyUses>=0,p.jan);
+    assert.ok(Object.values(p.scores).every(n=>Number.isInteger(n)&&n>=0&&n<=3),p.jan);
   }
 });
 
 test('Kao medicinal actives, pore-cleansing and dry fine lines are represented separately',()=>{
-  const byId=id=>catalog.find(p=>p.id===id);
-  assert.deepEqual(transparencyDetails(byId('curel-sebum-toner')).actives,['アラントイン']);
-  assert.deepEqual(transparencyDetails(byId('curel-bright-toner-i')).actives,['L-アスコルビン酸2-グルコシド']);
-  assert.deepEqual(transparencyDetails(byId('curel-bright-milk')).actives,['カモミラET']);
-  assert.deepEqual(transparencyDetails(byId('sofina-wrinkle-foam-serum')).actives,['ナイアシンアミド']);
-  assert.deepEqual(transparencyDetails(byId('sofina-firming-serum')).actives,[]);
-  assert.equal(byId('curel-aging-cream').scores.wrinkles??0,0,'乾燥小じわ対策は薬用シワ改善ではない');
-  assert.ok(byId('curel-aging-cream').scores.fineLines>0);
-  assert.ok(byId('biore-ouchi-gel-clear').scores.blackheads>0);
-  assert.equal(byId('biore-ouchi-gel-clear').scores.spots??0,0);
-  assert.ok(catalog.filter(p=>p.id.startsWith('curel-')||p.id.startsWith('biore-')||p.id.startsWith('sofina-')).every(p=>transparencyDetails(p).concentrations.length===0),'未公表配合濃度を推定しない');
+  const byJan=id=>catalog.find(p=>p.jan===id);
+  assert.deepEqual(transparencyDetails(byJan('4901301264343')).actives,['アラントイン']);
+  assert.deepEqual(transparencyDetails(byJan('4901301240309')).actives,['L-アスコルビン酸2-グルコシド']);
+  assert.deepEqual(transparencyDetails(byJan('4901301238795')).actives,['カモミラET']);
+  assert.deepEqual(transparencyDetails(byJan('4901301416483')).actives,['ナイアシンアミド']);
+  assert.deepEqual(transparencyDetails(byJan('4901301422750')).actives,[]);
+  assert.equal(byJan('4901301334534').scores.wrinkles??0,0,'乾燥小じわ対策は薬用シワ改善ではない');
+  assert.ok(byJan('4901301334534').scores.fineLines>0);
+  assert.ok(byJan('4901301463890').scores.blackheads>0);
+  assert.equal(byJan('4901301463890').scores.spots??0,0);
+  assert.ok(catalog.filter(p=>['キュレル','ビオレ','ソフィーナ iP'].includes(p.brand)).every(p=>transparencyDetails(p).concentrations.length===0),'未公表配合濃度を推定しない');
 });
 
 test('fast one-result optimization exactly matches exhaustive ranking across conditions',()=>{
@@ -273,63 +273,63 @@ test('fast one-result optimization exactly matches exhaustive ranking across con
     const all=optimize(catalog,options);
     const fast=optimize(catalog,{...options,resultLimit:1});
     assert.equal(fast.length,all.length?1:0);
-    assert.deepEqual(fast[0]?.products.map(p=>p.id),all[0]?.products.map(p=>p.id));
+    assert.deepEqual(fast[0]?.products.map(p=>p.jan),all[0]?.products.map(p=>p.jan));
     assert.equal(fast[0]?.monthly,all[0]?.monthly);
     assert.equal(fast[0]?.score,all[0]?.score);
   }
 });
 
 test('catalog distinguishes cosmetic and medicinal evidence after removing UV products',()=>{
-  for(const p of catalog.filter(p=>p.id.startsWith('minon-'))){
-    assert.deepEqual(transparencyDetails(p).actives,[],`${p.id} is a cosmetic, not a quasi-drug`);
+  for(const p of catalog.filter(p=>p.brand==='ミノン アミノモイスト')){
+    assert.deepEqual(transparencyDetails(p).actives,[],`${p.jan} is a cosmetic, not a quasi-drug`);
     assert.deepEqual(transparencyDetails(p).concentrations,[]);
   }
-  assert.equal(transparencyDetails(catalog.find(p=>p.id==='hadalabo-aging-lotion')).level,2);
-  assert.equal(transparencyDetails(catalog.find(p=>p.id==='melanocc-premium-essence')).level,2);
+  assert.equal(transparencyDetails(catalog.find(p=>p.jan==='4987241171255')).level,2);
+  assert.equal(transparencyDetails(catalog.find(p=>p.jan==='4987241168583')).level,2);
 });
 
 test('care style controls optional steps without rewarding price alone',()=>{
   const simple=optimize(catalog,{budget:5000,concerns:['pores','dullness'],priority:'simple'})[0];
   const thorough=optimize(catalog,{budget:5000,concerns:['pores','dullness'],priority:'thorough'})[0];
   assert.ok(thorough.products.filter(p=>['toner','serum'].includes(p.category)).length>=simple.products.filter(p=>['toner','serum'].includes(p.category)).length);
-  assert.equal(scoreRoutine(simple.products,{concerns:['pores'],overrides:{'nivea-soft':{price:480}}}),
-    scoreRoutine(simple.products,{concerns:['pores'],overrides:{'nivea-soft':{price:3000}}}));
+  assert.equal(scoreRoutine(simple.products,{concerns:['pores'],overrides:{'4901301043764':{price:480}}}),
+    scoreRoutine(simple.products,{concerns:['pores'],overrides:{'4901301043764':{price:3000}}}));
 });
 
 test('saved routines preserve independent prices, frequencies and budget',()=>{
   const routine=optimize(catalog,{budget:5000,concerns:['pores','dullness'],priority:'simple'})[0];
   const sharedOverrides={};
   const plan=createSavedPlan(routine,{budget:5000,concerns:['pores'],priority:'simple',overrides:sharedOverrides},'test-plan','2026-11-06T00:00:00Z');
-  assert.deepEqual(plan.productIds,routine.products.map(p=>p.id));
+  assert.deepEqual(plan.productJans,routine.products.map(p=>p.jan));
   assert.equal(plan.budget,5000);
   const before=savedPlanTotals(plan,catalog);
-  sharedOverrides[plan.productIds[0]]={price:99999};
+  sharedOverrides[plan.productJans[0]]={price:99999};
   assert.equal(savedPlanTotals(plan,catalog).monthly,before.monthly);
-  const id=plan.productIds[0];
+  const id=plan.productJans[0];
   assert.equal(updateSavedUsage(plan,id,'uses',1),true);
   assert.ok(savedPlanTotals(plan,catalog).monthly>before.monthly);
   assert.equal(updateSavedUsage(plan,id,'uses',0),false);
   assert.equal(updateSavedUsage(plan,'missing','price',100),false);
   assert.equal(updateSavedUsage(plan,id,'frequency',0),true);
-  assert.equal(monthlyCost(catalog.find(p=>p.id===id),plan.overrides[id]),0);
+  assert.equal(monthlyCost(catalog.find(p=>p.jan===id),plan.overrides[id]),0);
 });
 
 test('retiring a product clears its active selection and preserves its saved costs',()=>{
-  const retiring=catalog.find(p=>p.id==='biore-foam-smooth');
-  const keeping=catalog.find(p=>p.id==='nivea-soft');
+  const retiring=catalog.find(p=>p.jan==='4901301474407');
+  const keeping=catalog.find(p=>p.jan==='4901301043764');
   const active=[keeping];
   const plan=createSavedPlan({products:[retiring,keeping]},{},'old-plan','2026-11-13T00:00:00Z');
   const previous=savedPlanTotals(plan,[retiring,keeping]);
   const state=reconcileCatalogState({
-    locked:{cleanser:retiring.id,moisturizer:keeping.id},
-    excluded:{[retiring.id]:'合わない'},
-    manual:[retiring.id,keeping.id],
-    overrides:{[keeping.id]:{price:600}},
+    locked:{cleanser:retiring.jan,moisturizer:keeping.jan},
+    excluded:{[retiring.jan]:'合わない'},
+    manual:[retiring.jan,keeping.jan],
+    overrides:{[keeping.jan]:{price:600}},
   },active);
-  assert.deepEqual(state.locked,{moisturizer:keeping.id});
-  assert.deepEqual(state.excluded,{[retiring.id]:'合わない'});
+  assert.deepEqual(state.locked,{moisturizer:keeping.jan});
+  assert.deepEqual(state.excluded,{[retiring.jan]:'合わない'});
   assert.equal(state.manual,null);
-  assert.deepEqual(state.overrides,{[keeping.id]:{price:600}});
+  assert.deepEqual(state.overrides,{[keeping.jan]:{price:600}});
   const archived={...retiring,referencePrice:5000};
   const saved=savedPlanTotals(plan,[keeping,archived]);
   assert.deepEqual(saved.missing,[]);
@@ -351,12 +351,12 @@ test('score breakdown adds exactly to the optimization score',()=>{
 });
 
 test('official active ingredients are verified; unknown concentration is not zero',()=>{
-  const item=catalog.find(p=>p.id==='curel-toner-ii');
+  const item=catalog.find(p=>p.jan==='4901301236197');
   const evidence=transparencyDetails(item);
   assert.equal(evidence.level,2);
   assert.deepEqual(evidence.actives,['アラントイン']);
   assert.deepEqual(evidence.concentrations,[]);
-  const unchecked=catalog.find(p=>p.id==='curel-foam');
+  const unchecked=catalog.find(p=>p.jan==='4901301269348');
   assert.equal(transparencyDetails(unchecked).level,1);
   assert.deepEqual(transparencyDetails(unchecked).actives,[]);
   const imaginary={sourceUrl:'https://maker.example/product',evidence:{officialSource:true,activeIngredients:['成分X'],
@@ -384,21 +384,21 @@ test('diagnostic explains selected, excluded, competing locked and no-concern ca
   assert.ok(best);
   const chosen=best.products.find(p=>p.category==='toner');
   assert.ok(chosen);
-  assert.equal(diagnoseProduct(catalog,options,chosen.id,best).status,'selected');
-  assert.equal(diagnoseProduct(catalog,{...options,excluded:[chosen.id]},chosen.id,best).status,'excluded');
-  const rival=catalog.find(p=>p.category==='toner'&&p.id!==chosen.id);
-  assert.equal(diagnoseProduct(catalog,{...options,locked:{toner:chosen.id}},rival.id,best).status,'locked');
-  assert.equal(diagnoseProduct(catalog,{...options,concerns:[]},chosen.id,best).status,'no_concern');
+  assert.equal(diagnoseProduct(catalog,options,chosen.jan,best).status,'selected');
+  assert.equal(diagnoseProduct(catalog,{...options,excluded:[chosen.jan]},chosen.jan,best).status,'excluded');
+  const rival=catalog.find(p=>p.category==='toner'&&p.jan!==chosen.jan);
+  assert.equal(diagnoseProduct(catalog,{...options,locked:{toner:chosen.jan}},rival.jan,best).status,'locked');
+  assert.equal(diagnoseProduct(catalog,{...options,concerns:[]},chosen.jan,best).status,'no_concern');
 });
 
 test('diagnostic reruns a forced candidate, including its whole-routine cost',()=>{
   const options={budget:9000,concerns:['pores','dullness'],priority:'thorough'};
   const best=optimize(catalog,options)[0];
-  const challenger=catalog.find(p=>p.category==='toner'&&!best.products.some(x=>x.id===p.id));
+  const challenger=catalog.find(p=>p.category==='toner'&&!best.products.some(x=>x.jan===p.jan));
   assert.ok(challenger);
-  const diagnostic=diagnoseProduct(catalog,options,challenger.id,best);
+  const diagnostic=diagnoseProduct(catalog,options,challenger.jan,best);
   assert.equal(diagnostic.status,'not_selected');
-  assert.ok(diagnostic.forced.products.some(p=>p.id===challenger.id));
+  assert.ok(diagnostic.forced.products.some(p=>p.jan===challenger.jan));
   assert.ok(diagnostic.forced.monthly<=options.budget);
   assert.equal(diagnostic.scoreGap,Math.round((best.score-diagnostic.forced.score)*100)/100);
   assert.ok(diagnostic.scoreGap>=0);
@@ -408,18 +408,18 @@ test('diagnostic distinguishes a budget failure from an ingredient incompatibili
   const options={budget:3500,concerns:['dryness'],priority:'simple'};
   const best=optimize(catalog,options)[0];
   assert.ok(best);
-  const expensive=catalog.find(p=>p.id==='sofina-toning-serum');
-  const diagnosis=diagnoseProduct(catalog,options,expensive.id,best);
+  const expensive=catalog.find(p=>p.jan==='4901301460264');
+  const diagnosis=diagnoseProduct(catalog,options,expensive.jan,best);
   assert.equal(diagnosis.status,'budget');
   assert.ok(diagnosis.minimum>options.budget);
   assert.equal(diagnosis.comparisonMode,'singleChange');
   assert.ok(Number.isFinite(diagnosis.forced.score),'budget-over candidate is scored');
   assert.ok(diagnosis.forced.monthly>options.budget);
-  assert.ok(diagnosis.forced.products.some(p=>p.id===expensive.id));
+  assert.ok(diagnosis.forced.products.some(p=>p.jan===expensive.jan));
 });
 
 test('even when there is no budget-compliant routine, diagnostic can display a scored reference',()=>{
-  const mk=(id,category)=>({id,brand:'TEST',name:id,category,demoPrice:300,demoUses:30,dailyUses:1,
+  const mk=(id,category)=>({jan:id,brand:'TEST',name:id,category,demoPrice:300,demoUses:30,dailyUses:1,
     keyIngredients:[],sourceUrl:'https://example.test/'+id,scores:{pores:2}});
   const items=[mk('wash','cleanser'),mk('milk','moisturizer')];
   const options={budget:500,concerns:['pores']};
@@ -437,13 +437,13 @@ test('15 new Kao products have matching price sources and face-appropriate categ
  assert.equal(catalog.filter(p=>p.brand==='ニベア').length,9);
  assert.equal(catalog.filter(p=>p.allInOne).length,2);
  assert.ok(catalog.filter(p=>p.allInOne).every(p=>p.category==='moisturizer'));
- for(const p of catalog){assert.equal(priceDb.prices[p.id].jan,p.jan);assert.equal(priceOf(p),priceDb.prices[p.id].priceJPY);}
- assert.deepEqual(catalog.find(p=>p.id==='biore-face-acne').evidence.activeIngredients,['イソプロピルメチルフェノール','グリチルリチン酸ジカリウム']);
- assert.equal(catalog.find(p=>p.id==='nivea-2way-acne').evidence.activeIngredients,undefined);
- assert.equal(catalog.find(p=>p.id==='nivea-cream-56').category,'moisturizer');
+ for(const p of catalog){assert.equal(priceDb.prices[p.jan].jan,p.jan);assert.equal(priceOf(p),priceDb.prices[p.jan].priceJPY);}
+ assert.deepEqual(catalog.find(p=>p.jan==='4901301408396').evidence.activeIngredients,['イソプロピルメチルフェノール','グリチルリチン酸ジカリウム']);
+ assert.equal(catalog.find(p=>p.jan==='4901301451132').evidence.activeIngredients,undefined);
+ assert.equal(catalog.find(p=>p.jan==='4901301008497').category,'moisturizer');
 });
 test('inexpensive cleanser and moisturizer are feasible at the minimum budget',()=>{
- const subset=catalog.filter(p=>['nivea-wash-rich','biore-jelly-rich','nivea-cream-56'].includes(p.id));
+ const subset=catalog.filter(p=>['4901301335456','4901301287663','4901301008497'].includes(p.jan));
  const best=optimize(subset,{budget:1000,concerns:['dryness'],priority:'simple',resultLimit:1})[0];
  assert.ok(best&&best.monthly<=1000);
  assert.ok(best.products.some(p=>p.category==='cleanser'));
@@ -461,14 +461,14 @@ test('makeup switch adds one night remover and omits W washing for simple care',
  assert.ok(on.products.some(p=>p.category==='moisturizer'));
 });
 test('makeup-removal cost assumes one use per evening; thorough routine permits double cleansing',()=>{
- const p=catalog.find(p=>p.id==='biore-cleansing-liquid');
+ const p=catalog.find(p=>p.jan==='4901301263049');
  assert.equal(monthlyCost(p),Math.round(priceOf(p)/usesOf(p)*30));
  const r=optimize(catalog,{budget:12000,concerns:['pores','dryness'],priority:'thorough',useMakeupRemover:true,resultLimit:1})[0];
  assert.ok(r && r.products.some(p=>p.category==='makeupRemover'));
 });
 test('original five makeup removers retain their JAN and no-double-wash status',()=>{
- const ids=['biore-cleansing-oil','biore-cleansing-oil-moist','biore-cleansing-liquid','biore-cleansing-paste','nivea-cleansing-beauty'];
- const items=catalog.filter(p=>ids.includes(p.id));
+ const ids=['4901301417008','4901301440365','4901301263049','4901301246769','4901301388902'];
+ const items=catalog.filter(p=>ids.includes(p.jan));
  assert.equal(items.length,5);
  assert.ok(items.every(p=>p.priceReference?.jan===p.jan && p.doubleCleanseNotNeeded));
  assert.equal(catalog.length,120);
@@ -476,11 +476,11 @@ test('original five makeup removers retain their JAN and no-double-wash status',
 });
 
 test('expanded Kao catalog has 12 correctly identified products with price evidence',()=>{
-  const ids=["curel-foam-gel","curel-gel-makeup","curel-oil-makeup","curel-milk-makeup","curel-moist-spray-250","curel-gel-serum","curel-foam-serum","curel-barrier-serum","curel-oil-serum","biore-perfect-oil","biore-foam-cream-makeup","nivea-gel-cleanse"];
+  const ids=["4901301458964","4901301236203","4901301346995","4901301422095","4901301379924","4901301281715","4901301458957","4901301463937","4901301471338","4901301761385","4901301388063","4901301443182"];
   assert.equal(ids.length,12);
   assert.equal(catalog.length,120);
   for(const id of ids){
-    const p=catalog.find(p=>p.id===id);
+    const p=catalog.find(p=>p.jan===id);
     assert.ok(p, 'missing '+id);
     assert.equal(priceDb.prices[id].jan,p.jan);
     assert.equal(priceOf(p),priceDb.prices[id].priceJPY);
@@ -491,14 +491,14 @@ test('expanded Kao catalog has 12 correctly identified products with price evide
 });
 test('Curel gel and oil makeup removers require separate cleanser while milk does not',()=>{
   const cases=[
-    ['curel-gel-makeup',false],
-    ['curel-oil-makeup',false],
-    ['curel-milk-makeup',true],
-    ['biore-perfect-oil',true],
-    ['nivea-gel-cleanse',true]
+    ['4901301236203',false],
+    ['4901301346995',false],
+    ['4901301422095',true],
+    ['4901301761385',true],
+    ['4901301443182',true]
   ];
   for(const [id,notNeeded] of cases){
-    const p=catalog.find(x=>x.id===id);
+    const p=catalog.find(x=>x.jan===id);
     assert.equal(p.doubleCleanseNotNeeded,notNeeded);
     const options={budget:15000,concerns:['dryness'],useMakeupRemover:true,priority:'thorough',locked:{makeupRemover:id},resultLimit:1};
     const best=optimize(catalog,options)[0];
@@ -512,20 +512,20 @@ test('simple makeup care will not propose mandatory-W-wash removers',()=>{
  assert.ok(best);
  assert.ok(best.products.some(x=>x.category==='makeupRemover' && x.doubleCleanseNotNeeded));
  assert.ok(!best.products.some(x=>x.category==='cleanser'));
- const forced=optimize(catalog,{...options,locked:{makeupRemover:'curel-oil-makeup'}})[0];
+ const forced=optimize(catalog,{...options,locked:{makeupRemover:'4901301346995'}})[0];
  assert.equal(forced,undefined,'required W cleanser is excluded from one-step recommendations');
 });
 test('swapping a one-step cleanser for a W-required remover cannot drop mandatory washing',()=>{
- const subset=catalog.filter(p=>['curel-oil-makeup','curel-milk-makeup','curel-foam','curel-milk'].includes(p.id));
+ const subset=catalog.filter(p=>['4901301346995','4901301422095','4901301269348','4901301236173'].includes(p.jan));
  const opt={budget:10000,concerns:['dryness'],priority:'simple',useMakeupRemover:true,resultLimit:1};
  const baseline=optimize(subset,opt)[0];
  assert.ok(baseline);
  const out=swaps(baseline,subset,'makeupRemover',opt,10000);
- assert.ok(!out.some(c=>c.replacement.id==='curel-oil-makeup'));
+ assert.ok(!out.some(c=>c.replacement.jan==='4901301346995'));
 });
 
 test('regular Biore Black Gel uses JAN-matched Tsuruha quote and needs no W wash',()=>{
-  const p=catalog.find(p=>p.id==='biore-black-cleansing-gel');
+  const p=catalog.find(p=>p.jan==='4901301416919');
   assert.ok(p);
   assert.equal(p.jan,'4901301416919');
   assert.equal(p.priceReference.jan,p.jan);
@@ -545,13 +545,13 @@ test('eye care appears only for eye dryness and cannot replace whole-face moistu
  const usual=optimize(catalog,{budget:10000,concerns:['dryness'],priority:'thorough',resultLimit:1})[0];
  assert.ok(usual && !usual.products.some(p=>p.category==='eyeCare'));
  const eye=optimize(catalog,{budget:10000,concerns:['eyeDryness'],priority:'thorough',resultLimit:1})[0];
- assert.ok(eye && eye.products.some(p=>p.id==='curel-eye-cream'));
+ assert.ok(eye && eye.products.some(p=>p.jan==='4901301382528'));
  assert.ok(eye.products.some(p=>p.category==='moisturizer'));
  assert.ok(eye.products.some(p=>p.category==='cleanser'));
  assert.ok(eye.monthly<=10000);
 });
 test('eye cream has source-verified JAN price and is optional at low budget',()=>{
- const p=catalog.find(p=>p.id==='curel-eye-cream');
+ const p=catalog.find(p=>p.jan==='4901301382528');
  assert.equal(p.jan,'4901301382528');
  assert.equal(p.priceReference.jan,p.jan);
  assert.equal(p.priceReference.priceJPY,3080);
@@ -577,7 +577,7 @@ test('SOFINA BASIC plus uses JAN-verified full-size products and maker usage dur
  assert.equal(monthlyCost(m),550);
 });
 test('SOFINA BASIC plus products can be recommended with a separate mandatory cleanser',()=>{
- const subset=catalog.filter(p=>['nivea-wash-rich','sofina-basic-turbo-toner','sofina-basic-turbo-milk'].includes(p.id));
+ const subset=catalog.filter(p=>['4901301335456','4901301466648','4901301466679'].includes(p.jan));
  const best=optimize(subset,{budget:2000,concerns:['dryness'],priority:'thorough',resultLimit:1})[0];
  assert.ok(best&&best.monthly<=2000);
  assert.ok(best.products.some(p=>p.category==='cleanser'));
@@ -596,28 +596,28 @@ test('Kanebo cosmetics products from suisai and DEW have unique JAN and quoted p
  assert.ok(k.every(p=>!('sunscreen'===p.category)));
 });
 test('unit-dose suisai powder has manufacturer-counted 32 uses without contaminating generic cleanser consumption',()=>{
- const x=catalog.find(p=>p.id==='suisai-powder-n');
+ const x=catalog.find(p=>p.jan==='4973167823859');
  assert.equal(x.referenceUses,32);
  assert.equal(x.usageEstimate.kind,'packageCount');
  assert.equal(x.usageReference.verifiedUses,32);
  assert.equal(monthlyCost(x),Math.round(2090/32*30));
- const other=catalog.find(p=>p.id==='nivea-wash-rich');
- const estimateBefore=mergeCatalogData([other],{prices:{[other.id]:priceDb.prices[other.id]}},{usages:{}})[0];
+ const other=catalog.find(p=>p.jan==='4901301335456');
+ const estimateBefore=mergeCatalogData([other],{prices:{[other.jan]:priceDb.prices[other.jan]}},{usages:{}})[0];
  assert.ok(!x.usageEstimate?.amountPerUse);
  assert.ok(other.usageEstimate?.kind!=='packageCount');
  assert.equal(estimateBefore.referenceUses,null);
- assert.ok(catalog.filter(p=>p.id.startsWith('suisai-powder-')).every(p=>p.referenceUses===32));
+ assert.ok(catalog.filter(p=>p.brand==='suisai'&&p.name.includes('パウダーウォッシュ')&& !p.name.includes('ピーリング')).every(p=>p.referenceUses===32));
 });
 test('DEW medicinal product claims separate preventive spots, texture and dry fine-lines',()=>{
- const bright=catalog.find(p=>p.id==='dew-bright-aura');
+ const bright=catalog.find(p=>p.jan==='4973167553046');
  assert.ok(bright.evidence.activeIngredients.includes('L-アスコルビン酸 2-グルコシド'));
  assert.equal(bright.scores.spots,3);
- const milk=catalog.find(p=>p.id==='dew-bright-bounce');
+ const milk=catalog.find(p=>p.jan==='4973167019108');
  assert.ok(milk.evidence.activeIngredients.includes('カモミラET'));
  assert.equal(milk.scores.spots,3);
- const regular=catalog.find(p=>p.id==='dew-lotion-moist');
+ const regular=catalog.find(p=>p.jan==='4973167251911');
  assert.equal(regular.scores.spots||0,0);
- const emulsion=catalog.find(p=>p.id==='dew-milk-moist');
+ const emulsion=catalog.find(p=>p.jan==='4973167252512');
  assert.ok(emulsion.scores.fineLines>0);
  assert.equal(emulsion.scores.wrinkles||0,0);
 });
@@ -631,10 +631,10 @@ test('Kanebo products are usable in feasible scored routines while 1000 yen budg
 });
 
 test('eleven more Kanebo products have distinct JAN and Matsukiyo reference prices',()=>{
- const ids=["suisai-black-scrub-wash","suisai-refining-toner","dew-cleansing-oil","dew-cleansing-cream","dew-cream-soap","dew-cream","dew-bright-cream","dew-tantan-wrinkle-cream","dew-glamast-milk-drop","dew-tantan-conk-alpha","dew-wrinkle-smash"];
+ const ids=["4973167531198","4973167024485","4973167251607","4973167251584","4973167251614","4973167251720","4973167376164","4973167040980","4973167550601","4973167022726","4973167864920"];
  assert.equal(ids.length,11);
  assert.equal(catalog.length,120);
- const items=catalog.filter(p=>ids.includes(p.id));
+ const items=catalog.filter(p=>ids.includes(p.jan));
  assert.equal(items.length,11);
  assert.ok(items.every(p=>p.priceReference?.jan===p.jan));
  assert.ok(items.every(p=>p.priceReference?.retailer==='マツキヨココカラオンライン'));
@@ -642,8 +642,8 @@ test('eleven more Kanebo products have distinct JAN and Matsukiyo reference pric
  assert.equal(new Set(catalog.map(p=>p.jan)).size,catalog.length);
 });
 test('DEW cleansing products are only proposed with face wash and not one-step simple makeup care',()=>{
- for(const id of ['dew-cleansing-oil','dew-cleansing-cream']){
-  const p=catalog.find(p=>p.id===id);
+ for(const id of ['4973167251607','4973167251584']){
+  const p=catalog.find(p=>p.jan===id);
   assert.equal(p.doubleCleanseNotNeeded,false);
   const simple=optimize(catalog,{budget:15000,concerns:['dryness'],useMakeupRemover:true,priority:'simple',locked:{makeupRemover:id},resultLimit:1})[0];
   assert.equal(simple,undefined);
@@ -652,19 +652,19 @@ test('DEW cleansing products are only proposed with face wash and not one-step s
  }
 });
 test('preventive whitening and actual wrinkle improvement are kept separate',()=>{
- const c=catalog.find(p=>p.id==='dew-bright-cream');
+ const c=catalog.find(p=>p.jan==='4973167376164');
  assert.equal(c.scores.wrinkles||0,0);
  assert.equal(c.scores.fineLines,2);
  assert.deepEqual(c.evidence.activeIngredients,['カモミラET']);
- const w=catalog.find(p=>p.id==='dew-tantan-wrinkle-cream');
+ const w=catalog.find(p=>p.jan==='4973167040980');
  assert.equal(w.scores.wrinkles,3);
  assert.ok(w.evidence.activeIngredients.includes('ナイアシンアミド'));
- const wrinkle=catalog.find(p=>p.id==='dew-wrinkle-smash');
+ const wrinkle=catalog.find(p=>p.jan==='4973167864920');
  assert.equal(wrinkle.category,'serum');
  assert.equal(wrinkle.scores.wrinkles,3);
 });
 test('refining toner is identified as wipe-off rather than normal hydrating toner',()=>{
- const p=catalog.find(p=>p.id==='suisai-refining-toner');
+ const p=catalog.find(p=>p.jan==='4973167024485');
  assert.equal(p.category,'toner');
  assert.equal(p.wipeOff,true);
  assert.ok(p.explanation.includes('保湿化粧水とは用途が異なり'));
@@ -678,33 +678,33 @@ test('new 108-product catalog retains a feasible 1000 yen routine',()=>{
 });
 
 test('new DEW texture variants and suisai balm are JAN matched and have distinct retailer provenance',()=>{
- const ids=["dew-lotion-light","dew-lotion-rich","dew-milk-light","dew-milk-rich","dew-bright-lotion-light","dew-bright-milk-light","suisai-gold-cleansing-butter"];
+ const ids=["4973167251645","4973167251935","4973167251683","4973167252529","4973167382264","4973167383438","4973167552995"];
  assert.equal(ids.length,7);
- const p=catalog.filter(x=>ids.includes(x.id));
+ const p=catalog.filter(x=>ids.includes(x.jan));
  assert.equal(p.length,7);
  assert.ok(p.every(x=>x.manufacturer==='カネボウ化粧品' && x.priceReference?.jan===x.jan));
  assert.equal(p.filter(x=>x.priceReference.retailer==='マツキヨココカラオンライン').length,6);
  assert.equal(p.filter(x=>x.priceReference.retailer==='ツルハグループe-shop').length,1);
- const balm=p.find(x=>x.id==='suisai-gold-cleansing-butter');
+ const balm=p.find(x=>x.jan==='4973167552995');
  assert.equal(priceOf(balm),2750);
  assert.equal(balm.doubleCleanseNotNeeded,false);
 });
 test('DEW preventive whitening differs from dry fine-lines, and no old type has been lost',()=>{
- const lotion=catalog.find(x=>x.id==='dew-lotion-rich');
+ const lotion=catalog.find(x=>x.jan==='4973167251935');
  assert.equal(priceOf(lotion),3850);
  assert.equal(lotion.feel,'rich');
- const med=catalog.find(x=>x.id==='dew-bright-lotion-light');
+ const med=catalog.find(x=>x.jan==='4973167382264');
  assert.ok(med.evidence.activeIngredients.includes('L-アスコルビン酸 2-グルコシド'));
  assert.equal(med.scores.spots,3);
- const normal=catalog.find(x=>x.id==='dew-milk-rich');
+ const normal=catalog.find(x=>x.jan==='4973167252529');
  assert.equal(normal.scores.wrinkles||0,0);
  assert.ok(normal.scores.fineLines>0);
- const light=catalog.find(x=>x.id==='dew-bright-milk-light');
+ const light=catalog.find(x=>x.jan==='4973167383438');
  assert.deepEqual(light.evidence.activeIngredients,['カモミラET']);
- assert.ok(catalog.some(x=>x.id==='dew-milk-moist'));
+ assert.ok(catalog.some(x=>x.jan==='4973167252512'));
 });
 test('suisai balm W wash status cannot be forced in simple one-step cleansing',()=>{
- const base={budget:15000,concerns:['dryness'],priority:'simple',useMakeupRemover:true,locked:{makeupRemover:'suisai-gold-cleansing-butter'},resultLimit:1};
+ const base={budget:15000,concerns:['dryness'],priority:'simple',useMakeupRemover:true,locked:{makeupRemover:'4973167552995'},resultLimit:1};
  assert.equal(optimize(catalog,base)[0],undefined);
  const thorough=optimize(catalog,{...base,priority:'thorough'})[0];
  assert.ok(thorough && thorough.products.some(x=>x.category==='cleanser'));

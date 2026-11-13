@@ -100,8 +100,8 @@ export function scoreRoutine(products, options={}) {return explainRoutineScore(p
 export function evaluate(products, options={}) {
   return {
     products,
-    monthly: products.reduce((sum,p)=>sum+monthlyCost(p, options.overrides?.[p.id]),0),
-    initial: products.reduce((sum,p)=>sum+priceOf(p, options.overrides?.[p.id]),0),
+    monthly: products.reduce((sum,p)=>sum+monthlyCost(p, options.overrides?.[p.jan]),0),
+    initial: products.reduce((sum,p)=>sum+priceOf(p, options.overrides?.[p.jan]),0),
     score: scoreRoutine(products,options)
   };
 }
@@ -115,8 +115,8 @@ export function optimize(catalog, options={}) {
   const firstOnly=options.resultLimit===1;
   const minimumMonthly=options.objective==='minimumMonthly';
   const grouped = CATEGORIES.map(cat=>{
-    let choices = catalog.filter(p=>p.category===cat && !excluded.has(p.id));
-    if (locked[cat]) choices=choices.filter(p=>p.id===locked[cat]);
+    let choices = catalog.filter(p=>p.category===cat && !excluded.has(p.jan));
+    if (locked[cat]) choices=choices.filter(p=>p.jan===locked[cat]);
     if (cat==="makeupRemover") {
       if (!options.useMakeupRemover) choices=[null];
     } else if (cat==="eyeCare") {
@@ -151,7 +151,7 @@ export function optimize(catalog, options={}) {
     }
     for(const product of grouped[index]) {
       chosen.push(product);
-      enumerate(index+1,chosen,spent+(product?monthlyCost(product,options.overrides?.[product.id]):0));
+      enumerate(index+1,chosen,spent+(product?monthlyCost(product,options.overrides?.[product.jan]):0));
       chosen.pop();
     }
   }
@@ -163,13 +163,13 @@ export function optimize(catalog, options={}) {
 
 // 商品単独の点数ではなく「その商品を採用した最良の組み合わせ」を比較する。
 // 高コストの再探索はデバッグ画面で商品を指定した時だけ実行する。
-export function diagnoseProduct(catalog,options={},productId,baseline=null) {
-  const product=catalog.find(p=>p.id===productId);
+export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
+  const product=catalog.find(p=>p.jan===productJan);
   if(!product)return {status:'missing',reason:'商品DBに存在しません。'};
   if(!options.concerns?.length)return {status:'no_concern',reason:'先にメイン画面で肌悩みを選択してください。'};
   const excluded=new Set(options.excluded||[]);
-  if(excluded.has(productId))return {status:'excluded',reason:'ユーザーの「合わない・除外」設定で候補から外れています。'};
-  if(options.locked?.[product.category]&&options.locked[product.category]!==productId)
+  if(excluded.has(productJan))return {status:'excluded',reason:'ユーザーの「合わない・除外」設定で候補から外れています。'};
+  if(options.locked?.[product.category]&&options.locked[product.category]!==productJan)
     return {status:'locked',reason:'同じ品目で別の商品が固定されているため、候補に入れられません。'};
   const best=baseline||optimize(catalog,{...options,resultLimit:1})[0]||null;
   if(!best){
@@ -177,21 +177,21 @@ export function diagnoseProduct(catalog,options={},productId,baseline=null) {
     const cheapest=optimize(catalog,{...options,budget:Number.MAX_SAFE_INTEGER,resultLimit:1,objective:'minimumMonthly'})[0]||null;
     if(!cheapest)return {status:'no_base',reason:'予算を外しても、現在の固定・除外・必須成分の条件を満たす組み合わせがありません。'};
     const current=cheapest.products.find(p=>p.category===product.category);
-    const next=current?cheapest.products.map(p=>p.id===current.id?product:p):[...cheapest.products,product];
+    const next=current?cheapest.products.map(p=>p.jan===current.jan?product:p):[...cheapest.products,product];
     if(options.ingredientMode==='required' && options.ingredient && options.ingredient!=='none' && !next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient))))
       return {status:'unavailable',reason:'この1品の置き換えでは、必須成分の条件が成立しません。'};
     const preview=evaluate(next,options);
     return {status:'budget',reason:`現予算内に成立する組み合わせはありませんが、予算を外して1品を置き換えた場合も評価できます。この例の月額は${preview.monthly.toLocaleString('ja-JP')}円です。`,
       best:cheapest,forced:preview,comparisonMode:'unbudgetedExample'};
   }
-  if(best.products.some(p=>p.id===productId))
+  if(best.products.some(p=>p.jan===productJan))
     return {status:'selected',reason:'自動選定の最良の組み合わせに採用されています。',best,forced:best,scoreGap:0,monthlyGap:0};
-  const forcedOptions={...options,locked:{...(options.locked||{}),[product.category]:productId}};
+  const forcedOptions={...options,locked:{...(options.locked||{}),[product.category]:productJan}};
   // 予算内に組み直せた場合も、他の商品の入れ替えを伴わない純粋な1品交換を
   // 別途採点する。安い組み合わせへ再探索したために高額アップグレードの
   // 得点が隠れてしまう事態を避ける。
   const prior=best.products.find(p=>p.category===product.category);
-  const next=prior?best.products.map(p=>p.id===prior.id?product:p):[...best.products,product];
+  const next=prior?best.products.map(p=>p.jan===prior.jan?product:p):[...best.products,product];
   const meetsIngredient=options.ingredientMode!=='required'||!options.ingredient||options.ingredient==='none'||next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)));
   const singleChange=meetsIngredient?evaluate(next,options):null;
   const forced=optimize(catalog,{...forcedOptions,resultLimit:1})[0]||null;
@@ -222,8 +222,8 @@ export function swaps(routine, catalog, category, options={}, extra=100) {
   const excluded=new Set(options.excluded||[]);
   const maxBudget=Number(options.budget??5000)+Math.max(0,Number(extra)||0);
   const output=[];
-  for(const product of catalog.filter(p=>p.category===category && p.id!==current?.id && !excluded.has(p.id))){
-    const next=current ? routine.products.map(p=>p.id===current.id?product:p) : [...routine.products,product];
+  for(const product of catalog.filter(p=>p.category===category && p.jan!==current?.jan && !excluded.has(p.jan))){
+    const next=current ? routine.products.map(p=>p.jan===current.jan?product:p) : [...routine.products,product];
     if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !next.some(p=>p.keyIngredients.some(k=>k.includes(options.ingredient)))) continue;
     // W洗顔がメーカー指定のクレンジングへの1品交換で、洗顔料を失うのを防ぐ。
     if(options.useMakeupRemover && next.some(p=>p.category==="makeupRemover" && !p.doubleCleanseNotNeeded) && !next.some(p=>p.category==="cleanser")) continue;
