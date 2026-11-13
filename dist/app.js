@@ -1,6 +1,7 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.5';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.5';
-import {mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.5';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.6';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.6';
+import {mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.6';
+import {loadCatalog} from './catalog-csv.js?v=0.8.6';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const SAVED_KEY='skincare-lab-saved-routines-jan';
@@ -195,7 +196,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.5</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.6</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -312,10 +313,9 @@ document.getElementById('excludeForm').addEventListener('submit',e=>{
   document.getElementById('excludeDialog').close();pendingExclude=null;
 });
 
-const fetchJSON=url=>fetch(url,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(`商品データを読み込めません：${url}`);return r.json();});
-Promise.all([fetchJSON('./data/products.json'),fetchJSON('./data/pricing.json'),fetchJSON('./data/usage.json')]).then(([db,pricing,usage])=>{
-  catalog=mergeCatalogData(db.products,pricing,usage);meta=db.meta;
-  const archived=mergeCatalogData(db.archivedProducts??[],pricing,usage);
+loadCatalog().then(({products, archivedProducts, pricing, usage, meta: catalogMeta})=>{
+  catalog=mergeCatalogData(products,pricing,usage);meta=catalogMeta;
+  const archived=mergeCatalogData(archivedProducts,pricing,usage);
   savedPlanCatalog=[...catalog,...archived.map(product=>({...product,archived:true}))];
   state=reconcileCatalogState(load(),catalog);
   savedPlans=loadSavedPlans();

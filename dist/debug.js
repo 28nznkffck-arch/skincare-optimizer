@@ -1,6 +1,7 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.5';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.5';
-import {mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.5';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.6';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.6';
+import {mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.6';
+import {loadCatalog} from './catalog-csv.js?v=0.8.6';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const PAGE_SIZE=25;
@@ -105,7 +106,6 @@ items.addEventListener('click',e=>{
   updateState(state);refreshAnalysis();
 });
 window.addEventListener('storage',e=>{if(e.key===STORE_KEY)refreshAnalysis();});
-const fetchJSON=url=>fetch(url,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(`商品データを読み込めません：${url}`);return r.json();});
-Promise.all([fetchJSON('./data/products.json'),fetchJSON('./data/pricing.json'),fetchJSON('./data/usage.json')]).then(([db,pricing,usage])=>{
-  catalog=mergeCatalogData(db.products,pricing,usage);refreshAnalysis();
+loadCatalog().then(({products, pricing, usage})=>{
+  catalog=mergeCatalogData(products,pricing,usage);refreshAnalysis();
 }).catch(e=>{count.textContent=e.message;});
