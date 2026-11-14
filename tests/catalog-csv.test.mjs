@@ -138,7 +138,9 @@ test('revised concern scores distinguish medicinal action, formula action and in
   const gelCleanser = byJan.get('4901301458964');
   assert.equal(gelCleanser.brightness, 0);
   assert.equal(gelCleanser.dullness, 3);
-  assert.equal(byJan.get('4973167383551').brightness, 0);
+  assert.equal(byJan.get('4973167383551').brightness, 1);
+  assert.equal(byJan.get('4973167383476').brightness, 1);
+  assert.equal(byJan.get('4987241169658').brightness, 1);
   assert.equal(byJan.get('4973167383476').dullness, 2);
   assert.equal(byJan.get('4987241171255').brightness, 1);
   assert.equal(byJan.get('4973167864920').brightness, 0);
