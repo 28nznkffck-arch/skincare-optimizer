@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.8.16';
+import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.8.17';
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
@@ -50,7 +50,7 @@ export function renderContext(catalog,options,best){
   }
   return `${header}${condition}<div class="debug-context-result"><div><span class="micro muted">最良候補の月額</span><strong>${yen(best.monthly)}</strong></div><div><span class="micro muted">全体評価</span><strong>${best.score.toFixed(2)} 点</strong></div></div>
     <p class="micro">${escape(names(best))}</p>
-    ${missing.length?`<div class="unscored-warning">未採点の悩み：${missing.map(id=>escape(CONCERNS[id]||id)).join('・')}</div>`:''}
+    ${missing.length?`<div class="unscored-warning">加点対象の商品がない悩み：${missing.map(id=>escape(CONCERNS[id]||id)).join('・')}</div>`:''}
     <details class="debug-score-details"><summary>最良候補の採点内訳を見る</summary>${renderScoreTable(best,null,options)}</details>`;
 }
 
