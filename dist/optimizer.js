@@ -9,6 +9,7 @@ export const CONCERNS = {
   pores: "毛穴の目立ち",
   blackheads: "毛穴の黒ずみ・角栓",
   dullness: "くすみ",
+  brightness: "肌の明るさ（明るくしたい）",
   spots: "シミ",
   freckles: "そばかす",
   unevenTone: "色ムラ",

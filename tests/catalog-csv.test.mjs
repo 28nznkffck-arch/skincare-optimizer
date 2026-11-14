@@ -4,7 +4,7 @@ import test from 'node:test';
 import {loadCatalog, parseCatalog} from '../dist/catalog-csv.js';
 import {DIPOTASSIUM_GLYCYRRHIZATE, mergeCatalogData, reconcileCatalogState} from '../dist/catalog-data.js';
 import {renderEvidence} from '../dist/debug-analysis.js';
-import {optimize} from '../dist/optimizer.js';
+import {CONCERNS, optimize} from '../dist/optimizer.js';
 
 const headers = {};
 for (const name of ['products', 'prices', 'scores']) {
@@ -121,7 +121,7 @@ test('the saved ingredient preference matches both former spellings in the catal
 test('revised concern scores distinguish medicinal action, formula action and indirect evidence', async () => {
   const {products} = await loadCatalog(url => readFile(url, 'utf8'));
   const byJan = new Map(products.map(item => [item.jan, item.scores]));
-  assert.ok(products.every(item => Object.keys(item.scores).length === 17));
+  assert.ok(products.every(item => Object.keys(CONCERNS).every(key => Object.hasOwn(item.scores, key))));
   assert.ok(products.every(item => item.scores.darkCircles === 0));
   const gel = byJan.get('4901301281715');
   assert.equal(gel.irritation, 3);
@@ -135,4 +135,8 @@ test('revised concern scores distinguish medicinal action, formula action and in
   assert.equal(wrinkleCream.redness, 1);
   assert.equal(byJan.get('4901301416919').blackheads, 0);
   assert.equal(byJan.get('4973167383551').irritation, 2);
+  assert.equal(byJan.get('4973167019108').brightness, 3);
+  assert.equal(byJan.get('4973167383551').brightness, 2);
+  assert.equal(byJan.get('4973167535622').brightness, 1);
+  assert.equal(byJan.get('4987241169658').brightness, 0);
 });

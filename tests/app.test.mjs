@@ -103,3 +103,11 @@ test('lowering the budget does not hide the button for releasing a lock', {timeo
   assert.doesNotMatch(app.markup, /固定中の商品/);
   assert.match(app.markup, /class="panel recommendation"/);
 });
+
+test('selecting skin brightness proposes products scored for that concern', {timeout: 5000}, async () => {
+  const {app, click, saved} = await openApp('brightness', {[settingsKey]: {budget: 5000}});
+  assert.match(app.markup, /data-id="brightness" aria-pressed="false">肌の明るさ（明るくしたい）/);
+  click('concern', 'brightness');
+  assert.deepEqual(saved(settingsKey).concerns, ['brightness']);
+  assert.match(app.markup, /関連する悩み：肌の明るさ（明るくしたい）/);
+});

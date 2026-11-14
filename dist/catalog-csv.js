@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.8.18';
+import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.8.20';
 
 const RETAILERS = ['マツキヨココカラオンライン', 'ツルハグループe-shop', 'ウエルシア'];
 
@@ -224,7 +224,8 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
   }
 
   const scores = new Map();
-  for (const {jan, row, location} of table(scoresCsv, 'scores.csv', ['JAN', ...Object.keys(SCORE_FIELDS), '採点メモ'])) {
+  const scoreColumns = ['JAN', ...Object.keys(SCORE_FIELDS), '採点メモ'];
+  for (const {jan, row, location} of table(scoresCsv, 'scores.csv', scoreColumns, [CONCERNS.brightness])) {
     if (!products.has(jan)) throw new Error(`${location}: JAN ${jan} が商品マスターにありません`);
     if (scores.has(jan)) throw new Error(`${location}: JAN ${jan} が肌悩み別点数表で重複しています`);
     scores.set(jan, readFields(row, SCORE_FIELDS, location));
