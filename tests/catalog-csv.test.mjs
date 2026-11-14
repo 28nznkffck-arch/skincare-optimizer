@@ -3,6 +3,7 @@ import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 import {loadCatalog, parseCatalog} from '../dist/catalog-csv.js';
 import {DIPOTASSIUM_GLYCYRRHIZATE, mergeCatalogData, reconcileCatalogState} from '../dist/catalog-data.js';
+import {renderEvidence} from '../dist/debug-analysis.js';
 import {optimize} from '../dist/optimizer.js';
 
 const headers = {};
@@ -85,6 +86,22 @@ test('catalog uses the manufacturer-verified active ingredients for corrected pr
     ['L-アスコルビン酸 2-グルコシド', 'グリチルリチン酸ジカリウム']);
   assert.ok(byJan.get('4987241169658').evidence.activeIngredients.includes('トコフェロール酢酸エステル'));
   assert.equal(byJan.get('4987107670236').evidence?.activeIngredients, undefined);
+});
+
+test('debug shows a cosmetic as outside the medicinal ingredient field only when its type is recorded', () => {
+  const verifiedProduct = {...product, 公式情報確認済み: true, 公式情報の確認日: '2026-11-14'};
+  const showEvidence = row => renderEvidence(parseCatalog({
+    ...data, productsCsv: csv('products', [row]),
+  }).products[0]);
+  const cosmetic = showEvidence({...verifiedProduct, 製品区分: '化粧品', 主要成分: 'グリセリン'});
+  assert.match(cosmetic, /確認済み有効成分：対象外（化粧品）/);
+  assert.match(cosmetic, /公式製品情報の確認日 2026-11-14/);
+  assert.match(showEvidence(verifiedProduct), /確認済み有効成分：未調査・未登録/);
+  const quasiDrug = {...product, 製品区分: '医薬部外品'};
+  assert.match(showEvidence(quasiDrug), /確認済み有効成分：未調査・未登録/);
+  const labeled = showEvidence({...quasiDrug, 有効成分: 'アラントイン'});
+  assert.match(labeled, /確認済み有効成分：アラントイン/);
+  assert.match(labeled, /公式製品情報の確認日 未登録/);
 });
 
 test('the saved ingredient preference matches both former spellings in the catalog', async () => {

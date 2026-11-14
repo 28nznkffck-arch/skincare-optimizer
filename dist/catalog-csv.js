@@ -88,6 +88,7 @@ const feel = choice({さっぱり: 'light', しっとり: 'moist', とてもし�
 
 const PRODUCT_FIELDS = {
   ブランド: ['brand'], 商品名: ['name'], 品目: ['category', category], メーカー: ['manufacturer'],
+  製品区分: ['productType', choice({化粧品: 'cosmetic', 医薬部外品: 'quasiDrug'})],
   企業グループ: ['makerGroup'], 内容量: ['volume', positive], 単位: ['unit', choice({mL: 'mL', g: 'g'})],
   使用感の分類: ['feel', feel], 使用感メモ: ['tone'], 公式URL: ['sourceUrl', httpsUrl],
   主要成分: ['keyIngredients', ingredients], 商品説明: ['explanation'], 敏感肌向け: ['sensitiveSkin', boolean],
@@ -134,10 +135,10 @@ function* csvRows(source, name) {
   if (cells.length) yield {cells: [...cells, ''], line: rowStart};
 }
 
-function* table(source, name, columns) {
+function* table(source, name, columns, optionalColumns = []) {
   const rows = csvRows(source, name);
   const headers = rows.next().value?.cells ?? [];
-  const missing = columns.filter(column => !headers.includes(column));
+  const missing = columns.filter(column => !headers.includes(column) && !optionalColumns.includes(column));
   const unknown = headers.filter(column => !columns.includes(column));
   if (missing.length || unknown.length || new Set(headers).size !== headers.length)
     throw new Error(`${name}: 列名が一致しません（不足 ${missing.join('、') || 'なし'}／未定義 ${unknown.join('、') || 'なし'}）`);
@@ -182,7 +183,7 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
   const products = new Map(), usages = {}, retired = new Set();
   const columns = ['JAN', '掲載状態', ...Object.keys(PRODUCT_FIELDS), ...Object.keys(USAGE_FIELDS), ...Object.keys(EVIDENCE_FIELDS)];
   const required = ['brand', 'name', 'category', 'volume', 'unit', 'sourceUrl', 'dailyUses'];
-  for (const {jan, row, location} of table(productsCsv, 'products.csv', columns)) {
+  for (const {jan, row, location} of table(productsCsv, 'products.csv', columns, ['製品区分'])) {
     if (products.has(jan)) throw new Error(`${location}: JAN ${jan} が商品マスター内で重複しています`);
     const status = row.掲載状態 || '掲載中';
     if (status !== '掲載中' && status !== '掲載終了')
