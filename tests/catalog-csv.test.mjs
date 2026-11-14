@@ -71,6 +71,22 @@ test('the shared loader reads the repository CSV files', async () => {
   assert.ok(catalog.every(item => /^\d{13}$/.test(item.jan) && Number.isFinite(item.demoPrice)));
 });
 
+test('catalog uses the manufacturer-verified active ingredients for corrected products', async () => {
+  const {products} = await loadCatalog(url => readFile(url, 'utf8'));
+  const byJan = new Map(products.map(item => [item.jan, item]));
+  assert.deepEqual(byJan.get('4901301269348').evidence.activeIngredients, ['グリチルリチン酸ジカリウム']);
+  assert.deepEqual(byJan.get('4901301236210').evidence.activeIngredients, ['アラントイン']);
+  const gel = byJan.get('4901301281715');
+  assert.deepEqual(gel.evidence.activeIngredients, ['アラントイン']);
+  assert.ok(!gel.keyIngredients.includes('グリチルリチン酸ジカリウム'));
+  assert.deepEqual(byJan.get('4973167383551').evidence.activeIngredients,
+    ['L-アスコルビン酸 2-グルコシド', 'グリチルリチン酸ジカリウム']);
+  assert.deepEqual(byJan.get('4973167383575').evidence.activeIngredients,
+    ['L-アスコルビン酸 2-グルコシド', 'グリチルリチン酸ジカリウム']);
+  assert.ok(byJan.get('4987241169658').evidence.activeIngredients.includes('トコフェロール酢酸エステル'));
+  assert.equal(byJan.get('4987107670236').evidence?.activeIngredients, undefined);
+});
+
 test('the saved ingredient preference matches both former spellings in the catalog', async () => {
   const {products, pricing, usage} = await loadCatalog(url => readFile(url, 'utf8'));
   const catalog = mergeCatalogData(products, pricing, usage);
