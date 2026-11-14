@@ -137,6 +137,7 @@ test('revised concern scores distinguish medicinal action, formula action and in
   assert.equal(byJan.get('4973167383551').irritation, 2);
   assert.equal(byJan.get('4973167019108').brightness, 3);
   assert.equal(byJan.get('4973167383551').brightness, 2);
-  assert.equal(byJan.get('4973167535622').brightness, 1);
+  assert.equal(byJan.get('4901301458964').brightness, 3);
+  assert.equal(byJan.get('4973167535622').brightness, 2);
   assert.equal(byJan.get('4987241169658').brightness, 0);
 });
