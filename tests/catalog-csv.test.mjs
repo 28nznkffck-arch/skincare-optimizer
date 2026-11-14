@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import test from 'node:test';
 import {loadCatalog, parseCatalog} from '../dist/catalog-csv.js';
-import {mergeCatalogData} from '../dist/catalog-data.js';
+import {DIPOTASSIUM_GLYCYRRHIZATE, mergeCatalogData, reconcileCatalogState} from '../dist/catalog-data.js';
+import {optimize} from '../dist/optimizer.js';
 
 const headers = {};
 for (const name of ['products', 'prices', 'scores']) {
@@ -68,4 +69,18 @@ test('the shared loader reads the repository CSV files', async () => {
   const catalog = mergeCatalogData(products, pricing, usage);
   assert.equal(catalog.length, products.length);
   assert.ok(catalog.every(item => /^\d{13}$/.test(item.jan) && Number.isFinite(item.demoPrice)));
+});
+
+test('the saved ingredient preference matches both former spellings in the catalog', async () => {
+  const {products, pricing, usage} = await loadCatalog(url => readFile(url, 'utf8'));
+  const catalog = mergeCatalogData(products, pricing, usage);
+  const settings = reconcileCatalogState({
+    budget: 500, concerns: ['dryness'], ingredient: 'グリチルリチン酸2K', ingredientMode: 'required'
+  }, catalog);
+  assert.equal(settings.ingredient, DIPOTASSIUM_GLYCYRRHIZATE);
+  assert.ok(catalog.find(p => p.jan === '4901301269348').keyIngredients.includes(settings.ingredient));
+  assert.ok(catalog.find(p => p.jan === '4901301265678').keyIngredients.includes(settings.ingredient));
+  const [routine] = optimize(catalog, {...settings, excluded: [], resultLimit: 1});
+  assert.ok(routine?.monthly <= settings.budget);
+  assert.ok(routine.products.some(p => p.keyIngredients.includes(settings.ingredient)));
 });
