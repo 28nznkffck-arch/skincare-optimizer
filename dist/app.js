@@ -1,7 +1,7 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.14';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.14';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.14';
-import {loadCatalog} from './catalog-csv.js?v=0.8.14';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.15';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.15';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.15';
+import {loadCatalog} from './catalog-csv.js?v=0.8.15';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const SAVED_KEY='skincare-lab-saved-routines-jan';
@@ -82,6 +82,10 @@ function productCard(p){
     <div>
       <div class="product-brand">${escape(p.brand)}　・　${escape(CATEGORY_LABELS[p.category])}</div>
       <div class="product-top"><h3 class="product-name">${escape(p.name)}</h3><div class="product-cost">${yen(monthlyCost(p))}<small>月額試算</small></div></div>
+      <button type="button" class="button product-lock" data-action="lock" data-id="${p.jan}" aria-pressed="${locked}" aria-label="この商品を固定：${escape(nameOf(p))}">
+        <span aria-hidden="true">${locked?'◆':'◇'}</span> この商品を固定
+        ${locked?'<span class="product-lock-status" aria-hidden="true">固定中</span>':''}
+      </button>
       <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${Math.round(uses)}回分 / 1回約${escape(amountLabel)}（${escape(useEstimateLabel(p))}） / 1日${escape(p.dailyUses)}回</div>
       <div class="period">購入価格 ${yen(priceOf(p))}（${p.priceReference?`${escape(p.priceReference.retailer)}・確認済み`:'出典未確認の仮価格'}）</div>
       <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?'<div class="fit-note">部分ケア・顔全体の保湿の後に使用</div>':''}${p.wipeOff?'<div class="fit-note">ふき取りタイプ・コットン代は月額に含みません</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+(p.doubleCleanseNotNeeded?'W洗顔不要':'W洗顔が必要')+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
@@ -89,7 +93,6 @@ function productCard(p){
       ${matchLabels.length?`<div class="fit-note">関連する悩み：${matchLabels.map(escape).join('・')}</div>`:''}
       ${state.sensitiveSkin && p.sensitiveSkin?'<div class="fit-note">敏感肌向けの設計情報を考慮</div>':''}
       <div class="product-actions">
-        <button type="button" class="tiny-action ${locked?'active':''}" data-action="lock" data-id="${p.jan}">${locked?'◆ 固定中':'◇ この商品を固定'}</button>
         <button type="button" class="tiny-action" data-action="exclude" data-id="${p.jan}">合わない・除外</button>
         <a class="source" href="${escape(p.sourceUrl)}" target="_blank" rel="noopener noreferrer">公式成分表 ↗</a>
       </div>
@@ -278,7 +281,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.14</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.15</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
