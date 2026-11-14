@@ -279,6 +279,40 @@ test('fast one-result optimization exactly matches exhaustive ranking across con
   }
 });
 
+test('pruned search preserves makeup rules, ingredient preferences and ties',()=>{
+  const sample=['makeupRemover','cleanser','toner','serum','moisturizer','eyeCare']
+    .flatMap(category=>catalog.filter(p=>p.category===category).slice(0,5));
+  const cleanser=sample.find(p=>p.category==='cleanser');
+  const moisturizer=sample.find(p=>p.category==='moisturizer');
+  const settings=[
+    {useMakeupRemover:true,priority:'simple',ingredient:'グリセリン',ingredientMode:'required'},
+    {useMakeupRemover:true,priority:'thorough',sensitiveSkin:true,finish:'rich',ingredient:'グリセリン'},
+    {useMakeupRemover:true,priority:'simple',locked:{cleanser:cleanser.jan}},
+    {budget:1000,skinType:'combination',excluded:[moisturizer.jan],
+      overrides:{[cleanser.jan]:{price:0,uses:30,frequency:2}}},
+    {ingredient:'未登録の検証用成分',ingredientMode:'required'}
+  ];
+  for (const setting of settings) {
+    const options={budget:5000,concerns:['dryness','eyeDryness','pores'],
+      concernWeights:{dryness:'high',pores:'low'},...setting};
+    assert.deepEqual(optimize(sample,{...options,resultLimit:1}),optimize(sample,options).slice(0,1));
+  }
+  const wash={...cleanser,scores:{dryness:1},keyIngredients:[],evidence:{},sourceUrl:'',referencePrice:100};
+  const washWithHigherSingleScore={...wash,jan:'higher',scores:{dryness:2}};
+  const cream={...moisturizer,scores:{dryness:3},keyIngredients:[],evidence:{},sourceUrl:'',
+    referencePrice:100,referenceUses:30,dailyUses:1};
+  // 単体点の順位と、別の品目を足した後の同点時の順位を照合する。
+  const tied=[
+    {...wash,jan:'first',scores:{dryness:1,pores:2}},
+    {...washWithHigherSingleScore,scores:{dryness:2,pores:1}},
+    {...cream,scores:{dryness:3,pores:3}}
+  ];
+  const options={budget:5000,concerns:['dryness','pores'],skinType:'dry'};
+  assert.ok(scoreRoutine([tied[1]],options)>scoreRoutine([tied[0]],options));
+  assert.equal(optimize(tied,options)[0].products[0].jan,'first');
+  assert.deepEqual(optimize(tied,{...options,resultLimit:1}),optimize(tied,options).slice(0,1));
+});
+
 test('catalog distinguishes cosmetic and medicinal evidence after removing UV products',()=>{
   for(const p of catalog.filter(p=>p.brand==='ミノン アミノモイスト')){
     assert.deepEqual(transparencyDetails(p).actives,[],`${p.jan} is a cosmetic, not a quasi-drug`);

@@ -52,6 +52,14 @@ export function transparencyDetails(product) {
   return {level,official,actives,concentrations,verifiedAt:evidence.verifiedAt||null};
 }
 
+const concernWeight = (options, concern) => CONCERN_WEIGHTS[options.concernWeights?.[concern]] || 1;
+const stepPenaltyFor = options => options.priority === "simple" ? 5 : options.priority === "thorough" ? 0 : 2;
+const isExtraStep = category => ["toner", "serum", "eyeCare"].includes(category);
+const matchesFinish = (product, options) => options.finish && options.finish !== "any"
+  && ["toner", "moisturizer"].includes(product.category) && product.feel === options.finish;
+const matchesIngredient = (product, options) => Boolean(options.ingredient && options.ingredient !== "none"
+  && product.keyIngredients?.some(name => name.includes(options.ingredient)));
+
 const round2=n=>Math.round((n+Number.EPSILON)*100)/100;
 
 export function explainRoutineScore(products, options={}) {
@@ -60,7 +68,7 @@ export function explainRoutineScore(products, options={}) {
   const push=(id,label,value,detail='')=>parts.push({id,label,value:round2(value),detail});
   for (const concern of concerns) {
     const ranked = products.map(p=>({name:`${p.brand} ${p.name}`,points:p.scores?.[concern]||0})).sort((a,b)=>b.points-a.points);
-    const importance=CONCERN_WEIGHTS[options.concernWeights?.[concern]] || 1;
+    const importance=concernWeight(options, concern);
     const factors=[7,3,1];
     const points=ranked.slice(0,3).reduce((sum,p,i)=>sum+p.points*factors[i],0)*importance;
     push(`concern:${concern}`,CONCERNS[concern]||concern,points,
@@ -69,8 +77,8 @@ export function explainRoutineScore(products, options={}) {
   // 化粧水・美容液は省略可能。ただし一律で高く減点すると、肌悩みの
   // 適合性が高い化粧水までほぼ必ず落選するので、少ない手順の利点は
   // 小さな「手間コスト」として扱い、悩みへの追加適合性と比較する。
-  const stepPenalty = options.priority === "simple" ? 5 : options.priority === "thorough" ? 0 : 2;
-  push('steps','追加ステップの手間',-(products.filter(p=>p.category==="toner" || p.category==="serum" || p.category==="eyeCare").length + (options.useMakeupRemover && products.some(p=>p.category==="cleanser")?1:0)) * stepPenalty,
+  const stepPenalty = stepPenaltyFor(options);
+  push('steps','追加ステップの手間',-(products.filter(p=>isExtraStep(p.category)).length + (options.useMakeupRemover && products.some(p=>p.category==="cleanser")?1:0)) * stepPenalty,
     `化粧水・美容液 1品あたり ${stepPenalty}点の手間コスト`);
   // 肌質・使用感は商品DBの暫定的な適合情報で加点。刺激の有無を保証するものではない。
   if(options.skinType==="dry") push('skin','乾燥肌との適合',Math.max(0,...products.map(p=>p.scores?.dryness||0))*1.8);
@@ -78,10 +86,10 @@ export function explainRoutineScore(products, options={}) {
   if(options.skinType==="combination") push('skin','混合肌との適合',(Math.max(0,...products.map(p=>p.scores?.dryness||0))+Math.max(0,...products.map(p=>p.scores?.oiliness||0)))*0.9);
   if(options.sensitiveSkin) push('sensitive','敏感肌向けの設計情報',products.filter(p=>p.sensitiveSkin).length*3);
   if(options.finish && options.finish!=="any") {
-    push('finish','使用感の好み',products.filter(p=>["toner","moisturizer"].includes(p.category) && p.feel===options.finish).length*2);
+    push('finish','使用感の好み',products.filter(p=>matchesFinish(p, options)).length*2);
   }
   if (options.ingredient && options.ingredient !== "none") {
-    const matches = products.filter(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)));
+    const matches = products.filter(p=>matchesIngredient(p, options));
     push('ingredient','使ってみたい成分',matches.length ? 10 : 0,`${options.ingredient}：${matches.length}品該当`);
   }
   // 予算は optimize() 側の上限制約。費用を適合スコアに混ぜず、
@@ -132,6 +140,7 @@ export function optimize(catalog, options={}) {
     return choices;
   });
   if (grouped.some(x=>!x.length)) return [];
+  if (firstOnly && !minimumMonthly) return findBestRoutine(grouped, budget, options);
   const all=[];
   let best=null;
   function enumerate(index,chosen,spent){
@@ -159,6 +168,154 @@ export function optimize(catalog, options={}) {
   if(firstOnly) return best?[best]:[];
   all.sort((a,b)=>minimumMonthly?a.monthly-b.monthly:b.score-a.score || a.monthly-b.monthly);
   return all;
+}
+
+// 残りの品目を最も有利に見積もり、首位を更新できる組み合わせだけを探索する。
+function findBestRoutine(grouped, budget, options) {
+  const concerns = Array.isArray(options.concerns) ? options.concerns : ["pores", "dullness"];
+  const weights = concerns.map(concern => concernWeight(options, concern));
+  const requireIngredient = options.ingredientMode === "required" && options.ingredient && options.ingredient !== "none";
+  const stepPenalty = stepPenaltyFor(options);
+  // 洗浄・保湿から試す。完全同点時の判定と出力は元の品目順に従う。
+  const visitOrder = ["makeupRemover", "cleanser", "moisturizer", "toner", "serum", "eyeCare"]
+    .map(category => CATEGORIES.indexOf(category));
+  const cleanserSlot = CATEGORIES.indexOf("cleanser");
+  const groups = visitOrder.map(slot => {
+    const entries = grouped[slot].map((product, order) => ({
+      product, order,
+      cost: product ? monthlyCost(product, options.overrides?.[product.jan]) : 0,
+      points: concerns.map(concern => Math.max(0, product?.scores?.[concern] || 0)),
+      dryness: product?.scores?.dryness || 0,
+      oiliness: product?.scores?.oiliness || 0,
+      ingredients: product?.keyIngredients?.length || 0,
+      match: product ? matchesIngredient(product, options) : false,
+      sensitive: Number(Boolean(options.sensitiveSkin && product?.sensitiveSkin)),
+      finish: Number(Boolean(product && matchesFinish(product, options))),
+      penalty: product && (isExtraStep(product.category) || (product.category === "cleanser" && options.useMakeupRemover)) ? stepPenalty : 0,
+      transparency: product ? transparencyDetails(product).level : 0,
+    })).filter(entry => entry.cost <= budget);
+    if (entries.length > 1 && grouped[slot][0] !== null) {
+      for (const entry of entries) entry.singleScore = scoreRoutine([entry.product], options);
+      entries.sort((a, b) => b.singleScore - a.singleScore || a.order - b.order);
+    }
+    return entries;
+  });
+  if (groups.some(group => !group.length)) return [];
+
+  const maxima = groups.map(group => ({
+    points: concerns.map((_, i) => Math.max(...group.map(entry => entry.points[i]))),
+    cost: Math.min(...group.map(entry => entry.cost)),
+    penalty: Math.min(...group.map(entry => entry.penalty)),
+    dryness: Math.max(...group.map(entry => entry.dryness)),
+    oiliness: Math.max(...group.map(entry => entry.oiliness)),
+    ingredients: Math.max(...group.map(entry => entry.ingredients)),
+    match: group.some(entry => entry.match),
+    sensitive: Math.max(...group.map(entry => entry.sensitive)),
+    finish: Math.max(...group.map(entry => entry.finish)),
+    transparency: Math.max(...group.map(entry => entry.transparency)),
+    canOmit: group.some(entry => entry.product === null),
+    canInclude: group.some(entry => entry.product !== null),
+  }));
+  const empty = {cost: 0, penalty: 0, dryness: 0, oiliness: 0, ingredients: 0,
+    match: false, sensitive: 0, finish: 0, transparency: 0, count: 0};
+  const remaining = new Array(groups.length + 1);
+  remaining[groups.length] = {...empty, transparencyByCount: [0]};
+  for (let i = groups.length - 1; i >= 0; i--) {
+    const group = maxima[i];
+    const rest = remaining[i + 1];
+    // 平均の加点は品数でも変わるので、追加する品数ごとに上限を持つ。
+    const transparencyByCount = new Array(rest.transparencyByCount.length + 1).fill(-Infinity);
+    for (const [count, total] of rest.transparencyByCount.entries()) {
+      if (group.canOmit) transparencyByCount[count] = Math.max(transparencyByCount[count], total);
+      if (group.canInclude) transparencyByCount[count + 1] = Math.max(transparencyByCount[count + 1], total + group.transparency);
+    }
+    remaining[i] = {...combineSearchValues(group, rest), transparencyByCount};
+  }
+
+  const chosen = new Array(groups.length);
+  const depthBySlot = CATEGORIES.map((_, slot) => visitOrder.indexOf(slot));
+  let best, bestOrder;
+  function scoreCeiling(depth, used) {
+    const rest = remaining[depth];
+    let score = -used.penalty - rest.penalty;
+    for (let i = 0; i < weights.length; i++) {
+      let first = 0, second = 0, third = 0;
+      for (let j = 0; j < groups.length; j++) {
+        const points = (j < depth ? chosen[j] : maxima[j]).points[i];
+        if (points > first) { third = second; second = first; first = points; }
+        else if (points > second) { third = second; second = points; }
+        else if (points > third) third = points;
+      }
+      score += round2((first * 7 + second * 3 + third) * weights[i]);
+    }
+    const dryness = Math.max(used.dryness, rest.dryness);
+    const oiliness = Math.max(used.oiliness, rest.oiliness);
+    if (options.skinType === "dry") score += round2(dryness * 1.8);
+    if (options.skinType === "oily") score += round2(oiliness * 1.8);
+    if (options.skinType === "combination") score += round2((dryness + oiliness) * 0.9);
+    score += (used.sensitive + rest.sensitive) * 3 + (used.finish + rest.finish) * 2
+      + (used.match || rest.match ? 10 : 0);
+    // 成分数の合計は重複を含むため、異なる成分数の上限になる。
+    score += Math.min(used.ingredients + rest.ingredients, 12) * 0.25;
+    let transparency = 0;
+    for (let count = 0; count < rest.transparencyByCount.length; count++) {
+      if (used.count + count > 0)
+        transparency = Math.max(transparency, (used.transparency + rest.transparencyByCount[count]) / (used.count + count));
+    }
+    return round2(round2(score) + round2(transparency * 0.35));
+  }
+
+  function visit(depth, used) {
+    const rest = remaining[depth];
+    const minCost = used.cost + rest.cost;
+    if (minCost > budget || (requireIngredient && !used.match && !rest.match)) return;
+    if (best) {
+      const ceiling = scoreCeiling(depth, used);
+      if (ceiling < best.score || (ceiling === best.score && minCost > best.monthly)) return;
+    }
+    if (depth === groups.length) {
+      const entries = depthBySlot.map(i => chosen[i]);
+      const products = entries.map(entry => entry.product).filter(Boolean);
+      const candidate = {
+        products,
+        monthly: used.cost,
+        initial: products.reduce((sum, product) => sum + priceOf(product, options.overrides?.[product.jan]), 0),
+        score: scoreRoutine(products, options),
+      };
+      const firstDifference = bestOrder ? entries.findIndex((entry, i) => entry.order !== bestOrder[i]) : -1;
+      const earlier = firstDifference >= 0 && entries[firstDifference].order < bestOrder[firstDifference];
+      if (!best || candidate.score > best.score || (candidate.score === best.score &&
+        (candidate.monthly < best.monthly || (candidate.monthly === best.monthly && earlier)))) {
+        best = candidate;
+        bestOrder = entries.map(entry => entry.order);
+      }
+      return;
+    }
+    for (const entry of groups[depth]) {
+      // メイク落としが単独で使えない場合は洗顔を省略できない。
+      if (visitOrder[depth] === cleanserSlot && !entry.product &&
+          chosen[0].product && !chosen[0].product.doubleCleanseNotNeeded) continue;
+      chosen[depth] = entry;
+      visit(depth + 1, combineSearchValues(used, entry, Number(Boolean(entry.product))));
+    }
+  }
+  visit(0, empty);
+  return best ? [best] : [];
+}
+
+function combineSearchValues(a, b, addedCount = 0) {
+  return {
+    cost: a.cost + b.cost,
+    penalty: a.penalty + b.penalty,
+    dryness: Math.max(a.dryness, b.dryness),
+    oiliness: Math.max(a.oiliness, b.oiliness),
+    ingredients: a.ingredients + b.ingredients,
+    match: a.match || b.match,
+    sensitive: a.sensitive + b.sensitive,
+    finish: a.finish + b.finish,
+    transparency: a.transparency + b.transparency,
+    count: (a.count || 0) + addedCount,
+  };
 }
 
 // 商品単独の点数ではなく「その商品を採用した最良の組み合わせ」を比較する。
