@@ -1,4 +1,4 @@
-import {monthlyCost, priceOf, usesOf} from './optimizer.js?v=0.8.15';
+import {monthlyCost, priceOf, usesOf} from './optimizer.js?v=0.8.16';
 
 // 保存した組み合わせの使用条件は、その時点の値を個別に保持する。
 // 価格などの共通編集が、過去の保存プランを書き換えないようにするため。
