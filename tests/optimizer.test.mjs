@@ -418,16 +418,19 @@ test('official active ingredients are verified; unknown concentration is not zer
     concentrations:[{name:'成分X',value:1.5,unit:'%'}]}}).level,2);
 });
 
-test('information transparency adds a small, product-count-neutral tie-breaker',()=>{
+test('information transparency rewards sourced concentration disclosures independently of fit',()=>{
   const product={brand:'A',name:'B',category:'toner',scores:{},keyIngredients:[],sourceUrl:'https://maker.example'};
   const verified={...product,evidence:{officialSource:true,activeIngredients:['成分X']}};
+  const disclosed={...verified,evidence:{...verified.evidence,
+    concentrations:[{name:'成分X',value:1.5,unit:'%',sourceUrl:'https://maker.example/disclosure'}]}};
   const options={concerns:[],priority:'thorough'};
   const plain=explainRoutineScore([product],options);
-  const trusted=explainRoutineScore([verified],options);
+  const trusted=explainRoutineScore([disclosed],options);
+  assert.equal(explainRoutineScore([verified],options).transparency,0);
   assert.equal(trusted.subtotal,plain.subtotal);
-  assert.ok(trusted.total>plain.total);
-  assert.ok(trusted.total-plain.total<=1.05);
-  assert.equal(explainRoutineScore([verified,verified],options).transparency,trusted.transparency);
+  assert.equal(trusted.transparency,1.05);
+  assert.equal(explainRoutineScore([disclosed,verified],options).transparency,0.53);
+  assert.equal(explainRoutineScore([disclosed,disclosed],options).transparency,trusted.transparency);
 });
 
 test('recommendations and swaps require a selected concern',()=>{

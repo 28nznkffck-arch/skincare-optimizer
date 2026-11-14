@@ -61,6 +61,9 @@ export function transparencyDetails(product) {
   return {level,official,actives,concentrations,verifiedAt:evidence.verifiedAt||null};
 }
 
+const CONCENTRATION_DISCLOSURE_BONUS = 1.05;
+const hasDisclosedConcentration = product => transparencyDetails(product).concentrations.length > 0;
+
 const concernWeight = (options, concern) => CONCERN_WEIGHTS[options.concernWeights?.[concern]] || 1;
 const stepPenaltyFor = options => options.priority === "simple" ? 5 : options.priority === "thorough" ? 0 : 2;
 const isExtraStep = category => ["toner", "serum", "eyeCare"].includes(category);
@@ -108,9 +111,9 @@ export function explainRoutineScore(products, options={}) {
     const distinct = new Set(products.flatMap(p=>p.keyIngredients||[]));
     push('diversity','成分の種類',Math.min(distinct.size,12) * 0.25,`登録された主要成分 ${distinct.size}種類`);
   }
-  const meanTransparency=products.length?products.reduce((sum,p)=>sum+transparencyDetails(p).level,0)/products.length:0;
+  const meanTransparency=products.length?products.reduce((sum,p)=>sum+Number(hasDisclosedConcentration(p)),0)/products.length:0;
   // 個数の多い組み合わせを有利にしないため「1品あたり平均」で小さく加点。
-  push('transparency','情報公開の確認状況',round2(meanTransparency*0.35),'公式情報や公表濃度の確認レベルの平均。効果の強さではありません');
+  push('transparency','情報公開の確認状況',round2(meanTransparency * CONCENTRATION_DISCLOSURE_BONUS),'出典付きの配合量が登録されている商品の割合で加点');
   const subtotal=round2(parts.filter(p=>p.id!=='transparency').reduce((sum,p)=>sum+p.value,0));
   return {parts,subtotal,transparency:parts.at(-1).value,total:round2(subtotal+parts.at(-1).value)};
 }
@@ -205,7 +208,7 @@ function findBestRoutine(grouped, budget, options) {
       sensitive: Number(Boolean(options.sensitiveSkin && product?.sensitiveSkin)),
       finish: Number(Boolean(product && matchesFinish(product, options))),
       penalty: product && (isExtraStep(product.category) || (product.category === "cleanser" && options.useMakeupRemover)) ? stepPenalty : 0,
-      transparency: product ? transparencyDetails(product).level : 0,
+      transparency: Number(Boolean(product && hasDisclosedConcentration(product))),
     })).filter(entry => entry.cost <= budget);
     if (entries.length > 1 && grouped[slot][0] !== null) {
       for (const entry of entries) entry.singleScore = scoreRoutine([entry.product], options);
@@ -275,7 +278,7 @@ function findBestRoutine(grouped, budget, options) {
       if (used.count + count > 0)
         transparency = Math.max(transparency, (used.transparency + rest.transparencyByCount[count]) / (used.count + count));
     }
-    return round2(round2(score) + round2(transparency * 0.35));
+    return round2(round2(score) + round2(transparency * CONCENTRATION_DISCLOSURE_BONUS));
   }
 
   function visit(depth, used) {

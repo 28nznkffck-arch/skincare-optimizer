@@ -100,3 +100,22 @@ test('the saved ingredient preference matches both former spellings in the catal
   assert.ok(routine?.monthly <= settings.budget);
   assert.ok(routine.products.some(p => p.keyIngredients.includes(settings.ingredient)));
 });
+
+test('revised concern scores distinguish medicinal action, formula action and indirect evidence', async () => {
+  const {products} = await loadCatalog(url => readFile(url, 'utf8'));
+  const byJan = new Map(products.map(item => [item.jan, item.scores]));
+  assert.ok(products.every(item => Object.keys(item.scores).length === 17));
+  assert.ok(products.every(item => item.scores.darkCircles === 0));
+  const gel = byJan.get('4901301281715');
+  assert.equal(gel.irritation, 3);
+  assert.equal(gel.wrinkles, 0);
+  assert.equal(gel.fineLines, 2);
+  assert.equal(gel.redness, 0);
+  const wrinkleCream = byJan.get('4973167040980');
+  assert.equal(wrinkleCream.wrinkles, 3);
+  assert.equal(wrinkleCream.spots, 2);
+  assert.equal(wrinkleCream.unevenTone, 1);
+  assert.equal(wrinkleCream.redness, 1);
+  assert.equal(byJan.get('4901301416919').blackheads, 0);
+  assert.equal(byJan.get('4973167383551').irritation, 2);
+});

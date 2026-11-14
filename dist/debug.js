@@ -1,7 +1,7 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.17';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.17';
-import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.17';
-import {loadCatalog} from './catalog-csv.js?v=0.8.17';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.18';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.18';
+import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.18';
+import {loadCatalog} from './catalog-csv.js?v=0.8.18';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const PAGE_SIZE=25;
