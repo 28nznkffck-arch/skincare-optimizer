@@ -204,7 +204,7 @@ test('diagnostic retains the over-budget one-item improvement even if cheaper re
 });
 
 test('no impossible routine returned under zero budget',()=>{
-  assert.deepEqual(optimize(catalog,{budget:0}),[]);
+  assert.deepEqual(optimize(catalog,{budget:0,concerns:['dryness']}),[]);
 });
 
 test('toner is not systematically excluded by the simplicity penalty',()=>{
@@ -429,34 +429,18 @@ test('information transparency adds a small, product-count-neutral tie-breaker',
   assert.equal(explainRoutineScore([verified,verified],options).transparency,trusted.transparency);
 });
 
-test('recommendations work without concern scores and respect ingredient requirements',()=>{
-  const options={budget:5000,concerns:[],resultLimit:1};
-  const [basic]=optimize(catalog,options);
-  assert.deepEqual(basic.products.map(p=>p.category),['cleanser','moisturizer']);
-  assert.ok(!explainRoutineScore(basic.products,options).parts.some(p=>p.id==='diversity'||p.id.startsWith('concern:')));
-  assert.equal(diagnoseProduct(catalog,options,basic.products[0].jan,basic).status,'selected');
-  const [withIngredient]=optimize(catalog,{...options,useMakeupRemover:true,
-    ingredient:'ナイアシンアミド',ingredientMode:'required'});
-  assert.ok(withIngredient.products.some(p=>p.category==='makeupRemover'));
-  assert.ok(withIngredient.products.some(p=>p.keyIngredients.includes('ナイアシンアミド')));
-});
-
-test('sensitive skin with no concerns can add moisturizing care without adding a spot serum',()=>{
-  const options={budget:5000,concerns:[],sensitiveSkin:true,useMakeupRemover:true,resultLimit:1};
-  const spotsSerum=catalog.find(p=>p.jan==='4901301238825');
-  const [routine]=optimize(catalog,options);
-  const serum=routine.products.find(p=>p.category==='serum');
+test('recommendations and swaps require a selected concern',()=>{
+  const options={budget:5000,concerns:[],sensitiveSkin:true,useMakeupRemover:true,
+    ingredient:'ナイアシンアミド',ingredientMode:'required',resultLimit:1};
+  assert.deepEqual(optimize(catalog),[]);
+  assert.deepEqual(optimize(catalog,options),[]);
+  assert.deepEqual(optimize(catalog,{...options,budget:30000,resultLimit:undefined}),[]);
+  assert.deepEqual(optimize(catalog,{...options,budget:30000,objective:'minimumMonthly'}),[]);
+  const [routine]=optimize(catalog,{...options,concerns:['dryness']});
   assert.ok(routine.products.some(p=>p.category==='makeupRemover'));
-  assert.ok(serum?.sensitiveSkin && serum.scores.dryness>0);
-  assert.notEqual(serum.jan,spotsSerum.jan);
-  assert.equal(diagnoseProduct(catalog,options,spotsSerum.jan,routine).status,'unavailable');
-
-  const sample=[...routine.products,spotsSerum];
-  assert.deepEqual(optimize(sample,options),optimize(sample,{...options,resultLimit:undefined}).slice(0,1));
-  const [forSpots]=optimize(sample,{...options,concerns:['spots']});
-  assert.ok(forSpots.products.some(p=>p.jan===spotsSerum.jan));
-  const [withIngredient]=optimize(sample,{...options,ingredient:'カモミラET',ingredientMode:'required'});
-  assert.ok(withIngredient.products.some(p=>p.jan===spotsSerum.jan));
+  assert.ok(routine.products.some(p=>p.keyIngredients.includes('ナイアシンアミド')));
+  assert.equal(diagnoseProduct(catalog,options,routine.products[0].jan,routine).status,'no_concerns');
+  assert.deepEqual(swaps(routine,catalog,'moisturizer',options,5000),[]);
 });
 
 test('diagnostic explains selected, excluded and competing locked cases',()=>{

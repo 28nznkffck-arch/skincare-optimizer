@@ -59,28 +59,12 @@ const matchesFinish = (product, options) => options.finish && options.finish !==
   && ["toner", "moisturizer"].includes(product.category) && product.feel === options.finish;
 const matchesIngredient = (product, options) => Boolean(options.ingredient && options.ingredient !== "none"
   && product.keyIngredients?.some(name => name.includes(options.ingredient)));
-
-export function matchesOptionalCare(product, options={}) {
-  if (product.category !== "toner" && product.category !== "serum") return true;
-  if (!Array.isArray(options.concerns) || options.concerns.length ||
-      options.locked?.[product.category] === product.jan) return true;
-  if (matchesFinish(product, options) || matchesIngredient(product, options)) return true;
-
-  // 悩みの指定がない場合は、商品の主な用途を肌質やお手入れの希望と照合する。
-  const scores = product.scores || {};
-  const highest = Math.max(0, ...Object.values(scores));
-  if (!highest) return false;
-  const moisture = scores.dryness === highest;
-  const wantsMoisture = ["dry", "combination"].includes(options.skinType) || options.priority === "thorough";
-  const wantsOilControl = ["oily", "combination"].includes(options.skinType);
-  const sensitiveCare = options.sensitiveSkin && product.sensitiveSkin && (moisture || scores.irritation === highest);
-  return Boolean((wantsMoisture && moisture) || (wantsOilControl && scores.oiliness === highest) || sensitiveCare);
-}
+const hasSelectedConcerns = options => Array.isArray(options.concerns) && options.concerns.length > 0;
 
 const round2=n=>Math.round((n+Number.EPSILON)*100)/100;
 
 export function explainRoutineScore(products, options={}) {
-  const concerns = Array.isArray(options.concerns) ? options.concerns : ["pores", "dullness"];
+  const concerns = Array.isArray(options.concerns) ? options.concerns : [];
   const parts=[];
   const push=(id,label,value,detail='')=>parts.push({id,label,value:round2(value),detail});
   for (const concern of concerns) {
@@ -134,6 +118,7 @@ export function evaluate(products, options={}) {
 }
 
 export function optimize(catalog, options={}) {
+  if (!hasSelectedConcerns(options)) return [];
   const budget = Number(options.budget ?? 5000);
   const excluded = new Set(options.excluded||[]);
   const locked = options.locked || {};
@@ -154,7 +139,7 @@ export function optimize(catalog, options={}) {
       // メイク落としで洗浄が完結する場合、洗顔は任意。手軽さ重視は省く。
       if (!locked[cat]) choices=options.priority==="simple"?[null]:[null,...choices];
     } else if (cat==="toner" || cat==="serum") {
-      if (!locked[cat]) choices=[null,...choices.filter(p=>matchesOptionalCare(p,options))];
+      if (!locked[cat]) choices=[null,...choices];
     }
     return choices;
   });
@@ -191,7 +176,7 @@ export function optimize(catalog, options={}) {
 
 // 残りの品目を最も有利に見積もり、首位を更新できる組み合わせだけを探索する。
 function findBestRoutine(grouped, budget, options) {
-  const concerns = Array.isArray(options.concerns) ? options.concerns : ["pores", "dullness"];
+  const concerns = options.concerns;
   const weights = concerns.map(concern => concernWeight(options, concern));
   const requireIngredient = options.ingredientMode === "required" && options.ingredient && options.ingredient !== "none";
   const stepPenalty = stepPenaltyFor(options);
@@ -342,12 +327,12 @@ function combineSearchValues(a, b, addedCount = 0) {
 export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
   const product=catalog.find(p=>p.jan===productJan);
   if(!product)return {status:'missing',reason:'商品DBに存在しません。'};
+  if(!hasSelectedConcerns(options))
+    return {status:'no_concerns',reason:'メイン画面で肌悩みを選ぶと、商品の採否を確認できます。'};
   const excluded=new Set(options.excluded||[]);
   if(excluded.has(productJan))return {status:'excluded',reason:'ユーザーの「合わない・除外」設定で候補から外れています。'};
   if(options.locked?.[product.category]&&options.locked[product.category]!==productJan)
     return {status:'locked',reason:'同じ品目で別の商品が固定されているため、候補に入れられません。'};
-  if(!matchesOptionalCare(product,options))
-    return {status:'unavailable',reason:'肌悩みが未選択で、商品の主な用途・使用感・成分に合う希望がないため、追加ケアの候補外です。'};
   const best=baseline||optimize(catalog,{...options,resultLimit:1})[0]||null;
   if(!best){
     // 予算内で候補を作れなくても、費用最小の成立例については採点できる。
@@ -392,7 +377,7 @@ export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
 }
 
 export function swaps(routine, catalog, category, options={}, extra=100) {
-  if (!routine) return [];
+  if (!routine || !hasSelectedConcerns(options)) return [];
   const current = routine.products.find(p=>p.category===category);
   // 「入れ替える」は追加ではない。固定品を勝手に変更してもいけない。
   if(!current || options.locked?.[category]) return [];
@@ -400,7 +385,6 @@ export function swaps(routine, catalog, category, options={}, extra=100) {
   const maxBudget=Number(options.budget??5000)+Math.max(0,Number(extra)||0);
   const output=[];
   for(const product of catalog.filter(p=>p.category===category && p.jan!==current?.jan && !excluded.has(p.jan))){
-    if(!matchesOptionalCare(product,options)) continue;
     const next=current ? routine.products.map(p=>p.jan===current.jan?product:p) : [...routine.products,product];
     if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !next.some(p=>p.keyIngredients.some(k=>k.includes(options.ingredient)))) continue;
     // W洗顔がメーカー指定のクレンジングへの1品交換で、洗顔料を失うのを防ぐ。

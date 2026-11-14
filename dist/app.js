@@ -1,7 +1,7 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, matchesOptionalCare, optimize, swaps} from './optimizer.js?v=0.8.10';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.10';
-import {clampBudget, DEFAULT_BUDGET, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.10';
-import {loadCatalog} from './catalog-csv.js?v=0.8.10';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.11';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.11';
+import {clampBudget, DEFAULT_BUDGET, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.11';
+import {loadCatalog} from './catalog-csv.js?v=0.8.11';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const SAVED_KEY='skincare-lab-saved-routines-jan';
@@ -25,6 +25,7 @@ function load(){
   try {
     const saved=JSON.parse(localStorage.getItem(STORE_KEY)||'{}');
     const merged={...structuredClone(DEFAULT),...saved};
+    if(!Array.isArray(merged.concerns))merged.concerns=[];
     if(!['simple','any','thorough'].includes(merged.priority))merged.priority='any';
     if(!CATEGORIES.includes(merged.swapCategory))merged.swapCategory=DEFAULT.swapCategory;
     merged.budget=clampBudget(merged.budget,budgetRange);
@@ -47,7 +48,7 @@ function useEstimateLabel(p){return state.overrides[p.jan]?.amountPerUse!=null||
 function nameOf(p){return p?`${p.brand} ${p.name}`:'';}
 function missingConcernLabels(){return unscoredConcerns(catalog,state.concerns).map(id=>CONCERNS[id]||id);}
 function findManual(){
-  if(!state.manual?.length)return null;
+  if(!state.concerns.length || !state.manual?.length)return null;
   const ids=new Set(state.manual);
   const products=catalog.filter(p=>ids.has(p.jan));
   if(products.length!==ids.size || products.some(p=>state.excluded[p.jan])) return null;
@@ -56,7 +57,6 @@ function findManual(){
   if(!state.concerns.includes('eyeDryness') && products.some(p=>p.category==='eyeCare'))return null;
   if(state.useMakeupRemover && !products.some(p=>p.category==='cleanser') && products.some(p=>p.category==='makeupRemover' && !p.doubleCleanseNotNeeded))return null;
   if(products.some(p=>state.locked[p.category] && state.locked[p.category]!==p.jan)) return null;
-  if(products.some(p=>!matchesOptionalCare(p,state))) return null;
   const result=evaluate(products,options());
   return result.monthly<=state.budget+Math.max(0,Number(state.manualExtraBudget)||0)?result:null;
 }
@@ -110,7 +110,7 @@ function formHtml(){
       </div>
       <div class="range-label"><span>${yen(budgetRange.min)}</span><span>${yen(budgetRange.max)}</span></div>
     </div>
-    <div class="field"><div class="concern-heading"><span class="field-title">肌の悩み <small>任意・複数選択可</small></span>${state.concerns.length?'<button type="button" class="link-button" data-action="clearConcerns">選択をクリア</button>':''}</div>
+    <div class="field"><div class="concern-heading"><span class="field-title">肌の悩み <small>1つ以上選択</small></span>${state.concerns.length?'<button type="button" class="link-button" data-action="clearConcerns">選択をクリア</button>':''}</div>
       <div class="concern-groups">${CONCERN_GROUPS.map((group,index)=>`<details class="concern-group" ${(index===0 && !state.concerns.length)||Object.keys(group.items).some(id=>state.concerns.includes(id))?'open':''}><summary>${escape(group.label)} <span>${Object.keys(group.items).filter(id=>state.concerns.includes(id)).length||''}</span></summary><div class="chips">${Object.entries(group.items).map(([id,label])=>`<button class="chip ${state.concerns.includes(id)?'selected':''}" data-action="concern" data-id="${id}" aria-pressed="${state.concerns.includes(id)}">${escape(label)}</button>`).join('')}</div></details>`).join('')}</div>
       ${state.concerns.length?`<div class="concern-priorities"><span class="micro muted">悩みごとの優先度</span>${state.concerns.map(id=>`<label class="priority-row"><span>${escape(CONCERNS[id]||id)}</span><select class="select" data-importance="${escape(id)}"><option value="high" ${state.concernWeights?.[id]==='high'?'selected':''}>最優先</option><option value="normal" ${!state.concernWeights?.[id]||state.concernWeights?.[id]==='normal'?'selected':''}>気になる</option><option value="low" ${state.concernWeights?.[id]==='low'?'selected':''}>軽く気になる</option></select></label>`).join('')}</div>`:''}
     </div>
@@ -133,6 +133,7 @@ function formHtml(){
 }
 
 function summaryHtml(){
+  if(!state.concerns.length) return '<section class="panel summary"><h2>肌悩みを選ぶと提案します</h2></section>';
   if(!current) return `<section class="panel summary"><span class="tag orange">条件に合う候補なし</span><h2>組み合わせを作れませんでした</h2><p class="summary-note">予算や「必須成分」、固定・除外条件を見直してみてください。条件を無断で緩めて商品を出すことはありません。</p></section>`;
   const effectiveBudget=state.budget+(isManual?Math.max(0,Number(state.manualExtraBudget)||0):0);
   const used=Math.min(100,Math.round(current.monthly/effectiveBudget*100));
@@ -205,7 +206,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.10</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.11</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}

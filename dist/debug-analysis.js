@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.8.10';
+import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.8.11';
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
@@ -38,8 +38,9 @@ function renderScoreTable(first,second,options,firstLabel='自動選定'){
 export function renderContext(catalog,options,best){
   const concerns=options.concerns||[];
   const header=`<div class="debug-context-top"><div><span class="eyebrow">CURRENT OPTIMIZATION</span><h2>現在の自動選定</h2></div><span class="tag">月予算 ${yen(options.budget)}</span></div>`;
+  if(!concerns.length) return `${header}<p class="micro muted">メイン画面で肌悩みを選ぶと、選定結果を確認できます。</p>`;
   const missing=unscoredConcerns(catalog,concerns);
-  const condition=`<p class="micro muted">肌悩み：${concerns.map(x=>escape(CONCERNS[x]||x)).join('・')||'指定なし'} / お手入れ ${escape(({simple:'手軽に',any:'こだわらない',thorough:'しっかり'})[options.priority]||'こだわらない')} / 除外 ${options.excluded.length}品 / 固定 ${Object.keys(options.locked).length}品</p>`;
+  const condition=`<p class="micro muted">肌悩み：${concerns.map(x=>escape(CONCERNS[x]||x)).join('・')} / お手入れ ${escape(({simple:'手軽に',any:'こだわらない',thorough:'しっかり'})[options.priority]||'こだわらない')} / 除外 ${options.excluded.length}品 / 固定 ${Object.keys(options.locked).length}品</p>`;
   if(!best){
     const cheapest=optimize(catalog,{...options,budget:Number.MAX_SAFE_INTEGER,resultLimit:1,objective:'minimumMonthly'})[0]||null;
     if(!cheapest)return `${header}${condition}<div class="unscored-warning">予算を外しても、固定・除外・必須成分をすべて満たす組み合わせがありません。</div>`;
@@ -55,7 +56,7 @@ export function renderContext(catalog,options,best){
 
 export function renderProductAnalysis(catalog,options,product,best){
   const d=diagnoseProduct(catalog,options,product.jan,best);
-  const statusLabel={selected:'採用中',not_selected:'不採用',excluded:'除外設定',locked:'他商品を固定中',budget:'予算超過',unavailable:'条件不成立',no_base:'候補なし',missing:'商品不明'}[d.status]||d.status;
+  const statusLabel={selected:'採用中',not_selected:'不採用',excluded:'除外設定',locked:'他商品を固定中',budget:'予算超過',unavailable:'条件不成立',no_base:'候補なし',no_concerns:'肌悩み未選択',missing:'商品不明'}[d.status]||d.status;
   const showCompared=Boolean(d.best&&d.forced);
   const isPreview=d.comparisonMode==='singleChange'||d.comparisonMode==='unbudgetedExample';
   const baselineLabel=d.comparisonMode==='unbudgetedExample'?'予算外・費用最小の参考例':'現在の予算内最良候補';

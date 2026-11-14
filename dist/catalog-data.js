@@ -1,4 +1,4 @@
-import {monthlyCost} from './optimizer.js?v=0.8.10';
+import {monthlyCost} from './optimizer.js?v=0.8.11';
 
 export const DEFAULT_BUDGET = 5000;
 
