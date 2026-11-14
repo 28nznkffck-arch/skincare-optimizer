@@ -1,7 +1,7 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.8';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.8';
-import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.8';
-import {loadCatalog} from './catalog-csv.js?v=0.8.8';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.9';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.9';
+import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.9';
+import {loadCatalog} from './catalog-csv.js?v=0.8.9';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const PAGE_SIZE=25;
@@ -42,7 +42,7 @@ function getOptions(){
 
 function refreshAnalysis(){
   analysisOptions=getOptions();
-  bestRoutine=analysisOptions.concerns.length?optimize(catalog,{...analysisOptions,resultLimit:1})[0]||null:null;
+  bestRoutine=optimize(catalog,{...analysisOptions,resultLimit:1})[0]||null;
   diagnosisCache.clear();
   debugContext.innerHTML=renderContext(catalog,analysisOptions,bestRoutine);
   renderRows();

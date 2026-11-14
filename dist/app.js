@@ -1,7 +1,7 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.8';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.8';
-import {clampBudget, DEFAULT_BUDGET, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.8';
-import {loadCatalog} from './catalog-csv.js?v=0.8.8';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.9';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.9';
+import {clampBudget, DEFAULT_BUDGET, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.9';
+import {loadCatalog} from './catalog-csv.js?v=0.8.9';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const SAVED_KEY='skincare-lab-saved-routines-jan';
@@ -61,12 +61,16 @@ function findManual(){
 }
 
 function pickCurrent(){
-  if(!state.concerns.length){current=null;isManual=false;return current;}
   const ranked=optimize(catalog,{...options(),resultLimit:1});
   const manual=findManual();
   isManual=Boolean(manual);
   current=manual||ranked[0]||null;
   return current;
+}
+
+function setBudget(value){
+  state.budget=clampBudget(value,budgetRange);
+  state.manual=null;
 }
 
 function productCard(p){
@@ -98,10 +102,14 @@ function formHtml(){
   return `<aside class="panel controls" aria-label="選定条件">
     <div class="section-heading"><h2>あなたの条件</h2><span class="step-number">01 / SETTINGS</span></div>
     <div class="field"><div class="budget-row"><label class="field-title" for="budget">月額予算</label><span class="budget-value">${yen(state.budget)}<small> / 月</small></span></div>
-      <input id="budget" data-field="budget" type="range" min="${budgetRange.min}" max="${budgetRange.max}" step="${budgetRange.step}" value="${state.budget}">
+      <div class="budget-slider">
+        <button type="button" class="budget-step" data-action="budgetStep" data-id="down" aria-label="月額予算を100円下げる" ${state.budget<=budgetRange.min?'disabled':''}>◀</button>
+        <input id="budget" data-field="budget" type="range" min="${budgetRange.min}" max="${budgetRange.max}" step="${budgetRange.step}" value="${state.budget}">
+        <button type="button" class="budget-step" data-action="budgetStep" data-id="up" aria-label="月額予算を100円上げる" ${state.budget>=budgetRange.max?'disabled':''}>▶</button>
+      </div>
       <div class="range-label"><span>${yen(budgetRange.min)}</span><span>${yen(budgetRange.max)}</span></div>
     </div>
-    <div class="field"><div class="concern-heading"><span class="field-title">肌の悩み <small>複数選択可</small></span>${state.concerns.length?'<button type="button" class="link-button" data-action="clearConcerns">選択をクリア</button>':''}</div>
+    <div class="field"><div class="concern-heading"><span class="field-title">肌の悩み <small>任意・複数選択可</small></span>${state.concerns.length?'<button type="button" class="link-button" data-action="clearConcerns">選択をクリア</button>':''}</div>
       <div class="concern-groups">${CONCERN_GROUPS.map((group,index)=>`<details class="concern-group" ${(index===0 && !state.concerns.length)||Object.keys(group.items).some(id=>state.concerns.includes(id))?'open':''}><summary>${escape(group.label)} <span>${Object.keys(group.items).filter(id=>state.concerns.includes(id)).length||''}</span></summary><div class="chips">${Object.entries(group.items).map(([id,label])=>`<button class="chip ${state.concerns.includes(id)?'selected':''}" data-action="concern" data-id="${id}" aria-pressed="${state.concerns.includes(id)}">${escape(label)}</button>`).join('')}</div></details>`).join('')}</div>
       ${state.concerns.length?`<div class="concern-priorities"><span class="micro muted">悩みごとの優先度</span>${state.concerns.map(id=>`<label class="priority-row"><span>${escape(CONCERNS[id]||id)}</span><select class="select" data-importance="${escape(id)}"><option value="high" ${state.concernWeights?.[id]==='high'?'selected':''}>最優先</option><option value="normal" ${!state.concernWeights?.[id]||state.concernWeights?.[id]==='normal'?'selected':''}>気になる</option><option value="low" ${state.concernWeights?.[id]==='low'?'selected':''}>軽く気になる</option></select></label>`).join('')}</div>`:''}
     </div>
@@ -124,7 +132,6 @@ function formHtml(){
 }
 
 function summaryHtml(){
-  if(!state.concerns.length) return `<section class="panel summary"><span class="tag">まずは肌悩みを選択</span><h2>どんなお肌の悩みがある？</h2><p class="summary-note">左の「肌の悩み」から1つ以上選ぶと、予算や好みも考慮して組み合わせを提案します。最初から特定の悩みは選択していません。</p></section>`;
   if(!current) return `<section class="panel summary"><span class="tag orange">条件に合う候補なし</span><h2>組み合わせを作れませんでした</h2><p class="summary-note">予算や「必須成分」、固定・除外条件を見直してみてください。条件を無断で緩めて商品を出すことはありません。</p></section>`;
   const effectiveBudget=state.budget+(isManual?Math.max(0,Number(state.manualExtraBudget)||0):0);
   const used=Math.min(100,Math.round(current.monthly/effectiveBudget*100));
@@ -132,7 +139,7 @@ function summaryHtml(){
   const missing=missingConcernLabels();
   return `<section class="panel summary">
     <div class="summary-top"><span class="eyebrow">${isManual?'YOUR CUSTOM ROUTINE':'YOUR BEST MATCH'}</span><span class="tag">${current.monthly>state.budget?'追加予算込み':'月額予算内'}</span></div>
-    <h2>${isManual?'入れ替え後の組み合わせ':'おすすめの組み合わせ'}</h2><div class="summary-number">${yen(current.monthly)}<small> / 月</small></div>
+    <h2>${isManual?'入れ替え後の組み合わせ':state.concerns.length?'おすすめの組み合わせ':'基本のお手入れ'}</h2><div class="summary-number">${yen(current.monthly)}<small> / 月</small></div>
     <div class="meter" role="progressbar" aria-label="予算使用率" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${used}"><span style="width:${used}%"></span></div>
     <div class="summary-note">${isManual&&state.manualExtraBudget?`通常予算 ${yen(state.budget)} ＋ 追加上限 ${yen(state.manualExtraBudget)}。`:''}残り予算 <strong>${yen(Math.max(0,effectiveBudget-current.monthly))}</strong>。${isManual?'手動で選んだ組み合わせです。通常のおすすめとは異なる場合があります。':'無理に予算を使い切りません。'}</div>
     ${missing.length?`<div class="unscored-warning">データ未整備：${missing.map(escape).join('・')}。現在の${catalog.length}商品では根拠となる情報がなく、この項目は選定に反映していません。</div>`:''}
@@ -156,7 +163,7 @@ function resultHtml(){
 }
 
 function swapHtml(){
-  if(!state.concerns.length)return '';
+  if(!current)return '';
   const category=state.swapCategory;
   const previous=current?.products.find(p=>p.category===category);
   const isLocked=Boolean(state.locked[category]);
@@ -197,7 +204,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.8</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.9</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -221,6 +228,16 @@ function render(){
 app.addEventListener('click',e=>{
   const btn=e.target.closest('[data-action]'); if(!btn)return;
   const {action,id}=btn.dataset;
+  if(action==='budgetStep'){
+    const hadFocus=document.activeElement===btn;
+    setBudget(state.budget+(id==='down'?-budgetRange.step:budgetRange.step));
+    save();render();
+    if(hadFocus){
+      const next=app.querySelector(`[data-action="budgetStep"][data-id="${id}"]:enabled`)||document.getElementById('budget');
+      next.focus({preventScroll:true});
+    }
+    return;
+  }
   if(action==='concern') state.concerns=state.concerns.includes(id)?state.concerns.filter(x=>x!==id):[...state.concerns,id];
   if(action==='clearConcerns'){state.concerns=[];state.concernWeights={};}
   if(action==='priority')state.priority=id;
@@ -289,15 +306,17 @@ app.addEventListener('change',e=>{
     state.manual=null;
   }
   const field=e.target.dataset.field;
+  const restoreBudgetFocus=field==='budget'&&document.activeElement===e.target;
   if(field){
-    if(field==='budget')state.budget=clampBudget(e.target.value,budgetRange);
+    if(field==='budget')setBudget(e.target.value);
     else if(field==='sensitiveSkin'||field==='useMakeupRemover')state[field]=e.target.checked;
     else if(field==='swapExtra')state.swapExtra=Number(e.target.value);
     else state[field]=e.target.value;
-    if(!['swapCategory','swapExtra'].includes(field))state.manual=null;
+    if(!['budget','swapCategory','swapExtra'].includes(field))state.manual=null;
   }
   if(e.target.name==='ingredientMode'){state.ingredientMode=e.target.value;state.manual=null;}
   save();render();
+  if(restoreBudgetFocus)document.getElementById('budget').focus({preventScroll:true});
 });
 
 document.getElementById('closeDialog').addEventListener('click',()=>document.getElementById('excludeDialog').close());

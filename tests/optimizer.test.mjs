@@ -429,7 +429,19 @@ test('information transparency adds a small, product-count-neutral tie-breaker',
   assert.equal(explainRoutineScore([verified,verified],options).transparency,trusted.transparency);
 });
 
-test('diagnostic explains selected, excluded, competing locked and no-concern cases',()=>{
+test('basic recommendations work without concern scores and respect ingredient requirements',()=>{
+  const options={budget:5000,concerns:[],resultLimit:1};
+  const [basic]=optimize(catalog,options);
+  assert.deepEqual(basic.products.map(p=>p.category),['cleanser','moisturizer']);
+  assert.ok(!explainRoutineScore(basic.products,options).parts.some(p=>p.id==='diversity'||p.id.startsWith('concern:')));
+  assert.equal(diagnoseProduct(catalog,options,basic.products[0].jan,basic).status,'selected');
+  const [withIngredient]=optimize(catalog,{...options,useMakeupRemover:true,
+    ingredient:'ナイアシンアミド',ingredientMode:'required'});
+  assert.ok(withIngredient.products.some(p=>p.category==='makeupRemover'));
+  assert.ok(withIngredient.products.some(p=>p.keyIngredients.includes('ナイアシンアミド')));
+});
+
+test('diagnostic explains selected, excluded and competing locked cases',()=>{
   const options={budget:9000,concerns:['dryness','irritation'],priority:'thorough'};
   const best=optimize(catalog,options)[0];
   assert.ok(best);
@@ -439,7 +451,6 @@ test('diagnostic explains selected, excluded, competing locked and no-concern ca
   assert.equal(diagnoseProduct(catalog,{...options,excluded:[chosen.jan]},chosen.jan,best).status,'excluded');
   const rival=catalog.find(p=>p.category==='toner'&&p.jan!==chosen.jan);
   assert.equal(diagnoseProduct(catalog,{...options,locked:{toner:chosen.jan}},rival.jan,best).status,'locked');
-  assert.equal(diagnoseProduct(catalog,{...options,concerns:[]},chosen.jan,best).status,'no_concern');
 });
 
 test('diagnostic reruns a forced candidate, including its whole-routine cost',()=>{

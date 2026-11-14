@@ -50,3 +50,23 @@
 .debug-breakdown-table-total,.debug-breakdown-total{background:#e7f0e7!important;font-weight:800;color:#315a46}
 @media(max-width:680px){.debug-context{padding:17px}.debug-context-result strong{font-size:19px}.debug-diagnosis{padding:11px}.debug-breakdown-table{min-width:390px}.debug-breakdown-table th,.debug-breakdown-table td{padding:8px 7px}}
 .estimate-note{font-size:11px;line-height:1.8;color:#667b6d;margin:0 0 16px;max-width:960px}
+
+.budget-slider {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 8px;
+}
+.budget-slider input[type=range] { margin: 0; }
+.budget-step {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 1px solid #d7e1d8;
+  border-radius: 9px;
+  background: #fafbf7;
+  color: #315d4b;
+  font-size: 14px;
+}
+.budget-step:focus-visible { outline: 2px solid #426c58; outline-offset: 2px; }

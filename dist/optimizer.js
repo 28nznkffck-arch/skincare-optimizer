@@ -94,8 +94,10 @@ export function explainRoutineScore(products, options={}) {
   }
   // 予算は optimize() 側の上限制約。費用を適合スコアに混ぜず、
   // 同点の候補だけ安いほうを先に並べる。
-  const distinct = new Set(products.flatMap(p=>p.keyIngredients||[]));
-  push('diversity','成分の種類',Math.min(distinct.size,12) * 0.25,`登録された主要成分 ${distinct.size}種類`);
+  if (concerns.length) {
+    const distinct = new Set(products.flatMap(p=>p.keyIngredients||[]));
+    push('diversity','成分の種類',Math.min(distinct.size,12) * 0.25,`登録された主要成分 ${distinct.size}種類`);
+  }
   const meanTransparency=products.length?products.reduce((sum,p)=>sum+transparencyDetails(p).level,0)/products.length:0;
   // 個数の多い組み合わせを有利にしないため「1品あたり平均」で小さく加点。
   push('transparency','情報公開の確認状況',round2(meanTransparency*0.35),'公式情報や公表濃度の確認レベルの平均。効果の強さではありません');
@@ -256,7 +258,7 @@ function findBestRoutine(grouped, budget, options) {
     score += (used.sensitive + rest.sensitive) * 3 + (used.finish + rest.finish) * 2
       + (used.match || rest.match ? 10 : 0);
     // 成分数の合計は重複を含むため、異なる成分数の上限になる。
-    score += Math.min(used.ingredients + rest.ingredients, 12) * 0.25;
+    if (concerns.length) score += Math.min(used.ingredients + rest.ingredients, 12) * 0.25;
     let transparency = 0;
     for (let count = 0; count < rest.transparencyByCount.length; count++) {
       if (used.count + count > 0)
@@ -323,7 +325,6 @@ function combineSearchValues(a, b, addedCount = 0) {
 export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
   const product=catalog.find(p=>p.jan===productJan);
   if(!product)return {status:'missing',reason:'商品DBに存在しません。'};
-  if(!options.concerns?.length)return {status:'no_concern',reason:'先にメイン画面で肌悩みを選択してください。'};
   const excluded=new Set(options.excluded||[]);
   if(excluded.has(productJan))return {status:'excluded',reason:'ユーザーの「合わない・除外」設定で候補から外れています。'};
   if(options.locked?.[product.category]&&options.locked[product.category]!==productJan)
