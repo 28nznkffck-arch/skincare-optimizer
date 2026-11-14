@@ -1,4 +1,4 @@
-import {monthlyCost} from './optimizer.js?v=0.8.12';
+import {monthlyCost} from './optimizer.js?v=0.8.13';
 
 export const DEFAULT_BUDGET = 5000;
 
@@ -93,5 +93,5 @@ export function reconcileCatalogState(state, catalog) {
   const manualCategories = Array.isArray(state.manual) ? state.manual.map(id => categories.get(id)) : [];
   const manual = manualCategories.length && !manualCategories.includes(undefined)
     && new Set(manualCategories).size === manualCategories.length ? state.manual : null;
-  return {...state, locked, manual, excluded: state.excluded ?? {}, overrides: state.overrides ?? {}};
+  return {...state, locked, manual, excluded: state.excluded ?? {}};
 }
