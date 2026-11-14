@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.8.9';
+import {CATEGORY_LABELS, CONCERNS, explainRoutineScore, diagnoseProduct, optimize, transparencyDetails, unscoredConcerns} from './optimizer.js?v=0.8.10';
 
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
@@ -39,7 +39,7 @@ export function renderContext(catalog,options,best){
   const concerns=options.concerns||[];
   const header=`<div class="debug-context-top"><div><span class="eyebrow">CURRENT OPTIMIZATION</span><h2>現在の自動選定</h2></div><span class="tag">月予算 ${yen(options.budget)}</span></div>`;
   const missing=unscoredConcerns(catalog,concerns);
-  const condition=`<p class="micro muted">選択中：${concerns.map(x=>escape(CONCERNS[x]||x)).join('・')||'基本のお手入れ'} / お手入れ ${escape(({simple:'手軽に',any:'こだわらない',thorough:'しっかり'})[options.priority]||'こだわらない')} / 除外 ${options.excluded.length}品 / 固定 ${Object.keys(options.locked).length}品</p>`;
+  const condition=`<p class="micro muted">肌悩み：${concerns.map(x=>escape(CONCERNS[x]||x)).join('・')||'指定なし'} / お手入れ ${escape(({simple:'手軽に',any:'こだわらない',thorough:'しっかり'})[options.priority]||'こだわらない')} / 除外 ${options.excluded.length}品 / 固定 ${Object.keys(options.locked).length}品</p>`;
   if(!best){
     const cheapest=optimize(catalog,{...options,budget:Number.MAX_SAFE_INTEGER,resultLimit:1,objective:'minimumMonthly'})[0]||null;
     if(!cheapest)return `${header}${condition}<div class="unscored-warning">予算を外しても、固定・除外・必須成分をすべて満たす組み合わせがありません。</div>`;

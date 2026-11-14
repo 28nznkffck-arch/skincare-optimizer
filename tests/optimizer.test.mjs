@@ -429,7 +429,7 @@ test('information transparency adds a small, product-count-neutral tie-breaker',
   assert.equal(explainRoutineScore([verified,verified],options).transparency,trusted.transparency);
 });
 
-test('basic recommendations work without concern scores and respect ingredient requirements',()=>{
+test('recommendations work without concern scores and respect ingredient requirements',()=>{
   const options={budget:5000,concerns:[],resultLimit:1};
   const [basic]=optimize(catalog,options);
   assert.deepEqual(basic.products.map(p=>p.category),['cleanser','moisturizer']);
@@ -439,6 +439,24 @@ test('basic recommendations work without concern scores and respect ingredient r
     ingredient:'ナイアシンアミド',ingredientMode:'required'});
   assert.ok(withIngredient.products.some(p=>p.category==='makeupRemover'));
   assert.ok(withIngredient.products.some(p=>p.keyIngredients.includes('ナイアシンアミド')));
+});
+
+test('sensitive skin with no concerns can add moisturizing care without adding a spot serum',()=>{
+  const options={budget:5000,concerns:[],sensitiveSkin:true,useMakeupRemover:true,resultLimit:1};
+  const spotsSerum=catalog.find(p=>p.jan==='4901301238825');
+  const [routine]=optimize(catalog,options);
+  const serum=routine.products.find(p=>p.category==='serum');
+  assert.ok(routine.products.some(p=>p.category==='makeupRemover'));
+  assert.ok(serum?.sensitiveSkin && serum.scores.dryness>0);
+  assert.notEqual(serum.jan,spotsSerum.jan);
+  assert.equal(diagnoseProduct(catalog,options,spotsSerum.jan,routine).status,'unavailable');
+
+  const sample=[...routine.products,spotsSerum];
+  assert.deepEqual(optimize(sample,options),optimize(sample,{...options,resultLimit:undefined}).slice(0,1));
+  const [forSpots]=optimize(sample,{...options,concerns:['spots']});
+  assert.ok(forSpots.products.some(p=>p.jan===spotsSerum.jan));
+  const [withIngredient]=optimize(sample,{...options,ingredient:'カモミラET',ingredientMode:'required'});
+  assert.ok(withIngredient.products.some(p=>p.jan===spotsSerum.jan));
 });
 
 test('diagnostic explains selected, excluded and competing locked cases',()=>{
