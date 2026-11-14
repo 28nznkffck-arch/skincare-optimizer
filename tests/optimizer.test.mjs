@@ -216,6 +216,7 @@ test('toner is not systematically excluded by the simplicity penalty',()=>{
 
 test('expanded concern names are registered without inventing unsupported scores',()=>{
   for(const key of ['oiliness','shine','irritation','wrinkles','freckles','blackheads']) assert.ok(CONCERNS[key]);
+  assert.equal(CONCERNS.blackheads,'毛穴の黒ずみ・角栓');
   assert.equal(CONCERNS.firmness,'ハリ不足・たるみ');
   assert.equal(CONCERNS.freckles,'そばかす');
   assert.equal(CONCERNS.spots,'シミ');

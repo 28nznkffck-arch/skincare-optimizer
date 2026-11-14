@@ -28,7 +28,7 @@ const data = {
   productsCsv: csv('products', [product]),
   pricesCsv: csv('prices', [{...quote, 販売店: 'ツルハ', '税込価格（円）': 900},
     {...quote, 販売店: 'マツキヨ', '税込価格（円）': 1200}]),
-  scoresCsv: csv('scores', [{JAN: jan, 乾燥: 0, くすみ: 2}]),
+  scoresCsv: csv('scores', [{JAN: jan, 乾燥: 0, くすみ: 2, '黒ずみ・角栓': 3}]),
 };
 
 test('CSV preserves JAN and quoted cells and feeds the existing usage and pricing calculation', () => {
@@ -39,7 +39,7 @@ test('CSV preserves JAN and quoted cells and feeds the existing usage and pricin
   assert.equal(item.referencePrice, 1200);
   assert.equal(item.priceReference.verifiedAt, '2026-11-14');
   assert.equal(item.referenceUses, 120);
-  assert.deepEqual(item.scores, {dryness: 0, dullness: 2});
+  assert.deepEqual(item.scores, {blackheads: 3, dullness: 2, dryness: 0});
 });
 
 test('CSV keeps archived products available to saved routines', () => {

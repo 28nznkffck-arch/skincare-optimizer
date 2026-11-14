@@ -2,16 +2,25 @@ export const CATEGORIES = ["makeupRemover", "cleanser", "toner", "serum", "moist
 export const CATEGORY_LABELS = {
   makeupRemover: "メイク落とし", cleanser: "洗顔", toner: "化粧水", serum: "美容液", moisturizer: "保湿", eyeCare: "目元ケア"
 };
-export const CONCERN_GROUPS = [
-  {label:"毛穴", items:{pores:"毛穴の目立ち", blackheads:"黒ずみ・角栓"}},
-  {label:"肌の色", items:{dullness:"くすみ", spots:"シミ", freckles:"そばかす", unevenTone:"色ムラ"}},
-  {label:"目元", items:{eyeDryness:"目元の乾燥", darkCircles:"クマ"}},
-  {label:"エイジング", items:{wrinkles:"シワ", fineLines:"小ジワ", firmness:"ハリ不足・たるみ"}},
-  {label:"皮脂", items:{oiliness:"ベタつき", shine:"テカリ"}},
-  {label:"肌荒れ", items:{acne:"ニキビ", redness:"赤み", irritation:"肌荒れ"}},
-  {label:"保湿", items:{dryness:"乾燥"}}
-];
-export const CONCERNS = Object.assign({}, ...CONCERN_GROUPS.map(group=>group.items));
+export const CONCERNS = {
+  dryness: "乾燥",
+  oiliness: "ベタつき",
+  shine: "テカリ",
+  pores: "毛穴の目立ち",
+  blackheads: "毛穴の黒ずみ・角栓",
+  dullness: "くすみ",
+  spots: "シミ",
+  freckles: "そばかす",
+  unevenTone: "色ムラ",
+  eyeDryness: "目元の乾燥",
+  darkCircles: "クマ",
+  wrinkles: "シワ",
+  fineLines: "小ジワ",
+  firmness: "ハリ不足・たるみ",
+  acne: "ニキビ",
+  redness: "赤み",
+  irritation: "肌荒れ"
+};
 export const CONCERN_WEIGHTS = {high:1.6, normal:1, low:0.55};
 
 export function unscoredConcerns(catalog, concerns=[]) {

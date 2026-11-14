@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.8.11';
+import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.8.12';
 
 const RETAILERS = ['マツキヨココカラオンライン', 'ツルハグループe-shop', 'ウエルシア'];
 
@@ -112,7 +112,8 @@ const PRICE_FIELDS = {
   販売店: ['retailer', retailerName], '税込価格（円）': ['priceJPY', wholeNumber],
   価格の出典URL: ['url', httpsUrl], 価格の確認日: ['verifiedAt', dateString], 価格の確認方法: ['verificationMethod'],
 };
-const SCORE_FIELDS = Object.fromEntries(Object.entries(CONCERNS).map(([key, label]) => [label, [key, score]]));
+const SCORE_COLUMNS = {...CONCERNS, blackheads: '黒ずみ・角栓'};
+const SCORE_FIELDS = Object.fromEntries(Object.entries(SCORE_COLUMNS).map(([key, label]) => [label, [key, score]]));
 
 // UTF-8 BOM、ExcelのCRLF、セル内のカンマ・改行・二重引用符を扱う。
 function* csvRows(source, name) {
