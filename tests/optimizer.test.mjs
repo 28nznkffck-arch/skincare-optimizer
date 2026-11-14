@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {CONCERNS, diagnoseProduct, explainRoutineScore, monthlyCost, priceOf, usesOf, optimize, scoreRoutine, swaps, transparencyDetails, unscoredConcerns} from '../dist/optimizer.js';
 import {createSavedPlan, savedPlanTotals, updateSavedUsage} from '../dist/plans.js';
-import {mergeCatalogData, reconcileCatalogState, unitPerUse} from '../dist/catalog-data.js';
+import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from '../dist/catalog-data.js';
 import fs from 'node:fs';
 
 // Keep calculation examples reproducible when the editable catalog's prices or products change.
@@ -87,8 +87,25 @@ test('consumer page never exposes numerical evaluation scores',()=>{
   assert.ok(html.includes("'仮推定'"),'short provisional label for consumers');
   assert.ok(!html.includes('根拠未確認の仮推定'));
   assert.ok(html.includes('※「仮推定」の試算方法'),'calculation explained in the footer');
-  assert.ok(html.includes('min="1000" max="15000" step="100"'),'budget slider starts at 1000 yen');
-  assert.ok(html.includes('<span>1,000円</span>'));
+});
+
+test('budget starts at 300 yen and the ceiling follows catalog prices',()=>{
+  const range=getBudgetRange(catalog);
+  assert.deepEqual(range,{min:300,max:27600,step:100});
+  assert.equal(clampBudget(300,range),300);
+  assert.equal(clampBudget(200,range),300);
+  assert.equal(clampBudget(27600,range),27600);
+  assert.equal(clampBudget(28000,range),27600);
+  const higherPrices=catalog.map(p=>p.jan==='4973167864920'?{...p,referencePrice:7380}:p);
+  assert.ok(getBudgetRange(higherPrices).max>range.max);
+});
+
+test('low slider values distinguish no match from an affordable routine',()=>{
+  for(const useMakeupRemover of [false,true]){
+    const options={concerns:['dryness','pores'],useMakeupRemover,resultLimit:1};
+    assert.deepEqual(optimize(catalog,{...options,budget:300}),[]);
+    assert.ok(optimize(catalog,{...options,budget:500})[0]?.monthly<=500);
+  }
 });
 
 test('monthly estimate is rounded and usage-aware',()=>{

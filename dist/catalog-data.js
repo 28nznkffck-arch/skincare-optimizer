@@ -1,3 +1,35 @@
+import {monthlyCost} from './optimizer.js?v=0.8.8';
+
+export const DEFAULT_BUDGET = 5000;
+
+// しっかりケアで全品目を選べるときの月額を、スライダーの上限に使う。
+export function getBudgetRange(catalog) {
+  const min = 300;
+  const step = 100;
+  const maxByCategory = new Map();
+  let standaloneRemover = null;
+  for (const product of catalog) {
+    const cost = monthlyCost(product);
+    if (!Number.isFinite(cost)) continue;
+    maxByCategory.set(product.category, Math.max(maxByCategory.get(product.category) ?? 0, cost));
+    if (product.category === 'makeupRemover' && product.doubleCleanseNotNeeded) {
+      standaloneRemover = Math.max(standaloneRemover ?? 0, cost);
+    }
+  }
+  const cleanser = maxByCategory.get('cleanser');
+  const cleansing = cleanser === undefined ? standaloneRemover : cleanser + (maxByCategory.get('makeupRemover') ?? 0);
+  const moisturizer = maxByCategory.get('moisturizer');
+  if (cleansing === null || moisturizer === undefined) return {min, max: min, step};
+
+  const highestMonthly = cleansing + moisturizer + ['toner', 'serum', 'eyeCare']
+    .reduce((sum, category) => sum + (maxByCategory.get(category) ?? 0), 0);
+  return {min, max: Math.max(min, Math.ceil(highestMonthly / step) * step), step};
+}
+
+export function clampBudget(value, {min, max}) {
+  return Math.max(min, Math.min(max, Number(value) || DEFAULT_BUDGET));
+}
+
 // 外部で確認した価格・使用期間は元の商品DBの仮値と分けて保管する。
 // JANが一致しない情報は採用しない。メーカー表示の「約」は概算として扱う。
 export function mergeCatalogData(products, pricing={}, usage={}) {

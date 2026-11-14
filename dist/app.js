@@ -1,19 +1,20 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.7';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.7';
-import {mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.7';
-import {loadCatalog} from './catalog-csv.js?v=0.8.7';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, CONCERN_GROUPS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.8';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.8';
+import {clampBudget, DEFAULT_BUDGET, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.8';
+import {loadCatalog} from './catalog-csv.js?v=0.8.8';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const SAVED_KEY='skincare-lab-saved-routines-jan';
-const DEFAULT={budget:5000, useMakeupRemover:false, concerns:[], concernWeights:{}, skinType:'unknown', sensitiveSkin:false, finish:'any', priority:'any', ingredient:'none', ingredientMode:'prefer', excluded:{}, locked:{}, overrides:{}, manual:null, manualExtraBudget:0, swapCategory:'moisturizer', swapExtra:100};
+const DEFAULT={budget:DEFAULT_BUDGET, useMakeupRemover:false, concerns:[], concernWeights:{}, skinType:'unknown', sensitiveSkin:false, finish:'any', priority:'any', ingredient:'none', ingredientMode:'prefer', excluded:{}, locked:{}, overrides:{}, manual:null, manualExtraBudget:0, swapCategory:'moisturizer', swapExtra:100};
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
 const app=document.getElementById('app');
 let catalog=[];
+let budgetRange=getBudgetRange(catalog);
 let savedPlanCatalog=[];
 let catalogLoaded=false;
 let meta={};
-let state=load();
+let state=structuredClone(DEFAULT);
 let savedPlans=loadSavedPlans();
 let current=null;
 let isManual=false;
@@ -26,10 +27,10 @@ function load(){
     const merged={...structuredClone(DEFAULT),...saved};
     if(!['simple','any','thorough'].includes(merged.priority))merged.priority='any';
     if(!CATEGORIES.includes(merged.swapCategory))merged.swapCategory=DEFAULT.swapCategory;
-    merged.budget=Math.max(1000,Math.min(15000,Number(merged.budget)||DEFAULT.budget));
+    merged.budget=clampBudget(merged.budget,budgetRange);
     return merged;
   }
-  catch {return structuredClone(DEFAULT);}
+  catch {return {...structuredClone(DEFAULT),budget:clampBudget(DEFAULT.budget,budgetRange)};}
 }
 function save(){localStorage.setItem(STORE_KEY,JSON.stringify(state));}
 function loadSavedPlans(){
@@ -97,8 +98,8 @@ function formHtml(){
   return `<aside class="panel controls" aria-label="選定条件">
     <div class="section-heading"><h2>あなたの条件</h2><span class="step-number">01 / SETTINGS</span></div>
     <div class="field"><div class="budget-row"><label class="field-title" for="budget">月額予算</label><span class="budget-value">${yen(state.budget)}<small> / 月</small></span></div>
-      <input id="budget" data-field="budget" type="range" min="1000" max="15000" step="100" value="${state.budget}">
-      <div class="range-label"><span>1,000円</span><span>15,000円</span></div>
+      <input id="budget" data-field="budget" type="range" min="${budgetRange.min}" max="${budgetRange.max}" step="${budgetRange.step}" value="${state.budget}">
+      <div class="range-label"><span>${yen(budgetRange.min)}</span><span>${yen(budgetRange.max)}</span></div>
     </div>
     <div class="field"><div class="concern-heading"><span class="field-title">肌の悩み <small>複数選択可</small></span>${state.concerns.length?'<button type="button" class="link-button" data-action="clearConcerns">選択をクリア</button>':''}</div>
       <div class="concern-groups">${CONCERN_GROUPS.map((group,index)=>`<details class="concern-group" ${(index===0 && !state.concerns.length)||Object.keys(group.items).some(id=>state.concerns.includes(id))?'open':''}><summary>${escape(group.label)} <span>${Object.keys(group.items).filter(id=>state.concerns.includes(id)).length||''}</span></summary><div class="chips">${Object.entries(group.items).map(([id,label])=>`<button class="chip ${state.concerns.includes(id)?'selected':''}" data-action="concern" data-id="${id}" aria-pressed="${state.concerns.includes(id)}">${escape(label)}</button>`).join('')}</div></details>`).join('')}</div>
@@ -196,7 +197,7 @@ function savedPlansHtml(){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.7</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.8</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -267,7 +268,7 @@ app.addEventListener('click',e=>{
     if(!tab)alert('別画面を開けませんでした。ブラウザのポップアップ設定を確認してください。');
     return;
   }
-  if(action==='reset' && confirm('選定条件・共通価格補正・商品除外を初期化しますか？ 保存した組み合わせは残ります。'))state=structuredClone(DEFAULT);
+  if(action==='reset' && confirm('選定条件・共通価格補正・商品除外を初期化しますか？ 保存した組み合わせは残ります。'))state={...structuredClone(DEFAULT),budget:clampBudget(DEFAULT.budget,budgetRange)};
   if(['concern','clearConcerns','priority','lock','exclude','unexclude','reset'].includes(action))state.manual=null;
   save();render();
 });
@@ -289,7 +290,7 @@ app.addEventListener('change',e=>{
   }
   const field=e.target.dataset.field;
   if(field){
-    if(field==='budget')state.budget=Number(e.target.value);
+    if(field==='budget')state.budget=clampBudget(e.target.value,budgetRange);
     else if(field==='sensitiveSkin'||field==='useMakeupRemover')state[field]=e.target.checked;
     else if(field==='swapExtra')state.swapExtra=Number(e.target.value);
     else state[field]=e.target.value;
@@ -315,6 +316,7 @@ document.getElementById('excludeForm').addEventListener('submit',e=>{
 
 loadCatalog().then(({products, archivedProducts, pricing, usage, meta: catalogMeta})=>{
   catalog=mergeCatalogData(products,pricing,usage);meta=catalogMeta;
+  budgetRange=getBudgetRange(catalog);
   const archived=mergeCatalogData(archivedProducts,pricing,usage);
   savedPlanCatalog=[...catalog,...archived.map(product=>({...product,archived:true}))];
   state=reconcileCatalogState(load(),catalog);

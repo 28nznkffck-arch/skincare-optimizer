@@ -1,13 +1,14 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.7';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.7';
-import {mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.7';
-import {loadCatalog} from './catalog-csv.js?v=0.8.7';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.8';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.8';
+import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.8';
+import {loadCatalog} from './catalog-csv.js?v=0.8.8';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const PAGE_SIZE=25;
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
 let catalog=[];
+let budgetRange=getBudgetRange(catalog);
 let page=0;
 let selectedId=null;
 let analysisOptions=null;
@@ -29,7 +30,7 @@ function updateState(next){localStorage.setItem(STORE_KEY,JSON.stringify(next));
 function getOptions(){
   const state=reconcileCatalogState(getState(),catalog);
   return {
-    budget:Number(state.budget??5000),useMakeupRemover:Boolean(state.useMakeupRemover),concerns:Array.isArray(state.concerns)?state.concerns:[],
+    budget:clampBudget(state.budget,budgetRange),useMakeupRemover:Boolean(state.useMakeupRemover),concerns:Array.isArray(state.concerns)?state.concerns:[],
     concernWeights:state.concernWeights||{},skinType:state.skinType||'unknown',
     sensitiveSkin:Boolean(state.sensitiveSkin),finish:state.finish||'any',
     priority:['simple','any','thorough'].includes(state.priority)?state.priority:'any',
@@ -107,5 +108,7 @@ items.addEventListener('click',e=>{
 });
 window.addEventListener('storage',e=>{if(e.key===STORE_KEY)refreshAnalysis();});
 loadCatalog().then(({products, pricing, usage})=>{
-  catalog=mergeCatalogData(products,pricing,usage);refreshAnalysis();
+  catalog=mergeCatalogData(products,pricing,usage);
+  budgetRange=getBudgetRange(catalog);
+  refreshAnalysis();
 }).catch(e=>{count.textContent=e.message;});
