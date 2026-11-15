@@ -1,7 +1,7 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.20';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.20';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.20';
-import {loadCatalog} from './catalog-csv.js?v=0.8.20';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.21';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.21';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.21';
+import {loadCatalog} from './catalog-csv.js?v=0.8.21';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const SAVED_KEY='skincare-lab-saved-routines-jan';
@@ -43,7 +43,6 @@ function savePlans(){localStorage.setItem(SAVED_KEY,JSON.stringify(savedPlans));
 function options(){return {...state,excluded:Object.keys(state.excluded||{})};}
 function useEstimateLabel(p){return p.usageEstimate?.kind==='packageCount'?'個包装の使用回数':p.referenceUses?'使い切り期間から逆算':'仮推定';}
 function nameOf(p){return p?`${p.brand} ${p.name}`:'';}
-function missingConcernLabels(){return unscoredConcerns(catalog,state.concerns).map(id=>CONCERNS[id]||id);}
 function findManual(){
   if(!state.concerns.length || !state.manual?.length)return null;
   const ids=new Set(state.manual);
@@ -88,7 +87,7 @@ function productCard(p){
       </div>
       <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${Math.round(uses)}回分 / 1回約${escape(amountLabel)}（${escape(useEstimateLabel(p))}） / 1日${escape(p.dailyUses)}回</div>
       <div class="period">購入価格 ${yen(priceOf(p))}（${p.priceReference?`${escape(p.priceReference.retailer)}・確認済み`:'出典未確認の仮価格'}）</div>
-      <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?'<div class="fit-note">部分ケア・顔全体の保湿の後に使用</div>':''}${p.wipeOff?'<div class="fit-note">ふき取りタイプ・コットン代は月額に含みません</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+(p.doubleCleanseNotNeeded?'W洗顔不要':'W洗顔が必要')+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
+      <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?'<div class="fit-note">部分ケア・顔全体の保湿の後に使用</div>':''}${p.wipeOff?'<div class="fit-note">ふき取りタイプ・コットン代は月額に含みません</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+(p.doubleCleanseNotNeeded?'W洗顔不要':'このアプリでは洗顔料と併用')+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
       <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
       ${matchLabels.length?`<div class="fit-note">関連する悩み：${matchLabels.map(escape).join('・')}</div>`:''}
       ${state.sensitiveSkin && p.sensitiveSkin?'<div class="fit-note">敏感肌向けの設計情報を考慮</div>':''}
@@ -120,7 +119,7 @@ function formHtml(){
       </div>
       ${state.concerns.length?`<div class="concern-priorities"><span class="micro muted">悩みごとの優先度</span>${state.concerns.map(id=>`<label class="priority-row"><span>${escape(CONCERNS[id]||id)}</span><select class="select" data-importance="${escape(id)}"><option value="high" ${state.concernWeights?.[id]==='high'?'selected':''}>最優先</option><option value="normal" ${!state.concernWeights?.[id]||state.concernWeights?.[id]==='normal'?'selected':''}>気になる</option><option value="low" ${state.concernWeights?.[id]==='low'?'selected':''}>軽く気になる</option></select></label>`).join('')}</div>`:''}
     </div>
-    <div class="field"><span class="field-title">夜の洗浄</span><label class="sensitive-check"><input type="checkbox" data-field="useMakeupRemover" ${state.useMakeupRemover?'checked':''}> メイク落としを使う</label><div class="micro muted">チェック時は毎晩使う前提で試算します。「手軽に」はW洗顔を省きます。</div></div>
+    <div class="field"><span class="field-title">夜の洗浄</span><label class="sensitive-check"><input type="checkbox" data-field="useMakeupRemover" ${state.useMakeupRemover?'checked':''}> メイク落としを使う</label><div class="micro muted">チェック時は毎晩使う前提で試算します。「手軽に」では、洗顔料を固定していない場合にW洗顔を省きます。</div></div>
     <div class="field"><label class="field-title" for="skinType">肌質</label><select id="skinType" class="select" data-field="skinType">${[['unknown','わからない・指定なし'],['dry','乾燥肌'],['oily','脂性肌'],['combination','混合肌'],['normal','普通肌']].map(([id,label])=>`<option value="${id}" ${state.skinType===id?'selected':''}>${label}</option>`).join('')}</select>
       <label class="sensitive-check"><input type="checkbox" data-field="sensitiveSkin" ${state.sensitiveSkin?'checked':''}> 刺激を感じやすい・敏感肌</label>
     </div>
@@ -147,13 +146,13 @@ function summaryHtml(){
   const effectiveBudget=state.budget+(isManual?Math.max(0,Number(state.manualExtraBudget)||0):0);
   const used=Math.min(100,Math.round(current.monthly/effectiveBudget*100));
   const optional=current.products.filter(p=>p.category==='toner'||p.category==='serum'||p.category==='eyeCare').length+(state.useMakeupRemover && current.products.some(p=>p.category==='cleanser')?1:0);
-  const missing=missingConcernLabels();
+  const missing=unscoredConcerns(current.products,state.concerns).map(id=>CONCERNS[id]||id);
   return `<section class="panel summary">
     <div class="summary-top"><span class="eyebrow">${isManual?'YOUR CUSTOM ROUTINE':'YOUR BEST MATCH'}</span><span class="tag">${current.monthly>state.budget?'追加予算込み':'月額予算内'}</span></div>
     <h2>${isManual?'入れ替え後の組み合わせ':'おすすめの組み合わせ'}</h2><div class="summary-number">${yen(current.monthly)}<small> / 月</small></div>
     <div class="meter" role="progressbar" aria-label="予算使用率" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${used}"><span style="width:${used}%"></span></div>
     <div class="summary-note">${isManual&&state.manualExtraBudget?`通常予算 ${yen(state.budget)} ＋ 追加上限 ${yen(state.manualExtraBudget)}。`:''}残り予算 <strong>${yen(Math.max(0,effectiveBudget-current.monthly))}</strong>。${isManual?'手動で選んだ組み合わせです。通常のおすすめとは異なる場合があります。':'無理に予算を使い切りません。'}</div>
-    ${missing.length?`<div class="unscored-warning">${missing.map(escape).join('・')}に加点できる登録商品がないため、この項目は選定に反映していません。</div>`:''}
+    ${missing.length?`<div class="unscored-warning">今回の組み合わせで対応する商品がない悩み：${missing.map(escape).join('・')}</div>`:''}
     <div class="summary-stats"><div><span class="stat-label">初回購入費（試算）</span><span class="stat-value">${yen(current.initial)}</span></div><div><span class="stat-label">選定商品数</span><span class="stat-value">${current.products.length}<small> 品</small></span></div><div><span class="stat-label">追加ステップ</span><span class="stat-value">${optional}<small> 個</small></span></div></div>
     <button type="button" class="button button-dark save-routine" data-action="saveRoutine">この組み合わせを保存</button>
     ${isManual?'<button type="button" class="button save-routine" data-action="resetSwap">自動のおすすめに戻す</button>':''}
@@ -168,7 +167,6 @@ function resultHtml(){
   return `<section class="panel recommendation">
     <div class="reco-head"><div><span class="eyebrow">02 / RECOMMENDATION</span><h2>朝と夜のルーティン</h2></div><span class="tag orange">試作版</span></div>
     <p class="summary-note">朝：${am.map(p=>CATEGORY_LABELS[p.category]).join(' → ')||'なし'}<br>夜：${pm.map(p=>CATEGORY_LABELS[p.category]).join(' → ')}</p>
-    ${state.useMakeupRemover?'<p class="micro muted">毎晩メイク落とし1回。洗顔料が続く場合はW洗顔ですが、メーカーが必須とする意味ではありません。</p>':''}
     <div class="product-list">${sorted.map(productCard).join('')}</div>
   </section>`;
 }
@@ -278,7 +276,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.20</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.21</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}

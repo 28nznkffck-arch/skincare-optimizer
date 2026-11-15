@@ -346,6 +346,13 @@ export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
   if(excluded.has(productJan))return {status:'excluded',reason:'ユーザーの「合わない・除外」設定で候補から外れています。'};
   if(options.locked?.[product.category]&&options.locked[product.category]!==productJan)
     return {status:'locked',reason:'同じ品目で別の商品が固定されているため、候補に入れられません。'};
+  if(product.category==='makeupRemover' && !options.useMakeupRemover)
+    return {status:'unavailable',reason:'メイク落としの使用が選択されていません。'};
+  if(product.category==='eyeCare' && !options.concerns.includes('eyeDryness'))
+    return {status:'unavailable',reason:'目元の乾燥が選択されていません。'};
+  if(options.priority==='simple' && options.useMakeupRemover && !options.locked?.cleanser &&
+      (product.category==='cleanser' || product.category==='makeupRemover' && !product.doubleCleanseNotNeeded))
+    return {status:'unavailable',reason:'現在の「手軽に」設定では、メイク落としの後の洗顔を省きます。'};
   const best=baseline||optimize(catalog,{...options,resultLimit:1})[0]||null;
   if(!best){
     // 予算内で候補を作れなくても、費用最小の成立例については採点できる。
@@ -355,6 +362,8 @@ export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
     const next=current?cheapest.products.map(p=>p.jan===current.jan?product:p):[...cheapest.products,product];
     if(options.ingredientMode==='required' && options.ingredient && options.ingredient!=='none' && !next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient))))
       return {status:'unavailable',reason:'この1品の置き換えでは、必須成分の条件が成立しません。'};
+    if(needsSeparateCleanser(next))
+      return {status:'unavailable',reason:'この商品との1品交換には、別途洗顔料の追加が必要です。'};
     const preview=evaluate(next,options);
     return {status:'budget',reason:`現予算内に成立する組み合わせはありませんが、予算を外して1品を置き換えた場合も評価できます。この例の月額は${preview.monthly.toLocaleString('ja-JP')}円です。`,
       best:cheapest,forced:preview,comparisonMode:'unbudgetedExample'};
@@ -368,17 +377,20 @@ export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
   const prior=best.products.find(p=>p.category===product.category);
   const next=prior?best.products.map(p=>p.jan===prior.jan?product:p):[...best.products,product];
   const meetsIngredient=options.ingredientMode!=='required'||!options.ingredient||options.ingredient==='none'||next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)));
-  const singleChange=meetsIngredient?evaluate(next,options):null;
+  const singleChange=meetsIngredient && !needsSeparateCleanser(next)?evaluate(next,options):null;
   const forced=optimize(catalog,{...forcedOptions,resultLimit:1})[0]||null;
   if(!forced){
     // 予算の判定を採点より後にする。高額だからという理由で評価点を消さない。
-    if(!singleChange)
+    if(!meetsIngredient)
       return {status:'unavailable',reason:'この1品の置き換えでは、必須成分の条件が成立しません。',best};
     const cheapest=optimize(catalog,{...forcedOptions,budget:Number.MAX_SAFE_INTEGER,resultLimit:1,objective:'minimumMonthly'})[0];
     const minimum=cheapest?.monthly??null;
-    if(minimum!==null && minimum>Number(options.budget??5000))
+    if(minimum!==null && minimum>Number(options.budget??5000)){
+      if(!singleChange)
+        return {status:'budget',reason:'この商品には洗顔料の追加も必要で、組み合わせると現在の予算を超えます。',best,minimum};
       return {status:'budget',reason:`元の組み合わせの${prior?'1品を入れ替え':'任意品目として追加'}ると月${singleChange.monthly.toLocaleString('ja-JP')}円で、現在の予算を超えます。評価点は予算に関係なく計算しています。`,
         best,forced:singleChange,minimum,comparisonMode:'singleChange',scoreGap:round2(best.score-singleChange.score),monthlyGap:singleChange.monthly-best.monthly};
+    }
     return {status:'unavailable',reason:'現在の固定・除外・必須成分条件を満たす組み合わせが作れません。',best};
   }
   const scoreGap=round2(best.score-forced.score),monthlyGap=forced.monthly-best.monthly;
@@ -387,6 +399,11 @@ export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
     '他の同等候補が先に選ばれています。';
   return {status:'not_selected',reason,best,forced,scoreGap,monthlyGap,comparisonMode:'reoptimized',
     overbudgetPreview:singleChange?.monthly>Number(options.budget??5000)?singleChange:null};
+}
+
+function needsSeparateCleanser(products) {
+  return products.some(p=>p.category==='makeupRemover' && !p.doubleCleanseNotNeeded)
+    && !products.some(p=>p.category==='cleanser');
 }
 
 export function swaps(routine, catalog, category, options={}, extra=100) {
@@ -401,7 +418,7 @@ export function swaps(routine, catalog, category, options={}, extra=100) {
     const next=current ? routine.products.map(p=>p.jan===current.jan?product:p) : [...routine.products,product];
     if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !next.some(p=>p.keyIngredients.some(k=>k.includes(options.ingredient)))) continue;
     // W洗顔がメーカー指定のクレンジングへの1品交換で、洗顔料を失うのを防ぐ。
-    if(options.useMakeupRemover && next.some(p=>p.category==="makeupRemover" && !p.doubleCleanseNotNeeded) && !next.some(p=>p.category==="cleanser")) continue;
+    if(options.useMakeupRemover && needsSeparateCleanser(next)) continue;
     const candidate=evaluate(next,options);
     // 通常予算内の最高得点を起点とするため、改善には予算上限の拡大が必要。
     // 価格を採点前に足切りせず、採点→改善判定→拡張予算の順で選別する。

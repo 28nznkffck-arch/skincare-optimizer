@@ -499,6 +499,20 @@ test('even when there is no budget-compliant routine, diagnostic can display a s
   assert.ok(Number.isFinite(diagnosis.forced.score));
 });
 
+test('diagnostic does not present a budget example with unavailable makeup or eye products',()=>{
+  const options={budget:300,concerns:['dryness']};
+  for(const category of ['makeupRemover','eyeCare']){
+    const item=catalog.find(p=>p.category===category);
+    const diagnosis=diagnoseProduct(catalog,options,item.jan);
+    assert.equal(diagnosis.status,'unavailable');
+    assert.equal(diagnosis.forced,undefined);
+  }
+  const item=catalog.find(p=>p.category==='makeupRemover' && !p.doubleCleanseNotNeeded);
+  const diagnosis=diagnoseProduct(catalog,{...options,useMakeupRemover:true,priority:'simple'},item.jan);
+  assert.equal(diagnosis.status,'unavailable');
+  assert.equal(diagnosis.forced,undefined);
+});
+
 test('15 new Kao products have matching price sources and face-appropriate categories',()=>{
  assert.equal(catalog.length,120);
  assert.equal(catalog.filter(p=>p.brand==='ビオレ').length,21);
