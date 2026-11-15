@@ -74,6 +74,11 @@ const matchesIngredient = (product, options) => Boolean(options.ingredient && op
   && product.keyIngredients?.some(name => name.includes(options.ingredient)));
 const hasSelectedConcerns = options => Array.isArray(options.concerns) && options.concerns.length > 0;
 
+export function meetsIngredientRequirement(products, options) {
+  return options.ingredientMode !== 'required' || !options.ingredient || options.ingredient === 'none'
+    || products.some(product => matchesIngredient(product, options));
+}
+
 const round2=n=>Math.round((n+Number.EPSILON)*100)/100;
 
 export function explainRoutineScore(products, options={}) {
@@ -167,7 +172,7 @@ export function optimize(catalog, options={}) {
       if(options.useMakeupRemover && !products.some(p=>p.category==="makeupRemover")) return;
       if(options.useMakeupRemover && !products.some(p=>p.category==="cleanser") && products.some(p=>p.category==="makeupRemover" && !p.doubleCleanseNotNeeded)) return;
       if(options.priority==="simple" && options.useMakeupRemover && !locked.cleanser && products.some(p=>p.category==="cleanser")) return;
-      if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !products.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)))) return;
+      if(!meetsIngredientRequirement(products,options)) return;
       const result=evaluate(products,options);
       if (result.monthly>budget) return;
       if(firstOnly){
@@ -360,7 +365,7 @@ export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
     if(!cheapest)return {status:'no_base',reason:'予算を外しても、現在の固定・除外・必須成分の条件を満たす組み合わせがありません。'};
     const current=cheapest.products.find(p=>p.category===product.category);
     const next=current?cheapest.products.map(p=>p.jan===current.jan?product:p):[...cheapest.products,product];
-    if(options.ingredientMode==='required' && options.ingredient && options.ingredient!=='none' && !next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient))))
+    if(!meetsIngredientRequirement(next,options))
       return {status:'unavailable',reason:'この1品の置き換えでは、必須成分の条件が成立しません。'};
     if(needsSeparateCleanser(next))
       return {status:'unavailable',reason:'この商品との1品交換には、別途洗顔料の追加が必要です。'};
@@ -376,7 +381,7 @@ export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
   // 得点が隠れてしまう事態を避ける。
   const prior=best.products.find(p=>p.category===product.category);
   const next=prior?best.products.map(p=>p.jan===prior.jan?product:p):[...best.products,product];
-  const meetsIngredient=options.ingredientMode!=='required'||!options.ingredient||options.ingredient==='none'||next.some(p=>p.keyIngredients?.some(k=>k.includes(options.ingredient)));
+  const meetsIngredient=meetsIngredientRequirement(next,options);
   const singleChange=meetsIngredient && !needsSeparateCleanser(next)?evaluate(next,options):null;
   const forced=optimize(catalog,{...forcedOptions,resultLimit:1})[0]||null;
   if(!forced){
@@ -416,7 +421,7 @@ export function swaps(routine, catalog, category, options={}, extra=100) {
   const output=[];
   for(const product of catalog.filter(p=>p.category===category && p.jan!==current?.jan && !excluded.has(p.jan))){
     const next=current ? routine.products.map(p=>p.jan===current.jan?product:p) : [...routine.products,product];
-    if(options.ingredientMode==="required" && options.ingredient && options.ingredient!=="none" && !next.some(p=>p.keyIngredients.some(k=>k.includes(options.ingredient)))) continue;
+    if(!meetsIngredientRequirement(next,options)) continue;
     // W洗顔がメーカー指定のクレンジングへの1品交換で、洗顔料を失うのを防ぐ。
     if(options.useMakeupRemover && needsSeparateCleanser(next)) continue;
     const candidate=evaluate(next,options);

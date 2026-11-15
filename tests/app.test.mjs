@@ -4,7 +4,7 @@ import test from 'node:test';
 import {loadCatalog} from '../dist/catalog-csv.js';
 import {createSavedPlan, savedPlanTotals} from '../dist/plans.js';
 import {mergeCatalogData} from '../dist/catalog-data.js';
-import {monthlyCost, optimize} from '../dist/optimizer.js';
+import {monthlyCost, optimize, usesOf} from '../dist/optimizer.js';
 
 const settingsKey = 'skincare-lab-settings-jan';
 const plansKey = 'skincare-lab-saved-routines-jan';
@@ -80,6 +80,44 @@ test('saved edits select the plan ID and update totals without replacing the inp
   assert.match(fields.get('.saved-cost-summary').innerHTML, /初回購入額 <strong>2,100円/);
   assert.match(fields.get('.saved-item-total').innerHTML, /525円/);
   assert.equal(app.markup, markup);
+});
+
+test('saved use counts keep the fraction used to calculate the original monthly cost', async () => {
+  const product = catalog.find(item => item.jan === '4901301281715');
+  const uses = usesOf(product);
+  assert.ok(!Number.isInteger(uses));
+  const plan = createSavedPlan({products: [product]}, {budget: 5000}, 'fractional-plan', '2026-11-14T00:00:00Z');
+  const {app} = await openApp('fractional-plan', {[plansKey]: [plan]});
+  const input = app.markup.match(/<input [^>]*data-plan-usage="uses"[^>]*value="([^"]+)"/);
+  assert.equal(Number(input?.[1]), uses);
+  assert.equal(monthlyCost(product, {uses: Number(input[1])}), savedPlanTotals(plan, catalog).monthly);
+});
+
+test('a remembered swap is skipped when it no longer satisfies the required ingredient or fixed item', async () => {
+  const base = {budget: 5000, concerns: ['dryness'], manual: ['4901301269348', '4901301466679']};
+  const required = await openApp('stale-ingredient', {[settingsKey]: {
+    ...base, ingredient: 'ナイアシンアミド', ingredientMode: 'required',
+  }});
+  assert.match(required.app.markup, /class="panel recommendation"/);
+  assert.doesNotMatch(required.app.markup, /入れ替え後の組み合わせ/);
+  const fixed = await openApp('stale-lock', {[settingsKey]: {...base, locked: {toner: '4901301236197'}}});
+  assert.doesNotMatch(fixed.app.markup, /入れ替え後の組み合わせ/);
+  assert.match(fixed.app.markup, /data-action="lock" data-id="4901301236197" aria-pressed="true"/);
+});
+
+test('disabling makeup keeps its lock available and labels it as outside the current routine', async () => {
+  const jan = '4901301417008';
+  const {app, change, saved} = await openApp('paused-makeup', {[settingsKey]: {
+    budget: 5000, concerns: ['dryness'], useMakeupRemover: true,
+    locked: {makeupRemover: jan}, swapCategory: 'makeupRemover',
+  }});
+  change({dataset: {field: 'useMakeupRemover'}, checked: false});
+  assert.equal(saved(settingsKey).locked.makeupRemover, jan);
+  assert.match(app.markup, /現在は提案対象外/);
+  assert.match(app.markup, /入れ替え対象がありません/);
+  change({dataset: {field: 'useMakeupRemover'}, checked: true});
+  assert.doesNotMatch(app.markup, /現在は提案対象外/);
+  assert.match(app.markup, new RegExp(`data-action="lock" data-id="${jan}" aria-pressed="true"`));
 });
 
 test('lowering the budget does not hide the button for releasing a lock', {timeout: 5000}, async () => {

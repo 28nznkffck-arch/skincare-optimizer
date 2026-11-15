@@ -1,7 +1,7 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps} from './optimizer.js?v=0.8.21';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.21';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.21';
-import {loadCatalog} from './catalog-csv.js?v=0.8.22';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, meetsIngredientRequirement} from './optimizer.js?v=0.8.23';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.23';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.23';
+import {loadCatalog} from './catalog-csv.js?v=0.8.23';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const SAVED_KEY='skincare-lab-saved-routines-jan';
@@ -43,16 +43,21 @@ function savePlans(){localStorage.setItem(SAVED_KEY,JSON.stringify(savedPlans));
 function options(){return {...state,excluded:Object.keys(state.excluded||{})};}
 function useEstimateLabel(p){return p.usageEstimate?.kind==='packageCount'?'個包装の使用回数':p.referenceUses?'使い切り期間から逆算':'仮推定';}
 function nameOf(p){return p?`${p.brand} ${p.name}`:'';}
+function isSlotEnabled(category){
+  if(category==='makeupRemover')return state.useMakeupRemover;
+  if(category==='eyeCare')return state.concerns.includes('eyeDryness');
+  return true;
+}
 function findManual(){
   if(!state.concerns.length || !state.manual?.length)return null;
   const ids=new Set(state.manual);
   const products=catalog.filter(p=>ids.has(p.jan));
   if(products.length!==ids.size || products.some(p=>state.excluded[p.jan])) return null;
   for(const mandatory of [state.useMakeupRemover?'makeupRemover':'cleanser','moisturizer']) if(!products.some(p=>p.category===mandatory))return null;
-  if(!state.useMakeupRemover && products.some(p=>p.category==='makeupRemover'))return null;
-  if(!state.concerns.includes('eyeDryness') && products.some(p=>p.category==='eyeCare'))return null;
+  if(products.some(p=>!isSlotEnabled(p.category)))return null;
   if(state.useMakeupRemover && !products.some(p=>p.category==='cleanser') && products.some(p=>p.category==='makeupRemover' && !p.doubleCleanseNotNeeded))return null;
-  if(products.some(p=>state.locked[p.category] && state.locked[p.category]!==p.jan)) return null;
+  if(Object.entries(state.locked).some(([category, jan])=>isSlotEnabled(category) && !ids.has(jan)))return null;
+  if(!meetsIngredientRequirement(products,state))return null;
   const result=evaluate(products,options());
   return result.monthly<=state.budget+Math.max(0,Number(state.manualExtraBudget)||0)?result:null;
 }
@@ -138,7 +143,7 @@ function formHtml(){
     </select><div class="radio-line"><label><input type="radio" name="ingredientMode" value="prefer" ${state.ingredientMode==='prefer'?'checked':''}> 優先</label><label><input type="radio" name="ingredientMode" value="required" ${state.ingredientMode==='required'?'checked':''}> 必須</label></div></div>
     <div class="controls-foot">
       ${locked.length?`<div class="product-filter-list"><strong>固定中の商品：${locked.length}品</strong>
-        ${locked.map(p=>`<div>${escape(nameOf(p))} <button type="button" class="link-button" data-action="unlock" data-id="${escape(p.jan)}" aria-label="${escape(nameOf(p))}の固定を解除">固定解除</button></div>`).join('')}
+        ${locked.map(p=>`<div>${escape(nameOf(p))}${isSlotEnabled(p.category)?'':'（現在は提案対象外）'} <button type="button" class="link-button" data-action="unlock" data-id="${escape(p.jan)}" aria-label="${escape(nameOf(p))}の固定を解除">固定解除</button></div>`).join('')}
       </div>`:''}
       ${excluded.length?`<div class="product-filter-list"><strong>除外中の商品：${excluded.length}品</strong>${excluded.map(p=>`<div>${escape(nameOf(p))}（${escape(state.excluded[p.jan])}） <button class="link-button" data-action="unexclude" data-id="${escape(p.jan)}">解除</button></div>`).join('')}</div>`:''}
       <button class="link-button" data-action="reset">選定条件を初期化</button>
@@ -181,7 +186,7 @@ function swapHtml(){
   if(!current)return '';
   const category=state.swapCategory;
   const previous=current?.products.find(p=>p.category===category);
-  const isLocked=Boolean(state.locked[category]);
+  const isLocked=Boolean(previous && state.locked[category]===previous.jan);
   const items=current?swaps(current,catalog,category,options(),state.swapExtra):[];
   const alternatives=items.slice(0,5);
   return `<section class="panel swap-panel">
@@ -217,7 +222,7 @@ function savedProductRow(plan, p){
   return `<div class="saved-product-row">
     <div class="saved-product-name"><strong>${escape(nameOf(p))}</strong><small>${escape(savedProductDose(p,usage))}</small></div>
     <label>購入価格（円）<input type="number" min="0" step="10" data-plan-usage="price" ${data} value="${priceOf(p,usage)}"></label>
-    <label>1本の使用回数<input type="number" min="1" step="1" data-plan-usage="uses" ${data} value="${Math.round(usesOf(p,usage))}"></label>
+    <label>1本の使用回数<input type="number" min="1" step="any" data-plan-usage="uses" ${data} value="${usesOf(p,usage)}"></label>
     <label>1日使用回数<input type="number" min="0" step="0.5" data-plan-usage="frequency" ${data} value="${usage.frequency??p.dailyUses}"></label>
     <div class="saved-item-total">${savedItemMonthly(p,usage)}</div>
   </div>`;
@@ -265,7 +270,7 @@ function editSavedPlan(input, planId){
     const updated=updateSavedUsage(plan,productJan,planUsage,input.valueAsNumber);
     const usage=plan.overrides?.[productJan]||{};
     if(!updated){
-      input.value={price:priceOf(product,usage),uses:Math.round(usesOf(product,usage)),frequency:usage.frequency??product.dailyUses}[planUsage];
+      input.value={price:priceOf(product,usage),uses:usesOf(product,usage),frequency:usage.frequency??product.dailyUses}[planUsage];
       return;
     }
     const row=input.closest('.saved-product-row');
@@ -282,7 +287,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.22</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.23</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
