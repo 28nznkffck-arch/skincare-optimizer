@@ -169,7 +169,17 @@ function formHtml(){
 
 function summaryHtml(){
   if(!state.concerns.length) return '<section class="panel summary"><h2>肌悩みを選ぶと提案します</h2></section>';
-  if(!current) return `<section class="panel summary"><span class="tag orange">条件に合う候補なし</span><h2>組み合わせを作れませんでした</h2><p class="summary-note">予算や「必須成分」、固定・除外条件を見直してみてください。条件を無断で緩めて商品を出すことはありません。</p></section>`;
+  if(!current){
+    const settings={...options(),budget:Infinity,resultLimit:1};
+    const possible=optimize(catalog,settings).length>0;
+    const cheapest=possible?optimize(catalog,{...settings,objective:'minimumMonthly'})[0]:null;
+    const remover=catalog.find(p=>p.jan===state.locked.makeupRemover);
+    const cleansingConflict=state.useMakeupRemover && state.priority==='simple' && !state.locked.cleanser && remover && !remover.doubleCleanseNotNeeded;
+    const reason=cheapest?`今の条件で組める最安の組み合わせは月額${yen(cheapest.monthly)}です。`:
+      cleansingConflict?'固定中のメイク落としは、このアプリでは洗顔料と併用します。「お手入れの手間」を変更するか、メイク落としの固定を解除してください。':
+      '必須成分や固定・除外の条件を見直すと、候補が見つかることがあります。';
+    return `<section class="panel summary"><span class="tag orange">条件に合う候補なし</span><h2>組み合わせを作れませんでした</h2><p class="summary-note">${reason}</p></section>`;
+  }
   const effectiveBudget=state.budget+(isManual?Math.max(0,Number(state.manualExtraBudget)||0):0);
   const used=Math.min(100,Math.round(current.monthly/effectiveBudget*100));
   const optional=current.products.filter(p=>p.category==='toner'||p.category==='serum'||p.category==='eyeCare').length+(state.useMakeupRemover && current.products.some(p=>p.category==='cleanser')?1:0);
@@ -200,16 +210,17 @@ function resultHtml(){
 
 function swapHtml(){
   if(!current)return '';
-  const category=state.swapCategory;
-  const previous=current?.products.find(p=>p.category===category);
-  const isLocked=Boolean(previous && state.locked[category]===previous.jan);
+  const categories=CATEGORIES.filter(category=>current.products.some(p=>p.category===category));
+  const category=categories.includes(state.swapCategory)?state.swapCategory:DEFAULT.swapCategory;
+  const previous=current.products.find(p=>p.category===category);
+  const isLocked=state.locked[category]===previous.jan;
   const items=current?swaps(current,catalog,category,options(),state.swapExtra):[];
   const alternatives=items.slice(0,5);
   return `<section class="panel swap-panel">
     <div class="reco-head"><div><span class="eyebrow">03 / TINY UPGRADE</span><h2>1品だけ入れ替える</h2></div></div>
-    <div class="swap-row"><label for="swapCategory">変更する品目</label><select id="swapCategory" class="select" data-field="swapCategory">${CATEGORIES.map(c=>`<option value="${c}" ${c===category?'selected':''}>${CATEGORY_LABELS[c]}</option>`).join('')}</select><label for="swapExtra">予算上限を増やす</label><select id="swapExtra" class="select" data-field="swapExtra">${[0,100,300,500,1000,2000,5000].map(n=>`<option value="${n}" ${state.swapExtra===n?'selected':''}>＋${yen(n)}/月</option>`).join('')}</select></div>
-    <p class="micro muted">通常予算 ${yen(state.budget)} → 今回の上限 ${yen(state.budget+state.swapExtra)}。${previous?`現在：${escape(nameOf(previous))}。`:'現在の組み合わせにこの品目はありません。'}条件との相性がより良くなる1品交換だけを表示します。</p>
-    ${isLocked?'<div class="empty">この品目の商品が固定されています。入れ替えるには上の「この商品を固定」を解除してください。</div>':!previous?'<div class="empty">入れ替え対象がありません。現在使っている品目を選択してください。</div>':alternatives.length?`<div class="swap-items">${alternatives.map(x=>`<div class="swap-item"><div><strong>${escape(nameOf(x.replacement))}</strong><span class="micro">月額 ${yen(x.monthly)}（現在との差額 ${x.delta>0?'＋':x.delta<0?'−':'±'}${yen(Math.abs(x.delta))}）</span></div><button class="button button-dark" data-action="swap" data-id="${x.replacement.jan}">この商品に変更</button></div>`).join('')}</div>`:'<div class="empty">この品目には、追加予算を使っても評価が上がる1品交換はありません。商品DBにより良い選択肢がなければ表示しない仕様です。</div>'}
+    <div class="swap-row"><label for="swapCategory">変更する品目</label><select id="swapCategory" class="select" data-field="swapCategory">${categories.map(c=>`<option value="${c}" ${c===category?'selected':''}>${CATEGORY_LABELS[c]}</option>`).join('')}</select><label for="swapExtra">予算上限を増やす</label><select id="swapExtra" class="select" data-field="swapExtra">${[0,100,300,500,1000,2000,5000].map(n=>`<option value="${n}" ${state.swapExtra===n?'selected':''}>＋${yen(n)}/月</option>`).join('')}</select></div>
+    <p class="micro muted">通常予算 ${yen(state.budget)} → 今回の上限 ${yen(state.budget+state.swapExtra)}。現在：${escape(nameOf(previous))}。条件との相性がより良くなる1品交換だけを表示します。</p>
+    ${isLocked?'<div class="empty">この品目の商品が固定されています。入れ替えるには「固定中」のボタンを押してください。</div>':alternatives.length?`<div class="swap-items">${alternatives.map(x=>`<div class="swap-item"><div><strong>${escape(nameOf(x.replacement))}</strong><span class="micro">月額 ${yen(x.monthly)}（現在との差額 ${x.delta>0?'＋':x.delta<0?'−':'±'}${yen(Math.abs(x.delta))}）</span></div><button class="button button-dark" data-action="swap" data-id="${x.replacement.jan}">この商品に変更</button></div>`).join('')}</div>`:'<div class="empty">この品目には、追加予算を使っても評価が上がる1品交換はありません。</div>'}
   </section>`;
 }
 
@@ -304,7 +315,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.26</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.27</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -325,17 +336,21 @@ function render(){
     </div></details><span>SKINCARE LAB — 個人開発プロトタイプ</span></footer></div>`;
 }
 
+function renderAfterControl(control, selector, matches, fallback){
+  const focused=document.activeElement===control;
+  save();render();
+  if(!focused)return;
+  const next=Array.from(app.querySelectorAll(selector)).find(matches);
+  (next??fallback?.())?.focus({preventScroll:true});
+}
+
 app.addEventListener('click',e=>{
   const btn=e.target.closest('[data-action]'); if(!btn)return;
   const {action,id}=btn.dataset;
+  const matches=next=>next.dataset.action===action && next.dataset.id===id;
   if(action==='budgetStep'){
-    const hadFocus=document.activeElement===btn;
     setBudget(state.budget+(id==='down'?-budgetRange.step:budgetRange.step));
-    save();render();
-    if(hadFocus){
-      const next=app.querySelector(`[data-action="budgetStep"][data-id="${id}"]:enabled`)||document.getElementById('budget');
-      next.focus({preventScroll:true});
-    }
+    renderAfterControl(btn,'[data-action]:enabled',matches,()=>document.getElementById('budget'));
     return;
   }
   if(action==='concern') state.concerns=state.concerns.includes(id)?state.concerns.filter(x=>x!==id):[...state.concerns,id];
@@ -386,7 +401,7 @@ app.addEventListener('click',e=>{
     state={...structuredClone(DEFAULT),budget:clampBudget(DEFAULT.budget,budgetRange)};
   }
   if(['concern','clearConcerns','priority','lock','unlock','exclude','unexclude'].includes(action))state.manual=null;
-  save();render();
+  renderAfterControl(btn,'[data-action]:enabled',matches);
 });
 
 app.addEventListener('change',e=>{
@@ -400,8 +415,7 @@ app.addEventListener('change',e=>{
     state.concernWeights[e.target.dataset.importance]=e.target.value;
     state.manual=null;
   }
-  const field=e.target.dataset.field;
-  const restoreBudgetFocus=field==='budget'&&document.activeElement===e.target;
+  const {field,importance}=e.target.dataset;
   if(field){
     if(field==='budget')setBudget(e.target.value);
     else if(field==='sensitiveSkin'||field==='useMakeupRemover')state[field]=e.target.checked;
@@ -410,8 +424,11 @@ app.addEventListener('change',e=>{
     if(!['budget','swapCategory','swapExtra'].includes(field))state.manual=null;
   }
   if(e.target.name==='ingredientMode'){state.ingredientMode=e.target.value;state.manual=null;}
-  save();render();
-  if(restoreBudgetFocus)document.getElementById('budget').focus({preventScroll:true});
+  renderAfterControl(e.target,'[data-field], [data-importance], [name="ingredientMode"]',next=>{
+    if(field)return next.dataset.field===field;
+    if(importance)return next.dataset.importance===importance;
+    return next.name==='ingredientMode' && next.value===e.target.value;
+  });
 });
 
 document.getElementById('closeDialog').addEventListener('click',()=>document.getElementById('excludeDialog').close());

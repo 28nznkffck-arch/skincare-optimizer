@@ -37,7 +37,7 @@ async function openApp(name, savedState) {
     app,
     saved: key => JSON.parse(storage.get(key)),
     change: target => handlers.get('change')({target}),
-    click: (action, id) => handlers.get('click')({target: {closest: () => ({dataset: {action, id}})}})
+    click: (action, id, button={dataset: {action, id}}) => handlers.get('click')({target: {closest: () => button}})
   };
 }
 
@@ -157,10 +157,44 @@ test('disabling makeup keeps its lock available and labels it as outside the cur
   change({dataset: {field: 'useMakeupRemover'}, checked: false});
   assert.equal(saved(settingsKey).locked.makeupRemover, jan);
   assert.match(app.markup, /現在は提案対象外/);
-  assert.match(app.markup, /入れ替え対象がありません/);
+  const options=app.markup.match(/<select id="swapCategory"[^>]*>(.*?)<\/select>/)?.[1];
+  assert.ok(options);
+  assert.doesNotMatch(options, /value="makeupRemover"/);
+  assert.match(options, /value="moisturizer" selected/);
   change({dataset: {field: 'useMakeupRemover'}, checked: true});
   assert.doesNotMatch(app.markup, /現在は提案対象外/);
   assert.match(app.markup, new RegExp(`data-action="lock" data-id="${jan}" aria-pressed="true"`));
+});
+
+test('no-candidate feedback distinguishes budget from a fixed double-cleansing conflict', async () => {
+  const settings={budget:300,concerns:['dryness'],priority:'simple'};
+  const low=await openApp('minimum-budget',{[settingsKey]:settings});
+  const [cheapest]=optimize(catalog,{...settings,budget:Infinity,resultLimit:1,objective:'minimumMonthly'});
+  assert.match(low.app.markup,new RegExp(`最安の組み合わせは月額${cheapest.monthly}円`));
+  assert.doesNotMatch(low.app.markup,/class="panel recommendation"/);
+  const conflict=await openApp('cleansing-conflict',{[settingsKey]:{
+    ...settings,budget:5000,useMakeupRemover:true,locked:{makeupRemover:'4973167251607'},
+  }});
+  assert.match(conflict.app.markup,/固定中のメイク落としは、このアプリでは洗顔料と併用/);
+  assert.match(conflict.app.markup,/固定を解除/);
+  assert.doesNotMatch(conflict.app.markup,/最安の組み合わせ/);
+});
+
+test('rerendering keeps keyboard focus on the changed control', async () => {
+  const {app,click,change}=await openApp('keyboard-focus',{});
+  const focused=[];
+  const oldButton={dataset:{action:'concern',id:'dryness'}};
+  const newButton={dataset:oldButton.dataset,focus:options=>focused.push(['concern',options])};
+  globalThis.document.activeElement=oldButton;
+  app.querySelectorAll=()=>[{dataset:{action:'concern',id:'acne'}},newButton];
+  click('concern','dryness',oldButton);
+  assert.match(app.markup,/data-id="dryness" aria-pressed="true"/);
+  const oldSelect={dataset:{field:'finish'},value:'rich'};
+  const newSelect={dataset:oldSelect.dataset,focus:options=>focused.push(['finish',options])};
+  globalThis.document.activeElement=oldSelect;
+  app.querySelectorAll=()=>[newSelect];
+  change(oldSelect);
+  assert.deepEqual(focused,[['concern',{preventScroll:true}],['finish',{preventScroll:true}]]);
 });
 
 test('lowering the budget does not hide the button for releasing a lock', {timeout: 5000}, async () => {
