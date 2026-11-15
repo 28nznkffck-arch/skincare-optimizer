@@ -30,11 +30,20 @@ export function createSavedPlan(routine, options, id, createdAt) {
 
 export function savedPlanTotals(plan, catalog) {
   const lookup=new Map(catalog.map(p=>[p.jan,p]));
-  const items=plan.productJans.map(id=>lookup.get(id)).filter(Boolean);
-  const missing=plan.productJans.filter(id=>!lookup.has(id));
-  const monthly=items.reduce((sum,p)=>sum+monthlyCost(p,plan.overrides?.[p.jan]),0);
-  const initial=items.reduce((sum,p)=>sum+priceOf(p,plan.overrides?.[p.jan]),0);
-  return {items,missing,monthly,initial,budget:Number(plan.budget),remaining:Number(plan.budget)-monthly};
+  const items=[], missing=[];
+  let monthly=0, initial=0;
+  for(const jan of plan.productJans){
+    const product=lookup.get(jan);
+    const usage=plan.overrides?.[jan]??{};
+    if(product)items.push(product);
+    else missing.push(jan);
+    // 削除された商品も、保存時の価格・使用回数があれば合計に含める。
+    monthly+=monthlyCost(product??{},usage);
+    initial+=priceOf(product??{},usage);
+  }
+  const budget=Number(plan.budget);
+  const remaining=Number.isFinite(monthly)&&Number.isFinite(budget)?budget-monthly:null;
+  return {items,missing,monthly,initial,budget,remaining};
 }
 
 export function updateSavedUsage(plan, productJan, field, value) {

@@ -1,5 +1,5 @@
 import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.8.24';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.24';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.26';
 import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.24';
 import {loadCatalog} from './catalog-csv.js?v=0.8.24';
 
@@ -214,12 +214,13 @@ function swapHtml(){
 }
 
 function savedHeaderTotals(total){
-  const tag=total.remaining>=0?'<span class="tag">予算内</span>':'<span class="tag orange">予算超過</span>';
+  const tag=total.remaining===null?'<span class="tag orange">月額未確定</span>':
+    total.remaining>=0?'<span class="tag">予算内</span>':'<span class="tag orange">予算超過</span>';
   return `<strong>${yen(total.monthly)}<small> / 月</small></strong><span>月予算 ${yen(total.budget)}</span>${tag}`;
 }
 
 function savedCostSummary(total){
-  const remaining=total.remaining<0?'超過 '+yen(-total.remaining):'残り '+yen(total.remaining);
+  const remaining=total.remaining===null?'—':total.remaining<0?'超過 '+yen(-total.remaining):'残り '+yen(total.remaining);
   return `<span>月額合計 <strong>${yen(total.monthly)}</strong></span><span>初回購入額 <strong>${yen(total.initial)}</strong></span><span>予算との差 <strong>${remaining}</strong></span>`;
 }
 
@@ -303,7 +304,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.25</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.26</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -380,8 +381,11 @@ app.addEventListener('click',e=>{
       savePlans();
     }
   }
-  if(action==='reset' && confirm('選定条件・商品の固定と除外を初期化しますか？ 保存した組み合わせは残ります。'))state={...structuredClone(DEFAULT),budget:clampBudget(DEFAULT.budget,budgetRange)};
-  if(['concern','clearConcerns','priority','lock','unlock','exclude','unexclude','reset'].includes(action))state.manual=null;
+  if(action==='reset'){
+    if(!confirm('選定条件・商品の固定と除外を初期化しますか？ 保存した組み合わせは残ります。'))return;
+    state={...structuredClone(DEFAULT),budget:clampBudget(DEFAULT.budget,budgetRange)};
+  }
+  if(['concern','clearConcerns','priority','lock','unlock','exclude','unexclude'].includes(action))state.manual=null;
   save();render();
 });
 

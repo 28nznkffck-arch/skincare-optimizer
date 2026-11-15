@@ -110,6 +110,44 @@ test('a remembered swap is skipped when it no longer satisfies the required ingr
   assert.doesNotMatch(unrelated.app.markup, /入れ替え後の組み合わせ/);
 });
 
+test('cancelling the settings reset keeps the manually swapped routine', async () => {
+  const settings = {budget:600, concerns:['brightness'], priority:'thorough',
+    manual:['4973167018156','4901301043764'], manualExtraBudget:500};
+  const {app,click,saved}=await openApp('cancel-reset',{[settingsKey]:settings});
+  assert.match(app.markup,/入れ替え後の組み合わせ/);
+  const originalConfirm=globalThis.confirm;
+  try {
+    globalThis.confirm=()=>false;
+    click('reset');
+    assert.deepEqual(saved(settingsKey),settings);
+    assert.match(app.markup,/入れ替え後の組み合わせ/);
+    globalThis.confirm=()=>true;
+    click('reset');
+    assert.equal(saved(settingsKey).manual,null);
+    assert.match(app.markup,/肌悩みを選ぶと提案します/);
+  } finally {
+    globalThis.confirm=originalConfirm;
+  }
+});
+
+test('a deleted catalog entry still contributes its saved costs', async () => {
+  const product=catalog[0];
+  const removed={...catalog[1],jan:'0000000000000'};
+  const plan=createSavedPlan({products:[product,removed]},{budget:0},'removed-entry','2026-11-15T00:00:00Z');
+  const expected=savedPlanTotals(plan,[product,removed]);
+  const actual=savedPlanTotals(plan,catalog);
+  assert.deepEqual(actual.missing,[removed.jan]);
+  assert.equal(actual.monthly,expected.monthly);
+  assert.equal(actual.initial,expected.initial);
+  const {app}=await openApp('deleted-entry',{[plansKey]:[plan]});
+  assert.match(app.markup,/商品DBに見つからないJAN/);
+  assert.match(app.markup,/予算超過/);
+  const incomplete={...plan,overrides:{[product.jan]:plan.overrides[product.jan]}};
+  const invalid=await openApp('deleted-entry-without-cost',{[plansKey]:[incomplete]});
+  assert.match(invalid.app.markup,/月額未確定/);
+  assert.doesNotMatch(invalid.app.markup,/予算超過|予算内/);
+});
+
 test('disabling makeup keeps its lock available and labels it as outside the current routine', async () => {
   const jan = '4901301417008';
   const {app, change, saved} = await openApp('paused-makeup', {[settingsKey]: {
