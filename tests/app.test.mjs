@@ -189,12 +189,12 @@ test('morning and evening routines use the trial frequency and the product use o
   };
   for (const serum of ['4901301412829', '4901301416483']) {
     const {app} = await openApp(`before-toner-${serum}`, {[settingsKey]: {...settings, locked: {...settings.locked, serum}}});
-    assert.match(app.markup, /朝：洗顔 → 化粧水 → 保湿<br>夜：洗顔 → 美容液 → 化粧水 → 保湿/);
+    assert.match(app.markup, /朝：化粧水 → 保湿<br>夜：洗顔 → 美容液 → 化粧水 → 保湿/);
     assert.match(app.markup, /化粧水の前に使用/);
     assert.ok(app.markup.indexOf(`data-id="${serum}" aria-pressed="true"`)<app.markup.indexOf('data-id="4901301236197" aria-pressed="true"'));
   }
   const last = await openApp('after-moisturizer', {[settingsKey]: {...settings, locked: {...settings.locked, serum: '4973167864920'}}});
-  assert.match(last.app.markup, /朝：洗顔 → 化粧水 → 保湿 → 美容液<br>夜：洗顔 → 化粧水 → 保湿 → 美容液/);
+  assert.match(last.app.markup, /朝：化粧水 → 保湿 → 美容液<br>夜：洗顔 → 化粧水 → 保湿 → 美容液/);
   assert.match(last.app.markup, /お手入れの最後に使用/);
   assert.match(last.app.markup, /1回約0\.10g（メーカーの使用量目安から試算）/);
   assert.match(last.app.markup, /両目の目元に使う場合で試算/);
