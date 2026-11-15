@@ -114,11 +114,11 @@ test('selecting skin brightness proposes products scored for that concern', {tim
 
 test('a basic routine reports when the selected concern has no matching product in that budget', async () => {
   const {app, change} = await openApp('unmatched-brightness', {[settingsKey]: {budget: 400, concerns: ['brightness']}});
-  assert.match(app.markup, /今回の組み合わせで対応する商品がない悩み：肌の明るさ（明るくしたい）/);
+  assert.match(app.markup, /今回の組み合わせで対応できない悩み：肌の明るさ（明るくしたい）/);
   assert.match(app.markup, /class="panel recommendation"/);
   change({dataset: {field: 'budget'}, value: '1000'});
   assert.match(app.markup, /関連する悩み：肌の明るさ（明るくしたい）/);
-  assert.doesNotMatch(app.markup, /今回の組み合わせで対応する商品がない悩み/);
+  assert.doesNotMatch(app.markup, /今回の組み合わせで対応できない悩み/);
 });
 
 test('makeup routine explains when a fixed cleanser is still paired with remover', async () => {
@@ -129,5 +129,12 @@ test('makeup routine explains when a fixed cleanser is still paired with remover
   const {app} = await openApp('fixed-cleanser', {[settingsKey]: settings});
   assert.match(app.markup, /「手軽に」では、洗顔料を固定していない場合にW洗顔を省きます/);
   assert.match(app.markup, /夜：メイク落とし → 洗顔 →/);
-  assert.match(app.markup, /このアプリでは洗顔料と併用/);
+  assert.match(app.markup, /夜のみ・W洗顔不要の記載なし/);
+  for (const [remover, label] of [
+    ['4973167552995', 'メーカーが洗顔を案内'],
+    ['4901301417008', 'W洗顔不要'],
+  ]) {
+    const {app} = await openApp(remover, {[settingsKey]: {...settings, locked: {...settings.locked, makeupRemover: remover}}});
+    assert.ok(app.markup.includes('夜のみ・'+label));
+  }
 });

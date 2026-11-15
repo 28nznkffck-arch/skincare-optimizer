@@ -94,6 +94,7 @@ const PRODUCT_FIELDS = {
   主要成分: ['keyIngredients', ingredients], 商品説明: ['explanation'], 敏感肌向け: ['sensitiveSkin', boolean],
   オールインワン: ['allInOne', boolean], ふき取り: ['wipeOff', boolean],
   落ちにくいメイク対応: ['waterproof', boolean], 洗顔料なしで提案: ['doubleCleanseNotNeeded', boolean],
+  メーカーが洗顔を案内: ['manufacturerAdvisesCleanser', boolean],
   洗顔の根拠メモ: ['cleansingGuidance'], '1日使用回数（試算）': ['dailyUses', number],
   '1本の仮使用回数': ['demoUses', positive], '試算価格（円）': ['demoPrice', wholeNumber], 使用方法メモ: ['usage'],
 };
@@ -183,7 +184,7 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
   const products = new Map(), usages = {}, retired = new Set();
   const columns = ['JAN', '掲載状態', ...Object.keys(PRODUCT_FIELDS), ...Object.keys(USAGE_FIELDS), ...Object.keys(EVIDENCE_FIELDS)];
   const required = ['brand', 'name', 'category', 'volume', 'unit', 'sourceUrl', 'dailyUses'];
-  for (const {jan, row, location} of table(productsCsv, 'products.csv', columns, ['製品区分'])) {
+  for (const {jan, row, location} of table(productsCsv, 'products.csv', columns, ['製品区分', 'メーカーが洗顔を案内'])) {
     if (products.has(jan)) throw new Error(`${location}: JAN ${jan} が商品マスター内で重複しています`);
     const status = row.掲載状態 || '掲載中';
     if (status !== '掲載中' && status !== '掲載終了')
