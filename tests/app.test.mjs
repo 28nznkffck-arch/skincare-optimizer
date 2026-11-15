@@ -103,6 +103,11 @@ test('a remembered swap is skipped when it no longer satisfies the required ingr
   const fixed = await openApp('stale-lock', {[settingsKey]: {...base, locked: {toner: '4901301236197'}}});
   assert.doesNotMatch(fixed.app.markup, /入れ替え後の組み合わせ/);
   assert.match(fixed.app.markup, /data-action="lock" data-id="4901301236197" aria-pressed="true"/);
+  const unrelated = await openApp('stale-unrelated-serum', {[settingsKey]: {
+    ...base, concerns: ['blackheads'], manual: [...base.manual, '4987241169658'],
+  }});
+  assert.match(unrelated.app.markup, /class="panel recommendation"/);
+  assert.doesNotMatch(unrelated.app.markup, /入れ替え後の組み合わせ/);
 });
 
 test('disabling makeup keeps its lock available and labels it as outside the current routine', async () => {
@@ -175,4 +180,25 @@ test('makeup routine explains when a fixed cleanser is still paired with remover
     const {app} = await openApp(remover, {[settingsKey]: {...settings, locked: {...settings.locked, makeupRemover: remover}}});
     assert.ok(app.markup.includes('夜のみ・'+label));
   }
+});
+
+test('morning and evening routines use the trial frequency and the product use order', async () => {
+  const settings = {
+    budget: 10000, concerns: ['dryness', 'wrinkles'],
+    locked: {cleanser: '4901301463968', toner: '4901301236197', serum: '4901301412829'},
+  };
+  for (const serum of ['4901301412829', '4901301416483']) {
+    const {app} = await openApp(`before-toner-${serum}`, {[settingsKey]: {...settings, locked: {...settings.locked, serum}}});
+    assert.match(app.markup, /朝：洗顔 → 化粧水 → 保湿<br>夜：洗顔 → 美容液 → 化粧水 → 保湿/);
+    assert.match(app.markup, /化粧水の前に使用/);
+    assert.ok(app.markup.indexOf(`data-id="${serum}" aria-pressed="true"`)<app.markup.indexOf('data-id="4901301236197" aria-pressed="true"'));
+  }
+  const last = await openApp('after-moisturizer', {[settingsKey]: {...settings, locked: {...settings.locked, serum: '4973167864920'}}});
+  assert.match(last.app.markup, /朝：洗顔 → 化粧水 → 保湿 → 美容液<br>夜：洗顔 → 化粧水 → 保湿 → 美容液/);
+  assert.match(last.app.markup, /お手入れの最後に使用/);
+  assert.match(last.app.markup, /1回約0\.10g（メーカーの使用量目安から試算）/);
+  assert.match(last.app.markup, /両目の目元に使う場合で試算/);
+
+  const wipeOff = await openApp('wipe-off-first', {[settingsKey]: {...settings, locked: {...settings.locked, toner: '4973167024485'}}});
+  assert.match(wipeOff.app.markup, /夜：洗顔 → ふき取り化粧水 → 美容液 → 保湿/);
 });

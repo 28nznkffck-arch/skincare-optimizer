@@ -4,7 +4,7 @@ import test from 'node:test';
 import {loadCatalog, parseCatalog} from '../dist/catalog-csv.js';
 import {DIPOTASSIUM_GLYCYRRHIZATE, mergeCatalogData, reconcileCatalogState} from '../dist/catalog-data.js';
 import {renderEvidence} from '../dist/debug-analysis.js';
-import {CONCERNS, optimize} from '../dist/optimizer.js';
+import {CONCERNS, monthlyCost, optimize, priceOf, usesOf} from '../dist/optimizer.js';
 
 const headers = {};
 for (const name of ['products', 'prices', 'scores']) {
@@ -70,6 +70,19 @@ test('the shared loader reads the repository CSV files', async () => {
   const catalog = mergeCatalogData(products, pricing, usage);
   assert.equal(catalog.length, products.length);
   assert.ok(catalog.every(item => /^\d{13}$/.test(item.jan) && Number.isFinite(item.demoPrice)));
+});
+
+test('the quoted amount for both eyes takes precedence over a whole-face serum average', async () => {
+  const {products, pricing, usage} = await loadCatalog(url => readFile(url, 'utf8'));
+  const catalog = mergeCatalogData(products, pricing, usage);
+  const product = catalog.find(p => p.jan === '4973167864920');
+  assert.equal(product.usageReference.amountPerUse, 0.1);
+  assert.equal(product.usageReference.excludeFromCategoryAverages, true);
+  assert.equal(product.usageEstimate.kind, 'dose');
+  assert.equal(usesOf(product), 200);
+  assert.equal(monthlyCost(product), Math.round(priceOf(product) * 60 / 200));
+  const gel = catalog.find(p => p.jan === '4901301281715');
+  assert.equal(gel.usageEstimate.sampleCount, 4);
 });
 
 test('catalog uses the manufacturer-verified active ingredients for corrected products', async () => {

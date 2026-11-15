@@ -74,6 +74,11 @@ const matchesIngredient = (product, options) => Boolean(options.ingredient && op
   && product.keyIngredients?.some(name => name.includes(options.ingredient)));
 const hasSelectedConcerns = options => Array.isArray(options.concerns) && options.concerns.length > 0;
 
+export function canIncludeRoutineProduct(product, options) {
+  return !isExtraStep(product.category) || options.locked?.[product.category] === product.jan
+    || options.concerns?.some(concern => product.scores?.[concern] > 0) || matchesIngredient(product, options);
+}
+
 export function meetsIngredientRequirement(products, options) {
   return options.ingredientMode !== 'required' || !options.ingredient || options.ingredient === 'none'
     || products.some(product => matchesIngredient(product, options));
@@ -145,7 +150,7 @@ export function optimize(catalog, options={}) {
   const firstOnly=options.resultLimit===1;
   const minimumMonthly=options.objective==='minimumMonthly';
   const grouped = CATEGORIES.map(cat=>{
-    let choices = catalog.filter(p=>p.category===cat && !excluded.has(p.jan));
+    let choices = catalog.filter(p=>p.category===cat && !excluded.has(p.jan) && canIncludeRoutineProduct(p,options));
     if (locked[cat]) choices=choices.filter(p=>p.jan===locked[cat]);
     if (cat==="makeupRemover") {
       if (!options.useMakeupRemover) choices=[null];
@@ -358,6 +363,8 @@ export function diagnoseProduct(catalog,options={},productJan,baseline=null) {
   if(options.priority==='simple' && options.useMakeupRemover && !options.locked?.cleanser &&
       (product.category==='cleanser' || product.category==='makeupRemover' && !product.doubleCleanseNotNeeded))
     return {status:'unavailable',reason:'現在の「手軽に」設定では、メイク落としの後の洗顔を省きます。'};
+  if(!canIncludeRoutineProduct(product,options))
+    return {status:'unavailable',reason:'選択された肌悩みへの加点も、指定成分との一致もないため、追加手順の候補から外れています。'};
   const best=baseline||optimize(catalog,{...options,resultLimit:1})[0]||null;
   if(!best){
     // 予算内で候補を作れなくても、費用最小の成立例については採点できる。
@@ -420,6 +427,7 @@ export function swaps(routine, catalog, category, options={}, extra=100) {
   const maxBudget=Number(options.budget??5000)+Math.max(0,Number(extra)||0);
   const output=[];
   for(const product of catalog.filter(p=>p.category===category && p.jan!==current?.jan && !excluded.has(p.jan))){
+    if(!canIncludeRoutineProduct(product,options)) continue;
     const next=current ? routine.products.map(p=>p.jan===current.jan?product:p) : [...routine.products,product];
     if(!meetsIngredientRequirement(next,options)) continue;
     // W洗顔がメーカー指定のクレンジングへの1品交換で、洗顔料を失うのを防ぐ。

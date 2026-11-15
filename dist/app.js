@@ -1,7 +1,7 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, meetsIngredientRequirement} from './optimizer.js?v=0.8.23';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.23';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.23';
-import {loadCatalog} from './catalog-csv.js?v=0.8.23';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.8.24';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.24';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.24';
+import {loadCatalog} from './catalog-csv.js?v=0.8.24';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const SAVED_KEY='skincare-lab-saved-routines-jan';
@@ -41,7 +41,11 @@ function loadSavedPlans(){
 }
 function savePlans(){localStorage.setItem(SAVED_KEY,JSON.stringify(savedPlans));}
 function options(){return {...state,excluded:Object.keys(state.excluded||{})};}
-function useEstimateLabel(p){return p.usageEstimate?.kind==='packageCount'?'個包装の使用回数':p.referenceUses?'使い切り期間から逆算':'仮推定';}
+function useEstimateLabel(p){
+  return {
+    packageCount:'個包装の使用回数',duration:'使い切り期間から逆算',dose:'メーカーの使用量目安から試算',
+  }[p.usageEstimate?.kind] || '仮推定';
+}
 function nameOf(p){return p?`${p.brand} ${p.name}`:'';}
 function isSlotEnabled(category){
   if(category==='makeupRemover')return state.useMakeupRemover;
@@ -54,7 +58,7 @@ function findManual(){
   const products=catalog.filter(p=>ids.has(p.jan));
   if(products.length!==ids.size || products.some(p=>state.excluded[p.jan])) return null;
   for(const mandatory of [state.useMakeupRemover?'makeupRemover':'cleanser','moisturizer']) if(!products.some(p=>p.category===mandatory))return null;
-  if(products.some(p=>!isSlotEnabled(p.category)))return null;
+  if(products.some(p=>!isSlotEnabled(p.category) || !canIncludeRoutineProduct(p,state)))return null;
   if(state.useMakeupRemover && !products.some(p=>p.category==='cleanser') && products.some(p=>p.category==='makeupRemover' && !p.doubleCleanseNotNeeded))return null;
   if(Object.entries(state.locked).some(([category, jan])=>isSlotEnabled(category) && !ids.has(jan)))return null;
   if(!meetsIngredientRequirement(products,state))return null;
@@ -81,6 +85,16 @@ function cleansingLabel(product){
   return 'W洗顔不要の記載なし';
 }
 
+const applicationNotes={beforeToner:'化粧水の前に使用',last:'お手入れの最後に使用'};
+
+function applicationRank(product){
+  if(product.applicationOrder==='last')return CATEGORIES.length;
+  const tonerRank=CATEGORIES.indexOf('toner');
+  if(product.wipeOff)return tonerRank-0.5;
+  if(product.applicationOrder==='beforeToner')return tonerRank-0.25;
+  return CATEGORIES.indexOf(product.category);
+}
+
 function productCard(p){
   const locked=state.locked[p.category]===p.jan;
   const matchLabels=state.concerns.filter(id=>(p.scores?.[id]||0)>0).map(id=>CONCERNS[id]||id);
@@ -97,8 +111,10 @@ function productCard(p){
         <button type="button" class="chip" data-action="exclude" data-id="${p.jan}">合わない・除外</button>
       </div>
       <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${Math.round(uses)}回分 / 1回約${escape(amountLabel)}（${escape(useEstimateLabel(p))}） / 1日${escape(p.dailyUses)}回</div>
+      ${p.usageEstimate?.kind==='dose' && p.usageReference.referenceBasis?`<div class="period">${escape(p.usageReference.referenceBasis)}</div>`:''}
       <div class="period">購入価格 ${yen(priceOf(p))}（${p.priceReference?`${escape(p.priceReference.retailer)}・確認済み`:'出典未確認の仮価格'}）</div>
       <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?'<div class="fit-note">部分ケア・顔全体の保湿の後に使用</div>':''}${p.wipeOff?'<div class="fit-note">ふき取りタイプ・コットン代は月額に含みません</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+cleansingLabel(p)+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
+      ${p.applicationOrder?`<div class="fit-note">${applicationNotes[p.applicationOrder]}</div>`:''}
       <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
       ${matchLabels.length?`<div class="fit-note">関連する悩み：${matchLabels.map(escape).join('・')}</div>`:''}
       ${state.sensitiveSkin && p.sensitiveSkin?'<div class="fit-note">敏感肌向けの設計情報を考慮</div>':''}
@@ -172,12 +188,12 @@ function summaryHtml(){
 
 function resultHtml(){
   if(!current) return '';
-  const sorted=[...current.products].sort((a,b)=>CATEGORIES.indexOf(a.category)-CATEGORIES.indexOf(b.category));
-  const am=sorted.filter(p=>!['makeupRemover','cleanser'].includes(p.category)&&p.dailyUses>1);
-  const pm=sorted;
+  const sorted=[...current.products].sort((a,b)=>applicationRank(a)-applicationRank(b));
+  const am=sorted.filter(p=>p.category!=='makeupRemover' && p.dailyUses>1);
+  const steps=products=>products.map(p=>p.wipeOff?'ふき取り化粧水':CATEGORY_LABELS[p.category]).join(' → ');
   return `<section class="panel recommendation">
     <div class="reco-head"><div><span class="eyebrow">02 / RECOMMENDATION</span><h2>朝と夜のルーティン</h2></div><span class="tag orange">試作版</span></div>
-    <p class="summary-note">朝：${am.map(p=>CATEGORY_LABELS[p.category]).join(' → ')||'なし'}<br>夜：${pm.map(p=>CATEGORY_LABELS[p.category]).join(' → ')}</p>
+    <p class="summary-note">朝：${steps(am)||'なし'}<br>夜：${steps(sorted)}</p>
     <div class="product-list">${sorted.map(productCard).join('')}</div>
   </section>`;
 }
@@ -287,7 +303,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.23</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.24</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}

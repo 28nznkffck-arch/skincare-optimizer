@@ -1,7 +1,7 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.23';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.23';
-import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.23';
-import {loadCatalog} from './catalog-csv.js?v=0.8.23';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.8.24';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.8.24';
+import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.24';
+import {loadCatalog} from './catalog-csv.js?v=0.8.24';
 
 const STORE_KEY='skincare-lab-settings-jan';
 const PAGE_SIZE=25;
@@ -65,8 +65,23 @@ function renderRows(){
     const perUse=unitPerUse(p,{},uses);
     const amount=perUse==null?'—':`${perUse.toFixed(2)}${p.unit}`;
     const priceSource=p.priceReference?`通販価格（税込）：<a href="${escape(p.priceReference.url)}" target="_blank" rel="noopener noreferrer">${escape(p.priceReference.retailer)}</a>（${escape(p.priceReference.verifiedAt)}確認）`:'価格：出典未確認の試算用仮値';
-    const useSource=p.usageReference?`1回の目安：${escape(p.usageReference.doseDescription||'公式の使用期間を参照')}。${p.referenceUses?`約${p.referenceUses}回分（${p.usageReference.durationDays}日 × 1日${p.usageReference.referenceDailyUses}回）`:'容器あたりの回数は未確認'}。<a href="${escape(p.usageReference.sourceUrl)}" target="_blank" rel="noopener noreferrer">使用量の根拠 ↗</a>`:p.usageEstimate?.kind==='categoryAverage'?'この商品の使用量・使い切り期間は未確認。同品目・同単位の参考商品から仮推定しています。':'この商品の使用量・使い切り期間は未確認。1本の回数は従来の試算用仮値です。';
-    const estimate=p.referenceUses?'使い切り期間に基づく逆算値（品質の使用期限とは別）':p.usageEstimate?.kind==='categoryAverage'?`同品目・同単位の出典付き${p.usageEstimate.sampleCount}商品の1回量平均 ${p.usageEstimate.amountPerUse.toFixed(2)}${escape(p.unit)}/回を仮適用。個別商品の実測値ではありません。`:'同品目・同単位で参考例が2商品未満のため、従来の試算用仮回数を維持。';
+    const reference=p.usageReference;
+    const kind=p.usageEstimate?.kind;
+    const dose=reference?.doseDescription?`1回の目安：${escape(reference.doseDescription)}。`:'';
+    let useSource='この商品の使用量・使い切り期間は未確認。';
+    if(reference){
+      let countNote='容器あたりの回数は未確認';
+      if(kind==='packageCount')countNote=`${p.referenceUses}回分（個包装）`;
+      if(kind==='duration')countNote=`約${p.referenceUses}回分（${reference.durationDays}日 × 1日${reference.referenceDailyUses}回）`;
+      if(kind==='dose')countNote=`約${Math.round(p.referenceUses)}回分（1回約${escape(reference.amountPerUse)}${escape(p.unit)}）`;
+      useSource=`${dose}${countNote}。<a href="${escape(reference.sourceUrl)}" target="_blank" rel="noopener noreferrer">使用量の根拠 ↗</a>`;
+    }
+    const estimate={
+      packageCount:'メーカー表示の個包装数から算出。',
+      duration:'使い切り期間に基づく逆算値（品質の使用期限とは別）。',
+      dose:'メーカーの使用量目安から逆算。',
+      demo:'同品目・同単位で参考例が2商品未満のため、従来の試算用仮回数を使用。',
+    }[kind] || `同品目・同単位の出典付き${p.usageEstimate.sampleCount}商品の1回量平均 ${p.usageEstimate.amountPerUse.toFixed(2)}${escape(p.unit)}/回を仮適用。個別商品の実測値ではありません。`;
     return `<article class="debug-item"><div class="debug-item-head"><div><small>${escape(p.brand)}・${escape(CATEGORY_LABELS[p.category])} / JAN ${escape(p.jan||'未確認')}</small><h2>${escape(p.name)}</h2><p>${escape(p.keyIngredients.join('・'))}</p></div><a href="${escape(p.sourceUrl)}" class="source" target="_blank" rel="noopener noreferrer">メーカー公式 ↗</a></div>
       ${renderEvidence(p)}
       <div class="debug-provenance"><span>${priceSource}</span><span>${useSource}</span><small>${estimate}${p.usageReference?.referenceBasis?` ${escape(p.usageReference.referenceBasis)}。`:''} 数値は仮推定や逆算を含みます。</small></div>

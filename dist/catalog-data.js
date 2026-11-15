@@ -1,4 +1,4 @@
-import {monthlyCost} from './optimizer.js?v=0.8.23';
+import {monthlyCost} from './optimizer.js?v=0.8.24';
 
 export const DEFAULT_BUDGET = 5000;
 export const DIPOTASSIUM_GLYCYRRHIZATE = 'グリチルリチン酸ジカリウム';
@@ -47,17 +47,21 @@ export function mergeCatalogData(products, pricing={}, usage={}) {
     const packageUses=Number(amount?.verifiedUses);
     const verifiedPackage=validUsage && Number.isInteger(packageUses) && packageUses>0;
     const durationUses=validUsage && Number.isFinite(duration) && duration>0 && Number.isFinite(times) && times>0 ? duration*times : null;
-    const referenceUses=verifiedPackage?packageUses:durationUses;
+    const dose=Number(amount?.amountPerUse), volume=Number(product.volume);
+    const doseUses=validUsage && Number.isFinite(dose) && dose>0 && Number.isFinite(volume) && volume>0 ? volume/dose : null;
+    const referenceUses=verifiedPackage?packageUses:(durationUses??doseUses);
+    const kind=verifiedPackage?'packageCount':durationUses?'duration':'dose';
     return {
       ...product,
       priceReference:validPrice?price:null,
       referencePrice:validPrice?price.priceJPY:null,
       usageReference:validUsage?amount:null,
-      referenceUses
+      referenceUses,
+      usageEstimate:referenceUses?{kind,sampleCount:1}:null,
     };
   });
-  // 実際の使用期間を確認した商品だけを母集団とし、品目と容量単位ごとに
-  // 1回量を平均する。異なる剤型を跨がない／サンプル1件を全体の標準としない。
+  // 容器あたりの回数に根拠がある商品を、品目と容量単位ごとに集計する。
+  // 個包装や部分用など、ほかの同品目の目安にできないものはCSVで除外する。
   const samples=new Map();
   for(const product of merged){
     if(!product.referenceUses || product.usageReference?.excludeFromCategoryAverages ||
@@ -67,7 +71,7 @@ export function mergeCatalogData(products, pricing={}, usage={}) {
     samples.get(key).push(Number(product.volume)/product.referenceUses);
   }
   return merged.map(product=>{
-    if(product.referenceUses)return {...product,usageEstimate:{kind:product.usageReference?.verifiedUses?'packageCount':'duration',sampleCount:1}};
+    if(product.referenceUses)return product;
     const amounts=samples.get(`${product.category}/${product.unit}`)||[];
     if(amounts.length<2)return {...product,estimatedUses:null,usageEstimate:{kind:'demo',sampleCount:amounts.length}};
     const mean=amounts.reduce((sum,n)=>sum+n,0)/amounts.length;

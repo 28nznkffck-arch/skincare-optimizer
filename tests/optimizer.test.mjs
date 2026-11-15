@@ -34,7 +34,7 @@ test('all active products have JAN-verified retailer quotes; limited edition is 
   assert.equal(mergeCatalogData([{jan:'123',demoPrice:55,demoUses:3}],{prices:{'123':{jan:'456',priceJPY:2,url:'https://test.example'}}})[0].referencePrice,null);
 });
 
-test('product usage is only derived from cited duration; manual per-use amount overrides counts',()=>{
+test('cited duration and a manual per-use amount both determine the container use count',()=>{
   const toner=catalog.find(p=>p.jan==='4901301236197');
   assert.equal(toner.referenceUses,180);
   assert.equal(usesOf(toner),180);
@@ -346,6 +346,27 @@ test('care style controls optional steps without rewarding price alone',()=>{
   assert.ok(thorough.products.filter(p=>['toner','serum'].includes(p.category)).length>=simple.products.filter(p=>['toner','serum'].includes(p.category)).length);
   assert.equal(scoreRoutine(simple.products,{concerns:['pores'],overrides:{'4901301043764':{price:480}}}),
     scoreRoutine(simple.products,{concerns:['pores'],overrides:{'4901301043764':{price:3000}}}));
+});
+
+test('optional products enter the routine through a concern, ingredient preference, or lock',()=>{
+  const item=(jan,category,scores,keyIngredients=[])=>({
+    jan,category,scores,keyIngredients,demoPrice:100,demoUses:30,dailyUses:1,
+  });
+  const wash=item('wash','cleanser',{blackheads:3});
+  const milk=item('milk','moisturizer',{blackheads:1});
+  const related=item('related','serum',{blackheads:1});
+  const unrelated=item('unrelated','serum',{spots:3},['ナイアシンアミド','成分B','成分C','成分D']);
+  const items=[wash,milk,related,unrelated];
+  const options={budget:300,concerns:['blackheads'],concernWeights:{blackheads:'low'},priority:'thorough'};
+  const [best]=optimize(items,{...options,resultLimit:1});
+  assert.deepEqual(best.products,[wash,related,milk]);
+  assert.deepEqual(optimize(items,options)[0],best);
+  assert.ok(scoreRoutine([wash,unrelated,milk],options)>best.score);
+  assert.deepEqual(swaps(best,items,'serum',options,100),[]);
+  assert.equal(diagnoseProduct(items,options,unrelated.jan,best).status,'unavailable');
+  for(const eligible of [{ingredient:'ナイアシンアミド'},{ingredient:'ナイアシンアミド',ingredientMode:'required'},{locked:{serum:unrelated.jan}}]){
+    assert.ok(optimize(items,{...options,...eligible,resultLimit:1})[0].products.includes(unrelated));
+  }
 });
 
 test('saved routines preserve independent prices, frequencies and budget',()=>{
