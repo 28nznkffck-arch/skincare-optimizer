@@ -315,7 +315,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.29</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.30</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -325,7 +325,7 @@ function render(){
       <p>${escape(meta.notice)}</p>
       <ul><li>肌悩みや使用感との相性は試作用の適合評価であり、実際の美容効果や安全性を予測・保証するものではありません。</li>
       <li>敏感肌向けと登録された商品でも、すべての人に合うわけではありません。合わなかった商品の除外は商品単位で、原因成分を特定するものではありません。</li>
-      <li>登録77商品の購入価格は、JAN一致で確認したマツキヨココカラ通販・ツルハグループe-shopの税込価格です。店頭価格や将来の価格とは異なることがあります。</li>
+      <li>購入価格は、JANが一致するドラッグストア通販の税込掲載価格です。店頭価格や将来の価格とは異なることがあります。</li>
       <li>1本の使用回数は「朝晩で約3か月」などの使い切り期間から逆算し、未確認品は同品目・同容量単位の2商品以上の参考値の平均を仮採用します。平均できない商品は旧来の仮値です。使用期限とは区別します。プッシュ数・泡の直径から容量を決めつけません。</li>
       <li>目元の乾燥を選ぶと目元専用クリームを任意で追加できます。顔全体の保湿とは別枠です。月額使用回数は仮推定。クマは現在の登録商品で加点の根拠が確認できていないため、選択時に案内を表示します。</li>
       <li>メイク落としはチェック時に毎晩使う前提。「手軽に」はW洗顔を省略、ほかの手間設定ではW洗顔も選択可能。花王の登録製品はW洗顔不要で、追加洗顔が必須とは限りません。化粧の濃さにより適合は変わります。</li>
