@@ -200,7 +200,7 @@ function resultHtml(){
   if(!current) return '';
   const sorted=[...current.products].sort((a,b)=>applicationRank(a)-applicationRank(b));
   const am=sorted.filter(p=>p.category!=='makeupRemover' && p.dailyUses>1);
-  const steps=products=>products.map(p=>p.wipeOff?'ふき取り化粧水':CATEGORY_LABELS[p.category]).join(' → ');
+  const steps=products=>products.map(p=>p.wipeOff?`ふき取り${CATEGORY_LABELS[p.category]}`:CATEGORY_LABELS[p.category]).join(' → ');
   return `<section class="panel recommendation">
     <div class="reco-head"><div><span class="eyebrow">02 / RECOMMENDATION</span><h2>朝と夜のルーティン</h2></div><span class="tag orange">試作版</span></div>
     <p class="summary-note">朝：${steps(am)||'なし'}<br>夜：${steps(sorted)}</p>
@@ -315,7 +315,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.30</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.31</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
