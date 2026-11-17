@@ -114,6 +114,7 @@ function productCard(p){
       ${p.usageEstimate?.kind==='dose' && p.usageReference.referenceBasis?`<div class="period">${escape(p.usageReference.referenceBasis)}</div>`:''}
       <div class="period">購入価格 ${yen(priceOf(p))}（${p.priceReference?`${escape(p.priceReference.retailer)}・確認済み`:'出典未確認の仮価格'}）</div>
       <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?'<div class="fit-note">部分ケア・顔全体の保湿の後に使用</div>':''}${p.wipeOff?'<div class="fit-note">ふき取りタイプ・コットン代は月額に含みません</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+cleansingLabel(p)+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
+      ${p.applicationTime==='morning'?'<div class="fit-note">朝のみ</div>':''}
       ${p.applicationOrder?`<div class="fit-note">${applicationNotes[p.applicationOrder]}</div>`:''}
       <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
       ${matchLabels.length?`<div class="fit-note">関連する悩み：${matchLabels.map(escape).join('・')}</div>`:''}
@@ -199,11 +200,12 @@ function summaryHtml(){
 function resultHtml(){
   if(!current) return '';
   const sorted=[...current.products].sort((a,b)=>applicationRank(a)-applicationRank(b));
-  const am=sorted.filter(p=>p.category!=='makeupRemover' && p.dailyUses>1);
+  const am=sorted.filter(p=>p.category!=='makeupRemover' && (p.applicationTime==='morning' || p.dailyUses>1));
+  const pm=sorted.filter(p=>p.applicationTime!=='morning');
   const steps=products=>products.map(p=>p.wipeOff?`ふき取り${CATEGORY_LABELS[p.category]}`:CATEGORY_LABELS[p.category]).join(' → ');
   return `<section class="panel recommendation">
     <div class="reco-head"><div><span class="eyebrow">02 / RECOMMENDATION</span><h2>朝と夜のルーティン</h2></div><span class="tag orange">試作版</span></div>
-    <p class="summary-note">朝：${steps(am)||'なし'}<br>夜：${steps(sorted)}</p>
+    <p class="summary-note">朝：${steps(am)||'なし'}<br>夜：${steps(pm)||'なし'}</p>
     <div class="product-list">${sorted.map(productCard).join('')}</div>
   </section>`;
 }
@@ -315,7 +317,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.31</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.32</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}

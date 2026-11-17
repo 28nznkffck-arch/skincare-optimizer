@@ -274,3 +274,16 @@ test('morning and evening routines use the trial frequency and the product use o
   const wipeOff = await openApp('wipe-off-first', {[settingsKey]: {...settings, locked: {...settings.locked, toner: '4973167024485'}}});
   assert.match(wipeOff.app.markup, /夜：洗顔 → ふき取り化粧水 → 美容液 → 保湿/);
 });
+
+test('morning-only skincare appears in the morning routine at one use per day', async () => {
+  const settings = {
+    budget: 10000, concerns: ['dryness'],
+    locked: {
+      cleanser: '4901301463968', toner: '4901301236197',
+      serum: '4909978261337', moisturizer: '4909978261306',
+    },
+  };
+  const {app} = await openApp('morning-only-skincare', {[settingsKey]: settings});
+  assert.match(app.markup, /朝：美容液 → 化粧水 → 保湿<br>夜：洗顔 → 化粧水 → 保湿/);
+  assert.match(app.markup, /朝のみ/);
+});
