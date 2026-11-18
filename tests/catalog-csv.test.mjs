@@ -82,7 +82,11 @@ test('the quoted amount for both eyes takes precedence over a whole-face serum a
   assert.equal(usesOf(product), 200);
   assert.equal(monthlyCost(product), Math.round(priceOf(product) * 60 / 200));
   const gel = catalog.find(p => p.jan === '4901301281715');
-  assert.equal(gel.usageEstimate.sampleCount, 4);
+  const samples = catalog.filter(p => p.category === gel.category && p.unit === gel.unit
+    && p.referenceUses && !p.usageReference?.excludeFromCategoryAverages);
+  assert.ok(samples.length >= 4);
+  assert.equal(gel.usageEstimate.sampleCount, samples.length);
+  assert.ok(!samples.includes(product), '部分用の目元ケアを顔全体の平均に含めない');
 });
 
 test('catalog uses the manufacturer-verified active ingredients for corrected products', async () => {
