@@ -11,13 +11,13 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   const female = await loadCatalog(read);
   const male = await loadCatalog(read, '../catalog-men/');
   const jans = new Set(female.products.map(p => p.jan));
-  assert.equal(male.products.length, 25);
+  assert.equal(male.products.length, 36);
   assert.ok(male.products.every(p => !jans.has(p.jan)));
   assert.equal(new Set(male.products.map(p=>p.jan)).size, male.products.length);
   for (const p of male.products) {
-    assert.ok(['メンズビオレ','ニベアメン'].includes(p.brand));
+    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー'].includes(p.brand));
     assert.equal(male.pricing.prices[p.jan]?.jan, p.jan);
-    assert.ok(p.sourceUrl.startsWith('https://www.kao-kirei.com/'));
+    assert.ok(p.sourceUrl.startsWith('https://'));
   }
   const products = mergeCatalogData(male.products, male.pricing, male.usage);
   for (const concern of ['dryness','pores','acne']) {
@@ -46,4 +46,19 @@ test('men catalog supports makeup removal as standalone facial wash', async () =
   assert.ok(best.products.some(p => p.jan === '4901301389640'));
   assert.ok(best.products.some(p => p.category === 'moisturizer'));
   assert.ok(!best.products.some(p => p.category === 'cleanser'));
+});
+
+test('additional men brands retain verified JAN, brand totals and evidence distinctions', async () => {
+ const male=await loadCatalog(read,'../catalog-men/');
+ const brands=Object.groupBy(male.products,p=>p.brand);
+ assert.equal(brands['オキシー'].length,3);
+ assert.equal(brands['uno'].length,4);
+ assert.equal(brands['ギャツビー'].length,4);
+ const byJan=new Map(male.products.map(p=>[p.jan,p]));
+ assert.deepEqual(byJan.get('4902806117905').evidence.activeIngredients,['サリチル酸','グリチルリチン酸ジカリウム']);
+ assert.equal(byJan.get('4550516495280').allInOne,true);
+ assert.equal(byJan.get('4550516495280').category,'moisturizer');
+ assert.equal(byJan.get('4987241199471').productType,'cosmetic');
+ assert.equal(male.pricing.prices['4987241199457'].retailer,'ツルハグループe-shop');
+ assert.equal(male.pricing.prices['4902806122077'].priceJPY,902);
 });
