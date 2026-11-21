@@ -44,6 +44,34 @@ test('CSV preserves JAN and quoted cells and feeds the existing usage and pricin
   assert.deepEqual(item.scores, {blackheads: 3, dullness: 2, dryness: 0});
 });
 
+test('category-average exclusion without measurement does not require a fabricated usage source', () => {
+  // A targeted cream may be excluded from category reference samples before a dose is verified.
+  const onlyExclusion = {
+    ...product,
+    '使用量の出典URL': '',
+    使い切り日数: '',
+    '使い切り日数の基準回数／日': '',
+    '品目平均から除外': 'true',
+    '1本の仮使用回数': 120,
+  };
+  const input = {...data, productsCsv: csv('products', [onlyExclusion])};
+  const {products, pricing, usage} = parseCatalog(input);
+  assert.equal(usage.usages[jan].excludeFromCategoryAverages, true);
+  assert.equal(usage.usages[jan].sourceUrl, undefined);
+  const [merged] = mergeCatalogData(products, pricing, usage);
+  assert.equal(merged.usageReference, null, 'exclusion is not verified usage evidence');
+  assert.equal(usesOf(merged), 120, 'unverified cream retains its explicitly provisional use count');
+
+  // Quantitative usage claims still need a URL, even if the exclusion flag is present.
+  assert.throws(() => parseCatalog({
+    ...data,
+    productsCsv: csv('products', [{
+      ...onlyExclusion,
+      '1回量（数値・容量と同単位）': 0.2,
+    }]),
+  }), /使用量の出典URLが空欄/);
+});
+
 test('CSV keeps archived products available to saved routines', () => {
   const {products, archivedProducts} = parseCatalog({
     ...data, productsCsv: csv('products', [{...product, 掲載状態: '掲載終了'}]),

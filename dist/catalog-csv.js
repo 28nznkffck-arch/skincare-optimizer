@@ -202,7 +202,10 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
 
     const usage = readFields(row, USAGE_FIELDS, location);
     if (Object.keys(usage).length) {
-      if (!usage.sourceUrl) throw new Error(`${location}: 使用量の出典URLが空欄です`);
+      // 品目平均からの除外は使用量の根拠ではないため、単独なら出典URLを要求しない。
+      // 使用量・使い切り期間等の根拠を登録する場合は引き続き出典URLが必要。
+      if (!usage.sourceUrl && Object.keys(usage).some(key => key !== 'excludeFromCategoryAverages'))
+        throw new Error(`${location}: 使用量の出典URLが空欄です`);
       if (Object.hasOwn(usage, 'durationDays') !== Object.hasOwn(usage, 'referenceDailyUses'))
         throw new Error(`${location}: 使い切り日数と基準回数は一緒に入力してください`);
       usages[jan] = {doseDescription: null, ...usage};

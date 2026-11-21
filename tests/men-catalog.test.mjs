@@ -30,6 +30,19 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   }
 });
 
+test('men partial-use cream has exclusion metadata without pretending verified dose information', async () => {
+  const male = await loadCatalog(read, '../catalog-men/');
+  const spot = male.products.find(p => p.jan === '4902806131116');
+  assert.ok(spot);
+  assert.equal(spot.category, 'serum');
+  assert.equal(spot.applicationOrder, 'last');
+  assert.equal(male.usage.usages[spot.jan].excludeFromCategoryAverages, true);
+  assert.equal(male.usage.usages[spot.jan].sourceUrl, undefined);
+  const item = mergeCatalogData(male.products, male.pricing, male.usage).find(p => p.jan === spot.jan);
+  assert.equal(item.usageReference, null);
+  assert.equal(item.demoUses, 120);
+});
+
 test('men catalog supports makeup removal as standalone facial wash', async () => {
   const male = await loadCatalog(read, '../catalog-men/');
   const catalog = mergeCatalogData(male.products, male.pricing, male.usage);
