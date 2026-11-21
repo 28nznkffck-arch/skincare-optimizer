@@ -1,23 +1,77 @@
-/* Male-facing presentation only. Selection logic and components are shared. */
-body.men-theme{background:#eff3f7;color:#263c50}
-.men-theme .topbar{border-color:#d8e0e9}
-.men-theme .logo-mark{background:#304c67}
-.men-theme .eyebrow{color:#627f9c}
-.men-theme .hero p,.men-theme .muted{color:#637a8e}
-.men-theme .tag{background:#e7eef5;border-color:#c4d4e4;color:#365f7f}
-.men-theme .panel,.men-theme .product{border-color:#d9e2ec}
-.men-theme .chip{background:#f7f9fc;border-color:#cedae7;color:#3d5b74}
-.men-theme .chip.selected,.men-theme .button-dark{background:#355d7d;border-color:#355d7d;color:#fff}
-.men-theme .button{border-color:#b9cbda;color:#365b77}
+/* MEN’S SKINCARE LAB: the pale female edition is intentionally inverted into
+   a dark green canvas with light, sage-tinted working surfaces. Shared UI logic
+   and the women’s /dist/ styles remain unchanged. */
+body.men-theme{
+  min-height:100vh;
+  background:linear-gradient(155deg,#163b30 0%,#1d4b3b 48%,#285a44 100%);
+  background-attachment:fixed;
+  color:#213b2f;
+}
+.men-theme .topbar{border-color:#648b77}
+.men-theme .logo{color:#f1faed}
+.men-theme .logo-mark{background:#d1e9c6;color:#214638}
+.men-theme .topnav{color:#d5e8d9}
+.men-theme .variant-link{
+  color:#f2fff3;
+  background:rgba(246,255,245,.10);
+  border-color:#8bb69c;
+}
+.men-theme .variant-link:hover{background:rgba(246,255,245,.20)}
+.men-theme .tag{background:#e0efda;border-color:#c1dec7;color:#245641}
+.men-theme .hero h1,.men-theme .debug-heading h1{color:#f4faef}
+.men-theme .eyebrow{color:#b9e3bf}
+.men-theme .hero p,.men-theme .debug-heading p{color:#d1e5d5}
+.men-theme .mini-bottle{border-color:#a6ceb4;background:linear-gradient(165deg,#dcebd7,#95bca2)}
+.men-theme .mini-bottle.b{background:linear-gradient(160deg,#eff8de,#aacfb0)}
+.men-theme .mini-bottle.c{background:linear-gradient(160deg,#d5f0dc,#9ac7a7)}
+.men-theme .mini-bottle::before{background:#8cb59c}
+.men-theme .panel{
+  background:#f3f8f1;
+  border-color:#c7dccb;
+  box-shadow:0 9px 30px #091c1640;
+}
+.men-theme .product,
+.men-theme .saved-plan,
+.men-theme .debug-item,
+.men-theme .catalog-item{background:#fff;border-color:#d6e4d6}
+.men-theme .chip{background:#ebf4e9;border-color:#c7dccb;color:#2b5b45}
+.men-theme .chip:hover{border-color:#57876a}
+.men-theme .chip.selected,.men-theme .button-dark{
+  background:#235f45;border-color:#235f45;color:#fff;
+}
+.men-theme .button{border-color:#a9c8b0;color:#255a40}
 .men-theme .button-dark{color:#fff}
-.men-theme input[type=range],.men-theme input[type=checkbox],.men-theme input[type=radio]{accent-color:#365e7f}
-.men-theme .logo,.men-theme .summary-number{color:#2e4c64}
-.men-theme .variant-link{color:#345e81;border-color:#c2d2e1}
-.men-theme .variant-link:hover{background:#e1eaf3}
-.men-theme .ingredient{background:#e7eff6;color:#385c79}
-.men-theme .source,.men-theme .link-button{color:#305e83}
-.men-theme .product-visual{background:linear-gradient(135deg,#e4ebf4,#b9cbdc);color:#496a88}
-.men-theme .product-visual.toner{background:linear-gradient(#e6eff8,#bdcfe0)}
-.men-theme .product-visual.moisturizer{background:linear-gradient(#e4ecf4,#c7d6e5)}
-.men-theme .meter span{background:#527794}
-@media(max-width:520px){.men-theme .topnav{gap:7px}.men-theme .variant-link{font-size:11px;padding:5px 8px}}
+.men-theme .segment.selected{color:#1c5741}
+.men-theme .segmented{background:#e0ecde}
+.men-theme .select,.men-theme input[type=number]{background:#fff;border-color:#c7d9ca;color:#213d30}
+.men-theme input[type=range],.men-theme input[type=checkbox],.men-theme input[type=radio]{accent-color:#246c4c}
+.men-theme .summary-number,
+.men-theme .budget-value,
+.men-theme .saved-totals strong{color:#194d38}
+.men-theme .meter{background:#d6e5d6}
+.men-theme .meter span{background:#397c53}
+.men-theme .ingredient{background:#e1efdf;color:#225a3d}
+.men-theme .source,.men-theme .link-button{color:#176140}
+.men-theme .topbar > .source{color:#e4f4e4}
+.men-theme .product-visual{background:linear-gradient(135deg,#dfefdd,#b0d4b6);color:#3e815c}
+.men-theme .product-visual.toner{background:linear-gradient(#e6f6e3,#b8d9bd)}
+.men-theme .product-visual.moisturizer{background:linear-gradient(#dbeed9,#a5cdb0)}
+.men-theme .saved-cost-summary,.men-theme .debug-context-result{background:#e4efe1}
+.men-theme .swap-item{background:#ecf5ea;border-color:#cbded0}
+.men-theme .period,.men-theme .note,.men-theme .muted{color:#657e6b}
+.men-theme .footer{
+  border-color:#6d9580;
+  color:#d1e5d5;
+}
+.men-theme .estimate-note,
+.men-theme .disclaimer summary,
+.men-theme .disclaimer-body{color:#d6e9d8}
+.men-theme .disclaimer{border-color:#6d9580}
+.men-theme .loading,.men-theme .error{color:#e3f4e3}
+.men-theme .modal{background:#f6fbf4;border-color:#bcd5c0;color:#213b2f}
+.men-theme .modal .eyebrow{color:#3c7453}
+.men-theme :is(button,input,select,a):focus-visible{outline-color:#8cce9e}
+@media(max-width:520px){
+  .men-theme .topnav{gap:7px}
+  .men-theme .variant-link{font-size:11px;padding:5px 8px}
+}
