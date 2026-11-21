@@ -50,7 +50,7 @@ test('men catalog supports makeup removal as standalone facial wash', async () =
 
 test('additional men brands retain verified JAN, brand totals and evidence distinctions', async () => {
  const male=await loadCatalog(read,'../catalog-men/');
- const brands=Object.groupBy(male.products,p=>p.brand);
+ const brands=male.products.reduce((out,p)=>{(out[p.brand]??=[]).push(p);return out;},{});
  assert.equal(brands['オキシー'].length,3);
  assert.equal(brands['uno'].length,4);
  assert.equal(brands['ギャツビー'].length,4);
