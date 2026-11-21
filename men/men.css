@@ -1,0 +1,23 @@
+/* Male-facing presentation only. Selection logic and components are shared. */
+body.men-theme{background:#eff3f7;color:#263c50}
+.men-theme .topbar{border-color:#d8e0e9}
+.men-theme .logo-mark{background:#304c67}
+.men-theme .eyebrow{color:#627f9c}
+.men-theme .hero p,.men-theme .muted{color:#637a8e}
+.men-theme .tag{background:#e7eef5;border-color:#c4d4e4;color:#365f7f}
+.men-theme .panel,.men-theme .product{border-color:#d9e2ec}
+.men-theme .chip{background:#f7f9fc;border-color:#cedae7;color:#3d5b74}
+.men-theme .chip.selected,.men-theme .button-dark{background:#355d7d;border-color:#355d7d;color:#fff}
+.men-theme .button{border-color:#b9cbda;color:#365b77}
+.men-theme .button-dark{color:#fff}
+.men-theme input[type=range],.men-theme input[type=checkbox],.men-theme input[type=radio]{accent-color:#365e7f}
+.men-theme .logo,.men-theme .summary-number{color:#2e4c64}
+.men-theme .variant-link{color:#345e81;border-color:#c2d2e1}
+.men-theme .variant-link:hover{background:#e1eaf3}
+.men-theme .ingredient{background:#e7eff6;color:#385c79}
+.men-theme .source,.men-theme .link-button{color:#305e83}
+.men-theme .product-visual{background:linear-gradient(135deg,#e4ebf4,#b9cbdc);color:#496a88}
+.men-theme .product-visual.toner{background:linear-gradient(#e6eff8,#bdcfe0)}
+.men-theme .product-visual.moisturizer{background:linear-gradient(#e4ecf4,#c7d6e5)}
+.men-theme .meter span{background:#527794}
+@media(max-width:520px){.men-theme .topnav{gap:7px}.men-theme .variant-link{font-size:11px;padding:5px 8px}}

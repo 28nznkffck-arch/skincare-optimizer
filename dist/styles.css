@@ -71,3 +71,6 @@
   font-size: 14px;
 }
 .budget-step:focus-visible { outline: 2px solid #426c58; outline-offset: 2px; }
+
+.variant-link{display:inline-flex;align-items:center;min-height:36px;padding:7px 10px;border:1px solid #cbdcd0;border-radius:999px;color:#426450;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap}
+.variant-link:hover{background:#e8f1e8;text-decoration:none}

@@ -3,8 +3,9 @@ import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0
 import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.24';
 import {loadCatalog} from './catalog-csv.js?v=0.8.24';
 
-const STORE_KEY='skincare-lab-settings-jan';
-const SAVED_KEY='skincare-lab-saved-routines-jan';
+const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
+const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
+const SAVED_KEY=IS_MEN?'skincare-lab-men-saved-routines-jan':'skincare-lab-saved-routines-jan';
 const DEFAULT={budget:DEFAULT_BUDGET, useMakeupRemover:false, concerns:[], concernWeights:{}, skinType:'unknown', sensitiveSkin:false, finish:'any', priority:'any', ingredient:'none', ingredientMode:'prefer', excluded:{}, locked:{}, manual:null, manualExtraBudget:0, swapCategory:'moisturizer', swapExtra:100};
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
@@ -316,9 +317,9 @@ function editSavedPlan(input, planId){
 
 function render(){
   pickCurrent();
-  app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.35</span></div></header>
-    <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
+  app.innerHTML=`<div class="shell ${IS_MEN?'men-site':''}">
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">${IS_MEN?'◆':'✿'}</span><span>${IS_MEN?'MEN’S SKINCARE LAB':'SKINCARE LAB'}</span></div><div class="topnav"><a class="variant-link" href="${IS_MEN?'../dist/':'../men/'}">${IS_MEN?'女性向け版':'男性向け版'}</a><span class="tag">${IS_MEN?'MEN / BETA':'PROTOTYPE v0.8.35'}</span></div></header>
+    <section class="hero"><div><div class="eyebrow">${IS_MEN?'MEN’S SKINCARE, DATA FIRST':'SMART ROUTINE, SMALL BUDGET'}</div><h1>${IS_MEN?'男性向けスキンケアを、<br>予算と肌悩みから。':'肌にも、予算にも。<br>ちょうどいい組み合わせ。'}</h1><p>${IS_MEN?'男性向け商品の中から、洗顔と保湿を軸に組み合わせを提案します。<br>選定方法は共通、商品データは男性版専用です。':'肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。'}</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
     </div></div><footer class="footer">
@@ -330,7 +331,7 @@ function render(){
       <li>購入価格は、JANが一致するドラッグストア通販の税込掲載価格です。店頭価格や将来の価格とは異なることがあります。</li>
       <li>1本の使用回数は「朝晩で約3か月」などの使い切り期間から逆算し、未確認品は同品目・同容量単位の2商品以上の参考値の平均を仮採用します。平均できない商品は旧来の仮値です。使用期限とは区別します。プッシュ数・泡の直径から容量を決めつけません。</li>
       <li>目元の乾燥を選ぶと目元ケア製品を任意で追加できます。顔全体の保湿とは別枠です。使用回数が未確認の製品は仮推定。クマは現在の登録商品で加点の根拠が確認できていないため、選択時に案内を表示します。</li>
-      <li>メイク落としはチェック時に毎晩使う前提。「手軽に」はW洗顔を省略、ほかの手間設定ではW洗顔も選択可能。花王の登録製品はW洗顔不要で、追加洗顔が必須とは限りません。化粧の濃さにより適合は変わります。</li>
+      ${IS_MEN?'<li>メイク落としは男性版ではまだ未登録です。チェックを入れると対象商品がないため提案できません。</li>':'<li>メイク落としはチェック時に毎晩使う前提。「手軽に」はW洗顔を省略、ほかの手間設定ではW洗顔も選択可能。花王の登録製品はW洗顔不要で、追加洗顔が必須とは限りません。化粧の濃さにより適合は変わります。</li>'}
       <li>「手軽に」は任意の化粧水・美容液の追加手順を控えめに評価し、「しっかり」は有用な追加手順を許容します。価格は月予算を上限とし、評価が同等の場合のみ安い候補を優先します。</li>
       <li>メーカーが公表した配合量を出典付きで確認できた商品に、小さな情報公開ボーナスを加えます。これは美容効果や成分濃度の高さを表すものではなく、配合量が未確認の商品を0％と評価することもありません。採点内訳は商品DBのデバッグ画面で確認できます。</li>
       <li>保存した組み合わせはブラウザ内にのみ保存します。端末やブラウザを変えると共有されず、ブラウザデータの消去で失われます。</li>
@@ -447,7 +448,7 @@ document.getElementById('excludeForm').addEventListener('submit',e=>{
   document.getElementById('excludeDialog').close();pendingExclude=null;
 });
 
-loadCatalog().then(({products, archivedProducts, pricing, usage, meta: catalogMeta})=>{
+loadCatalog(undefined, IS_MEN ? '../catalog-men/' : '../catalog/').then(({products, archivedProducts, pricing, usage, meta: catalogMeta})=>{
   catalog=mergeCatalogData(products,pricing,usage);meta=catalogMeta;
   budgetRange=getBudgetRange(catalog);
   const archived=mergeCatalogData(archivedProducts,pricing,usage);

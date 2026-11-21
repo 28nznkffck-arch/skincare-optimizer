@@ -3,7 +3,8 @@ import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from
 import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.24';
 import {loadCatalog} from './catalog-csv.js?v=0.8.24';
 
-const STORE_KEY='skincare-lab-settings-jan';
+const IS_MEN=/(?:^|\/)men\/debug\.html$/.test(window.location?.pathname||'');
+const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
 const PAGE_SIZE=25;
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
@@ -113,7 +114,7 @@ items.addEventListener('click',e=>{
   renderRows();
 });
 window.addEventListener('storage',e=>{if(e.key===STORE_KEY)refreshAnalysis();});
-loadCatalog().then(({products, pricing, usage})=>{
+loadCatalog(undefined, IS_MEN ? '../catalog-men/' : '../catalog/').then(({products, pricing, usage})=>{
   catalog=mergeCatalogData(products,pricing,usage);
   budgetRange=getBudgetRange(catalog);
   refreshAnalysis();

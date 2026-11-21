@@ -258,10 +258,10 @@ async function fetchCatalogFile(url) {
   return response.text();
 }
 
-export async function loadCatalog(readFile = fetchCatalogFile) {
+export async function loadCatalog(readFile = fetchCatalogFile, catalogFolder = '../catalog/') {
   const [productsCsv, pricesCsv, scoresCsv, metadata] = await Promise.all(
     ['products.csv', 'prices.csv', 'scores.csv', 'metadata.json'].map(name =>
-      readFile(new URL(`../catalog/${name}`, import.meta.url))
+      readFile(new URL(`${catalogFolder}${name}`, import.meta.url))
     )
   );
   return {...parseCatalog({productsCsv, pricesCsv, scoresCsv}), meta: JSON.parse(metadata).products};

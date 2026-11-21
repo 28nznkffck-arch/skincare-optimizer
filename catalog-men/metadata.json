@@ -1,0 +1,20 @@
+{
+  "products": {
+    "version": "0.9.0-men-beta",
+    "checkedAt": "2026-11-21",
+    "source": "花王公式 My Kao Mall 製品情報（メンズビオレ・ニベアメン）",
+    "notice": "男性向け初期登録9品（メンズビオレ5品・ニベアメン4品）。商品マスター・価格・肌悩みスコアは女性版と完全に別管理。洗顔4品、保湿3品、化粧水2品。品目と採点は今後追加検証するベータ版です。",
+    "priceType": "retailer-verified"
+  },
+  "pricing": {
+    "currency": "JPY",
+    "taxIncluded": true,
+    "priceKind": "retailerOnline",
+    "verifiedAt": "2026-11-21",
+    "notice": "9品についてマツキヨココカラオンライン掲載の通常税込価格を登録。"
+  },
+  "usage": {
+    "purpose": "1本当たり使用回数の仮推定",
+    "notes": "全9商品は試算用の仮回数を使用。メーカーの使い切り期間・容量換算を確認した使用量ではない。"
+  }
+}
