@@ -129,6 +129,7 @@ function formHtml(){
   const ingredients=['none','ナイアシンアミド','セラミド機能成分','アラントイン','ヒアルロン酸Na',DIPOTASSIUM_GLYCYRRHIZATE];
   const locked=catalog.filter(product=>state.locked[product.category]===product.jan);
   const excluded=catalog.filter(product=>Object.hasOwn(state.excluded,product.jan));
+  const hasRemover=catalog.some(product=>product.category==='makeupRemover');
   return `<aside class="panel controls" aria-label="選定条件">
     <div class="section-heading"><h2>あなたの条件</h2><span class="step-number">01 / SETTINGS</span></div>
     <div class="field"><div class="budget-row"><label class="field-title" for="budget">月額予算</label><span class="budget-value">${yen(state.budget)}<small> / 月</small></span></div>
@@ -148,7 +149,7 @@ function formHtml(){
       </div>
       ${state.concerns.length?`<div class="concern-priorities"><span class="micro muted">悩みごとの優先度</span>${state.concerns.map(id=>`<label class="priority-row"><span>${escape(CONCERNS[id]||id)}</span><select class="select" data-importance="${escape(id)}"><option value="high" ${state.concernWeights?.[id]==='high'?'selected':''}>最優先</option><option value="normal" ${!state.concernWeights?.[id]||state.concernWeights?.[id]==='normal'?'selected':''}>気になる</option><option value="low" ${state.concernWeights?.[id]==='low'?'selected':''}>軽く気になる</option></select></label>`).join('')}</div>`:''}
     </div>
-    <div class="field"><span class="field-title">夜の洗浄</span><label class="sensitive-check"><input type="checkbox" data-field="useMakeupRemover" ${state.useMakeupRemover?'checked':''}> メイク落としを使う</label><div class="micro muted">チェック時は毎晩使う前提で試算します。「手軽に」では、洗顔料を固定していない場合にW洗顔を省きます。</div></div>
+    <div class="field"><span class="field-title">夜の洗浄</span><label class="sensitive-check"><input type="checkbox" data-field="useMakeupRemover" ${state.useMakeupRemover?'checked':''} ${hasRemover?'':'disabled'}> メイク落としを使う</label><div class="micro muted">${hasRemover?'チェック時は毎晩使う前提で試算します。「手軽に」では、洗顔料を固定していない場合にW洗顔を省きます。':'メイク落としは商品未登録のため、現時点では選択できません。'}</div></div>
     <div class="field"><label class="field-title" for="skinType">肌質</label><select id="skinType" class="select" data-field="skinType">${[['unknown','わからない・指定なし'],['dry','乾燥肌'],['oily','脂性肌'],['combination','混合肌'],['normal','普通肌']].map(([id,label])=>`<option value="${id}" ${state.skinType===id?'selected':''}>${label}</option>`).join('')}</select>
       <label class="sensitive-check"><input type="checkbox" data-field="sensitiveSkin" ${state.sensitiveSkin?'checked':''}> 刺激を感じやすい・敏感肌</label>
     </div>
