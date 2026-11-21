@@ -11,11 +11,11 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   const female = await loadCatalog(read);
   const male = await loadCatalog(read, '../catalog-men/');
   const jans = new Set(female.products.map(p => p.jan));
-  assert.equal(male.products.length, 36);
+  assert.equal(male.products.length, 52);
   assert.ok(male.products.every(p => !jans.has(p.jan)));
   assert.equal(new Set(male.products.map(p=>p.jan)).size, male.products.length);
   for (const p of male.products) {
-    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー'].includes(p.brand));
+    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード'].includes(p.brand));
     assert.equal(male.pricing.prices[p.jan]?.jan, p.jan);
     assert.ok(p.sourceUrl.startsWith('https://'));
   }
@@ -52,8 +52,8 @@ test('additional men brands retain verified JAN, brand totals and evidence disti
  const male=await loadCatalog(read,'../catalog-men/');
  const brands=male.products.reduce((out,p)=>{(out[p.brand]??=[]).push(p);return out;},{});
  assert.equal(brands['オキシー'].length,3);
- assert.equal(brands['uno'].length,4);
- assert.equal(brands['ギャツビー'].length,4);
+ assert.equal(brands['uno'].length,6);
+ assert.equal(brands['ギャツビー'].length,7);
  const byJan=new Map(male.products.map(p=>[p.jan,p]));
  assert.deepEqual(byJan.get('4902806117905').evidence.activeIngredients,['サリチル酸','グリチルリチン酸ジカリウム']);
  assert.equal(byJan.get('4550516495280').allInOne,true);
@@ -61,4 +61,18 @@ test('additional men brands retain verified JAN, brand totals and evidence disti
  assert.equal(byJan.get('4987241199471').productType,'cosmetic');
  assert.equal(male.pricing.prices['4987241199457'].retailer,'ツルハグループe-shop');
  assert.equal(male.pricing.prices['4902806122077'].priceJPY,902);
+});
+
+test('LUCIDO products are isolated and drug actives use manufacturer-current formulas', async () => {
+  const male=await loadCatalog(read,'../catalog-men/');
+  const byJan=new Map(male.products.map(p=>[p.jan,p]));
+  assert.equal(male.products.filter(p=>p.brand==='ルシード').length,11);
+  assert.equal(byJan.get('4902806134452').allInOne,true);
+  assert.equal(byJan.get('4902806134438').evidence.sensitiveSkinPatchTested,true);
+  assert.deepEqual(byJan.get('4902806107296').evidence.activeIngredients,
+    ['ナイアシンアミド','グリチルリチン酸ジカリウム']);
+  assert.equal(byJan.get('4902806122053').category,'moisturizer');
+  assert.equal(byJan.get('4550516474858').allInOne,true);
+  assert.equal(byJan.get('4550516474858').evidence.activeIngredients.length,2);
+  assert.equal(male.pricing.prices['4902806134452'].priceJPY,2200);
 });
