@@ -11,11 +11,11 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   const female = await loadCatalog(read);
   const male = await loadCatalog(read, '../catalog-men/');
   const jans = new Set(female.products.map(p => p.jan));
-  assert.equal(male.products.length, 64);
+  assert.equal(male.products.length, 69);
   assert.ok(male.products.every(p => !jans.has(p.jan)));
   assert.equal(new Set(male.products.map(p=>p.jan)).size, male.products.length);
   for (const p of male.products) {
-    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード','メラノCC Men','KNOWLEDGE','メンズオードムーゲ','メンズケシミン'].includes(p.brand));
+    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード','メラノCC Men','KNOWLEDGE','メンズオードムーゲ','メンズケシミン','毛穴撫子 男の子用','matsukiyo'].includes(p.brand));
     assert.equal(male.pricing.prices[p.jan]?.jan, p.jan);
     assert.ok(p.sourceUrl.startsWith('https://'));
   }
@@ -80,7 +80,7 @@ test('LUCIDO products are isolated and drug actives use manufacturer-current for
 test('additional male face-care has separate price/evidence and new serum slot', async () => {
   const male=await loadCatalog(read,'../catalog-men/');
   const by=new Map(male.products.map(p=>[p.jan,p]));
-  assert.equal(male.products.filter(p=>p.brand==='KNOWLEDGE').length,6);
+  assert.equal(male.products.filter(p=>p.brand==='KNOWLEDGE').length,8);
   assert.equal(male.products.filter(p=>p.brand==='メラノCC Men').length,2);
   assert.equal(male.products.filter(p=>p.brand==='メンズケシミン').length,2);
   assert.equal(male.products.filter(p=>p.brand==='メンズオードムーゲ').length,2);
@@ -93,4 +93,23 @@ test('additional male face-care has separate price/evidence and new serum slot',
   assert.equal(male.pricing.prices['4987241202980'].retailer,'ツルハグループe-shop');
   const merged=mergeCatalogData(male.products,male.pricing,male.usage);
   assert.equal(merged.find(p=>p.jan==='4987241171507').referenceUses,165);
+});
+
+test('new male face washes have JAN-aligned retailer prices without drug-actives confusion', async () => {
+  const male=await loadCatalog(read,'../catalog-men/');
+  const byJan=new Map(male.products.map(p=>[p.jan,p]));
+  for(const jan of ['4992440036328','4992440036335','4902806128376','4902806134674','4513574029439']){
+    const product=byJan.get(jan);
+    assert.equal(product.category,'cleanser');
+    assert.equal(product.productType,'cosmetic');
+    assert.equal(product.evidence.officialSource,true);
+    assert.equal(product.evidence.activeIngredients?.length ?? 0,0);
+    assert.equal(male.pricing.prices[jan].jan,jan);
+    assert.equal(male.pricing.prices[jan].retailer,'マツキヨココカラオンライン');
+  }
+  assert.equal(byJan.get('4902806134674').volume,200);
+  assert.equal(byJan.get('4992440036335').volume,100);
+  assert.equal(male.pricing.prices['4513574029439'].priceJPY,327);
+  assert.equal(male.products.filter(p=>p.brand==='KNOWLEDGE').length,8);
+  assert.equal(male.products.filter(p=>p.brand==='毛穴撫子 男の子用').length,2);
 });
