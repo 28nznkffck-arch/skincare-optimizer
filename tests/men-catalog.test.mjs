@@ -11,11 +11,11 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   const female = await loadCatalog(read);
   const male = await loadCatalog(read, '../catalog-men/');
   const jans = new Set(female.products.map(p => p.jan));
-  assert.equal(male.products.length, 52);
+  assert.equal(male.products.length, 64);
   assert.ok(male.products.every(p => !jans.has(p.jan)));
   assert.equal(new Set(male.products.map(p=>p.jan)).size, male.products.length);
   for (const p of male.products) {
-    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード'].includes(p.brand));
+    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード','メラノCC Men','KNOWLEDGE','メンズオードムーゲ','メンズケシミン'].includes(p.brand));
     assert.equal(male.pricing.prices[p.jan]?.jan, p.jan);
     assert.ok(p.sourceUrl.startsWith('https://'));
   }
@@ -75,4 +75,22 @@ test('LUCIDO products are isolated and drug actives use manufacturer-current for
   assert.equal(byJan.get('4550516474858').allInOne,true);
   assert.equal(byJan.get('4550516474858').evidence.activeIngredients.length,2);
   assert.equal(male.pricing.prices['4902806134452'].priceJPY,2200);
+});
+
+test('additional male face-care has separate price/evidence and new serum slot', async () => {
+  const male=await loadCatalog(read,'../catalog-men/');
+  const by=new Map(male.products.map(p=>[p.jan,p]));
+  assert.equal(male.products.filter(p=>p.brand==='KNOWLEDGE').length,6);
+  assert.equal(male.products.filter(p=>p.brand==='メラノCC Men').length,2);
+  assert.equal(male.products.filter(p=>p.brand==='メンズケシミン').length,2);
+  assert.equal(male.products.filter(p=>p.brand==='メンズオードムーゲ').length,2);
+  assert.equal(by.get('4987241171507').category,'serum');
+  assert.equal(by.get('4987241171507').evidence.activeIngredients.length,4);
+  assert.equal(by.get('4902806131116').applicationOrder,'last');
+  assert.equal(by.get('4902806128383').doubleCleanseNotNeeded,false);
+  assert.equal(by.get('4987072042687').wipeOff,true);
+  assert.equal(by.get('4987072088968').evidence.activeIngredients.length,2);
+  assert.equal(male.pricing.prices['4987241202980'].retailer,'ツルハグループe-shop');
+  const merged=mergeCatalogData(male.products,male.pricing,male.usage);
+  assert.equal(merged.find(p=>p.jan==='4987241171507').referenceUses,165);
 });
