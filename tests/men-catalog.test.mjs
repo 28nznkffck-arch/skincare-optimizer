@@ -11,11 +11,11 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   const female = await loadCatalog(read);
   const male = await loadCatalog(read, '../catalog-men/');
   const jans = new Set(female.products.map(p => p.jan));
-  assert.equal(male.products.length, 77);
+  assert.equal(male.products.length, 86);
   assert.ok(male.products.every(p => !jans.has(p.jan)));
   assert.equal(new Set(male.products.map(p=>p.jan)).size, male.products.length);
   for (const p of male.products) {
-    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード','メラノCC Men','KNOWLEDGE','メンズオードムーゲ','メンズケシミン','毛穴撫子 男の子用','matsukiyo','オルビス ミスター','テックスメックス','ちのしお','SHISEIDO メン','プラウドメン'].includes(p.brand));
+    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード','メラノCC Men','KNOWLEDGE','メンズオードムーゲ','メンズケシミン','毛穴撫子 男の子用','matsukiyo','オルビス ミスター','テックスメックス','ちのしお','SHISEIDO メン','プラウドメン','バルクオム'].includes(p.brand));
     assert.equal(male.pricing.prices[p.jan]?.jan, p.jan);
     assert.ok(p.sourceUrl.startsWith('https://'));
   }
@@ -131,7 +131,7 @@ test('Orbis Mr, SHISEIDO MEN and other male brands are registered by their JAN a
   const male=await loadCatalog(read, '../catalog-men/');
   const byJan=new Map(male.products.map(p=>[p.jan,p]));
   assert.equal(male.products.filter(p=>p.brand==='オルビス ミスター').length,3);
-  assert.equal(male.products.filter(p=>p.brand==='SHISEIDO メン').length,2);
+  assert.equal(male.products.filter(p=>p.brand==='SHISEIDO メン').length,8);
   for(const jan of ['4908064090189','4908064090196','4908064090219']){
     const p=byJan.get(jan);
     assert.equal(p.productType,'quasiDrug');
@@ -150,4 +150,35 @@ test('Orbis Mr, SHISEIDO MEN and other male brands are registered by their JAN a
   assert.equal(byJan.get('4528620301322').allInOne,true);
   assert.equal(male.pricing.prices['4528620301322'].retailer,'ツルハグループe-shop');
   assert.equal(male.pricing.prices['4982757916499'].priceJPY,785);
+});
+
+test('new SHISEIDO MEN and BULK HOMME products preserve medicinal classes, eye usage and costs', async () => {
+  const male=await loadCatalog(read,'../catalog-men/');
+  const byJan=new Map(male.products.map(p=>[p.jan,p]));
+  const pricing=male.pricing.prices;
+  assert.equal(male.products.filter(p=>p.brand==='SHISEIDO メン').length,8);
+  assert.equal(male.products.filter(p=>p.brand==='バルクオム').length,3);
+  assert.equal(byJan.get('4514254994016').category,'cleanser');
+  assert.equal(byJan.get('4514254994016').productType,'cosmetic');
+  assert.equal(byJan.get('4514254226735').category,'serum');
+  assert.equal(byJan.get('4514254120613').category,'eyeCare');
+  assert.equal(byJan.get('4514254120613').applicationOrder,'last');
+  assert.equal(byJan.get('4514254120613').productType,'cosmetic');
+  assert.equal(byJan.get('4514254120613').evidence.activeIngredients?.length??0,0);
+  assert.deepEqual(byJan.get('4589917799932').evidence.activeIngredients,['グリチルリチン酸ジカリウム']);
+  assert.equal(byJan.get('4589917799932').productType,'quasiDrug');
+  assert.equal(byJan.get('4514254181263').productType,'cosmetic');
+  assert.equal(byJan.get('4514254181263').evidence.activeIngredients?.length??0,0);
+  assert.equal(pricing['4514254120590'].priceJPY,9130);
+  assert.equal(pricing['4514254120606'].priceJPY,9130);
+  assert.equal(pricing['4514254181263'].priceJPY,13750);
+  assert.equal(pricing['4514254120613'].priceJPY,6600);
+  const merged=mergeCatalogData(male.products,male.pricing,male.usage);
+  const m=new Map(merged.map(p=>[p.jan,p]));
+  assert.equal(m.get('4514254994016').referenceUses,130);
+  assert.equal(m.get('4514254120613').referenceUses,75);
+  assert.equal(m.get('4514254120613').usageReference.excludeFromCategoryAverages,true);
+  assert.equal(m.get('4514254181263').referenceUses,150);
+  assert.equal(m.get('4589917799932').referenceUses,60);
+  assert.equal(m.get('4514254226735').referenceUses,null);
 });
