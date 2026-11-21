@@ -257,7 +257,8 @@ test('makeup routine explains when a fixed cleanser is still paired with remover
 test('morning and evening routines use the trial frequency and the product use order', async () => {
   const settings = {
     budget: 10000, concerns: ['dryness', 'wrinkles'],
-    locked: {cleanser: '4901301463968', toner: '4901301236197', serum: '4901301412829'},
+    locked: {cleanser: '4901301463968', toner: '4901301236197', serum: '4901301412829',
+      moisturizer: '4901301236210'},
   };
   for (const serum of ['4901301412829', '4901301416483']) {
     const {app} = await openApp(`before-toner-${serum}`, {[settingsKey]: {...settings, locked: {...settings.locked, serum}}});
@@ -286,4 +287,19 @@ test('morning-only skincare appears in the morning routine at one use per day', 
   const {app} = await openApp('morning-only-skincare', {[settingsKey]: settings});
   assert.match(app.markup, /朝：美容液 → 化粧水 → 保湿<br>夜：洗顔 → 化粧水 → 保湿/);
   assert.match(app.markup, /朝のみ/);
+});
+
+test('a pre-toner eye serum follows its own order without the default after-moisturizer instruction', async () => {
+  const settings = {
+    budget: 20000, concerns: ['eyeDryness'],
+    locked: {cleanser: '4901301463968', toner: '4901301236197',
+      moisturizer: '4901301236210', eyeCare: '4909978180089'},
+  };
+  const {app} = await openApp('pre-toner-eye-serum', {[settingsKey]: settings});
+  assert.doesNotMatch(app.markup, /朝：[^<]*目元ケア/);
+  assert.match(app.markup, /夜：洗顔 → 目元ケア → 化粧水 → 保湿/);
+  const eyeCard = app.markup.match(/<article class="product">(?:(?!<article)[\s\S])*?アイゾーンブースター[\s\S]*?<\/article>/)?.[0];
+  assert.ok(eyeCard);
+  assert.match(eyeCard, /化粧水の前に使用/);
+  assert.doesNotMatch(eyeCard, /顔全体の保湿の後に使用/);
 });

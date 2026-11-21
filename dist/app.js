@@ -113,7 +113,7 @@ function productCard(p){
       <div class="period">${escape(p.volume)}${escape(p.unit)} / 約${Math.round(uses)}回分 / 1回約${escape(amountLabel)}（${escape(useEstimateLabel(p))}） / 1日${escape(p.dailyUses)}回</div>
       ${p.usageEstimate?.kind==='dose' && p.usageReference.referenceBasis?`<div class="period">${escape(p.usageReference.referenceBasis)}</div>`:''}
       <div class="period">購入価格 ${yen(priceOf(p))}（${p.priceReference?`${escape(p.priceReference.retailer)}・確認済み`:'出典未確認の仮価格'}）</div>
-      <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?'<div class="fit-note">部分ケア・顔全体の保湿の後に使用</div>':''}${p.wipeOff?'<div class="fit-note">ふき取りタイプ・コットン代は月額に含みません</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+cleansingLabel(p)+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
+      <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?`<div class="fit-note">部分ケア${p.applicationOrder?'':'・顔全体の保湿の後に使用'}</div>`:''}${p.wipeOff?'<div class="fit-note">ふき取りタイプ・コットン代は月額に含みません</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+cleansingLabel(p)+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
       ${p.applicationTime==='morning'?'<div class="fit-note">朝のみ</div>':''}
       ${p.applicationOrder?`<div class="fit-note">${applicationNotes[p.applicationOrder]}</div>`:''}
       <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
@@ -317,7 +317,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.33</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">✿</span><span>SKINCARE LAB</span></div><div class="topnav"><span>スキンケア組合せ最適化</span><span class="tag">PROTOTYPE v0.8.34</span></div></header>
     <section class="hero"><div><div class="eyebrow">SMART ROUTINE, SMALL BUDGET</div><h1>肌にも、予算にも。<br>ちょうどいい組み合わせ。</h1><p>肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -329,7 +329,7 @@ function render(){
       <li>敏感肌向けと登録された商品でも、すべての人に合うわけではありません。合わなかった商品の除外は商品単位で、原因成分を特定するものではありません。</li>
       <li>購入価格は、JANが一致するドラッグストア通販の税込掲載価格です。店頭価格や将来の価格とは異なることがあります。</li>
       <li>1本の使用回数は「朝晩で約3か月」などの使い切り期間から逆算し、未確認品は同品目・同容量単位の2商品以上の参考値の平均を仮採用します。平均できない商品は旧来の仮値です。使用期限とは区別します。プッシュ数・泡の直径から容量を決めつけません。</li>
-      <li>目元の乾燥を選ぶと目元専用クリームを任意で追加できます。顔全体の保湿とは別枠です。月額使用回数は仮推定。クマは現在の登録商品で加点の根拠が確認できていないため、選択時に案内を表示します。</li>
+      <li>目元の乾燥を選ぶと目元ケア製品を任意で追加できます。顔全体の保湿とは別枠です。使用回数が未確認の製品は仮推定。クマは現在の登録商品で加点の根拠が確認できていないため、選択時に案内を表示します。</li>
       <li>メイク落としはチェック時に毎晩使う前提。「手軽に」はW洗顔を省略、ほかの手間設定ではW洗顔も選択可能。花王の登録製品はW洗顔不要で、追加洗顔が必須とは限りません。化粧の濃さにより適合は変わります。</li>
       <li>「手軽に」は任意の化粧水・美容液の追加手順を控えめに評価し、「しっかり」は有用な追加手順を許容します。価格は月予算を上限とし、評価が同等の場合のみ安い候補を優先します。</li>
       <li>メーカーが公表した配合量を出典付きで確認できた商品に、小さな情報公開ボーナスを加えます。これは美容効果や成分濃度の高さを表すものではなく、配合量が未確認の商品を0％と評価することもありません。採点内訳は商品DBのデバッグ画面で確認できます。</li>
