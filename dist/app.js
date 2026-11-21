@@ -1,7 +1,7 @@
 import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.8.24';
 import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.26';
 import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.24';
-import {loadCatalog} from './catalog-csv.js?v=0.8.24';
+import {loadCatalog} from './catalog-csv.js?v=0.9.1';
 
 const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
