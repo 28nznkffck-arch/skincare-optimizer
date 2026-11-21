@@ -11,11 +11,11 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   const female = await loadCatalog(read);
   const male = await loadCatalog(read, '../catalog-men/');
   const jans = new Set(female.products.map(p => p.jan));
-  assert.equal(male.products.length, 69);
+  assert.equal(male.products.length, 77);
   assert.ok(male.products.every(p => !jans.has(p.jan)));
   assert.equal(new Set(male.products.map(p=>p.jan)).size, male.products.length);
   for (const p of male.products) {
-    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード','メラノCC Men','KNOWLEDGE','メンズオードムーゲ','メンズケシミン','毛穴撫子 男の子用','matsukiyo'].includes(p.brand));
+    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード','メラノCC Men','KNOWLEDGE','メンズオードムーゲ','メンズケシミン','毛穴撫子 男の子用','matsukiyo','オルビス ミスター','テックスメックス','ちのしお','SHISEIDO メン','プラウドメン'].includes(p.brand));
     assert.equal(male.pricing.prices[p.jan]?.jan, p.jan);
     assert.ok(p.sourceUrl.startsWith('https://'));
   }
@@ -112,4 +112,29 @@ test('new male face washes have JAN-aligned retailer prices without drug-actives
   assert.equal(male.pricing.prices['4513574029439'].priceJPY,327);
   assert.equal(male.products.filter(p=>p.brand==='KNOWLEDGE').length,8);
   assert.equal(male.products.filter(p=>p.brand==='毛穴撫子 男の子用').length,2);
+});
+
+test('Orbis Mr, SHISEIDO MEN and other male brands are registered by their JAN and true product classes', async () => {
+  const male=await loadCatalog(read, '../catalog-men/');
+  const byJan=new Map(male.products.map(p=>[p.jan,p]));
+  assert.equal(male.products.filter(p=>p.brand==='オルビス ミスター').length,3);
+  assert.equal(male.products.filter(p=>p.brand==='SHISEIDO メン').length,2);
+  for(const jan of ['4908064090189','4908064090196','4908064090219']){
+    const p=byJan.get(jan);
+    assert.equal(p.productType,'quasiDrug');
+    assert.deepEqual(p.evidence.activeIngredients,['グリチルリチン酸ジカリウム']);
+  }
+  const tex=byJan.get('4901604421870');
+  assert.equal(tex.allInOne,true);
+  assert.equal(tex.category,'moisturizer');
+  assert.equal(tex.volume,150);
+  assert.equal(tex.evidence.sensitiveSkinPatchTested,true);
+  assert.equal(byJan.get('4982757916499').category,'toner');
+  assert.equal(byJan.get('4982757916499').volume,400);
+  const shiseido=byJan.get('4514254992418');
+  assert.equal(shiseido.productType,'cosmetic');
+  assert.equal(shiseido.category,'moisturizer');
+  assert.equal(byJan.get('4528620301322').allInOne,true);
+  assert.equal(male.pricing.prices['4528620301322'].retailer,'ツルハグループe-shop');
+  assert.equal(male.pricing.prices['4982757916499'].priceJPY,785);
 });
