@@ -319,7 +319,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell ${IS_MEN?'men-site':''}">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">${IS_MEN?'◆':'✿'}</span><span>${IS_MEN?'MEN’S SKINCARE LAB':'SKINCARE LAB'}</span></div><div class="topnav"><a class="variant-link" href="${IS_MEN?'../dist/':'../men/'}">${IS_MEN?'女性向け版':'男性向け版'}</a><span class="tag">${IS_MEN?'MEN / BETA':'PROTOTYPE v0.8.35'}</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">${IS_MEN?'◆':'✿'}</span><span>${IS_MEN?'MEN’S SKINCARE LAB':'SKINCARE LAB'}</span></div><div class="topnav"><a class="variant-link" href="${IS_MEN?'../dist/':'../men/'}">${IS_MEN?'女性向け版':'男性向け版'}</a><span class="tag">${IS_MEN?'MEN / BETA':'PROTOTYPE v0.8.36'}</span></div></header>
     <section class="hero"><div><div class="eyebrow">${IS_MEN?'MEN’S SKINCARE, DATA FIRST':'SMART ROUTINE, SMALL BUDGET'}</div><h1>${IS_MEN?'男性向けスキンケアを、<br>予算と肌悩みから。':'肌にも、予算にも。<br>ちょうどいい組み合わせ。'}</h1><p>${IS_MEN?'男性向け商品の中から、洗顔と保湿を軸に組み合わせを提案します。<br>選定方法は共通、商品データは男性版専用です。':'肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。'}</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
