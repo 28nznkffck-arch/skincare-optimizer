@@ -11,7 +11,7 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   const female = await loadCatalog(read);
   const male = await loadCatalog(read, '../catalog-men/');
   const jans = new Set(female.products.map(p => p.jan));
-  assert.equal(male.products.length, 9);
+  assert.equal(male.products.length, 25);
   assert.ok(male.products.every(p => !jans.has(p.jan)));
   assert.equal(new Set(male.products.map(p=>p.jan)).size, male.products.length);
   for (const p of male.products) {
@@ -28,4 +28,22 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
     assert.ok(result[0].products.some(p=>p.category==='cleanser'));
     assert.ok(result[0].products.some(p=>p.category==='moisturizer'));
   }
+});
+
+test('men catalog supports makeup removal as standalone facial wash', async () => {
+  const male = await loadCatalog(read, '../catalog-men/');
+  const catalog = mergeCatalogData(male.products, male.pricing, male.usage);
+  const lookup = new Map(catalog.map(p => [p.jan, p]));
+  assert.equal(lookup.get('4901301389640').category, 'makeupRemover');
+  assert.equal(lookup.get('4901301389640').doubleCleanseNotNeeded, true);
+  assert.equal(lookup.get('4901301448484').category, 'cleanser');
+  assert.equal(lookup.get('4901301257680').referenceUses, 130);
+  assert.equal(male.pricing.prices['4901301267092'].retailer, 'ツルハグループe-shop');
+  assert.equal(lookup.get('4901301420121').evidence.activeIngredients.length, 2);
+  const best = optimize(catalog, {budget:5000, useMakeupRemover:true, concerns:['pores'],
+    priority:'simple', skinType:'unknown', finish:'any', ingredient:'none'})[0];
+  assert.ok(best, 'expected feasible makeup removal routine');
+  assert.ok(best.products.some(p => p.jan === '4901301389640'));
+  assert.ok(best.products.some(p => p.category === 'moisturizer'));
+  assert.ok(!best.products.some(p => p.category === 'cleanser'));
 });
