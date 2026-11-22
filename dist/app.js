@@ -97,10 +97,12 @@ function applicationRank(product){
 }
 
 // Category pictograms follow the approved outline design; they are not product packaging.
-const foamShape='M24 12C28 12 31 10 30 6C37 7 42 12 43 18C49 19 52 23 51 29C58 32 61 38 59 44C57 50 52 52 47 51C43 56 37 57 32 53C26 57 19 56 15 51C8 53 3 49 3 43C3 38 6 34 10 32C9 26 13 21 19 20C19 16 21 13 24 12Z';
+// Rounded bubbles overlap without a central peak or stacked tiers.
+const foamShape='M12 30C7 22 12 13 20 15C22 7 34 7 38 16C47 11 56 19 52 28C60 30 63 38 58 44C55 49 49 51 43 48C38 55 29 55 24 49C15 54 6 50 4 43C1 37 5 32 12 30Z';
+const foamBubbles='<path d="M16 29C13 24 17 19 22 20 M39 36C42 31 48 32 50 36" fill="none"/><circle cx="27" cy="39" r="3.5" fill="none"/>';
 const categorySymbols={
-  makeupRemover:`<path d="${foamShape}" fill="#d5dfd4"/>`,
-  cleanser:`<path d="${foamShape}"/>`,
+  makeupRemover:`<path d="${foamShape}" fill="#d5dfd4"/>${foamBubbles}`,
+  cleanser:`<path d="${foamShape}"/>${foamBubbles}`,
   toner:'<path d="M32 5C27 12 13 28 13 39A19 19 0 0 0 51 39C51 28 37 12 32 5Z"/>',
   moisturizer:'<path d="M8 42C9 33 20 29 31 28C38 27 41 23 39 19C45 20 50 25 51 31C58 35 61 42 57 47C51 54 13 55 7 47C6 45 7 43 8 42Z"/>',
   serum:'<path d="M29 13C27 26 23 30 11 33C23 36 27 40 29 53C32 40 36 36 48 33C36 30 32 26 29 13Z M49 7C48 12 46 14 41 16C46 18 48 20 49 25C51 20 53 18 58 16C53 14 51 12 49 7Z M12 45C11 49 9 51 5 52C9 53 11 55 12 59C14 55 16 53 20 52C16 51 14 49 12 45Z"/>',
