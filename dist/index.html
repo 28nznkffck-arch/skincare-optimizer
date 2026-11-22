@@ -6,15 +6,15 @@
   <meta name="theme-color" content="#f5f6f0">
   <meta name="description" content="予算と肌悩みから基礎化粧品を組み合わせる実験的なスキンケア最適化ツール。複数メーカーの公式商品情報を参照。">
   <title>スキンケア最適化ラボ｜試作</title>
-  <link rel="stylesheet" href="./styles.css?v=0.9.19">
-  <script id="app-script" type="module" src="./app.js?v=0.9.19"></script>
+  <link rel="stylesheet" href="./styles.css?v=0.9.20">
+  <script id="app-script" type="module" src="./app.js?v=0.9.20"></script>
 </head>
 <body>
   <div id="app"><main class="loading" aria-busy="true"><div id="catalog-progress"><div class="process-progress">
     <svg class="process-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 34C5 23 14 13 25 12c6-.5 10-3 12-6 7 14 6 29-6 33-8 3-15 0-19-5Z"/><path d="M8 43c0-11 7-17 20-23"/></svg><h1 class="process-heading">あなたに合うスキンケアを検索中</h1>
     <div class="process-meter">
-      <progress max="100" aria-label="アプリの準備の進捗">準備中</progress>
-      <strong class="process-percent">準備中</strong>
+      <div class="process-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="アプリの準備の進捗"><span style="width:0%"></span></div>
+      <strong class="process-percent">  0.00%</strong>
     </div>
     <p class="process-current" aria-live="polite">アプリの準備をしています…</p>
 

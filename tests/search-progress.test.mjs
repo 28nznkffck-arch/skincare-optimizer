@@ -79,10 +79,11 @@ test('search descriptions name actual categories and remain readable while perce
       const options={budget:5000,concerns:['dryness'],priority:'thorough',...extra},events=[];
       const result=optimize(items,options,event=>events.push({...event,time}));
       assert.deepEqual(result,optimize(items,options));
-      const detailed=events.filter(event=>event.detail);
+      const detailed=events.filter(event=>event.stage==='search' && BigInt(event.completed)>0n && !event.complete);
       assert(detailed.length>0,'a long search must report the category being compared');
       let changedAt=detailed[0].time,previous=detailed[0].current;
       for(const event of detailed){
+        assert.equal(event.detail,undefined,'search must not emit pruning explanations for the UI');
         assert.match(event.current,/^(?:洗顔の暫定一位を計算しています|(?:化粧水|美容液|乳液・クリームなど)と組み合わせています)……$/);
         assert.doesNotMatch(event.current,/試験|通常品|上回る可能性|組み合わせを省略/);
         if(event.current!==previous){
@@ -101,15 +102,16 @@ test('search descriptions name actual categories and remain readable while perce
 test('progress panel puts the actual percent beside the bar and the current task below it',()=>{
   const markup=renderProgress({title:'提案の探索',stage:'search',percent:37.5,current:'予算を超える枝を省略',evaluated:'100',skipped:'200',total:'800'});
   assert.match(markup,/class="process-icon"/);assert.match(markup,/あなたに合うスキンケアを検索中/);
-  assert.match(markup,/<progress[^>]*value="37.5"[^>]*>[\s\S]*?<\/progress>\s*<strong class="process-percent"> 37.50%<\/strong>/);
+  assert.match(markup,/<div class="process-track" role="progressbar"[^>]*aria-valuenow="37.5"[^>]*><span style="width:37.5%"><\/span><\/div>\s*<strong class="process-percent"> 37.50%<\/strong>/);
   assert.match(markup,/予算を超える枝を省略/);assert.doesNotMatch(markup,/評価 100 通り|省略 200 通り/);
-  assert.doesNotMatch(renderProgress({current:'候補を集計中'}),/value="/);
+  assert.doesNotMatch(renderProgress({current:'候補を集計中'}),/aria-valuenow=/);
+  assert.match(renderProgress({current:'候補を集計中'}),/process-percent">  0.00%/);
   assert.match(renderProgress({stage:'loading',percent:25,current:'products.csvの読み込みが完了'}),/商品データを読み込んでいます…/);
   assert.match(renderProgress({percent:0,current:'保湿の候補を評価・整理中'}),/保湿の候補を評価しています…/);
   assert.match(renderProgress({percent:25,current:'prices.csvの照合'},true),/停止時の処理：prices.csvの照合/);
   assert.match(renderProgress({current:'<script>bad</script>'}),/&lt;script&gt;/);
   assert.doesNotMatch(renderProgress({current:'美容液と組み合わせています……',detail:'予算で省略'}),/process-detail/);
-  assert.match(renderProgress({current:'候補を比較',detail:'<b>予算を確認</b>'},true),/&lt;b&gt;予算を確認&lt;\/b&gt;/);
+  assert.doesNotMatch(renderProgress({current:'美容液と組み合わせています……',detail:'今の有力候補と相性を比較し、上回る可能性のない組み合わせを省いています…'},true),/process-detail|上回る可能性/);
 });
 
 test('percentage keeps exactly two decimals and a seven-character field at every digit boundary',async()=>{
@@ -118,7 +120,14 @@ test('percentage keeps exactly two decimals and a seven-character field at every
     assert.equal(text,expected);assert.equal(text.length,7);
   }
   const css=await readFile(new URL('../dist/styles.css',import.meta.url),'utf8');
-  const rule=css.match(/\.process-percent\{([^}]+)\}/)[1];
-  assert.match(rule,/(?:^|;)width:7ch;/);assert.match(rule,/font-family:[^;]*monospace;/);
+  const rule=css.match(/\.process-percent\{([^}]+)\}/)[1],meter=css.match(/\.process-meter\{([^}]+)\}/)[1];
+  assert.match(rule,/(?:^|;)width:7ch;/);assert.match(rule,/max-width:7ch;/);assert.match(rule,/font:inherit;/);
+  assert.match(meter,/grid-template-columns:minmax\(0,1fr\) 7ch;/);assert.match(meter,/font-family:[^;]*monospace;/);
   assert.match(rule,/white-space:pre;/);assert.match(rule,/letter-spacing:0;/);
+  for(const page of ['../dist/index.html','../men/index.html']){
+    const html=await readFile(new URL(page,import.meta.url),'utf8');
+    assert.match(html,/class="process-track" role="progressbar"/);
+    assert.match(html,/<strong class="process-percent">  0.00%<\/strong>/);
+    assert.doesNotMatch(html,/<progress\b/);
+  }
 });

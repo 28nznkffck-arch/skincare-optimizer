@@ -1,3 +1,5 @@
+import {prepareConcernBound} from './concern-bound.js?v=0.9.20';
+
 export const CATEGORIES = ["makeupRemover", "cleanser", "toner", "serum", "moisturizer", "eyeCare"];
 export const CATEGORY_LABELS = {
   makeupRemover: "メイク落とし", cleanser: "洗顔", toner: "化粧水", serum: "美容液", moisturizer: "保湿", eyeCare: "目元ケア"
@@ -166,7 +168,7 @@ function searchProgress(grouped, report) {
     if(description && (displayedCurrent===null || now-lastDescriptionChange>=1000) && displayedCurrent!==description){
       displayedCurrent=description;lastDescriptionChange=now;
     }
-    report({stage:'search',current:description?displayedCurrent:current,...(description?{detail:current}:{}),percent:total?Number(completed*10000n/total)/100:(complete?100:0),
+    report({stage:'search',current:description?displayedCurrent:current,percent:total?Number(completed*10000n/total)/100:(complete?100:0),
       evaluated:String(evaluated),skipped:String(skipped),completed:String(completed),total:String(total),complete});
     last=now;
   };
@@ -336,7 +338,7 @@ function findBestRoutine(grouped, budget, options,progress) {
   let progressDepth=0;
   progress?.context(()=>describeCombination(chosen.slice(0,progressDepth).map(entry=>entry.product)));
   const depthBySlot = CATEGORIES.map((_, slot) => visitOrder.indexOf(slot));
-  let best, bestOrder;
+  let best, bestOrder,concernBound=null,visited=0;
   function scoreCeiling(depth, used) {
     const rest = remaining[depth];
     let score = -used.penalty - rest.penalty;
@@ -350,6 +352,7 @@ function findBestRoutine(grouped, budget, options,progress) {
       }
       score += round2((first * 7 + second * 3 + third) * weights[i]);
     }
+    const concernPoints=score+used.penalty+rest.penalty;
     const dryness = Math.max(used.dryness, rest.dryness);
     const oiliness = Math.max(used.oiliness, rest.oiliness);
     if (options.skinType === "dry") score += round2(dryness * 1.8);
@@ -364,7 +367,8 @@ function findBestRoutine(grouped, budget, options,progress) {
       if (used.count + count > 0)
         transparency = Math.max(transparency, (used.transparency + rest.transparencyByCount[count]) / (used.count + count));
     }
-    return round2(round2(score) + round2(transparency * CONCENTRATION_DISCLOSURE_BONUS));
+    const total=round2(round2(score) + round2(transparency * CONCENTRATION_DISCLOSURE_BONUS));
+    return {total,other:round2(total-concernPoints+used.penalty+rest.penalty)};
   }
 
   // 各品目以外を最安で揃えたときに、その品目へ使える残額を求める。
@@ -453,6 +457,7 @@ function findBestRoutine(grouped, budget, options,progress) {
   }
 
   function visit(depth, used) {
+    visited++;
     if(progress)progressDepth=depth;
     const rest = remaining[depth];
     const minCost = used.cost + rest.cost;
@@ -460,11 +465,20 @@ function findBestRoutine(grouped, budget, options,progress) {
       progress?.skip(counts[depth],minCost>budget?'月額予算を超える組み合わせを省いています…':'必須成分を含められない組み合わせを省いています…');return;
     }
     if (best) {
-      let ceiling = scoreCeiling(depth, used);
+      const bound=scoreCeiling(depth,used);
+      let ceiling = bound.total;
       if (ceiling < best.score || (ceiling === best.score && minCost > best.monthly)) {
         progress?.skip(counts[depth],ceiling<best.score?'今の有力候補と相性を比較し、上回る可能性のない組み合わせを省いています…':'相性が同じなら、月額費用の安い組み合わせを優先しています…');return;
       }
-      if(depth<=pairStart && !pairCanCompete(depth,used,ceiling)){
+      // 金額ではなく探索量で追加の準備を判断する。短い検索には実行しない。
+      if(!concernBound && visited>=4096){
+        const reference=best.products.map(product=>({points:concerns.map(concern=>Math.max(0,product.scores?.[concern]||0))}));
+        concernBound=prepareConcernBound(groups,weights,reference,best.score-scoreCeiling(0,empty).other);
+      }
+      if(concernBound && round2(concernBound(depth,chosen)+bound.other)<best.score){
+        progress?.skip(counts[depth],'肌悩みの重複を含む上限で首位に届かない枝を省略');return;
+      }
+      if(depth<=pairStart && !pairCanCompete(depth,used,bound.total)){
         progress?.skip(counts[depth],'実在する商品の組み合わせ上限で首位に届かない枝を省略');return;
       }
       // 安価な上限で残った枝だけ再確認する。計算結果のキャッシュは使わない。
