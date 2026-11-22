@@ -99,14 +99,13 @@ function applicationRank(product){
 // Category pictograms follow the approved outline design; they are not product packaging.
 // Rounded bubbles overlap without a central peak or stacked tiers.
 const foamShape='M12 30C7 22 12 13 20 15C22 7 34 7 38 16C47 11 56 19 52 28C60 30 63 38 58 44C55 49 49 51 43 48C38 55 29 55 24 49C15 54 6 50 4 43C1 37 5 32 12 30Z';
-const foamBubbles='<path d="M16 29C13 24 17 19 22 20 M39 36C42 31 48 32 50 36" fill="none"/><circle cx="27" cy="39" r="3.5" fill="none"/>';
 const categorySymbols={
-  makeupRemover:`<path d="${foamShape}" fill="#d5dfd4"/>${foamBubbles}`,
-  cleanser:`<path d="${foamShape}"/>${foamBubbles}`,
+  makeupRemover:`<path d="${foamShape}" fill="#d5dfd4"/>`,
+  cleanser:`<path d="${foamShape}"/>`,
   toner:'<path d="M32 5C27 12 13 28 13 39A19 19 0 0 0 51 39C51 28 37 12 32 5Z"/>',
   moisturizer:'<path d="M8 42C9 33 20 29 31 28C38 27 41 23 39 19C45 20 50 25 51 31C58 35 61 42 57 47C51 54 13 55 7 47C6 45 7 43 8 42Z"/>',
   serum:'<path d="M29 13C27 26 23 30 11 33C23 36 27 40 29 53C32 40 36 36 48 33C36 30 32 26 29 13Z M49 7C48 12 46 14 41 16C46 18 48 20 49 25C51 20 53 18 58 16C53 14 51 12 49 7Z M12 45C11 49 9 51 5 52C9 53 11 55 12 59C14 55 16 53 20 52C16 51 14 49 12 45Z"/>',
-  eyeCare:'<path d="M12 22Q32 8 52 22 M5 32Q32 20 59 32Q46 47 32 47Q18 47 5 32Z"/><path d="M23 28Q32 26 41 28C44 37 40 46 32 46S20 37 23 28Z" fill="currentColor" stroke="none"/><path d="M8 36L4 41 M19 44L17 49 M32 47V53 M45 44L47 49 M56 36L60 41"/>',
+  eyeCare:'<path d="M7 25Q32 47 57 25 M17 32L13 38 M32 36V43 M47 32L51 38" fill="none"/>',
 };
 function categoryIcon(category){
   return `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="white" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${categorySymbols[category]||''}</svg>`;
