@@ -1,8 +1,9 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.20';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.20';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.20';
-import {loadCatalog} from './catalog-csv.js?v=0.9.20';
-import {renderProgress} from './progress-view.js?v=0.9.20';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.21';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.21';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.21';
+import {loadCatalog} from './catalog-csv.js?v=0.9.21';
+import {renderProgress} from './progress-view.js?v=0.9.21';
+import {ingredientChoices} from './ingredient-options.js?v=0.9.21';
 
 const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
@@ -12,6 +13,7 @@ const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 const yen=n=>Number.isFinite(n)?Math.round(n).toLocaleString('ja-JP')+'円':'—';
 const app=document.getElementById('app');
 let catalog=[];
+let availableIngredients=['none'];
 let budgetRange=getBudgetRange(catalog);
 let savedPlanCatalog=[];
 let catalogLoaded=false;
@@ -104,7 +106,7 @@ function pickCurrent(){
     recommendationPending=true;recommendationError='';
     recommendationProgress={title:'候補の準備',stage:'preparing',percent:0,completed:0,total:CATEGORIES.length,unit:'品目',current:state.useMakeupRemover?'メイク落としの暫定一位を計算しています……':'洗顔の暫定一位を計算しています……'};
     try{
-      const worker=new Worker(new URL('./routine-worker.js?v=0.9.20',import.meta.url),{type:'module'});
+      const worker=new Worker(new URL('./routine-worker.js?v=0.9.21',import.meta.url),{type:'module'});
       recommendationWorker=worker;
       const failed=message=>{
         if(recommendationWorker!==worker)return;
@@ -207,7 +209,7 @@ function productCard(p){
 function formHtml(){
   // 指定なしは先頭に置き、成分は読みの五十音順にする。
   const ingredientGuides=new Map([['アラントイン','allantoin'],[DIPOTASSIUM_GLYCYRRHIZATE,'glycyrrhizate'],['セラミド機能成分','ceramide'],['ナイアシンアミド','niacinamide'],['ヒアルロン酸Na','hyaluronate']]);
-  const ingredients=['none',...ingredientGuides.keys()];
+  const ingredients=availableIngredients;
   const ingredientGuideUrl=`${IS_MEN?'../dist/':''}ingredients.html${ingredientGuides.has(state.ingredient)?`#${ingredientGuides.get(state.ingredient)}`:''}`;
   const locked=catalog.filter(product=>state.locked[product.category]===product.jan);
   const excluded=catalog.filter(product=>Object.hasOwn(state.excluded,product.jan));
@@ -409,7 +411,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell ${IS_MEN?'men-site':''}">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">${IS_MEN?'◆':'✿'}</span><span>${IS_MEN?'MEN’S SKINCARE LAB':'SKINCARE LAB'}</span></div><div class="topnav"><a class="variant-link" href="${IS_MEN?'../dist/':'../men/'}">${IS_MEN?'女性向け版':'男性向け版'}</a><span class="tag">${IS_MEN?'MEN / BETA':'PROTOTYPE'} v0.9.20</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">${IS_MEN?'◆':'✿'}</span><span>${IS_MEN?'MEN’S SKINCARE LAB':'SKINCARE LAB'}</span></div><div class="topnav"><a class="variant-link" href="${IS_MEN?'../dist/':'../men/'}">${IS_MEN?'女性向け版':'男性向け版'}</a><span class="tag">${IS_MEN?'MEN / BETA':'PROTOTYPE'} v0.9.21</span></div></header>
     <section class="hero"><div><div class="eyebrow">${IS_MEN?'MEN’S SKINCARE, DATA FIRST':'SMART ROUTINE, SMALL BUDGET'}</div><h1>${IS_MEN?'男性向けスキンケアを、<br>予算と肌悩みから。':'肌にも、予算にも。<br>ちょうどいい組み合わせ。'}</h1><p>${IS_MEN?'男性向け商品の中から、洗顔と保湿を軸に組み合わせを提案します。<br>選定方法は共通、商品データは男性版専用です。':'肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。'}</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}
@@ -546,6 +548,7 @@ loadCatalog(undefined, IS_MEN ? '../catalog-men/' : '../catalog/',progress=>{
   if(target)target.innerHTML=renderProgress(progress);
 }).then(({products, archivedProducts, pricing, usage, meta: catalogMeta})=>{
   catalog=mergeCatalogData(products,pricing,usage);meta=catalogMeta;
+  availableIngredients=ingredientChoices(catalog);
   budgetRange=getBudgetRange(catalog);
   const archived=mergeCatalogData(archivedProducts,pricing,usage);
   savedPlanCatalog=[...catalog,...archived.map(product=>({...product,archived:true}))];

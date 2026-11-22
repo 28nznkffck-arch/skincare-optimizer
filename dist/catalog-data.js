@@ -1,7 +1,8 @@
-import {monthlyCost} from './optimizer.js?v=0.9.20';
+import {monthlyCost} from './optimizer.js?v=0.9.21';
+import {canonicalIngredient,ingredientChoices} from './ingredient-options.js?v=0.9.21';
+export {DIPOTASSIUM_GLYCYRRHIZATE} from './ingredient-options.js?v=0.9.21';
 
 export const DEFAULT_BUDGET = 5000;
-export const DIPOTASSIUM_GLYCYRRHIZATE = 'グリチルリチン酸ジカリウム';
 
 // しっかりケアで全品目を選べるときの月額を、スライダーの上限に使う。
 export function getBudgetRange(catalog) {
@@ -98,6 +99,7 @@ export function reconcileCatalogState(state, catalog) {
   const manualCategories = Array.isArray(state.manual) ? state.manual.map(id => categories.get(id)) : [];
   const manual = manualCategories.length && !manualCategories.includes(undefined)
     && new Set(manualCategories).size === manualCategories.length ? state.manual : null;
-  const ingredient = state.ingredient === 'グリチルリチン酸2K' ? DIPOTASSIUM_GLYCYRRHIZATE : state.ingredient;
+  let ingredient = canonicalIngredient(state.ingredient);
+  if(ingredient && !ingredientChoices(catalog).includes(ingredient))ingredient='none';
   return {...state, ingredient, locked, manual, excluded: state.excluded ?? {}};
 }

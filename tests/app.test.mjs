@@ -5,6 +5,7 @@ import {loadCatalog} from '../dist/catalog-csv.js';
 import {createSavedPlan, savedPlanTotals} from '../dist/plans.js';
 import {mergeCatalogData} from '../dist/catalog-data.js';
 import {monthlyCost, optimize, usesOf} from '../dist/optimizer.js';
+import {ingredientChoices} from '../dist/ingredient-options.js';
 
 const settingsKey = 'skincare-lab-settings-jan';
 const plansKey = 'skincare-lab-saved-routines-jan';
@@ -50,10 +51,33 @@ test('background selection renders controls first and rejects results from super
 test('ingredient choices use Japanese reading order while preserving guide destinations',async()=>{
   const {app}=await openApp('ingredient-reading-order',{[settingsKey]:{ingredient:'ナイアシンアミド'}});
   const select=app.markup.match(/<select[^>]*id="ingredient"[\s\S]*?<\/select>/)[0];
-  assert.deepEqual([...select.matchAll(/<option value="([^"]+)"/g)].map(match=>match[1]),['none','アラントイン','グリチルリチン酸ジカリウム','セラミド機能成分','ナイアシンアミド','ヒアルロン酸Na']);
+  const choices=[...select.matchAll(/<option value="([^"]+)"/g)].map(match=>match[1]);
+  assert.deepEqual(choices,ingredientChoices(catalog));
+  for(const name of ['トラネキサム酸','レチノール','ビタミンC誘導体','ヘパリン類似物質'])assert(choices.includes(name));
+  assert(choices.indexOf('アラントイン')<choices.indexOf('グリチルリチン酸ジカリウム'));
+  assert(choices.indexOf('グリチルリチン酸ジカリウム')<choices.indexOf('セラミド機能成分'));
   assert.match(app.markup,/ingredients\.html#niacinamide/);
   const guide=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
   assert.deepEqual([...guide.matchAll(/<article class="panel ingredient-card" id="([^"]+)"/g)].map(match=>match[1]),['allantoin','glycyrrhizate','ceramide','niacinamide','hyaluronate']);
+});
+
+test('female and male ingredient selectors follow their own catalogs and retain saved selections',async()=>{
+  const female=await openApp('female-retinol-selection',{[settingsKey]:{ingredient:'レチノール'}});
+  assert.match(female.app.markup,/<option value="レチノール" selected>/);
+  female.change({dataset:{field:'ingredient'},value:'トラネキサム酸'});
+  assert.equal(female.saved(settingsKey).ingredient,'トラネキサム酸');
+  assert.match(female.app.markup,/<option value="トラネキサム酸" selected>/);
+
+  const maleKey='skincare-lab-men-settings-jan';
+  const male=await openApp('male-tranexamic-selection',{[maleKey]:{ingredient:'トラネキサム酸'},[settingsKey]:{ingredient:'レチノール'}},true);
+  const select=male.app.markup.match(/<select[^>]*id="ingredient"[\s\S]*?<\/select>/)[0];
+  assert.match(select,/<option value="トラネキサム酸" selected>/);
+  assert.match(select,/<option value="グリシルグリシン"/);
+  assert.doesNotMatch(select,/value="レチノール"|value="ヘパリン類似物質"|value="セラミド機能成分"/);
+  assert.match(male.app.markup,/href="\.\.\/dist\/ingredients\.html"/);
+  male.change({dataset:{field:'ingredient'},value:'ナイアシンアミド'});
+  assert.equal(male.saved(maleKey).ingredient,'ナイアシンアミド');
+  assert.equal(male.saved(settingsKey).ingredient,'レチノール');
 });
 
 test('background selection failure offers retry without deleting saved plans', async () => {
@@ -72,7 +96,7 @@ test('background selection failure offers retry without deleting saved plans', a
   }
 });
 
-async function openApp(name, savedState) {
+async function openApp(name, savedState,men=false) {
   const handlers = new Map();
   const storage = new Map(Object.entries(savedState).map(([key, value]) => [key, JSON.stringify(value)]));
   let finishRender;
@@ -84,7 +108,7 @@ async function openApp(name, savedState) {
   };
   const stub = {addEventListener() {}};
   globalThis.document = {getElementById: id => id === 'app' ? app : stub};
-  globalThis.window = stub;
+  globalThis.window = {...stub,location:{pathname:men?'/skincare-optimizer/men/':'/skincare-optimizer/dist/'}};
   globalThis.localStorage = {
     getItem: key => storage.get(key),
     setItem: (key, value) => storage.set(key, value)
@@ -92,7 +116,7 @@ async function openApp(name, savedState) {
   globalThis.fetch = async url => new Response(await read(url));
   await import(`../dist/app.js?${name}`);
   await rendered;
-  assert.match(app.markup, /PROTOTYPE/);
+  assert.match(app.markup,men?/MEN \/ BETA/:/PROTOTYPE/);
   return {
     app,
     saved: key => JSON.parse(storage.get(key)),
