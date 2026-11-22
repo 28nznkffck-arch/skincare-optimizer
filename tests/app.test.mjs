@@ -28,7 +28,8 @@ test('background selection renders controls first and rejects results from super
     workers[0].onmessage({data:{progress:{phase:'recommendation',title:'提案の探索',stage:'search',percent:25,current:'組み合わせの採点',evaluated:'1',skipped:'3',completed:'4',total:'16'}}});
     assert.equal(app.markup,beforeProgress,'progress must not replace the condition controls');
     assert.match(document.getElementById('recommendation-progress').innerHTML,/25%/);
-    assert.match(document.getElementById('recommendation-progress').innerHTML,/省略 3 通り/);
+    assert.match(document.getElementById('recommendation-progress').innerHTML,/組み合わせの採点/);
+    assert.match(app.markup,/class="progress-screen"/);
     const first=workers[0];change({dataset:{field:'budget'},value:'6000'});
     assert(first.terminated);assert.equal(workers.length,2);
     first.onmessage({data:{routine:null,minimumMonthly:12345}});

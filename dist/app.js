@@ -1,8 +1,8 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.14';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.14';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.14';
-import {loadCatalog} from './catalog-csv.js?v=0.9.14';
-import {renderProgress} from './progress-view.js?v=0.9.14';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.15';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.15';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.15';
+import {loadCatalog} from './catalog-csv.js?v=0.9.15';
+import {renderProgress} from './progress-view.js?v=0.9.15';
 
 const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
@@ -104,7 +104,7 @@ function pickCurrent(){
     recommendationPending=true;recommendationError='';
     recommendationProgress={title:'候補の準備',stage:'preparing',percent:0,completed:0,total:CATEGORIES.length,unit:'品目',current:'品目別の候補を整理しています'};
     try{
-      const worker=new Worker(new URL('./routine-worker.js?v=0.9.14',import.meta.url),{type:'module'});
+      const worker=new Worker(new URL('./routine-worker.js?v=0.9.15',import.meta.url),{type:'module'});
       recommendationWorker=worker;
       const failed=message=>{
         if(recommendationWorker!==worker)return;
@@ -253,13 +253,13 @@ function formHtml(){
 }
 
 function recommendationProgressHtml(){
-  const previous=recommendationProgress?.phase==='minimum'?'<p class="process-note">提案の探索は100%完了。予算内の候補がなかったため、別工程で最低予算を調べています。</p>':'';
-  return previous+renderProgress(recommendationProgress||{});
+  const note=recommendationProgress?.phase==='minimum'?'提案の探索は100%完了。予算内の候補がなかったため、別工程で最低予算を調べています。':'';
+  return renderProgress({...recommendationProgress,note});
 }
 
 function summaryHtml(){
   if(!state.concerns.length) return '<section class="panel summary"><h2>肌悩みを選ぶと提案します</h2></section>';
-  if(recommendationPending)return `<section class="panel summary"><h2>条件に合う組み合わせを計算中…</h2><div id="recommendation-progress">${recommendationProgressHtml()}</div><p class="summary-note">条件の変更や、成分の解説はそのまま使えます。</p></section>`;
+  if(recommendationPending)return `<section class="progress-screen" aria-label="条件に合う組み合わせを計算中" aria-busy="true"><div id="recommendation-progress">${recommendationProgressHtml()}</div></section>`;
   if(recommendationError)return `<section class="panel summary" role="alert"><h2>提案の計算を完了できませんでした</h2><p class="summary-note">${escape(recommendationError)}</p>${recommendationProgress?renderProgress(recommendationProgress,true):''}<button type="button" class="button" data-action="retryRecommendation">もう一度計算する</button></section>`;
   if(!current){
     const settings={...options(),budget:Infinity,resultLimit:1};

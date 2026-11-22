@@ -69,10 +69,14 @@ test('empty candidate sets complete with zero work and large counts retain integ
   assert(total>BigInt(Number.MAX_SAFE_INTEGER));assert.equal(last.total,String(total));assert.equal(last.skipped,String(total));assert.equal(last.evaluated,'0');assert.equal(last.percent,100);
 });
 
-test('progress view shows true counts and stage, with no fabricated percent for unknown work',()=>{
+test('progress panel puts the actual percent beside the bar and the current task below it',()=>{
   const markup=renderProgress({title:'提案の探索',stage:'search',percent:37.5,current:'予算を超える枝を省略',evaluated:'100',skipped:'200',total:'800'});
-  assert.match(markup,/value="37.5"/);assert.match(markup,/37.5%/);assert.match(markup,/評価 100 通り・省略 200 通り/);assert.match(markup,/予算を超える枝を省略/);
+  assert.match(markup,/class="process-icon"/);assert.match(markup,/あなたに合うスキンケアを検索中/);
+  assert.match(markup,/<progress[^>]*value="37.5"[^>]*>[\s\S]*?<\/progress>\s*<strong class="process-percent">37.5%<\/strong>/);
+  assert.match(markup,/予算を超える枝を省略/);assert.doesNotMatch(markup,/評価 100 通り|省略 200 通り/);
   assert.doesNotMatch(renderProgress({current:'候補を集計中'}),/value="/);
+  assert.match(renderProgress({stage:'loading',percent:25,current:'products.csvの読み込みが完了'}),/商品データを読み込んでいます…/);
+  assert.match(renderProgress({percent:0,current:'保湿の候補を評価・整理中'}),/保湿の候補を評価しています…/);
   assert.match(renderProgress({percent:25,current:'prices.csvの照合'},true),/停止時の処理：prices.csvの照合/);
   assert.match(renderProgress({current:'<script>bad</script>'}),/&lt;script&gt;/);
 });

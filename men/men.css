@@ -2,6 +2,12 @@
    a dark green canvas with light, sage-tinted working surfaces. Shared UI logic
    and the women’s /dist/ styles remain unchanged. */
 body.men-theme{
+  --process-panel:#e6f1e5;
+  --process-text:#213b2f;
+  --process-accent:#397c53;
+  --process-track:#cbded0;
+  --process-border:#bfd4c3;
+  --process-backdrop:#173d32f5;
   min-height:100vh;
   background:linear-gradient(155deg,#163b30 0%,#1d4b3b 48%,#285a44 100%);
   background-attachment:fixed;
