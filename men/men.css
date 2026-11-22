@@ -7,7 +7,6 @@ body.men-theme{
   --process-accent:#397c53;
   --process-track:#cbded0;
   --process-border:#bfd4c3;
-  --process-backdrop:#173d32f5;
   min-height:100vh;
   background:linear-gradient(155deg,#163b30 0%,#1d4b3b 48%,#285a44 100%);
   background-attachment:fixed;

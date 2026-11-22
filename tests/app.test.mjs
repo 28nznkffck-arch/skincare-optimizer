@@ -29,7 +29,8 @@ test('background selection renders controls first and rejects results from super
     assert.equal(app.markup,beforeProgress,'progress must not replace the condition controls');
     assert.match(document.getElementById('recommendation-progress').innerHTML,/25%/);
     assert.match(document.getElementById('recommendation-progress').innerHTML,/組み合わせの採点/);
-    assert.match(app.markup,/class="progress-screen"/);
+    assert.match(app.markup,/class="recommendation-loading"/);
+    assert.doesNotMatch(app.markup,/class="progress-screen"/);
     const first=workers[0];change({dataset:{field:'budget'},value:'6000'});
     assert(first.terminated);assert.equal(workers.length,2);
     first.onmessage({data:{routine:null,minimumMonthly:12345}});

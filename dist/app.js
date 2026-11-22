@@ -259,7 +259,7 @@ function recommendationProgressHtml(){
 
 function summaryHtml(){
   if(!state.concerns.length) return '<section class="panel summary"><h2>肌悩みを選ぶと提案します</h2></section>';
-  if(recommendationPending)return `<section class="progress-screen" aria-label="条件に合う組み合わせを計算中" aria-busy="true"><div id="recommendation-progress">${recommendationProgressHtml()}</div></section>`;
+  if(recommendationPending)return `<section class="recommendation-loading" aria-label="条件に合う組み合わせを計算中" aria-busy="true"><div id="recommendation-progress">${recommendationProgressHtml()}</div></section>`;
   if(recommendationError)return `<section class="panel summary" role="alert"><h2>提案の計算を完了できませんでした</h2><p class="summary-note">${escape(recommendationError)}</p>${recommendationProgress?renderProgress(recommendationProgress,true):''}<button type="button" class="button" data-action="retryRecommendation">もう一度計算する</button></section>`;
   if(!current){
     const settings={...options(),budget:Infinity,resultLimit:1};

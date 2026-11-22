@@ -80,10 +80,10 @@
 .ingredient-help:focus-visible{outline:2px solid #426c58;outline-offset:4px}
 
 .startup-retry{display:inline-block;margin-top:12px;text-decoration:none}
-:root{--process-panel:#edf3ee;--process-text:#273b33;--process-accent:#6c8b77;--process-track:#d8e3db;--process-border:#dfe8df;--process-backdrop:#f5f6f0f5}
-.loading,.progress-screen{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:24px}
-.progress-screen{position:fixed;inset:0;z-index:80;overflow-y:auto;background:var(--process-backdrop)}
-.loading-progress,#catalog-progress,#recommendation-progress{width:min(100%,560px);min-width:0;margin:auto}
+:root{--process-panel:#edf3ee;--process-text:#273b33;--process-accent:#6c8b77;--process-track:#d8e3db;--process-border:#dfe8df}
+.loading{min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:24px}
+.loading-progress,#catalog-progress{width:min(100%,560px);min-width:0;margin:auto}
+#recommendation-progress{width:100%;min-width:0}
 .process-progress{width:100%;padding:36px 32px;background:var(--process-panel);color:var(--process-text);border:1px solid var(--process-border);border-radius:24px;text-align:center;overflow-wrap:anywhere}
 .process-icon{display:block;width:52px;height:52px;margin:0 auto;color:var(--process-accent)}
 .process-heading{font-size:clamp(20px,4.8vw,25px);font-weight:700;line-height:1.65;letter-spacing:-.025em;text-wrap:balance;margin:22px 0 30px}
@@ -97,4 +97,8 @@
 .process-note,.process-phase{font-size:12px;line-height:1.8;color:#5a7362;margin:14px 0 0}
 .process-stopped{max-width:520px;margin:20px auto}
 .process-stopped .process-phase{margin:0 0 14px}
-@media(max-width:520px){.loading,.progress-screen{padding:18px}.process-progress{padding:28px 22px;border-radius:22px}.process-heading{margin:18px 0 25px}.process-icon{width:46px;height:46px}.process-meter{gap:11px}.process-percent{font-size:22px}.process-current{font-size:14px;margin-top:20px}}
+@media(max-width:520px){.loading{padding:18px}.process-progress{padding:28px 22px;border-radius:22px}.process-heading{margin:18px 0 25px}.process-icon{width:46px;height:46px}.process-meter{gap:11px}.process-percent{font-size:22px}.process-current{font-size:14px;margin-top:20px}}
+.recommendation-loading .process-progress{padding:24px}
+.recommendation-loading .process-icon{width:32px;height:32px}
+.recommendation-loading .process-heading{font-size:18px;margin:12px 0 18px}
+.recommendation-loading .process-current{font-size:13px;margin-top:14px}
