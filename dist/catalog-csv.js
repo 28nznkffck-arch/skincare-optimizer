@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.8.24';
+import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.9.13';
 
 const RETAILERS = ['マツキヨココカラオンライン', 'ツルハグループe-shop', 'ウエルシア'];
 
@@ -256,9 +256,17 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
 }
 
 async function fetchCatalogFile(url) {
-  const response = await fetch(url, {cache: 'no-store'});
-  if (!response.ok) throw new Error(`商品データを読み込めません：${url.pathname.split('/').at(-1)}`);
-  return response.text();
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),20000);
+  const name=url.pathname.split('/').at(-1);
+  try {
+    const response = await fetch(url, {cache: 'no-store',signal:controller.signal});
+    if (!response.ok) throw new Error(`商品データを読み込めません：${name}`);
+    return await response.text();
+  } catch(error) {
+    if(controller.signal.aborted)throw new Error(`商品データの読み込みが時間内に完了しませんでした：${name}`);
+    throw error;
+  } finally { clearTimeout(timer); }
 }
 
 export async function loadCatalog(readFile = fetchCatalogFile, catalogFolder = '../catalog/') {

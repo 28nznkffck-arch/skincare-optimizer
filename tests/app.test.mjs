@@ -12,6 +12,50 @@ const read = url => readFile(url, 'utf8');
 const {products, pricing, usage} = await loadCatalog(read);
 const catalog = mergeCatalogData(products, pricing, usage);
 
+test('background selection renders controls first and rejects results from superseded conditions', async () => {
+  const original=globalThis.Worker,workers=[];
+  class PendingWorker {
+    constructor(url,options){assert.match(String(url),/routine-worker\.js\?v=/);assert.equal(options.type,'module');workers.push(this);}
+    postMessage(request){this.request=request;}
+    terminate(){this.terminated=true;}
+  }
+  globalThis.Worker=PendingWorker;
+  try {
+    const settings={budget:5000,concerns:['pores','dullness'],priority:'simple'};
+    const {app,change}=await openApp('background-selection',{[settingsKey]:settings});
+    assert.match(app.markup,/選定条件/);assert.match(app.markup,/組み合わせを計算中/);assert.match(app.markup,/成分の解説/);
+    const first=workers[0];change({dataset:{field:'budget'},value:'6000'});
+    assert(first.terminated);assert.equal(workers.length,2);
+    first.onmessage({data:{routine:null,minimumMonthly:12345}});
+    assert.match(app.markup,/組み合わせを計算中/);assert.doesNotMatch(app.markup,/12,345円/);
+    const second=workers[1],routine=optimize(catalog,{...second.request.options,resultLimit:1})[0];
+    second.onmessage({data:{routine,minimumMonthly:null}});
+    assert(second.terminated);assert.equal(workers.length,2);assert.match(app.markup,/class="panel recommendation"/);assert.doesNotMatch(app.markup,/組み合わせを計算中/);
+    change({dataset:{field:'budget'},value:'300'});
+    workers[2].onmessage({data:{routine:null,minimumMonthly:371}});
+    assert.match(app.markup,/月額371円/);assert.doesNotMatch(app.markup,/組み合わせを計算中/);
+  } finally {
+    for(const worker of workers)if(!worker.terminated)worker.onerror?.();
+    if(original===undefined)delete globalThis.Worker;else globalThis.Worker=original;
+  }
+});
+
+test('background selection failure offers retry without deleting saved plans', async () => {
+  const original=globalThis.Worker,workers=[];
+  class PendingWorker{constructor(){workers.push(this);}postMessage(){}terminate(){this.terminated=true;}}
+  globalThis.Worker=PendingWorker;
+  try {
+    const storedPlan={id:'retained-plan',name:'保持する組み合わせ',productJans:[catalog.find(p=>p.category==='cleanser').jan,catalog.find(p=>p.category==='moisturizer').jan]};
+    const {app,click,saved}=await openApp('background-failure',{[settingsKey]:{concerns:['pores']},[plansKey]:[storedPlan]});
+    workers[0].onerror();assert.match(app.markup,/計算を完了できませんでした/);assert.match(app.markup,/もう一度計算する/);assert.deepEqual(saved(plansKey),[storedPlan]);
+    click('retryRecommendation');assert.equal(workers.length,2);assert.match(app.markup,/組み合わせを計算中/);assert.deepEqual(saved(plansKey),[storedPlan]);
+    workers[1].onerror();
+  } finally {
+    for(const worker of workers)if(!worker.terminated)worker.onerror?.();
+    if(original===undefined)delete globalThis.Worker;else globalThis.Worker=original;
+  }
+});
+
 async function openApp(name, savedState) {
   const handlers = new Map();
   const storage = new Map(Object.entries(savedState).map(([key, value]) => [key, JSON.stringify(value)]));

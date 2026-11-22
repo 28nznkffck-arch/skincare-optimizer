@@ -33,6 +33,23 @@ const data = {
   scoresCsv: csv('scores', [{JAN: jan, 乾燥: 0, くすみ: 2, '黒ずみ・角栓': 3}]),
 };
 
+test('a stalled catalog request aborts with the failing file name', async () => {
+  const originalFetch=globalThis.fetch,originalSetTimeout=globalThis.setTimeout,originalClearTimeout=globalThis.clearTimeout;
+  const timers=new Set();
+  globalThis.setTimeout=(callback,delay,...args)=>{
+    if(delay!==20000)return originalSetTimeout(callback,delay,...args);
+    const timer=Symbol();timers.add(timer);queueMicrotask(callback);return timer;
+  };
+  globalThis.clearTimeout=timer=>{if(typeof timer==='symbol')timers.delete(timer);else originalClearTimeout(timer);};
+  globalThis.fetch=(_url,{signal})=>new Promise((_resolve,reject)=>signal.addEventListener('abort',()=>reject(new DOMException('Aborted','AbortError')),{once:true}));
+  try {
+    await assert.rejects(loadCatalog(),/読み込みが時間内に完了しませんでした：products\.csv/);
+    assert.equal(timers.size,0);
+  } finally {
+    globalThis.fetch=originalFetch;globalThis.setTimeout=originalSetTimeout;globalThis.clearTimeout=originalClearTimeout;
+  }
+});
+
 test('CSV preserves JAN and quoted cells and feeds the existing usage and pricing calculation', () => {
   const {products, pricing, usage} = parseCatalog(data);
   const [item] = mergeCatalogData(products, pricing, usage);

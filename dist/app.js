@@ -1,7 +1,7 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.8.24';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.8.26';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.8.24';
-import {loadCatalog} from './catalog-csv.js?v=0.9.7';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.13';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.13';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.13';
+import {loadCatalog} from './catalog-csv.js?v=0.9.13';
 
 const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
@@ -21,6 +21,19 @@ let current=null;
 let isManual=false;
 let pendingExclude=null;
 let expandedPlanId=null;
+let recommendationWorker=null;
+let recommendationTimer=null;
+let recommendationKey=null;
+let recommendationResult=null;
+let recommendationMinimum=null;
+let recommendationPending=false;
+let recommendationError='';
+
+function stopRecommendationWorker(){
+  recommendationWorker?.terminate();
+  recommendationWorker=null;
+  clearTimeout(recommendationTimer);
+}
 
 function load(){
   try {
@@ -68,10 +81,51 @@ function findManual(){
 }
 
 function pickCurrent(){
-  const ranked=optimize(catalog,{...options(),resultLimit:1});
   const manual=findManual();
   isManual=Boolean(manual);
-  current=manual||ranked[0]||null;
+  if(manual || !state.concerns.length){
+    stopRecommendationWorker();recommendationKey=null;recommendationPending=false;recommendationError='';
+    current=manual||null;
+    return current;
+  }
+  // 重い探索を画面の描画から分ける。固定・採点・予算の判定は同じエンジンを使う。
+  if(typeof Worker==='undefined'){
+    current=optimize(catalog,{...options(),resultLimit:1})[0]||null;
+    return current;
+  }
+  const {manual: ignoredManual,manualExtraBudget,swapCategory,swapExtra,...settings}=options();
+  const key=JSON.stringify(settings);
+  if(key!==recommendationKey){
+    stopRecommendationWorker();recommendationKey=key;
+    recommendationResult=null;recommendationMinimum=null;
+    recommendationPending=true;recommendationError='';
+    try{
+      const worker=new Worker(new URL('./routine-worker.js?v=0.9.13',import.meta.url),{type:'module'});
+      recommendationWorker=worker;
+      const failed=message=>{
+        if(recommendationWorker!==worker)return;
+        stopRecommendationWorker();recommendationPending=false;recommendationError=message;
+        render();
+      };
+      worker.onmessage=event=>{
+        if(recommendationWorker!==worker)return;
+        if(event.data.error){failed(event.data.error);return;}
+        const result=event.data.routine;
+        const byJan=new Map(catalog.map(product=>[product.jan,product]));
+        recommendationResult=result?{...result,products:result.products.map(product=>byJan.get(product.jan))}:null;
+        recommendationMinimum=event.data.minimumMonthly;
+        stopRecommendationWorker();recommendationPending=false;
+        render();
+      };
+      worker.onerror=()=>failed('計算に必要なファイルを読み込めませんでした。もう一度計算するか、ページを読み込み直してください。');
+      recommendationTimer=setTimeout(()=>failed('この条件の計算に時間がかかっています。条件を変更するか、もう一度計算してください。'),60000);
+      worker.postMessage({catalog,options:settings});
+    }catch(error){
+      stopRecommendationWorker();recommendationPending=false;
+      recommendationError='提案の計算を開始できませんでした。ページを読み込み直してください。';
+    }
+  }
+  current=recommendationResult;
   return current;
 }
 
@@ -189,10 +243,13 @@ function formHtml(){
 
 function summaryHtml(){
   if(!state.concerns.length) return '<section class="panel summary"><h2>肌悩みを選ぶと提案します</h2></section>';
+  if(recommendationPending)return '<section class="panel summary" role="status" aria-live="polite"><h2>条件に合う組み合わせを計算中…</h2><p class="summary-note">条件の変更や、成分の解説はそのまま使えます。</p></section>';
+  if(recommendationError)return `<section class="panel summary" role="alert"><h2>提案の計算を完了できませんでした</h2><p class="summary-note">${escape(recommendationError)}</p><button type="button" class="button" data-action="retryRecommendation">もう一度計算する</button></section>`;
   if(!current){
     const settings={...options(),budget:Infinity,resultLimit:1};
-    const possible=optimize(catalog,settings).length>0;
-    const cheapest=possible?optimize(catalog,{...settings,objective:'minimumMonthly'})[0]:null;
+    const possible=typeof Worker==='undefined'?optimize(catalog,settings).length>0:false;
+    const cheapest=typeof Worker==='undefined'?(possible?optimize(catalog,{...settings,objective:'minimumMonthly'})[0]:null):
+      (recommendationMinimum===null?null:{monthly:recommendationMinimum});
     const remover=catalog.find(p=>p.jan===state.locked.makeupRemover);
     const cleansingConflict=state.useMakeupRemover && state.priority==='simple' && !state.locked.cleanser && remover && !remover.doubleCleanseNotNeeded;
     const reason=cheapest?`今の条件で組める最安の組み合わせは月額${yen(cheapest.monthly)}です。`:
@@ -368,6 +425,7 @@ function renderAfterControl(control, selector, matches, fallback){
 app.addEventListener('click',e=>{
   const btn=e.target.closest('[data-action]'); if(!btn)return;
   const {action,id}=btn.dataset;
+  if(action==='retryRecommendation')recommendationKey=null;
   const matches=next=>next.dataset.action===action && next.dataset.id===id;
   if(action==='budgetStep'){
     setBudget(state.budget+(id==='down'?-budgetRange.step:budgetRange.step));

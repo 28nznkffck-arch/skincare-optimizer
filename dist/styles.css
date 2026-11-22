@@ -78,3 +78,5 @@
 .ingredient-heading .field-title{margin:0}
 .ingredient-help{font-size:11px;line-height:1.8;padding:7px 0;text-underline-offset:3px;white-space:nowrap}
 .ingredient-help:focus-visible{outline:2px solid #426c58;outline-offset:4px}
+
+.startup-retry{display:inline-block;margin-top:12px;text-decoration:none}
