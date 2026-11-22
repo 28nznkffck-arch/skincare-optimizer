@@ -1,7 +1,8 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.13';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.13';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.13';
-import {loadCatalog} from './catalog-csv.js?v=0.9.13';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.14';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.14';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.14';
+import {loadCatalog} from './catalog-csv.js?v=0.9.14';
+import {renderProgress} from './progress-view.js?v=0.9.14';
 
 const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
@@ -28,6 +29,8 @@ let recommendationResult=null;
 let recommendationMinimum=null;
 let recommendationPending=false;
 let recommendationError='';
+let recommendationProgress=null;
+let catalogProgress=null;
 
 function stopRecommendationWorker(){
   recommendationWorker?.terminate();
@@ -99,8 +102,9 @@ function pickCurrent(){
     stopRecommendationWorker();recommendationKey=key;
     recommendationResult=null;recommendationMinimum=null;
     recommendationPending=true;recommendationError='';
+    recommendationProgress={title:'候補の準備',stage:'preparing',percent:0,completed:0,total:CATEGORIES.length,unit:'品目',current:'品目別の候補を整理しています'};
     try{
-      const worker=new Worker(new URL('./routine-worker.js?v=0.9.13',import.meta.url),{type:'module'});
+      const worker=new Worker(new URL('./routine-worker.js?v=0.9.14',import.meta.url),{type:'module'});
       recommendationWorker=worker;
       const failed=message=>{
         if(recommendationWorker!==worker)return;
@@ -109,6 +113,12 @@ function pickCurrent(){
       };
       worker.onmessage=event=>{
         if(recommendationWorker!==worker)return;
+        if(event.data.progress){
+          recommendationProgress=event.data.progress;
+          const target=document.getElementById('recommendation-progress');
+          if(target)target.innerHTML=recommendationProgressHtml();
+          return;
+        }
         if(event.data.error){failed(event.data.error);return;}
         const result=event.data.routine;
         const byJan=new Map(catalog.map(product=>[product.jan,product]));
@@ -195,7 +205,8 @@ function productCard(p){
 }
 
 function formHtml(){
-  const ingredientGuides=new Map([['ナイアシンアミド','niacinamide'],['セラミド機能成分','ceramide'],['アラントイン','allantoin'],['ヒアルロン酸Na','hyaluronate'],[DIPOTASSIUM_GLYCYRRHIZATE,'glycyrrhizate']]);
+  // 指定なしは先頭に置き、成分は読みの五十音順にする。
+  const ingredientGuides=new Map([['アラントイン','allantoin'],[DIPOTASSIUM_GLYCYRRHIZATE,'glycyrrhizate'],['セラミド機能成分','ceramide'],['ナイアシンアミド','niacinamide'],['ヒアルロン酸Na','hyaluronate']]);
   const ingredients=['none',...ingredientGuides.keys()];
   const ingredientGuideUrl=`${IS_MEN?'../dist/':''}ingredients.html${ingredientGuides.has(state.ingredient)?`#${ingredientGuides.get(state.ingredient)}`:''}`;
   const locked=catalog.filter(product=>state.locked[product.category]===product.jan);
@@ -241,10 +252,15 @@ function formHtml(){
   </aside>`;
 }
 
+function recommendationProgressHtml(){
+  const previous=recommendationProgress?.phase==='minimum'?'<p class="process-note">提案の探索は100%完了。予算内の候補がなかったため、別工程で最低予算を調べています。</p>':'';
+  return previous+renderProgress(recommendationProgress||{});
+}
+
 function summaryHtml(){
   if(!state.concerns.length) return '<section class="panel summary"><h2>肌悩みを選ぶと提案します</h2></section>';
-  if(recommendationPending)return '<section class="panel summary" role="status" aria-live="polite"><h2>条件に合う組み合わせを計算中…</h2><p class="summary-note">条件の変更や、成分の解説はそのまま使えます。</p></section>';
-  if(recommendationError)return `<section class="panel summary" role="alert"><h2>提案の計算を完了できませんでした</h2><p class="summary-note">${escape(recommendationError)}</p><button type="button" class="button" data-action="retryRecommendation">もう一度計算する</button></section>`;
+  if(recommendationPending)return `<section class="panel summary"><h2>条件に合う組み合わせを計算中…</h2><div id="recommendation-progress">${recommendationProgressHtml()}</div><p class="summary-note">条件の変更や、成分の解説はそのまま使えます。</p></section>`;
+  if(recommendationError)return `<section class="panel summary" role="alert"><h2>提案の計算を完了できませんでした</h2><p class="summary-note">${escape(recommendationError)}</p>${recommendationProgress?renderProgress(recommendationProgress,true):''}<button type="button" class="button" data-action="retryRecommendation">もう一度計算する</button></section>`;
   if(!current){
     const settings={...options(),budget:Infinity,resultLimit:1};
     const possible=typeof Worker==='undefined'?optimize(catalog,settings).length>0:false;
@@ -524,7 +540,11 @@ document.getElementById('excludeForm').addEventListener('submit',e=>{
   document.getElementById('excludeDialog').close();pendingExclude=null;
 });
 
-loadCatalog(undefined, IS_MEN ? '../catalog-men/' : '../catalog/').then(({products, archivedProducts, pricing, usage, meta: catalogMeta})=>{
+loadCatalog(undefined, IS_MEN ? '../catalog-men/' : '../catalog/',progress=>{
+  catalogProgress=progress;
+  const target=document.getElementById('catalog-progress');
+  if(target)target.innerHTML=renderProgress(progress);
+}).then(({products, archivedProducts, pricing, usage, meta: catalogMeta})=>{
   catalog=mergeCatalogData(products,pricing,usage);meta=catalogMeta;
   budgetRange=getBudgetRange(catalog);
   const archived=mergeCatalogData(archivedProducts,pricing,usage);
@@ -533,7 +553,7 @@ loadCatalog(undefined, IS_MEN ? '../catalog-men/' : '../catalog/').then(({produc
   savedPlans=loadSavedPlans();
   catalogLoaded=true;
   render();
-}).catch(error=>{app.innerHTML=`<main class="error">商品データを読み込めませんでした。<br>${escape(error.message)}</main>`;});
+}).catch(error=>{app.innerHTML=`<main class="error">商品データを読み込めませんでした。<br>${escape(error.message)}${catalogProgress?renderProgress(catalogProgress,true):''}</main>`;});
 
 window.addEventListener('storage',e=>{
   if(!catalogLoaded)return;

@@ -15,9 +15,12 @@ test('worker preserves exact recommendations and the minimum-cost explanation',a
     await import('../dist/routine-worker.js?parity');
     const options={budget:5000,concerns:['dryness'],priority:'any'};
     self.onmessage({data:{catalog,options}});
-    assert.deepEqual(messages[0],{routine:optimize(catalog,{...options,resultLimit:1})[0]||null,minimumMonthly:null});
+    assert.deepEqual(messages.filter(message=>!message.progress)[0],{routine:optimize(catalog,{...options,resultLimit:1})[0]||null,minimumMonthly:null});
+    assert(messages.some(message=>message.progress?.phase==='recommendation' && message.progress?.complete && message.progress.percent===100));
     self.onmessage({data:{catalog,options:{...options,budget:0}}});
-    assert.equal(messages[1].routine,null);
-    assert.equal(messages[1].minimumMonthly,optimize(catalog,{...options,budget:Infinity,objective:'minimumMonthly',resultLimit:1})[0].monthly);
+    const final=messages.filter(message=>!message.progress)[1];
+    assert.equal(final.routine,null);
+    assert.equal(final.minimumMonthly,optimize(catalog,{...options,budget:Infinity,objective:'minimumMonthly',resultLimit:1})[0].monthly);
+    assert(messages.some(message=>message.progress?.phase==='minimum' && message.progress?.complete && message.progress.percent===100));
   } finally {if(original===undefined)delete globalThis.self;else globalThis.self=original;}
 });

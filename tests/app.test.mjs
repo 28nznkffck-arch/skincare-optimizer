@@ -24,6 +24,11 @@ test('background selection renders controls first and rejects results from super
     const settings={budget:5000,concerns:['pores','dullness'],priority:'simple'};
     const {app,change}=await openApp('background-selection',{[settingsKey]:settings});
     assert.match(app.markup,/選定条件/);assert.match(app.markup,/組み合わせを計算中/);assert.match(app.markup,/成分の解説/);
+    const beforeProgress=app.markup;
+    workers[0].onmessage({data:{progress:{phase:'recommendation',title:'提案の探索',stage:'search',percent:25,current:'組み合わせの採点',evaluated:'1',skipped:'3',completed:'4',total:'16'}}});
+    assert.equal(app.markup,beforeProgress,'progress must not replace the condition controls');
+    assert.match(document.getElementById('recommendation-progress').innerHTML,/25%/);
+    assert.match(document.getElementById('recommendation-progress').innerHTML,/省略 3 通り/);
     const first=workers[0];change({dataset:{field:'budget'},value:'6000'});
     assert(first.terminated);assert.equal(workers.length,2);
     first.onmessage({data:{routine:null,minimumMonthly:12345}});
@@ -38,6 +43,15 @@ test('background selection renders controls first and rejects results from super
     for(const worker of workers)if(!worker.terminated)worker.onerror?.();
     if(original===undefined)delete globalThis.Worker;else globalThis.Worker=original;
   }
+});
+
+test('ingredient choices use Japanese reading order while preserving guide destinations',async()=>{
+  const {app}=await openApp('ingredient-reading-order',{[settingsKey]:{ingredient:'ナイアシンアミド'}});
+  const select=app.markup.match(/<select[^>]*id="ingredient"[\s\S]*?<\/select>/)[0];
+  assert.deepEqual([...select.matchAll(/<option value="([^"]+)"/g)].map(match=>match[1]),['none','アラントイン','グリチルリチン酸ジカリウム','セラミド機能成分','ナイアシンアミド','ヒアルロン酸Na']);
+  assert.match(app.markup,/ingredients\.html#niacinamide/);
+  const guide=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
+  assert.deepEqual([...guide.matchAll(/<article class="panel ingredient-card" id="([^"]+)"/g)].map(match=>match[1]),['allantoin','glycyrrhizate','ceramide','niacinamide','hyaluronate']);
 });
 
 test('background selection failure offers retry without deleting saved plans', async () => {

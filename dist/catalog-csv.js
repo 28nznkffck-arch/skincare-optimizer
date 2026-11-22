@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.9.13';
+import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.9.14';
 
 const RETAILERS = ['マツキヨココカラオンライン', 'ツルハグループe-shop', 'ウエルシア'];
 
@@ -183,7 +183,9 @@ function compareRetailers(a, b) {
   return rank(a.retailer) - rank(b.retailer) || (a.retailer < b.retailer ? -1 : Number(a.retailer > b.retailer));
 }
 
-export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
+export function parseCatalog({productsCsv, pricesCsv, scoresCsv},onProgress) {
+  const report=(completed,current)=>onProgress?.({completed,total:4,current});
+  report(0,'商品マスターのJAN・容量・使用量を確認中');
   const products = new Map(), usages = {}, retired = new Set();
   const columns = ['JAN', '掲載状態', ...Object.keys(PRODUCT_FIELDS), ...Object.keys(USAGE_FIELDS), ...Object.keys(EVIDENCE_FIELDS)];
   const required = ['brand', 'name', 'category', 'volume', 'unit', 'sourceUrl', 'dailyUses'];
@@ -217,6 +219,7 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
       throw new Error(`${location}: 使用回数を出典から算出できない場合は1本の仮使用回数を入力してください`);
   }
 
+  report(1,'販売店の価格とJANを照合中');
   const quotes = new Map();
   for (const {jan, row, location} of table(pricesCsv, 'prices.csv', ['JAN', ...Object.keys(PRICE_FIELDS)])) {
     if (!products.has(jan)) throw new Error(`${location}: JAN ${jan} が商品マスターにありません`);
@@ -232,6 +235,7 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
     byRetailer.set(quote.retailer, quote);
   }
 
+  report(2,'肌悩み別の点数表を照合中');
   const scores = new Map();
   const scoreColumns = ['JAN', ...Object.keys(SCORE_FIELDS), '採点メモ'];
   for (const {jan, row, location} of table(scoresCsv, 'scores.csv', scoreColumns, [CONCERNS.brightness])) {
@@ -240,6 +244,7 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
     scores.set(jan, readFields(row, SCORE_FIELDS, location));
   }
 
+  report(3,'商品・価格・採点のデータを結合中');
   const activeProducts = [], archivedProducts = [], prices = {};
   for (const [jan, product] of products) {
     const quote = [...(quotes.get(jan)?.values() ?? [])].sort(compareRetailers)[0];
@@ -252,6 +257,7 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv}) {
     product.scores = scores.get(jan) ?? {};
     (retired.has(jan) ? archivedProducts : activeProducts).push(product);
   }
+  report(4,'商品データの照合が完了');
   return {products: activeProducts, archivedProducts, pricing: {prices}, usage: {usages}};
 }
 
@@ -269,11 +275,22 @@ async function fetchCatalogFile(url) {
   } finally { clearTimeout(timer); }
 }
 
-export async function loadCatalog(readFile = fetchCatalogFile, catalogFolder = '../catalog/') {
+export async function loadCatalog(readFile = fetchCatalogFile, catalogFolder = '../catalog/',onProgress) {
+  let completed=0;
+  const names=['products.csv','prices.csv','scores.csv','metadata.json'];
+  const reportLoad=current=>onProgress?.({stage:'loading',title:'商品データの読み込み',current,completed,total:names.length,percent:completed/names.length*100,unit:'ファイル'});
+  reportLoad('商品・価格・採点・更新情報の4ファイルを読み込み中');
   const [productsCsv, pricesCsv, scoresCsv, metadata] = await Promise.all(
-    ['products.csv', 'prices.csv', 'scores.csv', 'metadata.json'].map(name =>
-      readFile(new URL(`${catalogFolder}${name}`, import.meta.url))
-    )
+    names.map(async name=>{
+      const text=await readFile(new URL(`${catalogFolder}${name}`, import.meta.url));
+      completed++;reportLoad(`${name}の読み込みが完了`);
+      return text;
+    })
   );
-  return {...parseCatalog({productsCsv, pricesCsv, scoresCsv}), meta: JSON.parse(metadata).products};
+  const reportCheck=(completed,current)=>onProgress?.({stage:'checking',title:'商品データの照合',current,completed,total:5,percent:completed/5*100,unit:'工程'});
+  reportCheck(0,'更新情報を確認中');
+  const meta=JSON.parse(metadata).products;
+  reportCheck(1,'更新情報の確認が完了');
+  const catalog=parseCatalog({productsCsv, pricesCsv, scoresCsv},progress=>reportCheck(1+progress.completed,progress.current));
+  return {...catalog,meta};
 }

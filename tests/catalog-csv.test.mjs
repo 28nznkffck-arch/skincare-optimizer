@@ -50,6 +50,18 @@ test('a stalled catalog request aborts with the failing file name', async () => 
   }
 });
 
+test('catalog progress follows completed file reads and reports the validation step',async()=>{
+  const pending=new Map(),events=[],contents={'products.csv':data.productsCsv,'prices.csv':data.pricesCsv,'scores.csv':data.scoresCsv,'metadata.json':JSON.stringify({products:{version:'test'}})};
+  const result=loadCatalog(url=>new Promise(resolve=>pending.set(url.pathname.split('/').at(-1),resolve)),'../catalog/',event=>events.push(event));
+  for(const name of ['scores.csv','metadata.json','prices.csv','products.csv']){pending.get(name)(contents[name]);await Promise.resolve();}
+  await result;
+  assert.deepEqual(events.filter(event=>event.stage==='loading').map(event=>event.percent),[0,25,50,75,100]);
+  const checking=events.filter(event=>event.stage==='checking');assert(checking.some(event=>event.current.includes('価格')));assert.equal(checking.at(-1).percent,100);
+  const failure=[];
+  await assert.rejects(loadCatalog(async url=>url.pathname.endsWith('metadata.json')?contents['metadata.json']:url.pathname.endsWith('prices.csv')?'bad header':contents[url.pathname.split('/').at(-1)],'../catalog/',event=>failure.push(event)));
+  assert.match(failure.at(-1).current,/価格/);assert(failure.at(-1).percent<100);
+});
+
 test('CSV preserves JAN and quoted cells and feeds the existing usage and pricing calculation', () => {
   const {products, pricing, usage} = parseCatalog(data);
   const [item] = mergeCatalogData(products, pricing, usage);
