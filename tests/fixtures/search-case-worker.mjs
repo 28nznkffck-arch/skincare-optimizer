@@ -1,0 +1,10 @@
+import {parentPort,workerData} from 'node:worker_threads';
+import {readFile} from 'node:fs/promises';
+import {loadCatalog} from '../../dist/catalog-csv.js';
+import {mergeCatalogData} from '../../dist/catalog-data.js';
+import {optimize} from '../../dist/optimizer.js';
+const data=await loadCatalog(url=>readFile(url,'utf8'));
+const catalog=mergeCatalogData(data.products,data.pricing,data.usage);
+let progress;
+const result=optimize(catalog,{...workerData,resultLimit:1},event=>{progress=event;})[0];
+parentPort.postMessage({result:result?{score:result.score,monthly:result.monthly,jans:result.products.map(p=>p.jan)}:null,progress});

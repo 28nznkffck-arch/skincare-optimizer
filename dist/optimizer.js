@@ -304,6 +304,7 @@ function findBestRoutine(grouped, budget, options,progress) {
   const maxima = groups.map(group => ({
     points: concerns.map((_, i) => Math.max(...group.map(entry => entry.points[i]))),
     cost: Math.min(...group.map(entry => entry.cost)),
+    highestCost: Math.max(...group.map(entry => entry.cost)),
     penalty: Math.min(...group.map(entry => entry.penalty)),
     dryness: Math.max(...group.map(entry => entry.dryness)),
     oiliness: Math.max(...group.map(entry => entry.oiliness)),
@@ -374,6 +375,7 @@ function findBestRoutine(grouped, budget, options,progress) {
     let changed=false;
     for(let g=depth;g<groups.length;g++){
       const allowance=available-(rest.cost-maxima[g].cost);
+      if(allowance>=maxima[g].highestCost){affordable.push(maxima[g].points);continue;}
       const points=concerns.map(()=>0);
       for(const entry of groups[g]){
         if(entry.cost>allowance)continue;
@@ -401,6 +403,55 @@ function findBestRoutine(grouped, budget, options,progress) {
     return round2(originalCeiling-oldConcerns+newConcerns);
   }
 
+  // 末尾の美容液・目元ケアは、実在する2品の点数・費用・手間を同時に見る。
+  // 単品の要約だけを整理する。実際の探索候補は削らず、組み合わせの結果も保存しない。
+  const pairStart=groups.length-2;
+  const boundProfiles=groups.slice(pairStart).map(group=>group.filter((entry,i)=>!group.some((other,j)=>
+    i!==j && other.cost<=entry.cost && other.penalty<=entry.penalty && other.points.every((point,k)=>point>=entry.points[k]) &&
+    (j<i || other.cost<entry.cost || other.penalty<entry.penalty || other.points.some((point,k)=>point>entry.points[k]))
+  )));
+  function pairCanCompete(depth,used,ceiling){
+    const otherCost=remaining[depth].cost-maxima[pairStart].cost-maxima[pairStart+1].cost;
+    const budgetLeft=budget-used.cost-otherCost;
+    if(!Number.isFinite(otherCost) || Number.isNaN(budgetLeft))return true;
+    const ranks=new Array(concerns.length*3).fill(0);
+    let oldConcerns=0;
+    for(let i=0;i<concerns.length;i++){
+      let first=0,second=0,third=0;
+      for(let g=0;g<pairStart;g++){
+        const point=(g<depth?chosen[g]:maxima[g]).points[i];
+        if(point>first){third=second;second=first;first=point;}
+        else if(point>second){third=second;second=point;}else if(point>third)third=point;
+      }
+      ranks[i*3]=first;ranks[i*3+1]=second;ranks[i*3+2]=third;
+      for(let g=pairStart;g<groups.length;g++){
+        const point=maxima[g].points[i];
+        if(point>first){third=second;second=first;first=point;}
+        else if(point>second){third=second;second=point;}else if(point>third)third=point;
+      }
+      oldConcerns+=round2((first*7+second*3+third)*weights[i]);
+    }
+    const otherScore=round2(ceiling-oldConcerns+maxima[pairStart].penalty+maxima[pairStart+1].penalty);
+    for(const serum of boundProfiles[0])for(const eye of boundProfiles[1]){
+      if(serum.cost+eye.cost>budgetLeft)continue;
+      let score=otherScore-serum.penalty-eye.penalty;
+      for(let i=0;i<concerns.length;i++){
+        let first=ranks[i*3],second=ranks[i*3+1],third=ranks[i*3+2];
+        let point=serum.points[i];
+        if(point>first){third=second;second=first;first=point;}
+        else if(point>second){third=second;second=point;}else if(point>third)third=point;
+        point=eye.points[i];
+        if(point>first){third=second;second=first;first=point;}
+        else if(point>second){third=second;second=point;}else if(point>third)third=point;
+        score+=round2((first*7+second*3+third)*weights[i]);
+      }
+      score=round2(score);
+      const minCost=used.cost+otherCost+serum.cost+eye.cost;
+      if(score>best.score || (score===best.score && minCost<=best.monthly))return true;
+    }
+    return false;
+  }
+
   function visit(depth, used) {
     if(progress)progressDepth=depth;
     const rest = remaining[depth];
@@ -412,6 +463,9 @@ function findBestRoutine(grouped, budget, options,progress) {
       let ceiling = scoreCeiling(depth, used);
       if (ceiling < best.score || (ceiling === best.score && minCost > best.monthly)) {
         progress?.skip(counts[depth],ceiling<best.score?'今の有力候補と相性を比較し、上回る可能性のない組み合わせを省いています…':'相性が同じなら、月額費用の安い組み合わせを優先しています…');return;
+      }
+      if(depth<=pairStart && !pairCanCompete(depth,used,ceiling)){
+        progress?.skip(counts[depth],'実在する商品の組み合わせ上限で首位に届かない枝を省略');return;
       }
       // 安価な上限で残った枝だけ再確認する。計算結果のキャッシュは使わない。
       if(depth<groups.length-1 && Number.isFinite(budget)){

@@ -362,6 +362,25 @@ test('remaining-budget score ceilings preserve the exact optimum at price bounda
   }
 });
 
+test('bound-only summaries retain products whose ingredients or disclosure win the actual routine',()=>{
+  const item=(category,jan,scores,extra={})=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,keyIngredients:[],scores,evidence:{},...extra});
+  const base=[item('cleanser','wash',{dryness:3}),item('moisturizer','cream',{dryness:3}),item('toner','toner',{dryness:3})];
+  const disclosed={concentrations:[{name:'公開成分',value:1,unit:'%',sourceUrl:'https://example.test/concentration'}]};
+  const cases=[
+    {products:[item('serum','higher',{dryness:3}),item('serum','ingredient',{dryness:2},{keyIngredients:['指定成分']})],
+      settings:{ingredient:'指定成分',ingredientMode:'required'},expected:'ingredient'},
+    {products:[item('serum','higher',{dryness:3}),item('serum','disclosed',{dryness:2},{evidence:disclosed})],settings:{},expected:'disclosed'},
+    {products:[item('serum','earlier',{dryness:2},{keyIngredients:['指定成分']}),item('serum','higher',{dryness:3},{keyIngredients:['指定成分']})],
+      settings:{ingredient:'指定成分',ingredientMode:'required'},expected:'earlier'},
+  ];
+  for(const setting of cases){
+    const items=[...base,...setting.products],options={budget:1000,concerns:['dryness'],priority:'thorough',locked:{toner:'toner'},...setting.settings};
+    const fast=optimize(items,{...options,resultLimit:1});
+    assert.deepEqual(fast,optimize(items,options).slice(0,1));
+    assert.equal(fast[0].products.find(p=>p.category==='serum')?.jan,setting.expected);
+  }
+});
+
 test('pruned search preserves makeup rules, ingredient preferences and ties',()=>{
   const sample=['makeupRemover','cleanser','toner','serum','moisturizer','eyeCare']
     .flatMap(category=>catalog.filter(p=>p.category===category).slice(0,5));
