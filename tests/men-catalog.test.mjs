@@ -11,7 +11,7 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   const female = await loadCatalog(read);
   const male = await loadCatalog(read, '../catalog-men/');
   const jans = new Set(female.products.map(p => p.jan));
-  assert.equal(male.products.length, 98);
+  assert.equal(male.products.length, 103);
   assert.ok(male.products.every(p => !jans.has(p.jan)));
   assert.equal(new Set(male.products.map(p=>p.jan)).size, male.products.length);
   for (const p of male.products) {
@@ -53,20 +53,22 @@ test('men catalog supports makeup removal as standalone facial wash', async () =
   assert.equal(lookup.get('4901301257680').referenceUses, 130);
   assert.equal(male.pricing.prices['4901301267092'].retailer, 'ツルハグループe-shop');
   assert.equal(lookup.get('4901301420121').evidence.activeIngredients.length, 2);
-  const best = optimize(catalog, {budget:5000, useMakeupRemover:true, concerns:['pores'],
-    priority:'simple', skinType:'unknown', finish:'any', ingredient:'none'})[0];
-  assert.ok(best, 'expected feasible makeup removal routine');
-  assert.ok(best.products.some(p => p.jan === '4901301389640'));
-  assert.ok(best.products.some(p => p.category === 'moisturizer'));
-  assert.ok(!best.products.some(p => p.category === 'cleanser'));
+  for (const jan of ['4901301389640', '4902806125290']) {
+    const best = optimize(catalog, {budget:5000, useMakeupRemover:true, concerns:['pores'],
+      locked:{makeupRemover:jan}, priority:'simple', skinType:'unknown', finish:'any', ingredient:'none'})[0];
+    assert.ok(best, 'expected feasible makeup removal routine');
+    assert.ok(best.products.some(p => p.jan === jan));
+    assert.ok(best.products.some(p => p.category === 'moisturizer'));
+    assert.ok(!best.products.some(p => p.category === 'cleanser'));
+  }
 });
 
 test('additional men brands retain verified JAN, brand totals and evidence distinctions', async () => {
  const male=await loadCatalog(read,'../catalog-men/');
  const brands=male.products.reduce((out,p)=>{(out[p.brand]??=[]).push(p);return out;},{});
  assert.equal(brands['オキシー'].length,3);
- assert.equal(brands['uno'].length,11);
- assert.equal(brands['ギャツビー'].length,8);
+ assert.equal(brands['uno'].length,15);
+ assert.equal(brands['ギャツビー'].length,9);
  const byJan=new Map(male.products.map(p=>[p.jan,p]));
  assert.deepEqual(byJan.get('4902806117905').evidence.activeIngredients,['サリチル酸','グリチルリチン酸ジカリウム']);
  assert.equal(byJan.get('4550516495280').allInOne,true);
