@@ -53,9 +53,6 @@ body.men-theme{
 .men-theme .ingredient{background:#e1efdf;color:#225a3d}
 .men-theme .source,.men-theme .link-button{color:#176140}
 .men-theme .topbar > .source{color:#e4f4e4}
-.men-theme .product-visual{background:linear-gradient(135deg,#dfefdd,#b0d4b6);color:#3e815c}
-.men-theme .product-visual.toner{background:linear-gradient(#e6f6e3,#b8d9bd)}
-.men-theme .product-visual.moisturizer{background:linear-gradient(#dbeed9,#a5cdb0)}
 .men-theme .saved-cost-summary,.men-theme .debug-context-result{background:#e4efe1}
 .men-theme .swap-item{background:#ecf5ea;border-color:#cbded0}
 .men-theme .period,.men-theme .note,.men-theme .muted{color:#657e6b}

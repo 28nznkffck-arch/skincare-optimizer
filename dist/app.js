@@ -96,6 +96,20 @@ function applicationRank(product){
   return CATEGORIES.indexOf(product.category);
 }
 
+// Category pictograms follow the approved outline design; they are not product packaging.
+const foamShape='M24 12C28 12 31 10 30 6C37 7 42 12 43 18C49 19 52 23 51 29C58 32 61 38 59 44C57 50 52 52 47 51C43 56 37 57 32 53C26 57 19 56 15 51C8 53 3 49 3 43C3 38 6 34 10 32C9 26 13 21 19 20C19 16 21 13 24 12Z';
+const categorySymbols={
+  makeupRemover:`<path d="${foamShape}" fill="#d5dfd4"/>`,
+  cleanser:`<path d="${foamShape}"/>`,
+  toner:'<path d="M32 5C27 12 13 28 13 39A19 19 0 0 0 51 39C51 28 37 12 32 5Z"/>',
+  moisturizer:'<path d="M8 42C9 33 20 29 31 28C38 27 41 23 39 19C45 20 50 25 51 31C58 35 61 42 57 47C51 54 13 55 7 47C6 45 7 43 8 42Z"/>',
+  serum:'<path d="M29 13C27 26 23 30 11 33C23 36 27 40 29 53C32 40 36 36 48 33C36 30 32 26 29 13Z M49 7C48 12 46 14 41 16C46 18 48 20 49 25C51 20 53 18 58 16C53 14 51 12 49 7Z M12 45C11 49 9 51 5 52C9 53 11 55 12 59C14 55 16 53 20 52C16 51 14 49 12 45Z"/>',
+  eyeCare:'<path d="M12 22Q32 8 52 22 M5 32Q32 20 59 32Q46 47 32 47Q18 47 5 32Z"/><path d="M23 28Q32 26 41 28C44 37 40 46 32 46S20 37 23 28Z" fill="currentColor" stroke="none"/><path d="M8 36L4 41 M19 44L17 49 M32 47V53 M45 44L47 49 M56 36L60 41"/>',
+};
+function categoryIcon(category){
+  return `<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="white" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${categorySymbols[category]||''}</svg>`;
+}
+
 function productCard(p){
   const locked=state.locked[p.category]===p.jan;
   const matchLabels=state.concerns.filter(id=>(p.scores?.[id]||0)>0).map(id=>CONCERNS[id]||id);
@@ -103,7 +117,7 @@ function productCard(p){
   const amount=unitPerUse(p,{},uses);
   const amountLabel=amount==null?'—':`${amount.toFixed(2)}${p.unit}`;
   return `<article class="product">
-    <div class="product-visual ${p.category}" aria-hidden="true">✧</div>
+    <div class="product-visual" aria-hidden="true">${categoryIcon(p.category)}</div>
     <div>
       <div class="product-brand">${escape(p.brand)}　・　${escape(CATEGORY_LABELS[p.category])}</div>
       <div class="product-top"><h3 class="product-name">${escape(p.name)}</h3><div class="product-cost">${yen(monthlyCost(p))}<small>月額試算</small></div></div>
