@@ -1,8 +1,8 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.15';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.15';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.15';
-import {loadCatalog} from './catalog-csv.js?v=0.9.15';
-import {renderProgress} from './progress-view.js?v=0.9.15';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.17';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.17';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.17';
+import {loadCatalog} from './catalog-csv.js?v=0.9.17';
+import {renderProgress} from './progress-view.js?v=0.9.17';
 
 const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
@@ -104,7 +104,7 @@ function pickCurrent(){
     recommendationPending=true;recommendationError='';
     recommendationProgress={title:'候補の準備',stage:'preparing',percent:0,completed:0,total:CATEGORIES.length,unit:'品目',current:'品目別の候補を整理しています'};
     try{
-      const worker=new Worker(new URL('./routine-worker.js?v=0.9.15',import.meta.url),{type:'module'});
+      const worker=new Worker(new URL('./routine-worker.js?v=0.9.17',import.meta.url),{type:'module'});
       recommendationWorker=worker;
       const failed=message=>{
         if(recommendationWorker!==worker)return;

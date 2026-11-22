@@ -69,6 +69,27 @@ test('empty candidate sets complete with zero work and large counts retain integ
   assert(total>BigInt(Number.MAX_SAFE_INTEGER));assert.equal(last.total,String(total));assert.equal(last.skipped,String(total));assert.equal(last.evaluated,'0');assert.equal(last.percent,100);
 });
 
+test('search updates identify actual candidate products without changing results or counts',()=>{
+  const items=['cleanser','toner','serum','moisturizer'].flatMap(category=>Array.from({length:8},(_,i)=>product(category,i,{name:`${category}-${i}`,scores:{dryness:1}})));
+  const originalNow=Date.now;let time=0;
+  Date.now=()=>time+=100;
+  try {
+    for(const extra of [{},{resultLimit:1}]){
+      const options={budget:5000,concerns:['dryness'],priority:'thorough',...extra},events=[];
+      const result=optimize(items,options,event=>events.push(event));
+      assert.deepEqual(result,optimize(items,options));
+      const detailed=events.filter(event=>event.detail);
+      assert(detailed.length>0,'a long search must report the candidates being compared');
+      for(const event of detailed){
+        assert(items.some(item=>event.current.includes(`「${item.brand} ${item.name}」`)));
+        assert.match(event.current,/組み合わせを確認しています/);
+      }
+      assert(new Set(detailed.map(event=>event.current)).size>1,'candidate descriptions must follow the actual search');
+      const last=events.at(-1);assert.equal(last.percent,100);assert.equal(BigInt(last.evaluated)+BigInt(last.skipped),BigInt(last.total));
+    }
+  }finally{Date.now=originalNow;}
+});
+
 test('progress panel puts the actual percent beside the bar and the current task below it',()=>{
   const markup=renderProgress({title:'提案の探索',stage:'search',percent:37.5,current:'予算を超える枝を省略',evaluated:'100',skipped:'200',total:'800'});
   assert.match(markup,/class="process-icon"/);assert.match(markup,/あなたに合うスキンケアを検索中/);
@@ -79,4 +100,5 @@ test('progress panel puts the actual percent beside the bar and the current task
   assert.match(renderProgress({percent:0,current:'保湿の候補を評価・整理中'}),/保湿の候補を評価しています…/);
   assert.match(renderProgress({percent:25,current:'prices.csvの照合'},true),/停止時の処理：prices.csvの照合/);
   assert.match(renderProgress({current:'<script>bad</script>'}),/&lt;script&gt;/);
+  assert.match(renderProgress({current:'候補を比較',detail:'<b>予算を確認</b>'}),/&lt;b&gt;予算を確認&lt;\/b&gt;/);
 });

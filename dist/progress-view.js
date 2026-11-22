@@ -16,6 +16,7 @@ export function renderProgress(progress={},stopped=false){
       <strong class="process-percent">${percent}</strong>
     </div>
     <p class="process-current" aria-live="polite">${stopped?'停止時の処理：':''}${escape(current||'候補を整理しています…')}</p>
+    ${progress.detail?`<p class="process-detail">${escape(progress.detail)}</p>`:''}
     ${progress.note?`<p class="process-note">${escape(progress.note)}</p>`:''}
   </div>`;
 }
