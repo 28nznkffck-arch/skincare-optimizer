@@ -141,7 +141,9 @@ function productCard(p){
 }
 
 function formHtml(){
-  const ingredients=['none','ナイアシンアミド','セラミド機能成分','アラントイン','ヒアルロン酸Na',DIPOTASSIUM_GLYCYRRHIZATE];
+  const ingredientGuides=new Map([['ナイアシンアミド','niacinamide'],['セラミド機能成分','ceramide'],['アラントイン','allantoin'],['ヒアルロン酸Na','hyaluronate'],[DIPOTASSIUM_GLYCYRRHIZATE,'glycyrrhizate']]);
+  const ingredients=['none',...ingredientGuides.keys()];
+  const ingredientGuideUrl=`${IS_MEN?'../dist/':''}ingredients.html${ingredientGuides.has(state.ingredient)?`#${ingredientGuides.get(state.ingredient)}`:''}`;
   const locked=catalog.filter(product=>state.locked[product.category]===product.jan);
   const excluded=catalog.filter(product=>Object.hasOwn(state.excluded,product.jan));
   const hasRemover=catalog.some(product=>product.category==='makeupRemover');
@@ -172,7 +174,7 @@ function formHtml(){
     <div class="field"><span class="field-title">お手入れの手間</span><div class="segmented">
       ${[['simple','手軽に'],['any','こだわらない'],['thorough','しっかり']].map(([v,l])=>`<button class="segment ${state.priority===v?'selected':''}" data-action="priority" data-id="${v}" aria-pressed="${state.priority===v}">${l}</button>`).join('')}
     </div></div>
-    <div class="field"><label class="field-title" for="ingredient">使ってみたい成分</label><select class="select" id="ingredient" data-field="ingredient">
+    <div class="field"><div class="ingredient-heading"><label class="field-title" for="ingredient">使ってみたい成分</label><a class="ingredient-help" href="${ingredientGuideUrl}" target="_blank" rel="noopener noreferrer" aria-label="成分の解説（別タブで開きます）">成分の解説 <span aria-hidden="true">↗</span></a></div><select class="select" id="ingredient" data-field="ingredient">
       ${ingredients.map(x=>`<option value="${escape(x)}" ${state.ingredient===x?'selected':''}>${x==='none'?'指定なし':escape(x)}</option>`).join('')}
     </select><div class="radio-line"><label><input type="radio" name="ingredientMode" value="prefer" ${state.ingredientMode==='prefer'?'checked':''}> 優先</label><label><input type="radio" name="ingredientMode" value="required" ${state.ingredientMode==='required'?'checked':''}> 必須</label></div></div>
     <div class="controls-foot">

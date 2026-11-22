@@ -1,0 +1,32 @@
+.ingredient-guide{max-width:880px;padding-bottom:48px}
+.guide-intro{padding:38px 0 24px}
+.guide-intro h1{font-size:clamp(25px,4.5vw,36px);line-height:1.5;letter-spacing:-.04em;margin:10px 0 14px}
+.guide-intro p{font-size:14px;line-height:1.9;margin:10px 0;color:#526b5d}
+.guide-context{padding:15px 18px;border:1px solid #dce7da;border-radius:14px;background:#edf3e9;font-size:12px;line-height:1.9}
+.guide-nav{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 0}
+.guide-nav a{display:inline-flex;align-items:center;min-height:44px;padding:9px 13px;border:1px solid #d4dfd2;border-radius:10px;background:#fff;font-size:12px;font-weight:700;text-decoration:none}
+.guide-nav a:hover{background:#eaf1e6}
+.guide-cards{display:grid;gap:17px}
+.ingredient-card{padding:26px;scroll-margin-top:18px;overflow-wrap:anywhere}
+.ingredient-card:target{outline:2px solid #6d916b;outline-offset:3px}
+.ingredient-card-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.ingredient-purpose{font-size:11px;letter-spacing:.02em;color:#52784e;font-weight:700}
+.guide-top-link{font-size:11px;white-space:nowrap;text-underline-offset:3px;padding:8px 0}
+.ingredient-card h2{font-size:22px;line-height:1.5;letter-spacing:-.03em;margin:8px 0 12px}
+.ingredient-summary{font-size:14px;line-height:1.95;margin:0}
+.ingredient-choice{font-size:12px;line-height:1.9;margin:14px 0 0;padding-left:12px;border-left:3px solid #c2d6bb;color:#526b5d}
+.ingredient-choice strong{display:block;font-size:11px;margin-bottom:3px}
+.ingredient-evidence{border-top:1px solid #e4ebe0;margin-top:20px;padding-top:3px}
+.ingredient-evidence summary{min-height:44px;padding:13px 0;font-size:12px;font-weight:700;color:#3e664b}
+.evidence-kind{font-weight:400;color:#748773;font-size:11px;margin-left:8px}
+.evidence-scope,.evidence-limit{font-size:12px;line-height:1.9;margin:6px 0 12px;color:#526b5d}
+.evidence-limit{padding:11px 13px;background:#f4f7ef;border-radius:9px}
+.guide-references{padding-left:20px;margin:15px 0 5px;font-size:12px;line-height:1.8}
+.guide-references li{padding-left:3px;margin:14px 0}
+.guide-references cite{display:block;font-style:normal;color:#526b5d;margin:4px 0}
+.reference-links{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11px;margin-top:5px}
+.reference-links a{padding:4px 0;text-underline-offset:3px}
+.ingredient-guide :focus-visible{outline:2px solid #426c58;outline-offset:4px}
+.guide-footer{font-size:11px;line-height:1.9;color:#718571;border-top:1px solid #dce5d7;padding-top:20px;margin-top:26px}
+@media(max-width:520px){.guide-intro{padding-top:28px}.ingredient-card{padding:21px 19px}.ingredient-card h2{font-size:20px}.ingredient-card-top{gap:8px}.guide-intro p,.ingredient-summary{font-size:13px}.ingredient-guide .topnav{gap:12px;font-size:11px}.ingredient-guide .logo{font-size:13px}.ingredient-guide .logo-mark{width:30px;height:30px;border-radius:10px}}
+@media print{.guide-nav,.guide-top-link,.topnav{display:none}.ingredient-card{break-inside:avoid;box-shadow:none}.guide-references{display:block}}
