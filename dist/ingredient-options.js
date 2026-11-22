@@ -1,10 +1,35 @@
 export const DIPOTASSIUM_GLYCYRRHIZATE='グリチルリチン酸ジカリウム';
 
-// 同一成分の表記だけを揃える。似た名前の別成分はまとめない。
+// 表示・成分指定用。元のメーカー表記はCSVと商品オブジェクトに残す。
+// 同定根拠と、まとめない誘導体・原料規格は docs/ingredient-guide.md を参照。
+const normalizeName=value=>value.normalize('NFKC').trim().replace(/[‐‑−]/g,'-').replace(/\s+/g,' ');
+export const INGREDIENT_ALIASES=[
+  [DIPOTASSIUM_GLYCYRRHIZATE,['グリチルリチン酸2K','グリチルリチン酸二カリウム']],
+  ['ヒアルロン酸Na',['ヒアルロン酸Na-2','ヒアルロン酸Naー2','ヒアルロン酸Na(2)','ヒアルロン酸ナトリウム(2)']],
+  ['アセチルヒアルロン酸Na',['アセチル化ヒアルロン酸Na','アセチル化ヒアルロン酸ナトリウム']],
+  ['DPG',['ジプロピレングリコール']],
+  ['アスコルビルグルコシド',['L-アスコルビン酸 2-グルコシド','L-アスコルビン酸2-グルコシド']],
+  ['リン酸アスコルビルMg',['ビタミンCリン酸Mg']],
+  ['酢酸トコフェロール',['酢酸DL-α-トコフェロール','酢酸dl-α-トコフェロール','トコフェロール酢酸エステル']],
+  ['セラミド機能成分',['セチルPGヒドロキシエチルパルミタミド','ヘキサデシロキシPGヒドロキシエチルヘキサデカナミド']],
+  ['エチルヘキサン酸セチル',['2-エチルヘキサン酸セチル']],
+  ['テトラエチルヘキサン酸ペンタエリスリチル',['テトラ2-エチルヘキサン酸ペンタエリトリット']],
+  ['キシリトール',['キシリット']],
+  ['酸化亜鉛',['酸化Zn']],
+  ['二酸化炭素',['炭酸ガス']],
+  ['ホホバ種子油',['ホホバ油']],
+  ['ミネラルオイル',['流動パラフィン']],
+  ['ユビキノン',['ユビデカレノン']],
+];
+const aliases=new Map(INGREDIENT_ALIASES.flatMap(([name,values])=>[name,...values].map(value=>[normalizeName(value),name])));
 export function canonicalIngredient(value){
   if(typeof value!=='string')return value;
-  const name=value.trim();
-  return ['グリチルリチン酸2K','グリチルリチン酸二カリウム'].includes(name)?DIPOTASSIUM_GLYCYRRHIZATE:name;
+  const name=normalizeName(value);
+  return aliases.get(name)||name;
+}
+
+export function displayIngredients(values=[]){
+  return [...new Set(values.map(canonicalIngredient).filter(name=>typeof name==='string'&&name))];
 }
 
 const prefixes=[

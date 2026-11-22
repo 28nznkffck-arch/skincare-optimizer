@@ -58,12 +58,15 @@ test('ingredient choices use Japanese reading order while preserving guide desti
   assert(choices.indexOf('グリチルリチン酸ジカリウム')<choices.indexOf('セラミド機能成分'));
   assert.match(app.markup,/ingredients\.html#niacinamide/);
   const guide=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
-  assert.deepEqual([...guide.matchAll(/<article class="panel ingredient-card" id="([^"]+)"/g)].map(match=>match[1]),['allantoin','glycyrrhizate','ceramide','niacinamide','hyaluronate']);
+  const ids=[...guide.matchAll(/<article class="panel ingredient-card" id="([^"]+)"/g)].map(match=>match[1]);
+  for(const id of ['allantoin','glycyrrhizate','ceramide','niacinamide','hyaluronate'])assert(ids.includes(id));
+  assert(ids.length>5);
 });
 
 test('female and male ingredient selectors follow their own catalogs and retain saved selections',async()=>{
   const female=await openApp('female-retinol-selection',{[settingsKey]:{ingredient:'レチノール'}});
   assert.match(female.app.markup,/<option value="レチノール" selected>/);
+  assert.match(female.app.markup,/ingredients\.html#retinol/);
   female.change({dataset:{field:'ingredient'},value:'トラネキサム酸'});
   assert.equal(female.saved(settingsKey).ingredient,'トラネキサム酸');
   assert.match(female.app.markup,/<option value="トラネキサム酸" selected>/);
@@ -74,10 +77,23 @@ test('female and male ingredient selectors follow their own catalogs and retain 
   assert.match(select,/<option value="トラネキサム酸" selected>/);
   assert.match(select,/<option value="グリシルグリシン"/);
   assert.doesNotMatch(select,/value="レチノール"|value="ヘパリン類似物質"|value="セラミド機能成分"/);
-  assert.match(male.app.markup,/href="\.\.\/dist\/ingredients\.html"/);
+  assert.match(male.app.markup,/href="\.\.\/dist\/ingredients\.html#tranexamic"/);
   male.change({dataset:{field:'ingredient'},value:'ナイアシンアミド'});
   assert.equal(male.saved(maleKey).ingredient,'ナイアシンアミド');
   assert.equal(male.saved(settingsKey).ingredient,'レチノール');
+});
+
+test('saved alternative ingredient spellings migrate and product chips use the same display names',async()=>{
+  const moisturizer=catalog.find(p=>p.category==='moisturizer'&&p.keyIngredients.includes('ヒアルロン酸Na-2'));
+  assert(moisturizer);
+  const {app,saved}=await openApp('canonical-ingredient-display',{[settingsKey]:{
+    budget:20000,concerns:['dryness'],ingredient:'ヒアルロン酸ナトリウム（2）',ingredientMode:'required',locked:{moisturizer:moisturizer.jan},
+  }});
+  assert.equal(saved(settingsKey).ingredient,'ヒアルロン酸Na');
+  assert.match(app.markup,/<option value="ヒアルロン酸Na" selected>/);
+  assert.match(app.markup,/<span class="ingredient">ヒアルロン酸Na<\/span>/);
+  assert.doesNotMatch(app.markup,/<span class="ingredient">(?:ヒアルロン酸Na-2|ヒアルロン酸ナトリウム（2）)<\/span>/);
+  assert.match(app.markup,/ingredients\.html#hyaluronate/);
 });
 
 test('background selection failure offers retry without deleting saved plans', async () => {

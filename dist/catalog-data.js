@@ -1,6 +1,6 @@
-import {monthlyCost} from './optimizer.js?v=0.9.21';
-import {canonicalIngredient,ingredientChoices} from './ingredient-options.js?v=0.9.21';
-export {DIPOTASSIUM_GLYCYRRHIZATE} from './ingredient-options.js?v=0.9.21';
+import {monthlyCost} from './optimizer.js?v=0.9.22';
+import {canonicalIngredient,ingredientChoices} from './ingredient-options.js?v=0.9.22';
+export {DIPOTASSIUM_GLYCYRRHIZATE} from './ingredient-options.js?v=0.9.22';
 
 export const DEFAULT_BUDGET = 5000;
 

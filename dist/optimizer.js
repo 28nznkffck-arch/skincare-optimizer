@@ -1,5 +1,5 @@
-import {prepareConcernBound} from './concern-bound.js?v=0.9.21';
-import {canonicalIngredient} from './ingredient-options.js?v=0.9.21';
+import {prepareConcernBound} from './concern-bound.js?v=0.9.22';
+import {canonicalIngredient} from './ingredient-options.js?v=0.9.22';
 
 export const CATEGORIES = ["makeupRemover", "cleanser", "toner", "serum", "moisturizer", "eyeCare"];
 export const CATEGORY_LABELS = {
@@ -74,7 +74,7 @@ const isExtraStep = category => ["toner", "serum", "eyeCare"].includes(category)
 const matchesFinish = (product, options) => options.finish && options.finish !== "any"
   && ["toner", "moisturizer"].includes(product.category) && product.feel === options.finish;
 const matchesIngredient = (product, options) => Boolean(options.ingredient && options.ingredient !== "none"
-  && product.keyIngredients?.some(name => canonicalIngredient(name).includes(canonicalIngredient(options.ingredient))));
+  && product.keyIngredients?.some(name => canonicalIngredient(name) === canonicalIngredient(options.ingredient)));
 const hasSelectedConcerns = options => Array.isArray(options.concerns) && options.concerns.length > 0;
 
 export function canIncludeRoutineProduct(product, options) {

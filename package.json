@@ -3,8 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "guide:build": "node scripts/build_ingredient_guide.mjs",
+    "guide:check": "node scripts/build_ingredient_guide.mjs --check",
     "catalog:check": "node scripts/check_catalog.mjs",
     "search:verify": "node scripts/verify_search_exactness.mjs",
-    "test": "npm run catalog:check && node --test tests/*.test.mjs"
+    "test": "npm run catalog:check && npm run guide:check && node --test tests/*.test.mjs"
   }
 }

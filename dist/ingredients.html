@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#f5f6f0">
-  <meta name="description" content="スキンケアの成分の簡単解説。現在は5成分について、主な役割、研究で分かっている範囲と論文のPMID・DOIを紹介します。">
+  <meta name="description" content="スキンケア成分の簡単解説。48項目で主な役割と選ぶ目安、研究の対象・限界、論文のPMID・DOI、メーカーの一次資料を紹介します。">
   <title>使ってみたい成分の解説｜スキンケア最適化ラボ</title>
-  <link rel="stylesheet" href="./styles.css?v=0.9.21">
-  <link rel="stylesheet" href="./ingredients.css?v=0.9.12">
+  <link rel="stylesheet" href="./styles.css?v=0.9.22">
+  <link rel="stylesheet" href="./ingredients.css?v=0.9.22">
 </head>
 <body>
   <div class="shell ingredient-guide" id="guide-top">
@@ -16,94 +16,553 @@
       <div class="guide-intro">
         <div class="eyebrow">INGREDIENT GUIDE</div>
         <h1>使ってみたい成分、<br>どんな違い？</h1>
-        <p>現在は5成分について、主な役割と選ぶ目安をまとめています。<br>アプリでは、それぞれの商品データに登録された主要成分から選べます。詳しく知りたいときは「研究と出典を見る」を開いてください。</p>
-        <div class="guide-context">薬用の効能は、商品ごとの有効成分と表示で確認します。成分の研究結果が、配合されたすべての商品に当てはまるわけではありません。</div>
-        <nav class="guide-nav" aria-label="成分の目次"><a href="#allantoin">アラントイン</a><a href="#glycyrrhizate">グリチルリチン酸ジカリウム</a><a href="#ceramide">セラミド機能成分</a><a href="#niacinamide">ナイアシンアミド</a><a href="#hyaluronate">ヒアルロン酸Na</a></nav>
+        <p>48項目で、成分の役割と選ぶ目安を紹介します。<br>女性・男性それぞれのアプリで選べる成分をすべて掲載。関連する成分は同じ項目で説明し、違いも添えています。</p>
+        <div class="guide-context">薬用の効能は商品ごとの有効成分と表示で確認します。論文がある項目は、研究の対象・条件・限界とPMID／DOIを掲載。メーカーの用途説明は、臨床試験の結果と分けて読めます。</div>
+        <form class="guide-filter" id="guide-filter" role="search" hidden>
+          <label for="guide-search">成分名で検索</label>
+          <div class="guide-search-row"><input id="guide-search" type="search" placeholder="例：レチノール、ヒアルロン酸、DPG" autocomplete="off"><button type="button" id="guide-clear">クリア</button></div>
+          <label for="guide-category">役割で絞り込む</label><select id="guide-category"><option value="">すべての役割</option><option value="肌荒れ・ニキビ">肌荒れ・ニキビ</option><option value="シワ・シミ予防">シワ・シミ予防</option><option value="保湿・バリア">保湿・バリア</option><option value="毛穴・皮脂">毛穴・皮脂</option><option value="肌を整える成分">肌を整える成分</option><option value="洗浄・処方を支える成分">洗浄・処方を支える成分</option></select>
+        </form>
+        <p id="guide-results" class="guide-results" role="status" aria-live="polite">48項目を掲載しています</p>
+        <nav class="guide-nav" aria-label="役割別の目次"><a href="#guide-section-1">肌荒れ・ニキビ</a><a href="#guide-section-2">シワ・シミ予防</a><a href="#guide-section-3">保湿・バリア</a><a href="#guide-section-4">毛穴・皮脂</a><a href="#guide-section-5">肌を整える成分</a><a href="#guide-section-6">洗浄・処方を支える成分</a></nav>
       </div>
-      <div class="guide-cards">
-    <article class="panel ingredient-card" id="allantoin" aria-labelledby="allantoin-title" tabindex="-1">
-      <div class="ingredient-card-top"><span class="ingredient-purpose">肌荒れを防ぐ薬用ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
-      <h2 id="allantoin-title">アラントイン</h2>
-      <p class="ingredient-summary">肌荒れを防ぐために使われる薬用有効成分のひとつ。肌をすこやかに保つ目的の製品に配合されます。</p>
-      <p class="ingredient-choice"><strong>選ぶ目安</strong>肌荒れを繰り返しやすく、毎日のケアで予防したいとき。「有効成分」として配合されているか、商品の効能表示も確認します。</p>
-      <details class="ingredient-evidence">
-        <summary>研究と出典を見る <span class="evidence-kind">動物実験</span></summary>
-        <p class="evidence-scope">ラットの傷に、5%アラントインを含む乳剤などを14日間使い、皮膚が修復する過程を調べた基礎研究です。</p>
-        <p class="evidence-limit">ヒトの顔や、市販スキンケア製品を試した研究ではありません。この論文から、傷の治療やニキビ跡の改善を登録商品へ当てはめることはできません。</p>
-
-        <ol class="guide-references">
-          <li><strong>参考論文 · Araújoほか（2010）</strong><cite lang="en">Profile of wound healing process induced by allantoin</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/20877959/" target="_blank" rel="noopener noreferrer">PMID: 20877959 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1590/s0102-86502010000500014" target="_blank" rel="noopener noreferrer">DOI: 10.1590/s0102-86502010000500014 <span aria-hidden="true">↗</span></a></div></li>
-          <li><strong>成分の用途・表示</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/ihada/lotion-emulsion/" target="_blank" rel="noopener noreferrer">メーカーの肌荒れ防止成分の説明（資生堂） <span aria-hidden="true">↗</span></a></div></li>
-        </ol>
-      </details>
-    </article>
-    <article class="panel ingredient-card" id="glycyrrhizate" aria-labelledby="glycyrrhizate-title" tabindex="-1">
-      <div class="ingredient-card-top"><span class="ingredient-purpose">肌荒れを防ぐ薬用ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
-      <h2 id="glycyrrhizate-title">グリチルリチン酸ジカリウム</h2>
-      <p class="ingredient-summary">甘草由来の成分をもとにした、肌荒れ防止の薬用有効成分。成分表示では「グリチルリチン酸2K」「グリチルリチン酸二カリウム」と書かれることもあります。</p>
-      <p class="ingredient-choice"><strong>選ぶ目安</strong>肌荒れを予防するケアを探したいとき。ニキビ予防も目的なら、商品にその効能が表示されているかを確認します。</p>
-      <details class="ingredient-evidence">
-        <summary>研究と出典を見る <span class="evidence-kind">細胞・培養皮膚の研究</span></summary>
-        <p class="evidence-scope">炎症に関わる刺激を加えた細胞と、培養した皮膚モデルで、炎症に関係する遺伝子や物質の変化を調べた基礎研究です。</p>
-        <p class="evidence-limit">ヒトに塗って赤みが治ることを示した試験ではありません。似た名前の「グリチルレチン酸ステアリル」などとは別成分です。</p>
-
-        <ol class="guide-references">
-          <li><strong>参考論文 · Leeほか（2019）</strong><cite lang="en">Ameliorating effect of dipotassium glycyrrhizinate on an IL-4- and IL-13-induced atopic dermatitis-like skin-equivalent model</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/30506356/" target="_blank" rel="noopener noreferrer">PMID: 30506356 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1007/s00403-018-1883-z" target="_blank" rel="noopener noreferrer">DOI: 10.1007/s00403-018-1883-z <span aria-hidden="true">↗</span></a></div></li>
-          <li><strong>成分の用途・表示</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/ihada/lotion-emulsion/" target="_blank" rel="noopener noreferrer">メーカーの肌荒れ防止成分の説明（資生堂） <span aria-hidden="true">↗</span></a></div></li>
-        </ol>
-      </details>
-    </article>
-    <article class="panel ingredient-card" id="ceramide" aria-labelledby="ceramide-title" tabindex="-1">
-      <div class="ingredient-card-top"><span class="ingredient-purpose">うるおいを保つバリアの働きを補う</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
-      <h2 id="ceramide-title">セラミド機能成分</h2>
-      <p class="ingredient-summary">肌の角層にあるセラミドの働きを補うために開発された保湿成分。うるおいが逃げにくい状態を支え、乾燥しがちな肌を保湿します。</p>
-      <p class="ingredient-choice"><strong>選ぶ目安</strong>カサつきや乾燥が気になるとき。ここで説明するのは花王のセラミド機能成分（合成疑似セラミド）で、あらゆる種類のセラミドを一括した呼び名ではありません。</p>
-      <details class="ingredient-evidence">
-        <summary>研究と出典を見る <span class="evidence-kind">ヒト試験</span></summary>
-        <p class="evidence-scope">乾燥・敏感肌を自覚し、バリア機能が低下した52人を対象に、疑似セラミド配合スプレーと非配合の市販スプレーを4週間比較。角層の水分量や、水分の逃げやすさなどを調べています。</p>
-        <p class="evidence-limit">比較する2製品は、セラミド以外の処方も同一ではありません。メーカーの研究者が参加した試験で、登録品すべての効果を直接検証したものではありません。</p>
-        <p class="evidence-scope">表示名の例：ヘキサデシロキシPGヒドロキシエチルヘキサデカナミド、セチルPGヒドロキシエチルパルミタミド。</p>
-        <ol class="guide-references">
-          <li><strong>参考論文 · Akahaneほか（2025）</strong><cite lang="en">Efficacy of Pseudo-Ceramide Absorption Into the Stratum Corneum and Effects on Transepidermal Water Loss and the Ceramide Profile: A Randomized Controlled Trial</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/39492723/" target="_blank" rel="noopener noreferrer">PMID: 39492723 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1111/jocd.16655" target="_blank" rel="noopener noreferrer">DOI: 10.1111/jocd.16655 <span aria-hidden="true">↗</span></a></div></li>
-          <li><strong>成分の用途・表示</strong><div class="reference-links"><a href="https://www.kao.com/jp/kaonokao/zukan/20/" target="_blank" rel="noopener noreferrer">メーカーの成分説明（花王） <span aria-hidden="true">↗</span></a></div></li>
-        </ol>
-      </details>
-    </article>
-    <article class="panel ingredient-card" id="niacinamide" aria-labelledby="niacinamide-title" tabindex="-1">
-      <div class="ingredient-card-top"><span class="ingredient-purpose">シワ改善・シミ予防の薬用ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
-      <h2 id="niacinamide-title">ナイアシンアミド</h2>
-      <p class="ingredient-summary">ビタミンB3の一種。薬用有効成分として、シワ改善やシミ・そばかす予防を目的とする製品に使われます。どの効能があるかは、商品ごとの表示を確認します。</p>
-      <p class="ingredient-choice"><strong>選ぶ目安</strong>シワや、これからできるシミが気になるとき。成分名だけで選ばず、「シワ改善」「シミ・そばかすを防ぐ」などの表示も目安に。</p>
-      <details class="ingredient-evidence">
-        <summary>研究と出典を見る <span class="evidence-kind">ヒト試験</span></summary>
-        <p class="evidence-scope">40〜60歳の女性50人が、5%配合の保湿剤と、同じ基剤の保湿剤を顔の左右に使った12週間の比較試験。シワや色素斑、赤みムラなどの見え方を調べています。</p>
-        <p class="evidence-limit">このアプリの登録品が、研究と同じ濃度・処方とは確認できていません。薬用美白の「シミを防ぐ」と、すでにあるシミへの作用は区別します。</p>
-
-        <ol class="guide-references">
-          <li><strong>参考論文 · Bissettほか（2004）</strong><cite lang="en">Topical niacinamide reduces yellowing, wrinkling, red blotchiness, and hyperpigmented spots in aging facial skin</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/18492135/" target="_blank" rel="noopener noreferrer">PMID: 18492135 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1111/j.1467-2494.2004.00228.x" target="_blank" rel="noopener noreferrer">DOI: 10.1111/j.1467-2494.2004.00228.x <span aria-hidden="true">↗</span></a></div></li>
-          <li><strong>成分の用途・表示</strong><div class="reference-links"><a href="https://maison.kose.co.jp/site/onebykose/g/gMUWI/" target="_blank" rel="noopener noreferrer">メーカーの用途・有効成分表示（ONE BY KOSÉ） <span aria-hidden="true">↗</span></a></div></li>
-        </ol>
-      </details>
-    </article>
-    <article class="panel ingredient-card" id="hyaluronate" aria-labelledby="hyaluronate-title" tabindex="-1">
-      <div class="ingredient-card-top"><span class="ingredient-purpose">水分を抱え込む保湿ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
-      <h2 id="hyaluronate-title">ヒアルロン酸Na</h2>
-      <p class="ingredient-summary">ヒアルロン酸のナトリウム塩で、水分を抱え込む保湿成分。肌にうるおいを与え、乾燥を防ぐために使われます。</p>
-      <p class="ingredient-choice"><strong>選ぶ目安</strong>カサつきや、うるおい不足が気になるとき。分子の大きさや処方で使い心地も変わるため、同じ成分名でも使用感は同じとは限りません。</p>
-      <details class="ingredient-evidence">
-        <summary>研究と出典を見る <span class="evidence-kind">ヒト試験</span></summary>
-        <p class="evidence-scope">女性76人の目まわりで、分子の大きさが異なる0.1%ヒアルロン酸配合クリームを、基剤クリームと60日間比較。水分量や弾力、小ジワの深さを調べています。</p>
-        <p class="evidence-limit">ヒアルロン酸を使った特定の処方の試験です。「ヒアルロン酸Na配合」と書かれた全商品や、薬用のシワ改善に同じ結果を当てはめるものではありません。</p>
-
-        <ol class="guide-references">
-          <li><strong>参考論文 · Pavicicほか（2011）</strong><cite lang="en">Efficacy of cream-based novel formulations of hyaluronic acid of different molecular weights in anti-wrinkle treatment</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/22052267/" target="_blank" rel="noopener noreferrer">PMID: 22052267 <span aria-hidden="true">↗</span></a></div></li>
-          <li><strong>成分の用途・表示</strong><div class="reference-links"><a href="https://www.shop.rohto.co.jp/atorrege/atorrege-about.html" target="_blank" rel="noopener noreferrer">メーカーの保湿成分の説明（ロート製薬） <span aria-hidden="true">↗</span></a></div></li>
-        </ol>
-      </details>
-    </article>
-      </div>
+      <p class="guide-empty" id="guide-empty" hidden>一致する成分が見つかりませんでした。名前を短くするか、絞り込みを解除してください。</p>
+      <section class="guide-section" id="guide-section-1" data-section="肌荒れ・ニキビ" aria-labelledby="guide-section-1-title"><h2 id="guide-section-1-title">肌荒れ・ニキビ</h2><div class="guide-cards"><article class="panel ingredient-card" id="allantoin" aria-labelledby="allantoin-title" tabindex="-1" data-search="アラントイン 肌荒れ・ニキビ 肌荒れを防ぐ薬用ケアに アラントイン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">肌荒れを防ぐ薬用ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="allantoin-title">アラントイン</h3>
+  <p class="ingredient-summary">肌荒れを防ぐために使われる薬用有効成分のひとつ。肌をすこやかに保つ目的の製品に配合されます。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>肌荒れを予防したいとき。「有効成分」として配合されているか、商品の効能表示も確認します。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>アラントイン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">動物実験</span></summary>
+  <p class="evidence-scope">ラットの傷に5%アラントインを含む乳剤などを14日間使い、修復過程を調べた基礎研究です。</p><p class="evidence-limit">ヒトの顔や市販の登録商品を試した研究ではありません。傷やニキビ跡の治療効果を示すものではありません。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Araújoほか（2010）</strong><cite lang="en">Profile of wound healing process induced by allantoin</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/20877959/" target="_blank" rel="noopener noreferrer">PMID: 20877959 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1590/s0102-86502010000500014" target="_blank" rel="noopener noreferrer">DOI: 10.1590/s0102-86502010000500014 <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>有効成分と保湿成分の表示（資生堂 IHADA）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/ihada/lotion-emulsion/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="glycyrrhizate" aria-labelledby="glycyrrhizate-title" tabindex="-1" data-search="グリチルリチン酸ジカリウム 肌荒れ・ニキビ 肌荒れ・ニキビの予防に グリチルリチン酸ジカリウム グリチルリチン酸2K グリチルリチン酸二カリウム">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">肌荒れ・ニキビの予防に</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="glycyrrhizate-title">グリチルリチン酸ジカリウム</h3>
+  <p class="ingredient-summary">甘草に関連する成分をもとにした肌荒れ防止成分。「グリチルリチン酸2K」「二カリウム」と同じ成分名として扱います。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>薬用ケアでは有効成分と効能表示を確認します。普通の化粧品に含まれる場合もあり、配合だけで薬用の効能が付くわけではありません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>グリチルリチン酸ジカリウム</p><p class="ingredient-aliases">同じ成分として照合する別表記：グリチルリチン酸2K / グリチルリチン酸二カリウム</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">細胞・培養皮膚の研究</span></summary>
+  <p class="evidence-scope">IL-4・IL-13で刺激した細胞と皮膚モデルで、炎症に関係する物質の変化を調べた研究です。</p><p class="evidence-limit">ヒトに塗って赤みや皮膚炎が治ることを確かめた臨床試験ではありません。グリチルレチン酸ステアリルとは別成分です。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Leeほか（2019）</strong><cite lang="en">Ameliorating effect of dipotassium glycyrrhizinate on an IL-4- and IL-13-induced atopic dermatitis-like skin-equivalent model</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/30506356/" target="_blank" rel="noopener noreferrer">PMID: 30506356 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1007/s00403-018-1883-z" target="_blank" rel="noopener noreferrer">DOI: 10.1007/s00403-018-1883-z <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>有効成分と保湿成分の表示（資生堂 IHADA）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/ihada/lotion-emulsion/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="glycyrrhetinate" aria-labelledby="glycyrrhetinate-title" tabindex="-1" data-search="グリチルレチン酸ステアリル 肌荒れ・ニキビ 油性の処方にも使う肌荒れ防止成分 グリチルレチン酸ステアリル グリチルレチン酸ステアリルSW">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">油性の処方にも使う肌荒れ防止成分</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="glycyrrhetinate-title">グリチルレチン酸ステアリル</h3>
+  <p class="ingredient-summary">甘草に関連する肌荒れ防止成分のひとつ。グリチルリチン酸ジカリウムとは構造も表示名も異なります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>クリームなどの薬用製品では、有効成分としての表示を確認。「SW」付きの原料名は、ここでは別の登録名として残しています。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（2）</summary><p>グリチルレチン酸ステアリル / グリチルレチン酸ステアリルSW</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>配合目的の表示例（ちふれ）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/series/end-of-production/2450e" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>植物原料の名称・用途（原料メーカー 丸善製薬）</strong><div class="reference-links"><a href="https://www.maruzenpcy.co.jp/productguide/list/cosmetics/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="other-soothing" aria-labelledby="other-soothing-title" tabindex="-1" data-search="そのほかの肌荒れ防止・整肌成分 肌荒れ・ニキビ 有効成分と整肌成分を見分ける GABOB イプシロン-アミノカプロン酸 グアイアズレンスルホン酸Na 10-ヒドロキシウンデカン酸">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">有効成分と整肌成分を見分ける</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="other-soothing-title">そのほかの肌荒れ防止・整肌成分</h3>
+  <p class="ingredient-summary">GABOBはガンマ-アミノ-ベータ-ヒドロキシ酪酸の略称。イプシロン-アミノカプロン酸とともに、肌荒れ防止の有効成分として使う製品があります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>グアイアズレンスルホン酸Naは整肌、10-ヒドロキシウンデカン酸は皮脂が気になる肌の処方に使われる例があります。この欄の成分がすべて薬用有効成分という意味ではありません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（4）</summary><p>GABOB / イプシロン-アミノカプロン酸 / グアイアズレンスルホン酸Na / 10-ヒドロキシウンデカン酸</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>有効成分の表示（ロート製薬：薬用極潤スキンコンディショナー）</strong><div class="reference-links"><a href="https://jp.rohto.com/hadalabo/promo/yakuyou_gokujyun/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>有効成分GABOBの表示（花王 キュレル）</strong><div class="reference-links"><a href="https://www.kao-kirei.com/ja/item/kbb/curel/4901301463937/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>整肌成分の表示（ロート製薬 ブルーミオ）</strong><div class="reference-links"><a href="https://jp.rohto.com/bloomio/serum" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合例（花王 キュレル皮脂トラブルケア）</strong><div class="reference-links"><a href="https://www.kao-kirei.com/ja/item/kbb/curel/4901301264343/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="salicylic-acid" aria-labelledby="salicylic-acid-title" tabindex="-1" data-search="サリチル酸・殺菌成分 肌荒れ・ニキビ ニキビ予防の薬用ケアに サリチル酸 イソプロピルメチルフェノール">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">ニキビ予防の薬用ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="salicylic-acid-title">サリチル酸・殺菌成分</h3>
+  <p class="ingredient-summary">サリチル酸とイソプロピルメチルフェノールは別成分。薬用製品では殺菌などの目的で、ニキビ予防に使うものがあります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>有効成分と効能を商品ごとに確認。サリチル酸の配合を、高濃度ピーリングやニキビ治療薬と同じ意味では扱いません。4MSKとも別成分です。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（2）</summary><p>サリチル酸 / イソプロピルメチルフェノール</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>有効成分・皮脂吸着成分の説明（ロート製薬 アクネス）</strong><div class="reference-links"><a href="https://jp.rohto.com/acnes/powder-lotion" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>有効成分・用途の説明（小林製薬 オードムーゲ）</strong><div class="reference-links"><a href="https://www.kobayashi.co.jp/brand/eaudemuge/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article></div></section>
+<section class="guide-section" id="guide-section-2" data-section="シワ・シミ予防" aria-labelledby="guide-section-2-title"><h2 id="guide-section-2-title">シワ・シミ予防</h2><div class="guide-cards"><article class="panel ingredient-card" id="niacinamide" aria-labelledby="niacinamide-title" tabindex="-1" data-search="ナイアシンアミド シワ・シミ予防 シワ改善・シミ予防の薬用ケアに ナイアシンアミド">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">シワ改善・シミ予防の薬用ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="niacinamide-title">ナイアシンアミド</h3>
+  <p class="ingredient-summary">ビタミンB3の一種。薬用ではシワ改善や、メラニンの生成を抑えてシミ・そばかすを防ぐ有効成分として使われます。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>同じ成分名でも、どの効能を表示できるかは商品ごとに確認。化粧品への配合と薬用有効成分の表示は分けて見ます。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>ナイアシンアミド</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">ヒト比較試験</span></summary>
+  <p class="evidence-scope">40〜60歳の女性50人が、5%配合保湿剤と同じ基剤を顔の左右に12週間使用し、シワや色素斑などの見え方を比べた試験です。</p><p class="evidence-limit">登録商品の濃度・処方が同一とは確認できていません。薬用の「シミ予防」と、すでにあるシミの改善は区別します。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Bissettほか（2004）</strong><cite lang="en">Topical niacinamide reduces yellowing, wrinkling, red blotchiness, and hyperpigmented spots in aging facial skin</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/18492135/" target="_blank" rel="noopener noreferrer">PMID: 18492135 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1111/j.1467-2494.2004.00228.x" target="_blank" rel="noopener noreferrer">DOI: 10.1111/j.1467-2494.2004.00228.x <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>薬用の用途表示（コーセー ONE BY KOSÉ）</strong><div class="reference-links"><a href="https://maison.kose.co.jp/site/onebykose/g/gMUWI/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="retinol" aria-labelledby="retinol-title" tabindex="-1" data-search="レチノール・酢酸レチノール シワ・シミ予防 ビタミンAの種類を区別して選ぶ レチノール 酢酸レチノール">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">ビタミンAの種類を区別して選ぶ</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="retinol-title">レチノール・酢酸レチノール</h3>
+  <p class="ingredient-summary">レチノールはビタミンAの一種。シワ改善の薬用有効成分として使う製品があります。酢酸レチノールはその誘導体で、同一成分としては照合しません。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>「シワ改善」を目的に選ぶ場合は商品の薬用表示を確認。使い始めの頻度や使用順序は、その商品の案内に合わせます。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（2）</summary><p>レチノール / 酢酸レチノール</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">ヒト比較試験</span></summary>
+  <p class="evidence-scope">平均87歳の高齢者36人の腕で、0.4%レチノールローションと基剤を週3回まで・24週間比較し、小ジワの変化を調べています。</p><p class="evidence-limit">高齢者の腕での特定処方の試験です。顔の全商品や酢酸レチノールへ同じ結果は当てはめられません。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Kafiほか（2007）</strong><cite lang="en">Improvement of naturally aged skin with vitamin A (retinol)</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/17515510/" target="_blank" rel="noopener noreferrer">PMID: 17515510 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1001/archderm.143.5.606" target="_blank" rel="noopener noreferrer">DOI: 10.1001/archderm.143.5.606 <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>原著論文（JAMA Dermatology）</strong><div class="reference-links"><a href="https://jamanetwork.com/journals/jamadermatology/fullarticle/412795" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>薬用レチノールの説明（資生堂）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/sw/onlinestore/servicegarden/beautytopics/20250822/article01.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="tranexamic" aria-labelledby="tranexamic-title" tabindex="-1" data-search="トラネキサム酸 シワ・シミ予防 シミ予防・肌荒れ防止の薬用ケアに トラネキサム酸">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">シミ予防・肌荒れ防止の薬用ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="tranexamic-title">トラネキサム酸</h3>
+  <p class="ingredient-summary">薬用では、メラニンの生成を抑えるシミ予防や肌荒れ防止に使われる成分。「m-トラネキサム酸」という呼び方をするメーカーもあります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>同じ成分でも、シミ予防と肌荒れ防止のどちらを表示するかは商品によって異なります。内服薬の効果とは分けて考えます。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>トラネキサム酸</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">ヒト試験・対照群なし</span></summary>
+  <p class="evidence-scope">肝斑のある23人が2%配合の外用製剤を12週間使用。色調や組織の変化を調べた研究です。</p><p class="evidence-limit">基剤だけの対照群との比較ではなく、肝斑治療の研究です。日本の薬用化粧品のシミ予防効果を直接比較した試験ではありません。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Kimほか（2016）</strong><cite lang="en">Efficacy and possible mechanisms of topical tranexamic acid in melasma</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/27135282/" target="_blank" rel="noopener noreferrer">PMID: 27135282 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1111/ced.12835" target="_blank" rel="noopener noreferrer">DOI: 10.1111/ced.12835 <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>成分の説明（資生堂：トラネキサム酸）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/sp/haku/laboratory/dictionary/8.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="vitamin-c" aria-labelledby="vitamin-c-title" tabindex="-1" data-search="アスコルビン酸（ビタミンC） シワ・シミ予防 誘導体ではないビタミンC アスコルビン酸">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">誘導体ではないビタミンC</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="vitamin-c-title">アスコルビン酸（ビタミンC）</h3>
+  <p class="ingredient-summary">ビタミンCそのものの成分名。肌を整える用途に使われ、薬用では有効成分として配合する製品もあります。誘導体とは分けて表示・照合します。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>濃度だけでなく、処方や使用方法も確認します。「ビタミンC配合」の表示だけから、シミや毛穴への効果の強さは比べられません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>アスコルビン酸</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">ヒト比較試験</span></summary>
+  <p class="evidence-scope">5%ビタミンCクリームと基剤を6カ月比較し、光老化した皮膚の見え方・表面形状などを調べた二重盲検試験があります。</p><p class="evidence-limit">特定の外用処方の試験です。配合量が非公開の登録商品や、すべてのビタミンC誘導体へ同じ結果は当てはめません。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Humbertほか（2003）</strong><cite lang="en">Topical ascorbic acid on photoaged skin. Clinical, topographical and ultrastructural evaluation: double-blind study vs. placebo</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/12823436/" target="_blank" rel="noopener noreferrer">PMID: 12823436 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1034/j.1600-0625.2003.00008.x" target="_blank" rel="noopener noreferrer">DOI: 10.1034/j.1600-0625.2003.00008.x <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>著者公開の原著論文（リエージュ大学）</strong><div class="reference-links"><a href="https://orbi.uliege.be/bitstream/2268/39190/1/Humbert2003-postprintauteur.pdf" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>ビタミンCと誘導体の説明（ロート製薬 Obagi）</strong><div class="reference-links"><a href="https://www.obagi.co.jp/c-product" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="vitamin-c-derivatives" aria-labelledby="vitamin-c-derivatives-title" tabindex="-1" data-search="ビタミンC誘導体 シワ・シミ予防 安定性や水・油へのなじみを工夫した種類 ビタミンC誘導体 アスコルビルグルコシド リン酸アスコルビルMg アスコルビン酸リン酸エステルナトリウム 3-O-エチルアスコルビン酸 3-グリセリルアスコルビン酸 パルミチン酸アスコルビルリン酸3Na ビタミンCテトライソパルミテート L-アスコルビン酸 2-グルコシド L-アスコルビン酸2-グルコシド ビタミンCリン酸Mg">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">安定性や水・油へのなじみを工夫した種類</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="vitamin-c-derivatives-title">ビタミンC誘導体</h3>
+  <p class="ingredient-summary">ビタミンCの構造を変えた成分の総称。アスコルビルグルコシドは糖を結合した種類、リン酸アスコルビルMgはリン酸型です。種類が違えば同じ成分としては照合しません。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>「L-アスコルビン酸2-グルコシド」はアスコルビルグルコシド、「ビタミンCリン酸Mg」はリン酸アスコルビルMgへ表記を統一。薬用美白成分としての使用は商品ごとに確認します。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（8）</summary><p>ビタミンC誘導体 / アスコルビルグルコシド / リン酸アスコルビルMg / アスコルビン酸リン酸エステルナトリウム / 3-O-エチルアスコルビン酸 / 3-グリセリルアスコルビン酸 / パルミチン酸アスコルビルリン酸3Na / ビタミンCテトライソパルミテート</p><p class="ingredient-aliases">同じ成分として照合する別表記：L-アスコルビン酸 2-グルコシド / L-アスコルビン酸2-グルコシド / ビタミンCリン酸Mg</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">原料・メーカー資料</span></summary>
+  <p class="evidence-scope">原料メーカーの表示名称対応表と、配合メーカーの成分説明を参照しています。</p><p class="evidence-limit">安定性・浸透性の違いだけで、市販品の効果の順位を決めることはできません。「ビタミンC誘導体」のみの登録では種類を特定できません。</p>
+  <ol class="guide-references"><li><strong>AA2Gの化粧品名・成分名（ナガセヴィータ）</strong><div class="reference-links"><a href="https://group.nagase.com/viita/products_solutions/personal_care_ingredients/details/aa2g/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>リン酸型の表示名称（富士フイルム和光純薬）</strong><div class="reference-links"><a href="https://specchem-wako.fujifilm.com/jp/apmg/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合される種類の例（ロート製薬 Obagi）</strong><div class="reference-links"><a href="https://www.obagi.co.jp/c-product" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="arbutin" aria-labelledby="arbutin-title" tabindex="-1" data-search="アルブチン シワ・シミ予防 これからできるシミ・そばかすの予防に アルブチン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">これからできるシミ・そばかすの予防に</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="arbutin-title">アルブチン</h3>
+  <p class="ingredient-summary">メラニン生成に関わる酵素チロシナーゼの働きを抑える、薬用美白有効成分のひとつです。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>メラニンの生成を抑えてシミ・そばかすを防ぐ効能を確認。すでにあるシミが必ず薄くなるという意味ではありません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>アルブチン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の説明（資生堂：アルブチン）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/sp/haku/laboratory/dictionary/1.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="kojic-acid" aria-labelledby="kojic-acid-title" tabindex="-1" data-search="コウジ酸 シワ・シミ予防 メラニンの生成を抑える薬用ケアに コウジ酸">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">メラニンの生成を抑える薬用ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="kojic-acid-title">コウジ酸</h3>
+  <p class="ingredient-summary">麹菌がつくる物質として知られ、チロシナーゼの働きを抑える美白有効成分として使われます。発酵エキス全般と同じ成分ではありません。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>商品の有効成分とシミ・そばかす予防の効能を確認します。「米由来」「発酵」と書かれた成分すべてに同じ働きがあるわけではありません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>コウジ酸</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の説明（資生堂：コウジ酸）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/sp/haku/laboratory/dictionary/7.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="four-msk" aria-labelledby="four-msk-title" tabindex="-1" data-search="4MSK シワ・シミ予防 資生堂が開発した美白有効成分 4-メトキシサリチル酸カリウム塩">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">資生堂が開発した美白有効成分</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="four-msk-title">4MSK</h3>
+  <p class="ingredient-summary">正式な成分表示は「4-メトキシサリチル酸カリウム塩」。メラニンの生成を抑え、シミ・そばかすを防ぐ薬用成分として使われます。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>サリチル酸の誘導体ですが、ニキビ用などの「サリチル酸」とは別成分です。4MSKを含む商品自身の効能表示を確認します。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>4-メトキシサリチル酸カリウム塩</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の説明（資生堂：4MSK）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/sp/haku/laboratory/dictionary/18.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="chamomila" aria-labelledby="chamomila-title" tabindex="-1" data-search="カモミラET シワ・シミ予防 シミ予防の薬用有効成分 カモミラET">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">シミ予防の薬用有効成分</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="chamomila-title">カモミラET</h3>
+  <p class="ingredient-summary">カモミールに由来する美白有効成分。メラニン生成の指令に関わる仕組みに着目して使われます。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>「カミツレ花エキス」「ローマカミツレエキス」などの一般的な植物エキスとは区別します。カモミール配合というだけで同じ薬用効能にはなりません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>カモミラET</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>美白成分の説明（花王）</strong><div class="reference-links"><a href="https://www.kao.com/jp/binkanhada/daily_06_09/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>成分の説明（資生堂：カモミラET）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/sp/haku/laboratory/dictionary/5.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="placenta" aria-labelledby="placenta-title" tabindex="-1" data-search="プラセンタエキス シワ・シミ予防 薬用美白・保湿の表示を確認 プラセンタエキス-1">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">薬用美白・保湿の表示を確認</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="placenta-title">プラセンタエキス</h3>
+  <p class="ingredient-summary">胎盤から得られるエキス。薬用の美白有効成分として使う製品や、保湿目的に配合する製品があります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>エキスの名称だけで効能を判断せず、商品の有効成分表示を確認します。注射やサプリメントの研究は、顔へ塗る化粧品の根拠とは分けます。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>プラセンタエキス-1</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>薬用美白成分の例（花王）</strong><div class="reference-links"><a href="https://www.kao.com/jp/skincare/care/class-01/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article></div></section>
+<section class="guide-section" id="guide-section-3" data-section="保湿・バリア" aria-labelledby="guide-section-3-title"><h2 id="guide-section-3-title">保湿・バリア</h2><div class="guide-cards"><article class="panel ingredient-card" id="ceramide" aria-labelledby="ceramide-title" tabindex="-1" data-search="セラミド機能成分 保湿・バリア 角層のうるおいを保つ働きを補う セラミド機能成分 セチルPGヒドロキシエチルパルミタミド ヘキサデシロキシPGヒドロキシエチルヘキサデカナミド">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">角層のうるおいを保つ働きを補う</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="ceramide-title">セラミド機能成分</h3>
+  <p class="ingredient-summary">花王が開発した合成疑似セラミド（SLE）。角層のセラミドの働きを補う保湿成分で、「セチルPGヒドロキシエチルパルミタミド」などの表示名があります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>カサつきや乾燥が気になるとき。セラミドNPなどのいわゆるヒト型セラミドとは、表示・成分指定を分けています。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>セラミド機能成分</p><p class="ingredient-aliases">同じ成分として照合する別表記：セチルPGヒドロキシエチルパルミタミド / ヘキサデシロキシPGヒドロキシエチルヘキサデカナミド</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">ヒト比較試験</span></summary>
+  <p class="evidence-scope">乾燥・敏感肌を自覚する52人で、疑似セラミド配合スプレーと非配合の市販スプレーを4週間比較し、水分量などを調べた研究です。</p><p class="evidence-limit">セラミド以外の処方も同一ではありません。メーカー研究者が参加した試験で、登録商品すべてを直接検証したものではありません。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Akahaneほか（2025）</strong><cite lang="en">Efficacy of Pseudo-Ceramide Absorption Into the Stratum Corneum and Effects on Transepidermal Water Loss and the Ceramide Profile: A Randomized Controlled Trial</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/39492723/" target="_blank" rel="noopener noreferrer">PMID: 39492723 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1111/jocd.16655" target="_blank" rel="noopener noreferrer">DOI: 10.1111/jocd.16655 <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>成分名と保湿の仕組み（花王：セラミド機能成分）</strong><div class="reference-links"><a href="https://www.kao.com/jp/kaonokao/zukan/20/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="ceramide-types" aria-labelledby="ceramide-types-title" tabindex="-1" data-search="セラミドNP・NG・APなど 保湿・バリア セラミドの種類を分けて保湿を選ぶ セラミド2 セラミド6II セラミドAP セラミドNG セラミドNP N-ステアロイルジヒドロスフィンゴシン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">セラミドの種類を分けて保湿を選ぶ</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="ceramide-types-title">セラミドNP・NG・APなど</h3>
+  <p class="ingredient-summary">セラミドは角層の細胞間脂質の重要な成分。化粧品にも複数の構造・表示名があり、うるおいを保つ目的に使われます。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>NP・NG・APや番号付きの登録名は、このアプリでは一律に同一化していません。疑似セラミドの研究結果も、そのまま別の種類へは当てはめません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（6）</summary><p>セラミド2 / セラミド6II / セラミドAP / セラミドNG / セラミドNP / N-ステアロイルジヒドロスフィンゴシン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の用途（コープ化粧品：セラミドNP）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/detail.html?CD=9003811" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>種類と役割の説明（小林製薬 ヒフミド）</strong><div class="reference-links"><a href="https://www.kobayashi.co.jp/brand/hifmid/column/human-type-ceramide/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="hyaluronate" aria-labelledby="hyaluronate-title" tabindex="-1" data-search="ヒアルロン酸・ヒアルロン酸Na 保湿・バリア 水分を抱え込む保湿ケアに ヒアルロン酸 ヒアルロン酸Na ヒアルロン酸Na-2 ヒアルロン酸Naー2 ヒアルロン酸Na(2) ヒアルロン酸ナトリウム(2)">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">水分を抱え込む保湿ケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="hyaluronate-title">ヒアルロン酸・ヒアルロン酸Na</h3>
+  <p class="ingredient-summary">水分を抱え込む性質をもつ保湿成分。Naはナトリウム塩を示します。分子の大きさや処方によって、粘度や使い心地も変わります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>「ヒアルロン酸Na-2」「ヒアルロン酸ナトリウム(2)」などは選択欄ではヒアルロン酸Naにまとめています。原料規格・由来・分子量まで同一という意味ではありません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（2）</summary><p>ヒアルロン酸 / ヒアルロン酸Na</p><p class="ingredient-aliases">同じ成分として照合する別表記：ヒアルロン酸Na-2 / ヒアルロン酸Naー2 / ヒアルロン酸Na(2) / ヒアルロン酸ナトリウム(2)</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">ヒト比較試験</span></summary>
+  <p class="evidence-scope">女性76人の目まわりで、分子量が異なる0.1%ヒアルロン酸配合クリームと基剤を60日間比較した研究です。</p><p class="evidence-limit">特定処方の試験です。配合と書かれた全商品や薬用のシワ改善へ、同じ結果を当てはめるものではありません。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Pavicicほか（2011）</strong><cite lang="en">Efficacy of cream-based novel formulations of hyaluronic acid of different molecular weights in anti-wrinkle treatment</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/22052267/" target="_blank" rel="noopener noreferrer">PMID: 22052267 <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>成分表示・原料規格の説明（原料供給元 フジメディカ）</strong><div class="reference-links"><a href="https://fujimedica.com/wp-content/uploads/2019/06/ヒアルロン酸NA分子量100万タイプ-化粧品用.pdf" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="hyaluronate-derivatives" aria-labelledby="hyaluronate-derivatives-title" tabindex="-1" data-search="ヒアルロン酸の加工・誘導体 保湿・バリア 保湿・肌へのなじみなどを工夫した種類 アセチルヒアルロン酸Na 加水分解ヒアルロン酸 ヒアルロン酸クロスポリマーNa ヒアルロン酸ヒドロキシプロピルトリモニウム 乳酸球菌/ヒアルロン酸発酵液 アセチル化ヒアルロン酸Na アセチル化ヒアルロン酸ナトリウム">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">保湿・肌へのなじみなどを工夫した種類</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="hyaluronate-derivatives-title">ヒアルロン酸の加工・誘導体</h3>
+  <p class="ingredient-summary">アセチル化、加水分解、架橋など、加工の違う成分です。元のヒアルロン酸Naとは別名として残し、同じ保湿成分でも性質の違いを区別します。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>アセチル化ヒアルロン酸Na／ナトリウムは「アセチルヒアルロン酸Na」へ統一。種類名や「低分子」という表現だけで、製品の保湿力の順位は決められません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（5）</summary><p>アセチルヒアルロン酸Na / 加水分解ヒアルロン酸 / ヒアルロン酸クロスポリマーNa / ヒアルロン酸ヒドロキシプロピルトリモニウム / 乳酸球菌/ヒアルロン酸発酵液</p><p class="ingredient-aliases">同じ成分として照合する別表記：アセチル化ヒアルロン酸Na / アセチル化ヒアルロン酸ナトリウム</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>アセチル化体の表示名称（原料供給元 オーケム通商）</strong><div class="reference-links"><a href="https://www.ohchem.net/ac-ha" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>ヒアルロン酸配合の説明（ロート製薬）</strong><div class="reference-links"><a href="https://www.shop.rohto.co.jp/atorrege/atorrege-about.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="heparinoid" aria-labelledby="heparinoid-title" tabindex="-1" data-search="ヘパリン類似物質 保湿・バリア 乾燥に着目した保湿成分 ヘパリン類似物質">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">乾燥に着目した保湿成分</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="heparinoid-title">ヘパリン類似物質</h3>
+  <p class="ingredient-summary">水分を保つ性質をもち、乾燥に対する製品に使われる成分。医薬品にも薬用化粧品にも使われますが、製品区分と効能は異なります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>このアプリでは登録商品の区分・表示で判断します。医薬品の0.3%製剤の濃度や治療効能を、薬用化粧品へそのまま当てはめません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>ヘパリン類似物質</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の性質（健栄製薬）</strong><div class="reference-links"><a href="https://www.kenei-pharm.com/healmild/heparinoid/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>医薬品・医薬部外品の違い（健栄製薬）</strong><div class="reference-links"><a href="https://www.kenei-pharm.com/healmild/qa/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>薬用化粧品の有効成分表示（カルテ）</strong><div class="reference-links"><a href="https://carte-beauty.com/site/g/gPHMT/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="glycerin" aria-labelledby="glycerin-title" tabindex="-1" data-search="グリセリン・濃グリセリン 保湿・バリア 水分を保つ基本の保湿成分 グリセリン 濃グリセリン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">水分を保つ基本の保湿成分</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="glycerin-title">グリセリン・濃グリセリン</h3>
+  <p class="ingredient-summary">多くの化粧水・乳液などに使う保湿成分。濃グリセリンは原料規格を表す名称のため、選択肢では区別して残しています。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>配合されているだけで製品中の濃度は分かりません。ジグリセリン・ポリグリセリンなどの誘導体は別成分として照合します。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（2）</summary><p>グリセリン / 濃グリセリン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">ヒト比較試験</span></summary>
+  <p class="evidence-scope">乾燥のある健康な51人の前腕で、グリセリン・ワセリン配合クリームと各成分を除いた処方を比較。塗布後12時間の水分量・水分蒸散量を調べています。</p><p class="evidence-limit">治療効果を評価する設計ではなく、両成分を含む特定の処方の試験です。単独成分の万能性や全登録商品の効果を示しません。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Vaillantほか（2020）</strong><cite lang="en">Combined effects of glycerol and petrolatum in an emollient cream: A randomized, double-blind, crossover study in healthy volunteers with dry skin</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/31532576/" target="_blank" rel="noopener noreferrer">PMID: 31532576 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1111/jocd.13163" target="_blank" rel="noopener noreferrer">DOI: 10.1111/jocd.13163 <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合目的・全成分の例（ちふれ：保湿化粧水）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/skinlotion/2871" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="humectants" aria-labelledby="humectants-title" tabindex="-1" data-search="BG・DPG・糖類などの保湿成分 保湿・バリア 水になじむ保湿成分の仲間 BG DPG ジグリセリン ポリグリセリン PEG-30 POE(26)グリセリン PPG-9ジグリセリル エリスリトール キシリトール ソルビット液 ソルビトール トレハロース スクロース イノシトール グリセリルグルコシド アセチルグルコサミン 加水分解水添デンプン 水添ハチミツ ヒドロキシエチルエチレンウレア ジプロピレングリコール キシリット">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">水になじむ保湿成分の仲間</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="humectants-title">BG・DPG・糖類などの保湿成分</h3>
+  <p class="ingredient-summary">水分を保ったり、製品ののび・なじみを調整したりする成分群。BGとDPGは別成分で、「ジプロピレングリコール」はDPGの正式名です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>ソルビット液とソルビトールなど、溶液や原料規格の違いは登録名に残します。配合量やほかの成分との組み合わせで、しっとり感・べたつきは変わります。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（19）</summary><p>BG / DPG / ジグリセリン / ポリグリセリン / PEG-30 / POE(26)グリセリン / PPG-9ジグリセリル / エリスリトール / キシリトール / ソルビット液 / ソルビトール / トレハロース / スクロース / イノシトール / グリセリルグルコシド / アセチルグルコサミン / 加水分解水添デンプン / 水添ハチミツ / ヒドロキシエチルエチレンウレア</p><p class="ingredient-aliases">同じ成分として照合する別表記：ジプロピレングリコール / キシリット</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の用途（コープ化粧品：DPG）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/detail.html?CD=7105201" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合目的・全成分の例（ちふれ：濃厚化粧水）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/skinlotion/2628" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>糖類原料（ナガセヴィータ）</strong><div class="reference-links"><a href="https://group.nagase.com/viita/products_solutions/personal_care_ingredients/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>保湿成分の配合例（資生堂 エリクシール）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/sw/onlinestore/products/H42401.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="amino-moisturizers" aria-labelledby="amino-moisturizers-title" tabindex="-1" data-search="アミノ酸・PCA・ベタインなど 保湿・バリア 保湿・肌を整える処方に アミノ酸 L-アルギニン アルギニン L-セリン セリン メチルセリン アミジノプロリン PCA-Na ベタイン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">保湿・肌を整える処方に</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="amino-moisturizers-title">アミノ酸・PCA・ベタインなど</h3>
+  <p class="ingredient-summary">角層のうるおいに関わるアミノ酸や、その関連成分。保湿のほか、アルギニンのように処方のpH調整にも使われる成分があります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>肌を洗う「アミノ酸系洗浄成分」とは区別します。セリンとメチルセリンなど、名前の一部が同じでも同一成分として照合しません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（9）</summary><p>アミノ酸 / L-アルギニン / アルギニン / L-セリン / セリン / メチルセリン / アミジノプロリン / PCA-Na / ベタイン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の用途（コープ化粧品：アルギニン）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/detail.html?CD=8006471" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>保湿剤の表示例（コープ化粧品）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/stuff/detail.html?JAN=4902220559930" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>アミジノプロリン・メチルセリンの配合目的（花王）</strong><div class="reference-links"><a href="https://www.kao-kirei.com/ja/official/sofina-ip/products/treatmentlotion/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="collagen-proteins" aria-labelledby="collagen-proteins-title" tabindex="-1" data-search="コラーゲン・シルクなどのタンパク質系 保湿・バリア 肌表面のうるおい・なめらかさを支える コラーゲン コラーゲン・トリペプチドF 加水分解コラーゲン 加水分解コラーゲン末 水溶性コラーゲン 水溶性コラーゲン(F) 水溶性コラーゲン液 サクシニルアテロコラーゲン液 加水分解シルク 加水分解コンキオリン 加水分解ダイズタンパク 卵黄エキス">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">肌表面のうるおい・なめらかさを支える</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="collagen-proteins-title">コラーゲン・シルクなどのタンパク質系</h3>
+  <p class="ingredient-summary">タンパク質や、その一部を分解・加工した保湿原料。水溶性・加水分解などの名称で、原料や分子の性質が異なります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>塗るコラーゲンを、真皮のコラーゲンをそのまま補充するものとは考えません。飲む製品や注入の研究結果を、外用化粧品へ流用しません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（12）</summary><p>コラーゲン / コラーゲン・トリペプチドF / 加水分解コラーゲン / 加水分解コラーゲン末 / 水溶性コラーゲン / 水溶性コラーゲン(F) / 水溶性コラーゲン液 / サクシニルアテロコラーゲン液 / 加水分解シルク / 加水分解コンキオリン / 加水分解ダイズタンパク / 卵黄エキス</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の用途（コープ化粧品：コラーゲン・トリペプチドF）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/detail.html?CD=9007511" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>成分の用途（コープ化粧品：サクシニルアテロコラーゲン液）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/detail.html?CD=9002401" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>成分の用途（コープ化粧品：加水分解シルク）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/detail.html?CD=7052301" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="polymers" aria-labelledby="polymers-title" tabindex="-1" data-search="多糖類・保湿ポリマー 保湿・バリア 保湿・皮膜・使い心地を支える シロキクラゲ多糖体 ポリクオタニウム-51 ポリクオタニウム-61 水溶性プロテオグリカン ヒドロキシプロピルシクロデキストリン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">保湿・皮膜・使い心地を支える</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="polymers-title">多糖類・保湿ポリマー</h3>
+  <p class="ingredient-summary">水分を保つ、肌表面に膜をつくる、成分を包み込むなど、構造ごとに役割が異なる高分子成分です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>ポリクオタニウム-51と-61は別の成分。リピジュアは原料の商標で、ひとつの化学成分だけを指す名称ではありません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（5）</summary><p>シロキクラゲ多糖体 / ポリクオタニウム-51 / ポリクオタニウム-61 / 水溶性プロテオグリカン / ヒドロキシプロピルシクロデキストリン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>リピジュアの表示名称と用途（日油）</strong><div class="reference-links"><a href="https://www.nof.co.jp/contents/lipidure/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>原料ごとの種類（日油）</strong><div class="reference-links"><a href="https://www.nof.co.jp/contents/cosmeticlounge/pdf/cosmeticlounge.pdf" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合例（地の塩社 男の化粧水）</strong><div class="reference-links"><a href="https://www.chinoshiosya.com/news/product/ちのしお　男の化粧水-（男性用全身化粧水）/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="peptides" aria-labelledby="peptides-title" tabindex="-1" data-search="ペプチド・グルタチオン 保湿・バリア 整肌・ハリ感に着目した処方に カプロオイルテトラペプチド-3 パルミトイルジペプチド-18 カルノシン グルタチオン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">整肌・ハリ感に着目した処方に</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="peptides-title">ペプチド・グルタチオン</h3>
+  <p class="ingredient-summary">アミノ酸がいくつか結び付いた成分。結合する種類や脂肪酸の付け方で性質が異なるため、「ペプチド」として一律の効果は決められません。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>ハリ・うるおいをうたう商品の処方で使われる例があります。細胞実験、内服・注射の研究、完成品のヒト試験は別の根拠として読みます。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（4）</summary><p>カプロオイルテトラペプチド-3 / パルミトイルジペプチド-18 / カルノシン / グルタチオン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>カプロオイルテトラペプチド-3の原料情報（供給元 マツモト交商）</strong><div class="reference-links"><a href="https://matsumoto-trd.com/material/materialdetail.php?materialid=250" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="ricepower" aria-labelledby="ricepower-title" tabindex="-1" data-search="ライスパワーエキス 保湿・バリア 番号ごとの用途を確認 ライスパワーNo.11(米エキスNo.11) ライスパワーNo.11+ ライスパワーNo.6(米エキスNo.6) ライスパワーNo.7-A(米発酵エキスNo.7-A)">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">番号ごとの用途を確認</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="ricepower-title">ライスパワーエキス</h3>
+  <p class="ingredient-summary">米を発酵させてつくる原料群。No.11は皮膚水分保持能の改善、No.11+はそれに加えシワ改善、No.6は皮脂分泌の抑制という薬用の用途があります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>No.7-Aは保湿のための原料です。番号や「+」が異なれば一律にまとめず、選択・成分照合を分けています。米発酵液一般とも区別します。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（4）</summary><p>ライスパワーNo.11(米エキスNo.11) / ライスパワーNo.11+ / ライスパワーNo.6(米エキスNo.6) / ライスパワーNo.7-A(米発酵エキスNo.7-A)</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>番号ごとの効果・効能（開発元 勇心酒造）</strong><div class="reference-links"><a href="https://www.yushin-brewer.com/ricepower/effect/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>種類の説明（ライスフォース）</strong><div class="reference-links"><a href="https://www.riceforce.com/stc/about/ricepower.aspx" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>No.7-Aの保湿成分表示（コーセー）</strong><div class="reference-links"><a href="https://maison.kose.co.jp/site/onebykose/g/gMUUA/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="squalane" aria-labelledby="squalane-title" tabindex="-1" data-search="スクワラン 保湿・バリア 油分で肌をやわらかく保つ スクワラン 植物性スクワラン シュガースクワラン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">油分で肌をやわらかく保つ</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="squalane-title">スクワラン</h3>
+  <p class="ingredient-summary">肌をなめらかにし、油分を補うエモリエント成分。植物性・シュガースクワランは、主に原料の由来を表す呼び方です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>由来を区別したい場合に備え、登録名は残しています。由来だけで保湿力や肌との相性を決めず、製品全体の感触も目安にします。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（3）</summary><p>スクワラン / 植物性スクワラン / シュガースクワラン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>配合目的・全成分の例（ちふれ：濃厚美容液）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/essence/2634" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="petrolatum" aria-labelledby="petrolatum-title" tabindex="-1" data-search="ワセリン 保湿・バリア 油性の膜で水分の蒸散を抑える ワセリン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">油性の膜で水分の蒸散を抑える</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="petrolatum-title">ワセリン</h3>
+  <p class="ingredient-summary">肌表面を覆い、うるおいが逃げにくい状態を支える成分。水分を抱えるグリセリンなどとは保湿の役割が異なります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>乾燥が気になるときの保護に。仕上がりの重さは配合量や処方で変わり、配合されているだけで全商品が同じ使用感にはなりません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>ワセリン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">ヒト比較試験</span></summary>
+  <p class="evidence-scope">グリセリンの項で紹介する51人の試験では、ワセリンを含む処方による水分蒸散量の低下などを比較しています。</p><p class="evidence-limit">純ワセリン単独の試験ではなく、特定の乳化クリームの比較です。</p>
+  <ol class="guide-references"><li><strong>参考論文 · Vaillantほか（2020）</strong><cite lang="en">Combined effects of glycerol and petrolatum in an emollient cream: A randomized, double-blind, crossover study in healthy volunteers with dry skin</cite><div class="reference-links"><a href="https://pubmed.ncbi.nlm.nih.gov/31532576/" target="_blank" rel="noopener noreferrer">PMID: 31532576 <span aria-hidden="true">↗</span></a><a href="https://doi.org/10.1111/jocd.13163" target="_blank" rel="noopener noreferrer">DOI: 10.1111/jocd.13163 <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>有効成分と保湿成分の表示（資生堂 IHADA）</strong><div class="reference-links"><a href="https://www.shiseido.co.jp/ihada/lotion-emulsion/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="plant-oils" aria-labelledby="plant-oils-title" tabindex="-1" data-search="植物油・ワックス・脂質 保湿・バリア 油分・なめらかさを補う アボカド油 オリーブ果実油 カラスムギ穀粒油 コメ胚芽油 シア脂 ダイズ油 ハトムギ油 ヒマワリ種子油 ホホバ種子油 マカデミアナッツ油 マカデミア種子油 マカデミアナッツ脂肪酸フィトステリル ミツロウ フィトステロールズ ホホバ油">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">油分・なめらかさを補う</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="plant-oils-title">植物油・ワックス・脂質</h3>
+  <p class="ingredient-summary">油分を補って肌をやわらかくしたり、クリームの質感を整えたりする成分群。植物油と、植物から取る水溶性のエキスは別の原料です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>ホホバ油はホホバ種子油に表記を統一。その他の油の登録名は元の情報に合わせて残しています。「天然由来」だけで刺激の起こりにくさは判断しません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（14）</summary><p>アボカド油 / オリーブ果実油 / カラスムギ穀粒油 / コメ胚芽油 / シア脂 / ダイズ油 / ハトムギ油 / ヒマワリ種子油 / ホホバ種子油 / マカデミアナッツ油 / マカデミア種子油 / マカデミアナッツ脂肪酸フィトステリル / ミツロウ / フィトステロールズ</p><p class="ingredient-aliases">同じ成分として照合する別表記：ホホバ油</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>配合目的・全成分の例（ちふれ：濃厚保湿クリーム）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/moisturecream/2632" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合目的・全成分の例（ちふれ：濃厚美容液）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/essence/2634" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>ホホバ油の表示名（香栄興業）</strong><div class="reference-links"><a href="https://www.koei-pcf.co.jp/products/cosme/cosme12.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="emollient-oils" aria-labelledby="emollient-oils-title" tabindex="-1" data-search="エステル油・炭化水素油 保湿・バリア 油分・のび・クレンジングを支える イソドデカン イソノナン酸イソノニル エチルヘキサン酸セチル エチルヘキサン酸セテアリル テトラエチルヘキサン酸ペンタエリスリチル トリ(カプリル酸/カプリン酸)グリセリル トリイソノナノイン トリエチルヘキサノイン パルミチン酸エチルヘキシル ミネラルオイル ミリスチン酸イソプロピル ラウリン酸メチルヘプチル 水添ポリデセン 炭酸ジカプリリル 流動イソパラフィン α-オレフィンオリゴマー 2-エチルヘキサン酸セチル テトラ2-エチルヘキサン酸ペンタエリトリット 流動パラフィン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">油分・のび・クレンジングを支える</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="emollient-oils-title">エステル油・炭化水素油</h3>
+  <p class="ingredient-summary">クリームのなめらかさや軽さを調整する油性成分。クレンジングではメイクをなじませて落とすためにも使われます。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>流動パラフィンはミネラルオイルへ表記を統一（原料の粘度・規格は別途確認）。エチルヘキサン酸セチルとパルミチン酸エチルヘキシルは別のエステルです。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（16）</summary><p>イソドデカン / イソノナン酸イソノニル / エチルヘキサン酸セチル / エチルヘキサン酸セテアリル / テトラエチルヘキサン酸ペンタエリスリチル / トリ(カプリル酸/カプリン酸)グリセリル / トリイソノナノイン / トリエチルヘキサノイン / パルミチン酸エチルヘキシル / ミネラルオイル / ミリスチン酸イソプロピル / ラウリン酸メチルヘプチル / 水添ポリデセン / 炭酸ジカプリリル / 流動イソパラフィン / α-オレフィンオリゴマー</p><p class="ingredient-aliases">同じ成分として照合する別表記：2-エチルヘキサン酸セチル / テトラ2-エチルヘキサン酸ペンタエリトリット / 流動パラフィン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>配合目的・全成分の例（ちふれ：濃厚保湿クリーム）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/moisturecream/2632" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>原料の表示名・用途（製造元 ナショナル美松）</strong><div class="reference-links"><a href="https://nationalmimatsu.co.jp/product-details-ester4.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>ミネラルオイルの表示名（山桂産業）</strong><div class="reference-links"><a href="https://www.yamakei.jp/product/ryupara/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="silicones" aria-labelledby="silicones-title" tabindex="-1" data-search="シリコーン系の油性成分 保湿・バリア すべり・なめらかさ・質感を調整 ジメチコン デカメチルシクロペンタシロキサン デカメチルテトラシロキサン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">すべり・なめらかさ・質感を調整</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="silicones-title">シリコーン系の油性成分</h3>
+  <p class="ingredient-summary">乳液やクリームなどののびをよくし、肌表面をなめらかにする油性成分。揮発しやすさなどは種類によって異なります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>シリコーンが入っているかだけで、毛穴づまりや肌との相性は判定できません。完成品の使用感と使い方を目安にします。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（3）</summary><p>ジメチコン / デカメチルシクロペンタシロキサン / デカメチルテトラシロキサン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>配合目的・全成分の例（ちふれ：濃厚保湿クリーム）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/moisturecream/2632" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article></div></section>
+<section class="guide-section" id="guide-section-4" data-section="毛穴・皮脂" aria-labelledby="guide-section-4-title"><h2 id="guide-section-4-title">毛穴・皮脂</h2><div class="guide-cards"><article class="panel ingredient-card" id="glycylglycine" aria-labelledby="glycylglycine-title" tabindex="-1" data-search="グリシルグリシン 毛穴・皮脂 毛穴の見え方に着目した整肌成分 グリシルグリシン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">毛穴の見え方に着目した整肌成分</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="glycylglycine-title">グリシルグリシン</h3>
+  <p class="ingredient-summary">グリシンが2つ結び付いたジペプチド。資生堂が、毛穴周辺の皮膚の状態に着目して研究した整肌成分です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>毛穴まわりをなめらかに整える処方の目安。角栓を溶かす洗浄成分や、毛穴を永久になくす成分とは異なります。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>グリシルグリシン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーのヒト試験報告</span></summary>
+  <p class="evidence-scope">資生堂のIFSCC受賞研究紹介で、グリシルグリシンを含む溶液を2カ月使用した際の毛穴の見え方を報告しています。</p><p class="evidence-limit">公開されたメーカーの研究紹介です。ここでは論文番号を確認できていないため、PMIDを付けていません。登録品同士の優劣は示しません。</p>
+  <ol class="guide-references"><li><strong>IFSCC 2006受賞研究（資生堂）</strong><div class="reference-links"><a href="https://corp.shiseido.com/jp/rd/ifscc/13.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="powders" aria-labelledby="powders-title" tabindex="-1" data-search="クレイ・炭・シリカなどの粉体 毛穴・皮脂 汚れの吸着・さらさら感・質感を支える カオリン タナクラクレイ ベントナイト モロッコ溶岩クレイ 海シルト 炭 シリカ 含水シリカ 無水ケイ酸 コーンスターチ セルロース 結晶セルロース ヒドロキシアパタイト マイカ メタケイ酸アルミン酸Mg">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">汚れの吸着・さらさら感・質感を支える</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="powders-title">クレイ・炭・シリカなどの粉体</h3>
+  <p class="ingredient-summary">余分な皮脂や汚れを吸着する、粉体で感触を調整するなど、目的の異なる成分群。クレイ、炭、シリカは別々の原料です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>洗顔料では洗い流して汚れを落とす働き、化粧水ではさらさらした仕上がりなどを確認します。配合だけで毛穴そのものを小さくする意味ではありません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（15）</summary><p>カオリン / タナクラクレイ / ベントナイト / モロッコ溶岩クレイ / 海シルト / 炭 / シリカ / 含水シリカ / 無水ケイ酸 / コーンスターチ / セルロース / 結晶セルロース / ヒドロキシアパタイト / マイカ / メタケイ酸アルミン酸Mg</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>クレイ・炭の配合例（花王 ニベア）</strong><div class="reference-links"><a href="https://www.kao-kirei.com/ja/item/khg/nivea/4901301451132/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>有効成分・皮脂吸着成分の説明（ロート製薬 アクネス）</strong><div class="reference-links"><a href="https://jp.rohto.com/acnes/powder-lotion" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>粉体の配合目的例（コープ化粧品）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/stuff/detail.html?JAN=49156737" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="zinc-calamine" aria-labelledby="zinc-calamine-title" tabindex="-1" data-search="酸化亜鉛・カラミン 毛穴・皮脂 粉体の用途と、薬用成分の表示を区別 酸化亜鉛 カラミン 酸化Zn">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">粉体の用途と、薬用成分の表示を区別</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="zinc-calamine-title">酸化亜鉛・カラミン</h3>
+  <p class="ingredient-summary">酸化Znは酸化亜鉛の別表記。皮脂が気になる肌向けのパウダーなどに使われます。カラミンは酸化亜鉛に関連する、別の粉体原料です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>化粧品での配合を、医薬品のあせも・かゆみへの効能と同じには扱いません。日焼け止めとしての性能も、成分名だけでは判断できません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（2）</summary><p>酸化亜鉛 / カラミン</p><p class="ingredient-aliases">同じ成分として照合する別表記：酸化Zn</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の用途（コープ化粧品：酸化亜鉛）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/detail.html?CD=7093901" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>有効成分・皮脂吸着成分の説明（ロート製薬 アクネス）</strong><div class="reference-links"><a href="https://jp.rohto.com/acnes/powder-lotion" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article></div></section>
+<section class="guide-section" id="guide-section-5" data-section="肌を整える成分" aria-labelledby="guide-section-5-title"><h2 id="guide-section-5-title">肌を整える成分</h2><div class="guide-cards"><article class="panel ingredient-card" id="vitamin-e" aria-labelledby="vitamin-e-title" tabindex="-1" data-search="トコフェロール・酢酸トコフェロール 肌を整える成分 ビタミンEと誘導体を区別する トコフェロール 酢酸トコフェロール 酢酸DL-α-トコフェロール 酢酸dl-α-トコフェロール トコフェロール酢酸エステル">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">ビタミンEと誘導体を区別する</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="vitamin-e-title">トコフェロール・酢酸トコフェロール</h3>
+  <p class="ingredient-summary">トコフェロールはビタミンEの仲間で、製品成分の酸化を防ぐ目的にも使われます。酢酸トコフェロールは誘導体で、別成分です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>酢酸DL-α-トコフェロール／トコフェロール酢酸エステルは、酢酸トコフェロールに表記を統一。有効成分か製品の酸化防止目的かは商品表示を確認します。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（2）</summary><p>トコフェロール / 酢酸トコフェロール</p><p class="ingredient-aliases">同じ成分として照合する別表記：酢酸DL-α-トコフェロール / 酢酸dl-α-トコフェロール / トコフェロール酢酸エステル</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>同義語の確認（日本医薬品添加剤協会）</strong><div class="reference-links"><a href="https://www.jpec.gr.jp/detail%3Dnormal%26date%3Dsafetydata/sa/dasu5.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合目的・全成分の例（ちふれ：保湿化粧水）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/skinlotion/2871" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="other-vitamins" aria-labelledby="other-vitamins-title" tabindex="-1" data-search="ビタミンB関連成分 肌を整える成分 保湿・肌を整えるケアに D-パントテニルアルコール ピリドキシン塩酸塩">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">保湿・肌を整えるケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="other-vitamins-title">ビタミンB関連成分</h3>
+  <p class="ingredient-summary">D-パントテニルアルコールはパンテノールに関連する名称、ピリドキシン塩酸塩はビタミンB6の一種。別々の成分です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>保湿・整肌などの配合目的を商品で確認します。ビタミンという総称だけで、ナイアシンアミドなどと同じ薬用効能にはなりません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（2）</summary><p>D-パントテニルアルコール / ピリドキシン塩酸塩</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分表示（ロート製薬 メラノCC）</strong><div class="reference-links"><a href="https://jp.rohto.com/melanocc/essence/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>医薬部外品の成分表示名称リスト</strong><div class="reference-links"><a href="https://www.tokyorika.com/dcms_media/other/qdlnl.pdf" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="coenzyme-q10" aria-labelledby="coenzyme-q10-title" tabindex="-1" data-search="ユビキノン・ユビデカレノン 肌を整える成分 コエンザイムQ10の表示名 ユビキノン ユビデカレノン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">コエンザイムQ10の表示名</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="coenzyme-q10-title">ユビキノン・ユビデカレノン</h3>
+  <p class="ingredient-summary">コエンザイムQ10の成分表示名。肌を整える化粧品の処方に使われ、ユビデカレノンはユビキノンに表記を統一しています。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>内服での働きや細胞実験の結果を、塗る製品のシワ改善と同じ意味では扱いません。配合量・完成品の表示を確認します。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（1）</summary><p>ユビキノン</p><p class="ingredient-aliases">同じ成分として照合する別表記：ユビデカレノン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>保湿成分としての配合例（三宝製薬）</strong><div class="reference-links"><a href="https://www.sampo-seiyaku.co.jp/products/cat6_5.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>名称の対応（厚生労働省掲載資料）</strong><div class="reference-links"><a href="https://www.mhlw.go.jp/topics/bukyoku/iyaku/kaisyu/kaisyuu2005-2-2044.html" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="botanical-extracts" aria-labelledby="botanical-extracts-title" tabindex="-1" data-search="植物・海藻などのエキス 肌を整える成分 保湿・整肌など、原料ごとに用途が異なる アシタバエキス アスナロエキス アセンヤクエキス アルピニアカツマダイ種子エキス アロエエキス(2) アンズ果汁 イチョウエキス ウコンエキス エイジツエキス エーデルワイスエキス オウゴンエキス オタネニンジン根エキス カキタンニン ガゴメエキス カミツレ花エキス カモミラエキス(1) ザクロ果実エキス シャクヤクエキス ショウガ根エキス ショウキョウエキス ジンギベルプルプレウム根エキス スターフルーツ葉エキス セージ葉エキス ダイズ芽エキス ダイズ種子エキス チャエキス(1) チャ葉エキス チンピエキス ツバキ種子エキス ツボクサエキス ツボクサ葉/茎エキス ツボクサ葉エキス ハトムギエキス ハトムギ種子エキス ハトムギ種子水 ブクリョウタケエキス モモ果汁 ユーカリエキス ユーカリ葉エキス ユキノシタエキス ヨクイニンエキス ヨクイニン水 ローズマリーエキス ワレモコウエキス ローマカミツレエキス ローヤルゼリーエキス 油溶性ヨクイニンエキス 油溶性甘草エキス(2)">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">保湿・整肌など、原料ごとに用途が異なる</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="botanical-extracts-title">植物・海藻などのエキス</h3>
+  <p class="ingredient-summary">植物の葉・根・種子、海藻などから得る原料群。保湿や肌を整える用途に使われますが、種・部位・抽出方法が違えば中身も同じではありません。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>CICAはツボクサ関連の呼び方ですが、葉・茎や抽出物の登録名は分けます。植物名の一致だけで薬用美白やニキビ予防の有効成分とは判定しません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（48）</summary><p>アシタバエキス / アスナロエキス / アセンヤクエキス / アルピニアカツマダイ種子エキス / アロエエキス(2) / アンズ果汁 / イチョウエキス / ウコンエキス / エイジツエキス / エーデルワイスエキス / オウゴンエキス / オタネニンジン根エキス / カキタンニン / ガゴメエキス / カミツレ花エキス / カモミラエキス(1) / ザクロ果実エキス / シャクヤクエキス / ショウガ根エキス / ショウキョウエキス / ジンギベルプルプレウム根エキス / スターフルーツ葉エキス / セージ葉エキス / ダイズ芽エキス / ダイズ種子エキス / チャエキス(1) / チャ葉エキス / チンピエキス / ツバキ種子エキス / ツボクサエキス / ツボクサ葉/茎エキス / ツボクサ葉エキス / ハトムギエキス / ハトムギ種子エキス / ハトムギ種子水 / ブクリョウタケエキス / モモ果汁 / ユーカリエキス / ユーカリ葉エキス / ユキノシタエキス / ヨクイニンエキス / ヨクイニン水 / ローズマリーエキス / ワレモコウエキス / ローマカミツレエキス / ローヤルゼリーエキス / 油溶性ヨクイニンエキス / 油溶性甘草エキス(2)</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">原料メーカー資料</span></summary>
+  <p class="evidence-scope">植物原料の名称・用途を整理した資料を参照しています。</p><p class="evidence-limit">このグループ全体に共通するヒト臨床効果を示すものではありません。カモミラETなど、個別に薬用で使う成分は別項目にしています。</p>
+  <ol class="guide-references"><li><strong>植物原料の名称・用途（原料メーカー 丸善製薬）</strong><div class="reference-links"><a href="https://www.maruzenpcy.co.jp/productguide/list/cosmetics/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="ferments" aria-labelledby="ferments-title" tabindex="-1" data-search="発酵液・酵母エキス 肌を整える成分 うるおい・肌を整えるケアに コメ発酵液 サッカロミセス/ハトムギ種子発酵液 酵母エキス(1) 酵母エキス(3)">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">うるおい・肌を整えるケアに</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="ferments-title">発酵液・酵母エキス</h3>
+  <p class="ingredient-summary">発酵や酵母に由来する保湿・整肌原料。菌や原料、抽出工程によって含まれるものが異なるため、発酵というだけで同一の成分とは扱いません。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>酵母エキスの番号は消さずに残します。ライスパワーNo.11などに認められた薬用効能を、米発酵液全般へ当てはめることはできません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（4）</summary><p>コメ発酵液 / サッカロミセス/ハトムギ種子発酵液 / 酵母エキス(1) / 酵母エキス(3)</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>植物原料の名称・用途（原料メーカー 丸善製薬）</strong><div class="reference-links"><a href="https://www.maruzenpcy.co.jp/productguide/list/cosmetics/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>原料ごとの用途（勇心酒造）</strong><div class="reference-links"><a href="https://www.yushin-brewer.com/ricepower/effect/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="cooling-oils" aria-labelledby="cooling-oils-title" tabindex="-1" data-search="清涼成分・精油 肌を整える成分 清涼感・香りなどの使用感に メントール カンフル ティーツリー葉油 ユーカリ葉油">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">清涼感・香りなどの使用感に</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="cooling-oils-title">清涼成分・精油</h3>
+  <p class="ingredient-summary">メントール・カンフルは清涼感、精油は香りなどの目的に使う成分です。ユーカリ葉油とユーカリ葉エキスは異なる原料です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>すっとする感覚を、炎症が治まった証拠とは考えません。精油の抗菌実験を、配合化粧品のニキビ予防の効能へそのまま当てはめません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（4）</summary><p>メントール / カンフル / ティーツリー葉油 / ユーカリ葉油</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の用途（コープ化粧品：メントール）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/detail.html?CD=8003041" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>植物原料の名称・用途（原料メーカー 丸善製薬）</strong><div class="reference-links"><a href="https://www.maruzenpcy.co.jp/productguide/list/cosmetics/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article></div></section>
+<section class="guide-section" id="guide-section-6" data-section="洗浄・処方を支える成分" aria-labelledby="guide-section-6-title"><h2 id="guide-section-6-title">洗浄・処方を支える成分</h2><div class="guide-cards"><article class="panel ingredient-card" id="amino-cleansers" aria-labelledby="amino-cleansers-title" tabindex="-1" data-search="アミノ酸系などの洗浄成分 洗浄・処方を支える成分 汚れと皮脂を水で流しやすくする アミノ酸系洗浄成分 ココイルグリシンK ココイルグリシンNa ココイルグルタミン酸2Na ココイルグルタミン酸Na ココイルグルタミン酸TEA ココイルメチルタウリンNa ココイルメチルタウリンタウリンNa ミリストイルグルタミン酸Na ラウロイルアスパラギン酸Na ラウロイルグルタミン酸K ラウロイルグルタミン酸Na ラウロイルメチルアラニンNa ココアンホ酢酸Na ラウリルヒドロキシスルタイン ラウリルベタイン コセス硫酸亜鉛">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">汚れと皮脂を水で流しやすくする</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="amino-cleansers-title">アミノ酸系などの洗浄成分</h3>
+  <p class="ingredient-summary">水と油の境界で働く界面活性剤。アミノ酸系のほか、ベタイン系・タウリン系などもこの項で説明しています。すべてが同じ種類という意味ではありません。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>洗浄力・つっぱり感は種類と配合量、組み合わせで変わります。「アミノ酸系」だけで低刺激を保証せず、洗い上がりも目安にします。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（17）</summary><p>アミノ酸系洗浄成分 / ココイルグリシンK / ココイルグリシンNa / ココイルグルタミン酸2Na / ココイルグルタミン酸Na / ココイルグルタミン酸TEA / ココイルメチルタウリンNa / ココイルメチルタウリンタウリンNa / ミリストイルグルタミン酸Na / ラウロイルアスパラギン酸Na / ラウロイルグルタミン酸K / ラウロイルグルタミン酸Na / ラウロイルメチルアラニンNa / ココアンホ酢酸Na / ラウリルヒドロキシスルタイン / ラウリルベタイン / コセス硫酸亜鉛</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>酵素・アミノ酸系洗浄成分の説明（カネボウ化粧品 suisai）</strong><div class="reference-links"><a href="https://www.kanebo-cosmetics.jp/suisai/tsurusube/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合目的・全成分の例（ちふれ：洗顔フォーム）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/facewash/2129" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="soap" aria-labelledby="soap-title" tabindex="-1" data-search="石けん成分・脂肪酸 洗浄・処方を支える成分 洗顔の泡・洗浄やクリームの質感に カリ石ケン素地 パーム核脂肪酸K パーム核脂肪酸Na オレイン酸Na ミリスチン酸Na ラウリン酸 ミリスチン酸 ステアリン酸">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">洗顔の泡・洗浄やクリームの質感に</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="soap-title">石けん成分・脂肪酸</h3>
+  <p class="ingredient-summary">脂肪酸とその塩は、洗顔料の石けん成分として使われます。一方、ステアリン酸などはクリームの質感を整える用途もあります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>脂肪酸名だけで洗顔の強さは決められません。洗顔料かクリームか、処方中の目的と使用感を併せて見ます。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（8）</summary><p>カリ石ケン素地 / パーム核脂肪酸K / パーム核脂肪酸Na / オレイン酸Na / ミリスチン酸Na / ラウリン酸 / ミリスチン酸 / ステアリン酸</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>配合目的・全成分の例（ちふれ：洗顔石けん）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/facewash/2560" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合目的・全成分の例（ちふれ：洗顔フォーム）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/facewash/2129" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="emulsifiers" aria-labelledby="emulsifiers-title" tabindex="-1" data-search="乳化・可溶化を支える成分 洗浄・処方を支える成分 水と油をなじませ、処方を安定させる PEG-7グリセリルココエート イソステアリン酸ポリオキシエチレングリセリル オレイン酸ソルビタン ステアロイルグルタミン酸Na ラウリン酸PEG-12 ラウリン酸ポリグリセリル-10">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">水と油をなじませ、処方を安定させる</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="emulsifiers-title">乳化・可溶化を支える成分</h3>
+  <p class="ingredient-summary">乳化・可溶化などで、水と油が混ざった状態や使用感を支える成分。クレンジングでメイクを流しやすくする用途のものもあります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>界面活性剤には洗浄以外の役割もあります。成分名だけで刺激の強さや肌悩みへの効果を判断せず、製品全体で選びます。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（6）</summary><p>PEG-7グリセリルココエート / イソステアリン酸ポリオキシエチレングリセリル / オレイン酸ソルビタン / ステアロイルグルタミン酸Na / ラウリン酸PEG-12 / ラウリン酸ポリグリセリル-10</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>配合目的・全成分の例（ちふれ：濃厚美容液）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/essence/2634" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>配合目的・全成分の例（ちふれ：保湿化粧水）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/skinlotion/2871" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="enzymes" aria-labelledby="enzymes-title" tabindex="-1" data-search="酵素：プロテアーゼ・リパーゼなど 洗浄・処方を支える成分 古い角質・皮脂汚れの洗浄を助ける プロテアーゼ リパーゼ パパイン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">古い角質・皮脂汚れの洗浄を助ける</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="enzymes-title">酵素：プロテアーゼ・リパーゼなど</h3>
+  <p class="ingredient-summary">プロテアーゼやパパインはタンパク質、リパーゼは脂質に作用する酵素。洗顔料で、角質や皮脂に由来する汚れを落とす目的に使います。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>毛穴汚れやザラつきが気になるとき。酵素の種類だけで洗浄力は比べられないため、使用頻度や泡立て方は商品案内に合わせます。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（3）</summary><p>プロテアーゼ / リパーゼ / パパイン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>酵素・アミノ酸系洗浄成分の説明（カネボウ化粧品 suisai）</strong><div class="reference-links"><a href="https://www.kanebo-cosmetics.jp/suisai/tsurusube/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="acids-ph" aria-labelledby="acids-ph-title" tabindex="-1" data-search="有機酸・pH調整成分 洗浄・処方を支える成分 処方のpH・使用感などを整える クエン酸 乳酸 グリコール酸 グルコン酸 トロメタミン 炭酸水素Na">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">処方のpH・使用感などを整える</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="acids-ph-title">有機酸・pH調整成分</h3>
+  <p class="ingredient-summary">クエン酸などは製品のpHを調整する目的にも使います。乳酸・グリコール酸などの有機酸は、濃度やpHによって働きが変わります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>成分欄に酸があるだけでピーリング製品とは判定できません。角質ケアを目的に選ぶ場合は、商品の用途・使用方法を確認します。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（6）</summary><p>クエン酸 / 乳酸 / グリコール酸 / グルコン酸 / トロメタミン / 炭酸水素Na</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>配合目的・全成分の例（ちふれ：濃厚美容液）</strong><div class="reference-links"><a href="https://www.chifure.co.jp/products/essence/2634" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>pH調整剤の表示例（コープ化粧品）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/stuff/detail.html?JAN=4902220551880" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="solvents" aria-labelledby="solvents-title" tabindex="-1" data-search="溶剤・品質を支える成分 洗浄・処方を支える成分 成分を溶かす・使用感や品質を整える 変性アルコール エトキシジグリコール エチルヘキシルグリセリン">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">成分を溶かす・使用感や品質を整える</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="solvents-title">溶剤・品質を支える成分</h3>
+  <p class="ingredient-summary">ほかの成分を溶かす、軽い使い心地にする、品質を支えるなどの用途があります。エチルヘキシルグリセリンも、グリセリンそのものとは別成分です。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>溶剤があることだけで製品の刺激性や安全性は決められません。成分数を増やすためではなく、完成品を使える状態にする役割もあります。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（3）</summary><p>変性アルコール / エトキシジグリコール / エチルヘキシルグリセリン</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>成分の用途（コープ化粧品：エトキシジグリコール）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/detail.html?CD=9003771" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>原料の配合目的を調べる（コープ化粧品）</strong><div class="reference-links"><a href="https://www.co-op.ne.jp/cosmetics/element/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article>
+<article class="panel ingredient-card" id="water-gases" aria-labelledby="water-gases-title" tabindex="-1" data-search="温泉水・炭酸ガス・窒素 洗浄・処方を支える成分 水性の基剤・泡・噴射を支える 温泉水 二酸化炭素 窒素 炭酸ガス">
+  <div class="ingredient-card-top"><span class="ingredient-purpose">水性の基剤・泡・噴射を支える</span><a class="guide-top-link" href="#guide-top">目次へ ↑</a></div>
+  <h3 id="water-gases-title">温泉水・炭酸ガス・窒素</h3>
+  <p class="ingredient-summary">温泉水は水性の原料。二酸化炭素は炭酸ガスの別名で、泡や製品の処方に使われます。窒素は容器から噴射するガスなどとして使う例があります。</p>
+  <p class="ingredient-choice"><strong>選ぶ目安</strong>温泉水の配合は温泉療法と同じ意味ではありません。炭酸の泡があることだけで、完成品の浸透や血流への効果は決められません。</p>
+  <details class="ingredient-names"><summary>この解説で扱う登録名（3）</summary><p>温泉水 / 二酸化炭素 / 窒素</p><p class="ingredient-aliases">同じ成分として照合する別表記：炭酸ガス</p></details>
+  <details class="ingredient-evidence"><summary>研究と出典を見る <span class="evidence-kind">メーカーの用途・原料資料</span></summary>
+  <p class="evidence-scope">配合目的や成分名を確認するための資料です。完成品の効果を比較した臨床試験とは区別しています。</p>
+  <ol class="guide-references"><li><strong>炭酸泡の製品説明（花王 SOFINA iP）</strong><div class="reference-links"><a href="https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301412829/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li>
+<li><strong>ミストの成分表示（花王 キュレル）</strong><div class="reference-links"><a href="https://www.kao-kirei.com/ja/item/kbb/curel/4901301379924/" target="_blank" rel="noopener noreferrer">出典を開く <span aria-hidden="true">↗</span></a></div></li></ol></details>
+</article></div></section>
     </main>
-    <footer class="guide-footer">出典確認：2026年11月22日。PMIDはPubMedの論文番号、DOIは論文を特定する識別子です。論文リンク先は主に英語です。研究の種類と対象を添えて、メーカーの用途説明とは分けて掲載しています。</footer>
+    <footer class="guide-footer">出典確認：2026/11/23。PMIDはPubMedの論文番号、DOIは論文を特定する識別子です。論文は主に英語です。表記の統一は成分名の照合のためで、原料規格・分子量・配合濃度・製品の効能が同一であることを意味しません。</footer>
   </div>
+  <script type="module" src="./ingredient-guide.js?v=0.9.22"></script>
 </body>
 </html>

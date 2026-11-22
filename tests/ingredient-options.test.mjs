@@ -3,7 +3,7 @@ import test from 'node:test';
 import {readFile} from 'node:fs/promises';
 import {loadCatalog} from '../dist/catalog-csv.js';
 import {reconcileCatalogState} from '../dist/catalog-data.js';
-import {ingredientChoices,canonicalIngredient,DIPOTASSIUM_GLYCYRRHIZATE} from '../dist/ingredient-options.js';
+import {ingredientChoices,canonicalIngredient,displayIngredients,INGREDIENT_ALIASES,DIPOTASSIUM_GLYCYRRHIZATE} from '../dist/ingredient-options.js';
 import {canIncludeRoutineProduct,meetsIngredientRequirement,optimize,scoreRoutine} from '../dist/optimizer.js';
 
 test('choices include each catalog ingredient independently of guide coverage and exclude invalid fragments',()=>{
@@ -13,6 +13,44 @@ test('choices include each catalog ingredient independently of guide coverage an
   assert.deepEqual(ingredientChoices(catalog),['none','アラントイン','加水分解コラーゲン','グリセリン','セラミドNG','トラネキサム酸','ナイアシンアミド','濃グリセリン','ヒアルロン酸Na','レチノール','ワセリン']);
   const options=ingredientChoices([{keyIngredients:['3-O-エチルアスコルビン酸','BG','α-オレフィンオリゴマー']}]);
   assert.equal(options.length,4);
+});
+
+test('verified aliases deduplicate choices, match both directions and migrate saved selections',()=>{
+  for(const [canonical,aliases] of INGREDIENT_ALIASES){
+    for(const name of [canonical,...aliases]){
+      assert.equal(canonicalIngredient(name),canonical);
+      const product={jan:'alias-product',category:'serum',keyIngredients:[name],scores:{}};
+      const options={ingredient:canonical,ingredientMode:'required',concerns:['dryness']};
+      assert(meetsIngredientRequirement([product],options),name);
+      assert(canIncludeRoutineProduct(product,options),name);
+      assert.equal(scoreRoutine([product],options)-scoreRoutine([product],{...options,ingredient:'none'}),10);
+      assert(meetsIngredientRequirement([{...product,keyIngredients:[canonical]}],{...options,ingredient:name}),name);
+      assert.equal(reconcileCatalogState({ingredient:name},[product]).ingredient,canonical);
+    }
+    assert.deepEqual(ingredientChoices([{keyIngredients:[canonical,...aliases]}]),['none',canonical]);
+    assert.deepEqual(displayIngredients([canonical,...aliases]),[canonical]);
+  }
+  assert.equal(canonicalIngredient('  ヒアルロン酸Ｎａ（２）  '),'ヒアルロン酸Na');
+  assert.equal(canonicalIngredient('ツボクサ葉／茎エキス'),'ツボクサ葉/茎エキス');
+  assert.equal(canonicalIngredient('ライスパワーNo.11+'),'ライスパワーNo.11+');
+});
+
+test('related compounds and raw-material grades do not match merely by containing the selected name',()=>{
+  for(const [selected,other] of [
+    ['レチノール','酢酸レチノール'],['ヒアルロン酸Na','アセチルヒアルロン酸Na'],
+    ['ヒアルロン酸Na','ヒアルロン酸クロスポリマーNa'],['グリセリン','ジグリセリン'],
+    ['グリセリン','濃グリセリン'],['セリン','メチルセリン'],['アミノ酸','アミノ酸系洗浄成分'],
+    ['セラミド機能成分','セラミドNP'],['トコフェロール','酢酸トコフェロール'],
+    ['アスコルビン酸','アスコルビルグルコシド'],['カモミラET','カモミラエキス(1)'],
+    ['ライスパワーNo.11(米エキスNo.11)','ライスパワーNo.11+'],
+  ]){
+    assert.notEqual(canonicalIngredient(selected),canonicalIngredient(other));
+    const product={jan:'other-product',category:'serum',keyIngredients:[other],scores:{}};
+    const options={ingredient:selected,ingredientMode:'required',concerns:['dryness']};
+    assert(!meetsIngredientRequirement([product],options),`${selected} / ${other}`);
+    assert(!canIncludeRoutineProduct(product,options),`${selected} / ${other}`);
+    assert.equal(scoreRoutine([product],options),scoreRoutine([product],{...options,ingredient:'none'}));
+  }
 });
 
 test('all selectable names have a matching active product in their own catalog',async()=>{
