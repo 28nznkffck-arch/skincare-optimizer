@@ -1,8 +1,8 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.17';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.17';
-import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.17';
-import {loadCatalog} from './catalog-csv.js?v=0.9.17';
-import {renderProgress} from './progress-view.js?v=0.9.17';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.18';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.18';
+import {clampBudget, DEFAULT_BUDGET, DIPOTASSIUM_GLYCYRRHIZATE, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.18';
+import {loadCatalog} from './catalog-csv.js?v=0.9.18';
+import {renderProgress} from './progress-view.js?v=0.9.18';
 
 const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
@@ -102,9 +102,9 @@ function pickCurrent(){
     stopRecommendationWorker();recommendationKey=key;
     recommendationResult=null;recommendationMinimum=null;
     recommendationPending=true;recommendationError='';
-    recommendationProgress={title:'候補の準備',stage:'preparing',percent:0,completed:0,total:CATEGORIES.length,unit:'品目',current:'品目別の候補を整理しています'};
+    recommendationProgress={title:'候補の準備',stage:'preparing',percent:0,completed:0,total:CATEGORIES.length,unit:'品目',current:state.useMakeupRemover?'メイク落としの暫定一位を計算しています……':'洗顔の暫定一位を計算しています……'};
     try{
-      const worker=new Worker(new URL('./routine-worker.js?v=0.9.17',import.meta.url),{type:'module'});
+      const worker=new Worker(new URL('./routine-worker.js?v=0.9.18',import.meta.url),{type:'module'});
       recommendationWorker=worker;
       const failed=message=>{
         if(recommendationWorker!==worker)return;

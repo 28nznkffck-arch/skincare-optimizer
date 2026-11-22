@@ -297,6 +297,71 @@ test('fast one-result optimization exactly matches exhaustive ranking across con
   }
 });
 
+test('optional products are tried in descending net score and seed the strongest routine first',()=>{
+  const item=(category,jan,points)=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,keyIngredients:[],scores:{dryness:points},evidence:{}});
+  const items=[item('cleanser','wash',2),item('moisturizer','cream',2),
+    ...Array.from({length:80},(_,i)=>item('toner',`toner-${i+1}`,i+1)),
+    ...Array.from({length:80},(_,i)=>item('serum',`serum-${i+1}`,i+1))];
+  const options={budget:1000,concerns:['dryness'],priority:'any'},events=[];
+  const fast=optimize(items,{...options,resultLimit:1},event=>events.push(event));
+  assert.deepEqual(fast,optimize(items,options).slice(0,1));
+  assert.deepEqual(fast[0].products.map(p=>p.jan),['wash','toner-80','serum-80','cream']);
+  assert.equal(events.at(-1).evaluated,'1','lower-scoring optional products should be pruned after the first routine');
+});
+
+test('extra-step penalties prune weak optional combinations while stronger additions remain eligible',()=>{
+  const item=(category,jan,points)=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,keyIngredients:[],scores:{dryness:points},evidence:{}});
+  const base=[item('cleanser','wash',5),item('moisturizer','cream',5)];
+  const items=[...base,...Array.from({length:80},(_,i)=>item('toner',`weak-toner-${i}`,0.1)),
+    ...Array.from({length:80},(_,i)=>item('serum',`weak-serum-${i}`,0.1))];
+  for(const priority of ['simple','any']){
+    const options={budget:1000,concerns:['dryness'],priority},events=[];
+    const fast=optimize(items,{...options,resultLimit:1},event=>events.push(event));
+    assert.deepEqual(fast,optimize(items,options).slice(0,1));
+    assert.deepEqual(fast[0].products.map(p=>p.jan),['wash','cream']);
+    assert.equal(events.at(-1).evaluated,'1','losing combinations must not reach full routine scoring');
+    assert.equal(BigInt(events.at(-1).evaluated)+BigInt(events.at(-1).skipped),BigInt(events.at(-1).total));
+    const stronger=[...base,item('toner','strong-toner',10),item('serum','strong-serum',10)];
+    assert(optimize(stronger,{...options,resultLimit:1})[0].products.some(p=>p.category==='toner'));
+  }
+  assert.equal(explainRoutineScore([...base,items[2]],{concerns:['dryness'],priority:'thorough'}).parts.find(part=>part.id==='steps').value,0);
+});
+
+test('nullable cleanser and eye-care choices also try the highest net score first',()=>{
+  const item=(category,jan,scores)=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,keyIngredients:[],scores,evidence:{}});
+  const items=[item('makeupRemover','remover',{}),item('moisturizer','cream',{}),
+    item('cleanser','weak-wash',{dryness:1}),item('cleanser','strong-wash',{dryness:3}),
+    item('eyeCare','weak-eye',{eyeDryness:1}),item('eyeCare','strong-eye',{eyeDryness:3})];
+  items[0].doubleCleanseNotNeeded=true;
+  const options={budget:1000,concerns:['dryness','eyeDryness'],priority:'any',useMakeupRemover:true},events=[];
+  const fast=optimize(items,{...options,resultLimit:1},event=>events.push(event));
+  assert.deepEqual(fast,optimize(items,options).slice(0,1));
+  assert.deepEqual(fast[0].products.map(p=>p.jan),['remover','strong-wash','cream','strong-eye']);
+  assert.equal(events.at(-1).evaluated,'1','nullable choices must seed the strongest routine first');
+});
+
+test('remaining-budget score ceilings preserve the exact optimum at price boundaries and after overrides',()=>{
+  const item=(category,jan,cost,scores)=>({category,jan,brand:'検証',name:jan,referencePrice:cost,referenceUses:30,dailyUses:1,keyIngredients:[],scores,evidence:{}});
+  const items=[...Array.from({length:4},(_,i)=>item('cleanser',`wash-${i}`,80+i*30,{dryness:1})),
+    ...Array.from({length:4},(_,i)=>item('moisturizer',`cream-${i}`,100+i*50,{dryness:3})),
+    ...Array.from({length:4},(_,i)=>item('toner',`toner-${i}`,100+i*40,{dryness:3})),
+    ...Array.from({length:4},(_,i)=>item('serum',`serum-${i}`,100+i*50,{dryness:3})),
+    item('serum','eye-balm',800,{dryness:2,eyeDryness:3}),
+    item('eyeCare','eye-1',100,{eyeDryness:3}),item('eyeCare','eye-2',130,{eyeDryness:3})];
+  for(const setting of [
+    {budget:1180},{budget:1179},{budget:500},{budget:Infinity},
+    {budget:1180,concernWeights:{eyeDryness:'high',dryness:'low'}},
+    {budget:1180,overrides:{'eye-balm':{price:100}}},
+    {budget:1180,locked:{toner:'toner-3'}},
+  ]){
+    const options={concerns:['dryness','eyeDryness'],priority:'any',...setting},events=[];
+    const fast=optimize(items,{...options,resultLimit:1},event=>events.push(event));
+    assert.deepEqual(fast,optimize(items,options).slice(0,1));
+    const last=events.at(-1);
+    assert.equal(BigInt(last.evaluated)+BigInt(last.skipped),BigInt(last.total));assert.equal(last.percent,100);
+  }
+});
+
 test('pruned search preserves makeup rules, ingredient preferences and ties',()=>{
   const sample=['makeupRemover','cleanser','toner','serum','moisturizer','eyeCare']
     .flatMap(category=>catalog.filter(p=>p.category===category).slice(0,5));

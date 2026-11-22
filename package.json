@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "catalog:check": "node scripts/check_catalog.mjs",
+    "search:verify": "node scripts/verify_search_exactness.mjs",
     "test": "npm run catalog:check && node --test tests/*.test.mjs"
   }
 }

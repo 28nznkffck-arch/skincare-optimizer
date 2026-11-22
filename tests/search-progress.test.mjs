@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
 import {optimize,CATEGORIES} from '../dist/optimizer.js';
 import {renderProgress} from '../dist/progress-view.js';
 
@@ -69,23 +70,30 @@ test('empty candidate sets complete with zero work and large counts retain integ
   assert(total>BigInt(Number.MAX_SAFE_INTEGER));assert.equal(last.total,String(total));assert.equal(last.skipped,String(total));assert.equal(last.evaluated,'0');assert.equal(last.percent,100);
 });
 
-test('search updates identify actual candidate products without changing results or counts',()=>{
+test('search descriptions name actual categories and remain readable while percent keeps updating',()=>{
   const items=['cleanser','toner','serum','moisturizer'].flatMap(category=>Array.from({length:8},(_,i)=>product(category,i,{name:`${category}-${i}`,scores:{dryness:1}})));
   const originalNow=Date.now;let time=0;
   Date.now=()=>time+=100;
   try {
     for(const extra of [{},{resultLimit:1}]){
       const options={budget:5000,concerns:['dryness'],priority:'thorough',...extra},events=[];
-      const result=optimize(items,options,event=>events.push(event));
+      const result=optimize(items,options,event=>events.push({...event,time}));
       assert.deepEqual(result,optimize(items,options));
       const detailed=events.filter(event=>event.detail);
-      assert(detailed.length>0,'a long search must report the candidates being compared');
+      assert(detailed.length>0,'a long search must report the category being compared');
+      let changedAt=detailed[0].time,previous=detailed[0].current;
       for(const event of detailed){
-        assert(items.some(item=>event.current.includes(`「${item.brand} ${item.name}」`)));
-        assert.match(event.current,/組み合わせを確認しています/);
+        assert.match(event.current,/^(?:洗顔の暫定一位を計算しています|(?:化粧水|美容液|乳液・クリームなど)と組み合わせています)……$/);
+        assert.doesNotMatch(event.current,/試験|通常品|上回る可能性|組み合わせを省略/);
+        if(event.current!==previous){
+          assert(event.time-changedAt>=1000,'category text must stay visible for at least one second');
+          previous=event.current;changedAt=event.time;
+        }
       }
-      assert(new Set(detailed.map(event=>event.current)).size>1,'candidate descriptions must follow the actual search');
+      assert(detailed.some((event,i)=>i>0 && event.current===detailed[i-1].current && event.percent>detailed[i-1].percent),
+        'percent must advance while the category description stays visible');
       const last=events.at(-1);assert.equal(last.percent,100);assert.equal(BigInt(last.evaluated)+BigInt(last.skipped),BigInt(last.total));
+      assert.equal(last.current,'組み合わせの探索が完了','completion must immediately replace the held description');
     }
   }finally{Date.now=originalNow;}
 });
@@ -93,12 +101,24 @@ test('search updates identify actual candidate products without changing results
 test('progress panel puts the actual percent beside the bar and the current task below it',()=>{
   const markup=renderProgress({title:'提案の探索',stage:'search',percent:37.5,current:'予算を超える枝を省略',evaluated:'100',skipped:'200',total:'800'});
   assert.match(markup,/class="process-icon"/);assert.match(markup,/あなたに合うスキンケアを検索中/);
-  assert.match(markup,/<progress[^>]*value="37.5"[^>]*>[\s\S]*?<\/progress>\s*<strong class="process-percent">37.5%<\/strong>/);
+  assert.match(markup,/<progress[^>]*value="37.5"[^>]*>[\s\S]*?<\/progress>\s*<strong class="process-percent"> 37.50%<\/strong>/);
   assert.match(markup,/予算を超える枝を省略/);assert.doesNotMatch(markup,/評価 100 通り|省略 200 通り/);
   assert.doesNotMatch(renderProgress({current:'候補を集計中'}),/value="/);
   assert.match(renderProgress({stage:'loading',percent:25,current:'products.csvの読み込みが完了'}),/商品データを読み込んでいます…/);
   assert.match(renderProgress({percent:0,current:'保湿の候補を評価・整理中'}),/保湿の候補を評価しています…/);
   assert.match(renderProgress({percent:25,current:'prices.csvの照合'},true),/停止時の処理：prices.csvの照合/);
   assert.match(renderProgress({current:'<script>bad</script>'}),/&lt;script&gt;/);
-  assert.match(renderProgress({current:'候補を比較',detail:'<b>予算を確認</b>'}),/&lt;b&gt;予算を確認&lt;\/b&gt;/);
+  assert.doesNotMatch(renderProgress({current:'美容液と組み合わせています……',detail:'予算で省略'}),/process-detail/);
+  assert.match(renderProgress({current:'候補を比較',detail:'<b>予算を確認</b>'},true),/&lt;b&gt;予算を確認&lt;\/b&gt;/);
+});
+
+test('percentage keeps exactly two decimals and a seven-character field at every digit boundary',async()=>{
+  for(const [value,expected] of [[0,'  0.00%'],[9,'  9.00%'],[9.99,'  9.99%'],[10,' 10.00%'],[99.99,' 99.99%'],[100,'100.00%'],[-1,'  0.00%'],[101,'100.00%']]){
+    const text=renderProgress({percent:value}).match(/<strong class="process-percent">([^<]+)<\/strong>/)[1];
+    assert.equal(text,expected);assert.equal(text.length,7);
+  }
+  const css=await readFile(new URL('../dist/styles.css',import.meta.url),'utf8');
+  const rule=css.match(/\.process-percent\{([^}]+)\}/)[1];
+  assert.match(rule,/(?:^|;)width:7ch;/);assert.match(rule,/font-family:[^;]*monospace;/);
+  assert.match(rule,/white-space:pre;/);assert.match(rule,/letter-spacing:0;/);
 });

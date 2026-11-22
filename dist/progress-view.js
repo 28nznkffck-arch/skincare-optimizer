@@ -5,7 +5,7 @@ const leaf='<svg class="process-icon" viewBox="0 0 48 48" fill="none" stroke="cu
 export function renderProgress(progress={},stopped=false){
   const known=Number.isFinite(progress.percent);
   const value=known?Math.max(0,Math.min(100,progress.percent)):null;
-  const percent=known?`${value.toLocaleString('ja-JP',{maximumFractionDigits:2})}%`:'準備中';
+  const percent=known?`${value.toFixed(2)}%`.padStart(7,' '):'準備中';
   const title=progress.title||'処理の進捗';
   const current=stopped?progress.current:progress.stage==='loading'?'商品データを読み込んでいます…':
     progress.current?.replace(/の候補を評価・整理中$/,'の候補を評価しています…').replace(/の候補を確認$/,'の候補を確認しています…');
@@ -16,7 +16,7 @@ export function renderProgress(progress={},stopped=false){
       <strong class="process-percent">${percent}</strong>
     </div>
     <p class="process-current" aria-live="polite">${stopped?'停止時の処理：':''}${escape(current||'候補を整理しています…')}</p>
-    ${progress.detail?`<p class="process-detail">${escape(progress.detail)}</p>`:''}
+    ${stopped&&progress.detail?`<p class="process-detail">${escape(progress.detail)}</p>`:''}
     ${progress.note?`<p class="process-note">${escape(progress.note)}</p>`:''}
   </div>`;
 }

@@ -1,4 +1,4 @@
-import {monthlyCost} from './optimizer.js?v=0.9.17';
+import {monthlyCost} from './optimizer.js?v=0.9.18';
 
 export const DEFAULT_BUDGET = 5000;
 export const DIPOTASSIUM_GLYCYRRHIZATE = 'グリチルリチン酸ジカリウム';

@@ -148,22 +148,27 @@ function combinationCounts(groups) {
 
 function describeCombination(products) {
   const selected=products.filter(Boolean),focus=selected.at(-1);
-  if(!focus)return '予算と成分の条件から候補を絞り込んでいます…';
-  const others=selected.slice(0,-1).map(product=>CATEGORY_LABELS[product.category]).join('・');
-  return `${CATEGORY_LABELS[focus.category]}「${focus.brand} ${focus.name}」${others?`と${others}の`:'を使う'}組み合わせを確認しています…`;
+  if(!focus)return '条件に合う組み合わせを確認しています……';
+  const label=focus.category==='moisturizer'?'乳液・クリームなど':CATEGORY_LABELS[focus.category];
+  return ['makeupRemover','cleanser'].includes(focus.category)
+    ? `${label}の暫定一位を計算しています……` : `${label}と組み合わせています……`;
 }
 
 function searchProgress(grouped, report) {
   if(!report)return null;
   const total=combinationCounts(grouped)[0];
-  let evaluated=0n,skipped=0n,ticks=0,last=0,describeCurrent=null;
+  let evaluated=0n,skipped=0n,ticks=0,last=0,describeCurrent=null,displayedCurrent=null,lastDescriptionChange=0;
   const emit=(current,complete=false)=>{
+    const now=Date.now();
     const completed=evaluated+skipped;
-    // 商品名の組み立ては通知するときだけ行い、探索を重くしない。
     const description=complete?null:describeCurrent?.();
-    report({stage:'search',current:description||current,...(description?{detail:current}:{}),percent:total?Number(completed*10000n/total)/100:(complete?100:0),
+    // 工程名だけ読める頻度に抑える。進捗率や完了通知は待たせない。
+    if(description && (displayedCurrent===null || now-lastDescriptionChange>=1000) && displayedCurrent!==description){
+      displayedCurrent=description;lastDescriptionChange=now;
+    }
+    report({stage:'search',current:description?displayedCurrent:current,...(description?{detail:current}:{}),percent:total?Number(completed*10000n/total)/100:(complete?100:0),
       evaluated:String(evaluated),skipped:String(skipped),completed:String(completed),total:String(total),complete});
-    last=Date.now();
+    last=now;
   };
   const update=(current)=>{
     // 表示更新だけを間引く。探索や完了を待たせるタイマーは使わない。
@@ -270,7 +275,6 @@ function findBestRoutine(grouped, budget, options,progress) {
     .map(category => CATEGORIES.indexOf(category));
   const cleanserSlot = CATEGORIES.indexOf("cleanser");
   const groups = visitOrder.map(slot => {
-    progress?.status(`${CATEGORY_LABELS[CATEGORIES[slot]]}の候補を評価・整理中`);
     const entries = grouped[slot].map((product, order) => ({
       product, order,
       cost: product ? monthlyCost(product, options.overrides?.[product.jan]) : 0,
@@ -284,8 +288,11 @@ function findBestRoutine(grouped, budget, options,progress) {
       penalty: product && (isExtraStep(product.category) || (product.category === "cleanser" && options.useMakeupRemover)) ? stepPenalty : 0,
       transparency: Number(Boolean(product && hasDisclosedConcentration(product))),
     })).filter(entry => entry.cost <= budget);
-    if (entries.length > 1 && grouped[slot][0] !== null) {
-      for (const entry of entries) entry.singleScore = scoreRoutine([entry.product], options);
+    if(entries.some(entry=>entry.product))progress?.status(CATEGORIES[slot]==='cleanser'
+      ? '洗顔の暫定一位を計算しています……' : `${CATEGORY_LABELS[CATEGORIES[slot]]}の候補を高得点順に並べています……`);
+    if (entries.length > 1) {
+      // 任意の品目も、手間減点を含む単品評価順に試す。省略は0点。
+      for (const entry of entries) entry.singleScore = scoreRoutine(entry.product?[entry.product]:[], options);
       entries.sort((a, b) => b.singleScore - a.singleScore || a.order - b.order);
     }
     return entries;
@@ -359,6 +366,41 @@ function findBestRoutine(grouped, budget, options,progress) {
     return round2(round2(score) + round2(transparency * CONCENTRATION_DISCLOSURE_BONUS));
   }
 
+  // 各品目以外を最安で揃えたときに、その品目へ使える残額を求める。
+  // 残額では買えない高得点商品を肌悩みの上限に含めない。
+  // 他の加点は従来の楽観的な上限を保ち、最高点を過小評価しない。
+  function affordableScoreCeiling(depth,used,originalCeiling){
+    const rest=remaining[depth],available=budget-used.cost,affordable=[];
+    let changed=false;
+    for(let g=depth;g<groups.length;g++){
+      const allowance=available-(rest.cost-maxima[g].cost);
+      const points=concerns.map(()=>0);
+      for(const entry of groups[g]){
+        if(entry.cost>allowance)continue;
+        for(let i=0;i<concerns.length;i++)points[i]=Math.max(points[i],entry.points[i]);
+      }
+      changed ||= points.some((point,i)=>point<maxima[g].points[i]);
+      affordable.push(points);
+    }
+    if(!changed)return originalCeiling;
+    let oldConcerns=0,newConcerns=0;
+    for(let i=0;i<concerns.length;i++){
+      let first=0,second=0,third=0,affordableFirst=0,affordableSecond=0,affordableThird=0;
+      for(let g=0;g<groups.length;g++){
+        const old=(g<depth?chosen[g]:maxima[g]).points[i];
+        const next=g<depth?chosen[g].points[i]:affordable[g-depth][i];
+        if(old>first){third=second;second=first;first=old;}
+        else if(old>second){third=second;second=old;}else if(old>third)third=old;
+        if(next>affordableFirst){affordableThird=affordableSecond;affordableSecond=affordableFirst;affordableFirst=next;}
+        else if(next>affordableSecond){affordableThird=affordableSecond;affordableSecond=next;}
+        else if(next>affordableThird)affordableThird=next;
+      }
+      oldConcerns+=round2((first*7+second*3+third)*weights[i]);
+      newConcerns+=round2((affordableFirst*7+affordableSecond*3+affordableThird)*weights[i]);
+    }
+    return round2(originalCeiling-oldConcerns+newConcerns);
+  }
+
   function visit(depth, used) {
     if(progress)progressDepth=depth;
     const rest = remaining[depth];
@@ -367,9 +409,16 @@ function findBestRoutine(grouped, budget, options,progress) {
       progress?.skip(counts[depth],minCost>budget?'月額予算を超える組み合わせを省いています…':'必須成分を含められない組み合わせを省いています…');return;
     }
     if (best) {
-      const ceiling = scoreCeiling(depth, used);
+      let ceiling = scoreCeiling(depth, used);
       if (ceiling < best.score || (ceiling === best.score && minCost > best.monthly)) {
         progress?.skip(counts[depth],ceiling<best.score?'今の有力候補と相性を比較し、上回る可能性のない組み合わせを省いています…':'相性が同じなら、月額費用の安い組み合わせを優先しています…');return;
+      }
+      // 安価な上限で残った枝だけ再確認する。計算結果のキャッシュは使わない。
+      if(depth<groups.length-1 && Number.isFinite(budget)){
+        ceiling=affordableScoreCeiling(depth,used,ceiling);
+        if(ceiling<best.score || (ceiling===best.score && minCost>best.monthly)){
+          progress?.skip(counts[depth],'残り予算で得られる点数では首位に届かない組み合わせを省略');return;
+        }
       }
     }
     if (depth === groups.length) {
