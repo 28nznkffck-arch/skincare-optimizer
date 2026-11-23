@@ -63,6 +63,8 @@ function ingredients(value) {
   if (parts.some(part => !/[A-Za-zぁ-んァ-ヶ一-龯]/u.test(part.normalize('NFKC'))))
     throw new Error('成分名に数字や記号だけの断片が含まれています');
   // 原料規格の(1)/(2)や構造名の括弧は残す。注釈・説明文の混入は入力時に検出する。
+  if (parts.some(part => part.length > 160 || /販売名[：:]/u.test(part) || /(?:サリチル酸|グリチルリチン酸ジカリウム)[，](?=[ァ-ヶ一-龯])/u.test(part)))
+    throw new Error('成分名の区切りまたは販売名の混入を確認してください');
   if (parts.some(part => /[※＊*†‡☆★。\r\n]|(?:エキス|成分)は/.test(part)))
     throw new Error('成分名に注釈・説明文が含まれています。成分名のみを入力してください');
   return parts;

@@ -105,3 +105,5 @@ test('ingredient dictionary search handles kana, source names, empty results and
 });
 
 test('old standalone guide links point to grouped cards',async()=>{const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');for(const name of ['EDTA-2Na','PEG-4','ステアリン酸Na','シャクヤク根エキス'])assert(html.includes('id="'+ingredientGuideId(name)+'"'));});
+
+test('new glyceryl and glycerin groups have distinct guide links',()=>{for(const [oldName,newName] of [['グリセリンモノ2-エチルヘキシルエーテル','エチルヘキシルグリセリン'],['POE(26)グリセリン','グリセレス-26'],['トリメチルグリシン','ベタイン'],['エデト酸二ナトリウム','EDTA']])assert.equal(ingredientGuideId(oldName),ingredientGuideId(newName));assert.notEqual(ingredientGuideId('グリセリン'),ingredientGuideId('ステアリン酸グリセリル'));});

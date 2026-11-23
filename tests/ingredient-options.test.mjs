@@ -128,3 +128,5 @@ test('identical glycyrrhizate names match preferences and requirements without m
 });
 
 test('new ingredient groupings do not equate unrelated chemicals',()=>{for(const [a,b] of [['ステアリン酸','ステアリン酸Mg'],['塩化ナトリウム','塩化Mg'],['クエン酸','クエン酸トリエチル'],['グルタミン酸','D-グルタミン酸'],['ローズマリーエキス','ローズマリー葉油']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));for(const item of ['EDTA-2Na','EDTA-3Na','EDTA-4Na'])assert.equal(ingredientSelection(item),'EDTA');});
+
+test('glycerin roots are not all interchangeable; verified synonyms are',()=>{for(const [a,b] of [['グリセリン','ステアリン酸グリセリル'],['グリセリン','グリセリルグルコシド'],['グリセリン','エチルヘキシルグリセリン'],['ステアリン酸グリセリル','ステアリン酸グリセリル(SE)'],['BG','PG'],['ジメチコン','ジメチコンクロスポリマー']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));for(const n of ['オクトキシグリセリン','グリセリンモノ2-エチルヘキシルエーテル','グリセリルエチルヘキシルエーテル'])assert.equal(ingredientSelection(n),'エチルヘキシルグリセリン');for(const n of ['トリメチルグリシン','ベタイン'])assert.equal(ingredientSelection(n),'ベタイン');});
