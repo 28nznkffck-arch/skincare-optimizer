@@ -1,10 +1,10 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.28';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.28';
-import {clampBudget, DEFAULT_BUDGET, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.28';
-import {loadCatalog} from './catalog-csv.js?v=0.9.28';
-import {renderProgress} from './progress-view.js?v=0.9.28';
-import {ingredientChoices} from './ingredient-options.js?v=0.9.28';
-import {ingredientGuideId} from './ingredient-guide-index.js?v=0.9.28';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.29';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.29';
+import {clampBudget, DEFAULT_BUDGET, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.29';
+import {loadCatalog} from './catalog-csv.js?v=0.9.29';
+import {renderProgress} from './progress-view.js?v=0.9.29';
+import {ingredientChoices} from './ingredient-options.js?v=0.9.29';
+import {ingredientGuideId} from './ingredient-guide-index.js?v=0.9.29';
 
 const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
@@ -107,7 +107,7 @@ function pickCurrent(){
     recommendationPending=true;recommendationError='';
     recommendationProgress={title:'候補の準備',stage:'preparing',percent:0,completed:0,total:CATEGORIES.length,unit:'品目',current:state.useMakeupRemover?'メイク落としの暫定一位を計算しています……':'洗顔の暫定一位を計算しています……'};
     try{
-      const worker=new Worker(new URL('./routine-worker.js?v=0.9.28',import.meta.url),{type:'module'});
+      const worker=new Worker(new URL('./routine-worker.js?v=0.9.29',import.meta.url),{type:'module'});
       recommendationWorker=worker;
       const failed=message=>{
         if(recommendationWorker!==worker)return;
