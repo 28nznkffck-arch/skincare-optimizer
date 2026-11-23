@@ -165,3 +165,20 @@ test('SIMULGEL premix keeps manufacturer text but offers its three real constitu
   assert.equal(ingredientSelections('(アクリレーツ/アクリル酸アルキル(C10-30))クロスポリマー').length,1);
   assert.equal(ingredientSelections('水添ポリイソブテン').length,1);
 });
+
+test('registered products with the specified mixed polymer raw label remain searchable by all components',async()=>{
+  let seen=0;
+  for(const folder of ['../catalog/','../catalog-men/']){
+    const {products}=await loadCatalog(url=>readFile(url,'utf8'),folder);
+    for(const product of products){
+      const premix=product.ingredients.find(name=>ingredientSelections(name).length===3);
+      if(!premix)continue;
+      seen++;
+      for(const part of INGREDIENT_COMPOSITES[0][1]){
+        assert(meetsIngredientRequirement([product],{ingredient:part,ingredientMode:'required'}),product.jan+' / '+part);
+      }
+      assert(product.ingredients.includes(premix),'the source ingredient text is preserved');
+    }
+  }
+  assert(seen>=10,'registered mixed raw labels must not silently disappear');
+});
