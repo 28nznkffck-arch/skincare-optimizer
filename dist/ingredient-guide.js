@@ -6,7 +6,6 @@ export function normalizeGuideSearch(value){
 
 const form=document.getElementById('guide-filter');
 const search=document.getElementById('guide-search');
-const category=document.getElementById('guide-category');
 const status=document.getElementById('guide-results');
 const empty=document.getElementById('guide-empty');
 const cards=[...document.querySelectorAll('.ingredient-card')];
@@ -18,7 +17,7 @@ function filter(){
   for(const section of sections){
     let count=0;
     for(const card of section.querySelectorAll('.ingredient-card')){
-      const match=(!category.value||section.dataset.section===category.value)&&texts.get(card).includes(query);
+      const match=texts.get(card).includes(query);
       card.hidden=!match;
       if(match)count++;
     }
@@ -31,14 +30,13 @@ function filter(){
 form.hidden=false;
 form.addEventListener('submit',event=>event.preventDefault());
 search.addEventListener('input',filter);
-category.addEventListener('change',filter);
 document.getElementById('guide-clear').addEventListener('click',()=>{
-  search.value='';category.value='';filter();search.focus();
+  search.value='';filter();search.focus();
 });
 // 絞り込みで非表示になった項目にも、目次・戻る操作から到達できるようにする。
 window.addEventListener('hashchange',()=>{
   const id=window.location.hash.slice(1);
   const target=document.getElementById(id);
   if(!target)return;
-  search.value='';category.value='';filter();target.scrollIntoView();
+  search.value='';filter();target.scrollIntoView();
 });

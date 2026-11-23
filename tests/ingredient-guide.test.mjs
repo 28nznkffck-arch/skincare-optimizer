@@ -2,14 +2,15 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
 import {guides} from '../data/ingredient-guide.mjs';
+import {dictionaryEntries,dictionaryKanaRow} from '../data/ingredient-dictionary.mjs';
 import {INGREDIENT_GUIDE_GROUPS,ingredientGuideId} from '../dist/ingredient-guide-index.js';
-import {INGREDIENT_ALIASES,ingredientChoices} from '../dist/ingredient-options.js';
+import {INGREDIENT_ALIASES,ingredientChoices,compareIngredients} from '../dist/ingredient-options.js';
 import {loadCatalog} from '../dist/catalog-csv.js';
 
 test('all selectable ingredients and their aliases lead to an existing, sourced guide card',async()=>{
   const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
   const ids=[...html.matchAll(/<article class="panel ingredient-card" id="([^"]+)"/g)].map(m=>m[1]);
-  assert.equal(new Set(ids).size,guides.length);
+  assert.equal(new Set(ids).size,dictionaryEntries.length);
   assert.equal(ids.length,INGREDIENT_GUIDE_GROUPS.length);
   for(const folder of ['../catalog/','../catalog-men/']){
     const {products}=await loadCatalog(url=>readFile(url,'utf8'),folder);
@@ -31,16 +32,22 @@ test('all selectable ingredients and their aliases lead to an existing, sourced 
     }
   }
   for(const id of ['allantoin','glycyrrhizate','ceramide','niacinamide','hyaluronate'])assert(ids.includes(id),'preserve existing deep links');
+  const names=[...html.matchAll(/<article[^>]*data-name="([^"]+)"/g)].map(m=>m[1]);
+  assert.deepEqual(names,[...names].sort(compareIngredients),'the page must follow ingredient names, not roles or concerns');
+  assert.doesNotMatch(html,/guide-category|役割で絞り込む|役割別の目次/);
+  assert.match(html,/aria-label="五十音の目次"/);
+  for(const entry of dictionaryEntries){assert(entry.use&&entry.summary);assert.match(html,new RegExp(`主な用途：`));}
+  assert.equal(dictionaryKanaRow('ヒアルロン酸'),'ha');assert.equal(dictionaryKanaRow('グリセリン'),'ka');
 });
 
-test('guide search handles kana, full-width aliases, empty results, categories and navigation',async()=>{
+test('ingredient dictionary search handles kana, source names, empty results and alphabetical navigation',async()=>{
   const oldDocument=globalThis.document,oldWindow=globalThis.window;
   const element=(extra={})=>({hidden:false,value:'',events:{},addEventListener(name,fn){this.events[name]=fn;},focus(){this.focused=true;},scrollIntoView(){this.scrolled=true;},...extra});
   const a=element({dataset:{search:'ヒアルロン酸Na ヒアルロン酸ナトリウム(2)'}});
   const b=element({dataset:{search:'レチノール 酢酸レチノール'}});
   const section=(name,cards)=>element({dataset:{section:name},querySelectorAll(){return cards;}});
-  const first=section('保湿・バリア',[a]),second=section('シワ・シミ予防',[b]);
-  const elements=Object.fromEntries(['guide-filter','guide-search','guide-category','guide-results','guide-empty','guide-clear'].map(id=>[id,element()]));
+  const first=section('は行',[a]),second=section('ら行',[b]);
+  const elements=Object.fromEntries(['guide-filter','guide-search','guide-results','guide-empty','guide-clear'].map(id=>[id,element()]));
   elements.retinol=b;
   const windowEvents={};
   globalThis.document={getElementById(id){return elements[id]||null;},querySelectorAll(selector){return selector==='.ingredient-card'?[a,b]:[first,second];}};
@@ -51,7 +58,7 @@ test('guide search handles kana, full-width aliases, empty results, categories a
     assert.equal(normalizeGuideSearch('ひあるろん酸'),normalizeGuideSearch('ヒアルロン酸'));
     elements['guide-search'].value='ヒアルロン酸ナトリウム（２）';elements['guide-search'].events.input();
     assert(!a.hidden&&b.hidden&&!first.hidden&&second.hidden);
-    elements['guide-category'].value='シワ・シミ予防';elements['guide-category'].events.change();
+    elements['guide-search'].value='見つからない成分';elements['guide-search'].events.input();
     assert(a.hidden&&b.hidden&&!elements['guide-empty'].hidden);
     assert.equal(elements['guide-results'].textContent,'0 / 2項目を表示しています');
     elements['guide-clear'].events.click();assert(!a.hidden&&!b.hidden&&elements['guide-empty'].hidden);

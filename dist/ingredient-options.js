@@ -1,6 +1,6 @@
 export const DIPOTASSIUM_GLYCYRRHIZATE='グリチルリチン酸ジカリウム';
 
-// 表示・成分指定用。元のメーカー表記はCSVと商品オブジェクトに残す。
+// 成分の同義語確認用。商品の成分表示にはこの変換を使わない。
 // 同定根拠と、まとめない誘導体・原料規格は docs/ingredient-guide.md を参照。
 const normalizeName=value=>value.normalize('NFKC').trim().replace(/[‐‑−]/g,'-').replace(/\s+/g,' ');
 export const INGREDIENT_ALIASES=[
@@ -32,6 +32,37 @@ export function displayIngredients(values=[]){
   return [...new Set(values.map(canonicalIngredient).filter(name=>typeof name==='string'&&name))];
 }
 
+// 「使ってみたい成分」のまとまり。同一化学物質という意味ではなく、
+// この仲間のいずれかを含む商品を選ぶための分類。メーカーの表示名とは別管理。
+export const INGREDIENT_FAMILIES=[
+  ['ヒアルロン酸',['ヒアルロン酸','ヒアルロン酸Na','アセチルヒアルロン酸Na','加水分解ヒアルロン酸','ヒアルロン酸クロスポリマーNa','ヒアルロン酸ヒドロキシプロピルトリモニウム','乳酸球菌/ヒアルロン酸発酵液']],
+  ['コラーゲン',['コラーゲン','コラーゲン・トリペプチドF','加水分解コラーゲン','加水分解コラーゲン末','水溶性コラーゲン','水溶性コラーゲン(F)','水溶性コラーゲン液','サクシニルアテロコラーゲン液']],
+  ['セラミド',['セラミド','セラミド機能成分','セラミド2','セラミド6II','セラミドAP','セラミドNG','セラミドNP','N-ステアロイルジヒドロスフィンゴシン']],
+  ['グリセリン',['グリセリン','濃グリセリン']],
+  ['ビタミンC',['ビタミンC','ビタミンC誘導体','アスコルビン酸','アスコルビルグルコシド','リン酸アスコルビルMg','アスコルビン酸リン酸エステルナトリウム','3-O-エチルアスコルビン酸','3-グリセリルアスコルビン酸','パルミチン酸アスコルビルリン酸3Na','ビタミンCテトライソパルミテート']],
+  ['ビタミンE',['ビタミンE','トコフェロール','酢酸トコフェロール']],
+  ['スクワラン',['スクワラン','植物性スクワラン','シュガースクワラン']],
+  ['ソルビトール',['ソルビトール','ソルビット液']],
+  ['グリチルレチン酸ステアリル',['グリチルレチン酸ステアリル','グリチルレチン酸ステアリルSW']],
+  ['アルギニン',['アルギニン','L-アルギニン']],
+  ['セリン',['セリン','L-セリン']],
+  ['ツボクサエキス',['ツボクサエキス','ツボクサ葉/茎エキス','ツボクサ葉エキス']],
+  ['ハトムギエキス',['ハトムギエキス','ハトムギ種子エキス','ハトムギ種子水','ヨクイニンエキス','ヨクイニン水','油溶性ヨクイニンエキス']],
+  ['カミツレエキス',['カミツレエキス','カミツレ花エキス','カモミラエキス(1)']],
+  ['ユーカリエキス',['ユーカリエキス','ユーカリ葉エキス']],
+  ['ショウガエキス',['ショウガエキス','ショウガ根エキス','ショウキョウエキス']],
+  ['チャ葉エキス',['チャ葉エキス','チャエキス(1)']],
+  ['酵母エキス',['酵母エキス','酵母エキス(1)','酵母エキス(3)']],
+];
+const families=new Map(INGREDIENT_FAMILIES.flatMap(([name,members])=>members.map(member=>[canonicalIngredient(member),name])));
+export function ingredientSelection(value){
+  const name=canonicalIngredient(value);
+  return families.get(name)||name;
+}
+export function matchesIngredientSelection(value,selection){
+  return Boolean(selection&&selection!=='none'&&ingredientSelection(value)===ingredientSelection(selection));
+}
+
 const prefixes=[
   ['温泉水','おんせんすい'],['加水分解','かすいぶんかい'],['海シルト','かいしると'],
   ['含水','がんすい'],['結晶','けっしょう'],['酵母','こうぼ'],['酢酸','さくさん'],
@@ -43,7 +74,7 @@ const prefixes=[
 const letters=['えー','びー','しー','でぃー','いー','えふ','じー','えいち','あい','じぇー','けー','える','えむ','えぬ','おー','ぴー','きゅー','あーる','えす','てぃー','ゆー','ぶい','だぶりゅー','えっくす','わい','ぜっと'];
 const numbers={'2':'に','3':'さん','4':'よん','10':'じゅう'};
 const collator=new Intl.Collator('ja',{numeric:true});
-function reading(name){
+export function ingredientReading(name){
   let value=name.normalize('NFKC');
   const prefix=prefixes.find(([text])=>value.startsWith(text));
   if(prefix)value=prefix[1]+value.slice(prefix[0].length);
@@ -51,17 +82,18 @@ function reading(name){
     .replace(/^[A-Za-z]+/,word=>[...word.toUpperCase()].map(char=>letters[char.charCodeAt(0)-65]).join(''))
     .replace(/[ァ-ヶ]/g,char=>String.fromCharCode(char.charCodeAt(0)-0x60));
 }
+export const compareIngredients=(a,b)=>collator.compare(ingredientReading(a),ingredientReading(b))||collator.compare(a,b);
 
 export function ingredientChoices(catalog){
   const names=new Set();
   for(const product of catalog){
     if(product.archived)continue;
     for(const value of product.keyIngredients||[]){
-      const name=canonicalIngredient(value);
+      const name=ingredientSelection(value);
       // 数値だけの断片や、説明文が混ざった欄を選択肢として表示しない。
       if(typeof name!=='string' || !/[A-Za-zぁ-んァ-ヶ一-龯]/u.test(name) || /[。\r\n]|(?:エキス|成分)は/.test(name))continue;
       names.add(name);
     }
   }
-  return ['none',...[...names].sort((a,b)=>collator.compare(reading(a),reading(b))||collator.compare(a,b))];
+  return ['none',...[...names].sort(compareIngredients)];
 }

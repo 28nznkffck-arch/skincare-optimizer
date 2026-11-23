@@ -1,6 +1,6 @@
-import {monthlyCost} from './optimizer.js?v=0.9.22';
-import {canonicalIngredient,ingredientChoices} from './ingredient-options.js?v=0.9.22';
-export {DIPOTASSIUM_GLYCYRRHIZATE} from './ingredient-options.js?v=0.9.22';
+import {monthlyCost} from './optimizer.js?v=0.9.23';
+import {ingredientSelection,ingredientChoices} from './ingredient-options.js?v=0.9.23';
+export {DIPOTASSIUM_GLYCYRRHIZATE} from './ingredient-options.js?v=0.9.23';
 
 export const DEFAULT_BUDGET = 5000;
 
@@ -99,7 +99,7 @@ export function reconcileCatalogState(state, catalog) {
   const manualCategories = Array.isArray(state.manual) ? state.manual.map(id => categories.get(id)) : [];
   const manual = manualCategories.length && !manualCategories.includes(undefined)
     && new Set(manualCategories).size === manualCategories.length ? state.manual : null;
-  let ingredient = canonicalIngredient(state.ingredient);
+  let ingredient = ingredientSelection(state.ingredient);
   if(ingredient && !ingredientChoices(catalog).includes(ingredient))ingredient='none';
   return {...state, ingredient, locked, manual, excluded: state.excluded ?? {}};
 }

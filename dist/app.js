@@ -1,10 +1,10 @@
-import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.22';
-import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.22';
-import {clampBudget, DEFAULT_BUDGET, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.22';
-import {loadCatalog} from './catalog-csv.js?v=0.9.22';
-import {renderProgress} from './progress-view.js?v=0.9.22';
-import {ingredientChoices,displayIngredients} from './ingredient-options.js?v=0.9.22';
-import {ingredientGuideId} from './ingredient-guide-index.js?v=0.9.22';
+import {CATEGORIES, CATEGORY_LABELS, CONCERNS, unscoredConcerns, monthlyCost, priceOf, usesOf, evaluate, optimize, swaps, canIncludeRoutineProduct, meetsIngredientRequirement} from './optimizer.js?v=0.9.23';
+import {createSavedPlan, savedPlanTotals, updateSavedUsage} from './plans.js?v=0.9.23';
+import {clampBudget, DEFAULT_BUDGET, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.23';
+import {loadCatalog} from './catalog-csv.js?v=0.9.23';
+import {renderProgress} from './progress-view.js?v=0.9.23';
+import {ingredientChoices} from './ingredient-options.js?v=0.9.23';
+import {ingredientGuideId} from './ingredient-guide-index.js?v=0.9.23';
 
 const IS_MEN=/(?:^|\/)men\/(?:index\.html)?$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
@@ -107,7 +107,7 @@ function pickCurrent(){
     recommendationPending=true;recommendationError='';
     recommendationProgress={title:'候補の準備',stage:'preparing',percent:0,completed:0,total:CATEGORIES.length,unit:'品目',current:state.useMakeupRemover?'メイク落としの暫定一位を計算しています……':'洗顔の暫定一位を計算しています……'};
     try{
-      const worker=new Worker(new URL('./routine-worker.js?v=0.9.22',import.meta.url),{type:'module'});
+      const worker=new Worker(new URL('./routine-worker.js?v=0.9.23',import.meta.url),{type:'module'});
       recommendationWorker=worker;
       const failed=message=>{
         if(recommendationWorker!==worker)return;
@@ -199,7 +199,7 @@ function productCard(p){
       <p class="product-description">${escape(p.explanation)}</p>${p.category==='eyeCare'?`<div class="fit-note">部分ケア${p.applicationOrder?'':'・顔全体の保湿の後に使用'}</div>`:''}${p.wipeOff?'<div class="fit-note">ふき取りタイプ・コットン代は月額に含みません</div>':''}${p.category==='makeupRemover'?'<div class="fit-note">夜のみ・'+cleansingLabel(p)+(p.waterproof?'・落ちにくいメイク対応':'')+'</div>':''}
       ${p.applicationTime==='morning'?'<div class="fit-note">朝のみ</div>':''}
       ${p.applicationOrder?`<div class="fit-note">${applicationNotes[p.applicationOrder]}</div>`:''}
-      <div class="ingredient-row">${displayIngredients(p.keyIngredients).map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
+      <div class="ingredient-row">${p.keyIngredients.map(x=>`<span class="ingredient">${escape(x)}</span>`).join('')}</div>
       ${matchLabels.length?`<div class="fit-note">関連する悩み：${matchLabels.map(escape).join('・')}</div>`:''}
       ${state.sensitiveSkin && p.sensitiveSkin?'<div class="fit-note">敏感肌向けの設計情報を考慮</div>':''}
       <a class="source" href="${escape(p.sourceUrl)}" target="_blank" rel="noopener noreferrer">公式成分表 ↗</a>
@@ -412,7 +412,7 @@ function editSavedPlan(input, planId){
 function render(){
   pickCurrent();
   app.innerHTML=`<div class="shell ${IS_MEN?'men-site':''}">
-    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">${IS_MEN?'◆':'✿'}</span><span>${IS_MEN?'MEN’S SKINCARE LAB':'SKINCARE LAB'}</span></div><div class="topnav"><a class="variant-link" href="${IS_MEN?'../dist/':'../men/'}">${IS_MEN?'女性向け版':'男性向け版'}</a><span class="tag">${IS_MEN?'MEN / BETA':'PROTOTYPE'} v0.9.22</span></div></header>
+    <header class="topbar"><div class="logo"><span class="logo-mark" aria-hidden="true">${IS_MEN?'◆':'✿'}</span><span>${IS_MEN?'MEN’S SKINCARE LAB':'SKINCARE LAB'}</span></div><div class="topnav"><a class="variant-link" href="${IS_MEN?'../dist/':'../men/'}">${IS_MEN?'女性向け版':'男性向け版'}</a><span class="tag">${IS_MEN?'MEN / BETA':'PROTOTYPE'} v0.9.23</span></div></header>
     <section class="hero"><div><div class="eyebrow">${IS_MEN?'MEN’S SKINCARE, DATA FIRST':'SMART ROUTINE, SMALL BUDGET'}</div><h1>${IS_MEN?'男性向けスキンケアを、<br>予算と肌悩みから。':'肌にも、予算にも。<br>ちょうどいい組み合わせ。'}</h1><p>${IS_MEN?'男性向け商品の中から、洗顔と保湿を軸に組み合わせを提案します。<br>選定方法は共通、商品データは男性版専用です。':'肌悩み・好み・使用コストから、必要なアイテムを探す実験室。<br>メーカー公式に確認できる情報を出発点にしています。'}</p></div><div class="hero-accent" aria-hidden="true"><i class="mini-bottle a"></i><i class="mini-bottle b"></i><i class="mini-bottle c"></i></div></section>
     <div class="layout">${formHtml()}<div class="main-column">
       ${summaryHtml()}${resultHtml()}${swapHtml()}${savedPlansHtml()}

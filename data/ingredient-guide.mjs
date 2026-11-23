@@ -1,4 +1,4 @@
-// 編集元。npm run guide:build で静的ページとアプリ用の小さな索引を生成する。
+// 研究・一次資料の記録。画面の見出しと短い配合目的は ingredient-dictionary.mjs で管理する。
 // names は説明の対象。ここで同じ項目に並べても、同一成分として照合はしない。
 export const checkedOn='2026-11-23';
 const ref=(label,url)=>({label,url});
