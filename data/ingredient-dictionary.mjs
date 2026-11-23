@@ -1,6 +1,6 @@
 import {createHash} from 'node:crypto';
 import {guides} from './ingredient-guide.mjs';
-import {canonicalIngredient,ingredientSelection,compareIngredients,ingredientReading} from '../dist/ingredient-options.js';
+import {canonicalIngredient,ingredientSelection,ingredientSelections,compareIngredients,ingredientReading} from '../dist/ingredient-options.js';
 
 // ページは肌悩みや原料の機能群で分けず、選択欄と同じ成分名を見出しにする。
 // 既存の研究・一次資料は、その研究が対象とする種類を明示して引き継ぐ。
@@ -155,6 +155,16 @@ Object.assign(specific,{
   'EDTA':{use:'金属イオンの捕捉・品質保持',summary:'EDTA（エデト酸）とそのナトリウム塩をまとめ、製品中の金属イオンを捕捉するための用途を説明します。',note:'2Na・3Na・4Naなどの中和度、水和物、配合規格には違いがあります。グリセリン類とは別の処方補助成分です。',refs:[{label:'エデト酸二ナトリウムとEDTA-2Naの対応（マツモト交商）',url:'https://matsumoto-trd.com/material/materialdetail.php?materialid=12'}]},
 });
 
+
+Object.assign(specific,{
+ 'アーティチョークエキス':{use:'保湿・整肌',summary:'アーティチョーク（チョウセンアザミ）の葉を抽出した植物エキスです。肌を整える目的で配合されます。',note:'化粧品の「アーチチョーク葉エキス」と医薬部外品の「アーティチョークエキス」は同じ植物部位の表示名としてまとめています。抽出法・製剤規格まで同一とは限りません。',refs:[{label:'原料メーカーによる化粧品・医薬部外品表示名の対応',url:'https://www.ichimaru.co.jp/dev/cosmetics/261'}]},
+ 'ビタミンA':{use:'整肌／薬用ではレチノールのシワ改善',summary:'ビタミンA系成分の総称です。レチノール、酢酸レチノール、パルミチン酸レチノール、ビタミンA油などを「使ってみたい成分」ではひとつにまとめています。',note:'それぞれ異なる化合物・原料規格です。シワ改善の薬用有効成分であるレチノールについての研究を、酢酸レチノール・パルミチン酸レチノール・ビタミンA油にそのまま当てはめません。'},
+ 'ビタミンB6':{use:'整肌・保湿など',summary:'ビタミンB6の一形態であるピリドキシン塩酸塩（ピリドキシンHCl）を含む成分群です。肌をすこやかに保つ目的などで配合されます。',note:'ピリドキシンHCl、塩酸ピリドキシン、ピリドキシン塩酸塩は同じ塩の表示名です。「ビタミンB6」は選択用の親しみやすい名称で、ほかのB6形態との完全な化学的同一性は主張しません。',refs:[{label:'医薬部外品原料規格・塩酸ピリドキシン（厚生労働省）',url:'https://www.mhlw.go.jp/content/000839905.pdf'}]},
+ 'アクリル酸ナトリウム・アクリロイルジメチルタウリン酸ナトリウム共重合体':{use:'増粘・乳化安定化',summary:'水や油を含む製品のとろみや安定性を調整する高分子成分です。',note:'この共重合体・イソヘキサデカン・ポリソルベート80を組み合わせた原料はSIMULGEL EGとして供給されています。製品の原文は1つの複合原料名のまま保持し、使ってみたい成分では3つの構成成分をそれぞれ検索できます。',refs:[{label:'原料メーカーSEPPIC：SIMULGEL EG',url:'https://www.seppic.com/en-IN/product/simulgel-eg'}]},
+});
+specific['ビタミンC']={...specific['ビタミンC'],note:'アスコルビン酸、硫酸塩・リン酸塩、配糖体や油溶性誘導体を選択画面ではまとめています。研究結果と薬用での効能を各誘導体へ一律に当てはめず、元の配合成分名はメーカー表示どおりに保持します。'};
+specific['ビタミンE']={...specific['ビタミンE'],note:'天然ビタミンE、トコフェロール、酢酸トコフェロール、トコフェリルグルコシドなどを選択用にまとめています。天然ビタミンEは原料規格・異性体組成が異なりうるため、化学的に同一ではありません。'};
+
 const rice={
   'ライスパワーNo.11(米エキスNo.11)':['皮膚水分保持能の改善（薬用）','肌が水分を保つ力を改善する薬用有効成分として使われる米由来の発酵原料です。'],
   'ライスパワーNo.11+':['シワ改善・皮膚水分保持能の改善（薬用）','皮膚水分保持能の改善に加え、シワ改善の効能で使われる薬用有効成分です。'],
@@ -224,11 +234,11 @@ export function dictionaryForCatalog(catalog){
   const entries=new Map(dictionaryEntries.map(entry=>[entry.name,{...entry,members:[...entry.members],legacyIds:[...entry.legacyIds]}]));
   const occupiedIds=new Set([...entries.values()].flatMap(e=>[e.id,...e.legacyIds]));
   const groups=new Map();
-  for(const product of catalog)for(const value of product.ingredients||[]){
-    const name=ingredientSelection(value);
+  for(const product of catalog)for(const value of product.ingredients||[])for(const name of ingredientSelections(value)){
     if(!name||!/[A-Za-zぁ-んァ-ヶ一-龯]/u.test(name))continue;
     if(!groups.has(name))groups.set(name,{members:new Set(),rawNames:new Set(),urls:new Set()});
-    groups.get(name).members.add(canonicalIngredient(value));
+    // 複合原料は構成成分それぞれへ登録するが、原料全体を化学的同義語とは扱わない。
+    groups.get(name).members.add(ingredientSelections(value).length===1?canonicalIngredient(value):name);
     groups.get(name).rawNames.add(value.normalize('NFKC').trim());
     const url=product.ingredientSourceUrl||product.sourceUrl;if(url)groups.get(name).urls.add(url);
   }

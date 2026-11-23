@@ -3,14 +3,14 @@ import test from 'node:test';
 import {readFile} from 'node:fs/promises';
 import {loadCatalog} from '../dist/catalog-csv.js';
 import {reconcileCatalogState} from '../dist/catalog-data.js';
-import {ingredientChoices,canonicalIngredient,ingredientSelection,displayIngredients,INGREDIENT_ALIASES,INGREDIENT_FAMILIES,DIPOTASSIUM_GLYCYRRHIZATE} from '../dist/ingredient-options.js';
+import {ingredientChoices,canonicalIngredient,ingredientSelection,displayIngredients,INGREDIENT_ALIASES,INGREDIENT_FAMILIES,INGREDIENT_COMPOSITES,ingredientSelections,matchesIngredientSelection,DIPOTASSIUM_GLYCYRRHIZATE} from '../dist/ingredient-options.js';
 import {canIncludeRoutineProduct,meetsIngredientRequirement,optimize,scoreRoutine} from '../dist/optimizer.js';
 
 test('choices include each catalog ingredient independently of guide coverage and exclude invalid fragments',()=>{
   const names=['レチノール','加水分解コラーゲン','アラントイン','濃グリセリン','グリセリン','セラミドNG','トラネキサム酸','ナイアシンアミド','ヒアルロン酸Na','ワセリン'];
   const catalog=[{ingredients:[...names,'1','酸化チタン ハトムギ発酵エキスは別名です',...names]},
     {archived:true,ingredients:['掲載終了成分']}];
-  assert.deepEqual(ingredientChoices(catalog),['none','アラントイン','グリセリン','コラーゲン','セラミド','トラネキサム酸','ナイアシンアミド','ヒアルロン酸','レチノール','ワセリン']);
+  assert.deepEqual(ingredientChoices(catalog),['none','アラントイン','グリセリン','コラーゲン','セラミド','トラネキサム酸','ナイアシンアミド','ヒアルロン酸','ビタミンA','ワセリン']);
   const options=ingredientChoices([{ingredients:['3-O-エチルアスコルビン酸','BG','α-オレフィンオリゴマー']}]);
   assert.equal(options.length,4);
 });
@@ -37,7 +37,7 @@ test('verified aliases deduplicate choices, match both directions and migrate sa
 
 test('different selection families do not match merely by containing part of the selected name',()=>{
   for(const [selected,other] of [
-    ['レチノール','酢酸レチノール'],['グリセリン','ジグリセリン'],
+    ['レチノール','トレチノイン'],['グリセリン','ジグリセリン'],
     ['セリン','メチルセリン'],['アミノ酸','アミノ酸系洗浄成分'],
     ['ヒアルロン酸','水溶性コラーゲン'],['ビタミンC','酢酸トコフェロール'],
     ['カモミラET','カモミラエキス(1)'],['ユーカリエキス','ユーカリ葉油'],
@@ -107,7 +107,7 @@ test('all selectable names have a matching active product in their own catalog',
     assert.equal(choices.filter(name=>name===DIPOTASSIUM_GLYCYRRHIZATE).length,1);
     assert(!choices.includes('グリチルリチン酸2K'));assert(!choices.includes('1'));
   }
-  assert(lists[0].includes('レチノール'));assert(!lists[1].includes('レチノール'));
+  assert(lists[0].includes('ビタミンA'));assert(!lists[1].includes('ビタミンA'));
   assert(lists[1].includes('グリシルグリシン'));assert(lists[0].includes('グリシルグリシン'));
 });
 
@@ -130,3 +130,38 @@ test('identical glycyrrhizate names match preferences and requirements without m
 test('new ingredient groupings do not equate unrelated chemicals',()=>{for(const [a,b] of [['ステアリン酸','ステアリン酸Mg'],['塩化ナトリウム','塩化Mg'],['クエン酸','クエン酸トリエチル'],['グルタミン酸','D-グルタミン酸'],['ローズマリーエキス','ローズマリー葉油']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));for(const item of ['EDTA-2Na','EDTA-3Na','EDTA-4Na'])assert.equal(ingredientSelection(item),'EDTA');});
 
 test('glycerin roots are not all interchangeable; verified synonyms are',()=>{for(const [a,b] of [['グリセリン','ステアリン酸グリセリル'],['グリセリン','グリセリルグルコシド'],['グリセリン','エチルヘキシルグリセリン'],['ステアリン酸グリセリル','ステアリン酸グリセリル(SE)'],['BG','PG'],['ジメチコン','ジメチコンクロスポリマー']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));for(const n of ['オクトキシグリセリン','グリセリンモノ2-エチルヘキシルエーテル','グリセリルエチルヘキシルエーテル'])assert.equal(ingredientSelection(n),'エチルヘキシルグリセリン');for(const n of ['トリメチルグリシン','ベタイン'])assert.equal(ingredientSelection(n),'ベタイン');});
+
+
+test('plant extract labels and vitamin names are grouped only for selection',()=>{
+  for(const name of ['アーチチョーク葉エキス','アーティチョーク葉エキス','アーティチョークエキス'])assert.equal(ingredientSelection(name),'アーティチョークエキス');
+  const examples={
+    'ビタミンA':['ビタミンA油','レチノール','酢酸レチノール','パルミチン酸レチノール'],
+    'ビタミンB6':['ピリドキシンHCl','ピリドキシン塩酸塩','ピリドキシン塩酸塩（ビタミンB6）','塩酸ピリドキシン'],
+    'ビタミンC':['アスコルビン酸（活性型ビタミンC）','アスコルビン酸硫酸2Na','ビタミンCリン酸Mg（ビタミンC誘導体）','リン酸L-アスコルビルマグネシウム'],
+    'ビタミンE':['天然ビタミンE','トコフェリルグルコシド','酢酸トコフェロール'],
+  };
+  for(const [name,variants] of Object.entries(examples))for(const variant of variants){
+    assert.equal(ingredientSelection(variant),name,variant);
+    assert.equal(ingredientChoices([{ingredients:[variant]}])[1],name);
+  }
+  for(const [a,b] of [['ビタミンA','トレチノイン'],['ビタミンE','ユビキノン'],['ビタミンB6','パンテノール'],['ビタミンC','アスコルビン酸とは無関係の成分']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));
+  assert.notEqual(canonicalIngredient('レチノール'),canonicalIngredient('酢酸レチノール'));
+});
+
+test('SIMULGEL premix keeps manufacturer text but offers its three real constituents',()=>{
+  const combined=INGREDIENT_COMPOSITES[0][0],separate=INGREDIENT_COMPOSITES[0][1];
+  assert.deepEqual(ingredientSelections(combined),separate);
+  assert.deepEqual(ingredientSelections(combined.replaceAll('/','／')),separate);
+  const product={jan:'complex',category:'serum',ingredients:[combined],scores:{}};
+  const pristine=structuredClone(product);
+  const choices=ingredientChoices([product]);
+  for(const name of separate){
+    assert(choices.includes(name),name);
+    assert(matchesIngredientSelection(combined,name),name);
+    assert(meetsIngredientRequirement([product],{ingredient:name,ingredientMode:'required'}),name);
+  }
+  assert.equal(choices.length,4);
+  assert.deepEqual(product,pristine);
+  assert.equal(ingredientSelections('(アクリレーツ/アクリル酸アルキル(C10-30))クロスポリマー').length,1);
+  assert.equal(ingredientSelections('水添ポリイソブテン').length,1);
+});

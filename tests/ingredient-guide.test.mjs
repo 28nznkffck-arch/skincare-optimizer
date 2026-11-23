@@ -107,3 +107,16 @@ test('ingredient dictionary search handles kana, source names, empty results and
 test('old standalone guide links point to grouped cards',async()=>{const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');for(const name of ['EDTA-2Na','PEG-4','ステアリン酸Na','シャクヤク根エキス'])assert(html.includes('id="'+ingredientGuideId(name)+'"'));});
 
 test('new glyceryl and glycerin groups have distinct guide links',()=>{for(const [oldName,newName] of [['グリセリンモノ2-エチルヘキシルエーテル','エチルヘキシルグリセリン'],['POE(26)グリセリン','グリセレス-26'],['トリメチルグリシン','ベタイン'],['エデト酸二ナトリウム','EDTA']])assert.equal(ingredientGuideId(oldName),ingredientGuideId(newName));assert.notEqual(ingredientGuideId('グリセリン'),ingredientGuideId('ステアリン酸グリセリル'));});
+
+test('guide groups point artichoke, vitamins, and three-part premix to separate sourced cards',async()=>{
+  const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
+  for(const [a,b] of [['アーチチョーク葉エキス','アーティチョークエキス'],['レチノール','ビタミンA'],['ビタミンA油','ビタミンA'],['天然ビタミンE','ビタミンE'],['ピリドキシンHCl','ビタミンB6'],['アスコルビン酸硫酸2Na','ビタミンC']]){
+    assert.equal(ingredientGuideId(a),ingredientGuideId(b),a);
+  }
+  const combo='アクリル酸ナトリウム・アクリロイルジメチルタウリン酸ナトリウム共重合体/イソヘキサデカン/ポリソルベート80';
+  const ids=['アクリル酸ナトリウム・アクリロイルジメチルタウリン酸ナトリウム共重合体','イソヘキサデカン','ポリソルベート80'].map(ingredientGuideId);
+  assert.equal(new Set(ids).size,3);
+  assert.equal(ingredientGuideId(combo),ids[0]);
+  for(const id of ids)assert(html.includes('id="'+id+'"'));
+  assert(html.includes('id="retinol"'),'old retinol bookmark stays valid');
+});
