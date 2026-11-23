@@ -185,3 +185,21 @@ test('new SHISEIDO MEN and BULK HOMME products preserve medicinal classes, eye u
   assert.equal(m.get('4514254226735').referenceUses,null);
 });
 
+
+
+test('male ingredient audit rejects merged ingredient strings and sales-name contamination',async()=>{
+  const {products}=await loadCatalog(read,'../catalog-men/');
+  const byJan=new Map(products.map(p=>[p.jan,p]));
+  for(const product of products){
+    assert(product.ingredients.every(n=>n.length<=160&&!/販売名[：:]/u.test(n)),product.jan);
+  }
+  assert.equal(byJan.get('4550516495280').ingredients.length,37);
+  assert.equal(byJan.get('4550516495266').ingredients.length,30);
+  assert.equal(byJan.get('4550516474858').ingredients.length,26);
+  assert(byJan.get('4550516495280').ingredients.some(n=>n.includes('ブチレングリコール')));
+  assert(byJan.get('4550516474858').ingredients.includes('グリチルリチン酸ジカリウム'));
+  for(const jan of ['4908064090189','4908064090196','4908064090219']){
+    const p=byJan.get(jan);
+    assert(p.ingredients.some(n=>n.includes('フェノキシエタノール')||n.includes('カルボキシメチルセルロース')));
+  }
+});
