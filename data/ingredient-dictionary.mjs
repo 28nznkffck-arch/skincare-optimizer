@@ -271,6 +271,14 @@ export function dictionaryForCatalog(catalog){
     const url=product.ingredientSourceUrl||product.sourceUrl;if(url)groups.get(name).urls.add(url);
   }
 
+  // 選択カテゴリ名を変更した場合、旧カテゴリ名のハッシュリンクも維持する。
+  // 旧名が元のメーカー成分欄に存在しない場合は、通常のrawNamesから生成されない。
+  const previousLabels=new Map([['レチノール(ビタミンA)',['ビタミンA']]]);
+  for(const [current,names] of previousLabels){
+    const group=groups.get(current);
+    if(group)for(const name of names)group.rawNames.add(name);
+  }
+
   // 個別の旧アンカーを残す前に、全カードの主IDを予約する。
   for(const name of groups.keys())occupiedIds.add(ingredientId(name));
   for(const [name,{members,rawNames,urls:allUrls}] of groups){
