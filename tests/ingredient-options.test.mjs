@@ -10,7 +10,7 @@ test('choices include each catalog ingredient independently of guide coverage an
   const names=['レチノール','加水分解コラーゲン','アラントイン','濃グリセリン','グリセリン','セラミドNG','トラネキサム酸','ナイアシンアミド','ヒアルロン酸Na','ワセリン'];
   const catalog=[{ingredients:[...names,'1','酸化チタン ハトムギ発酵エキスは別名です',...names]},
     {archived:true,ingredients:['掲載終了成分']}];
-  assert.deepEqual(ingredientChoices(catalog),['none','アラントイン','グリセリン','コラーゲン','セラミド','トラネキサム酸','ナイアシンアミド','ヒアルロン酸','ビタミンA','ワセリン']);
+  assert.deepEqual(ingredientChoices(catalog),['none','アラントイン','グリセリン','コラーゲン','セラミド','トラネキサム酸','ナイアシンアミド','ヒアルロン酸','レチノール(ビタミンA)','ワセリン']);
   const options=ingredientChoices([{ingredients:['3-O-エチルアスコルビン酸','BG','α-オレフィンオリゴマー']}]);
   assert.equal(options.length,4);
 });

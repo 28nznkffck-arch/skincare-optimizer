@@ -1,4 +1,4 @@
-import {optimize} from './optimizer.js?v=0.9.31';
+import {optimize} from './optimizer.js?v=0.9.32';
 
 // 画面から独立して既存の厳密探索を実行する。近似や採点基準の変更はしない。
 self.onmessage=({data})=>{
