@@ -50,6 +50,8 @@ test('different selection families do not match merely by containing part of the
     ['セルロース','ヒドロキシエチルセルロース'],
     ['サリチル酸','4-メトキシサリチル酸カリウム塩'],
     ['PCA-Na','PCA亜鉛'],
+    ['アロエエキス(2)','油溶性甘草エキス(2)'],
+    ['POE(26)グリセリン','グリセリン'],
   ]){
     assert.notEqual(canonicalIngredient(selected),canonicalIngredient(other));
     const product={jan:'other-product',category:'serum',keyIngredients:[other],scores:{}};

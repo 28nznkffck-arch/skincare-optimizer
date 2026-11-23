@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.9.25';
+import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.9.26';
 
 const RETAILERS = ['マツキヨココカラオンライン', 'ツルハグループe-shop', 'ウエルシア'];
 
@@ -60,6 +60,9 @@ function dateString(value) {
 function ingredients(value) {
   const parts = value.split('|').map(part => part.trim());
   if (!parts.every(Boolean)) throw new Error('成分名を | で区切って入力してください');
+  // 原料規格の(1)/(2)や構造名の括弧は残す。注釈・説明文の混入は入力時に検出する。
+  if (parts.some(part => /[※＊*†‡。\r\n]|(?:エキス|成分)は/.test(part)))
+    throw new Error('成分名に注釈・説明文が含まれています。成分名のみを入力してください');
   return parts;
 }
 

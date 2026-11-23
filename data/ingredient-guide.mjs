@@ -15,6 +15,10 @@ const extracts=ref('植物原料の名称・用途（原料メーカー 丸善�
 const make=entry=>({...entry,names:entry.names.split('|')});
 
 export const guides=[
+  make({id:'titanium-dioxide',title:'酸化チタン',section:'処方を支える成分',names:'酸化チタン',purpose:'着色・製品の見た目の調整',
+    summary:'白色の粉体で、化粧品の色や不透明さを調整するためなどに使われます。',
+    choice:'登録製品ではメーカーの成分表示を確認し、その製品の用途に従って扱います。',
+    refs:[ref('着色成分としての用途例（ちふれ）','https://www.chifure.co.jp/products/foundation/2403'),ref('酸化チタンまでが全成分、続く行は説明文（コーセー 雪肌精）','https://sekkisei.jp/site/blue/g/gMTNC/')]}),
   make({id:'allantoin',title:'アラントイン',section:'肌荒れ・ニキビ',names:'アラントイン',purpose:'肌荒れを防ぐ薬用ケアに',
     summary:'肌荒れを防ぐために使われる薬用有効成分のひとつ。肌をすこやかに保つ目的の製品に配合されます。',
     choice:'肌荒れを予防したいとき。「有効成分」として配合されているか、商品の効能表示も確認します。',

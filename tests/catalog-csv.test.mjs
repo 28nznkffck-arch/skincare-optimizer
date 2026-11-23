@@ -109,6 +109,14 @@ test('CSV keeps archived products available to saved routines', () => {
   assert.equal(archivedProducts[0].jan, jan);
 });
 
+test('ingredient fields retain regulatory numbers and structural brackets but reject imported footnotes', () => {
+  const names=['アロエエキス(2)','油溶性甘草エキス（2）','POE(26)グリセリン','水溶性コラーゲン(F)','トリ（カプリル酸／カプリン酸）グリセリル'];
+  const input=主要成分=>({...data,productsCsv:csv('products',[{...product,主要成分}])});
+  assert.deepEqual(parseCatalog(input(names.join(' | '))).products[0].keyIngredients,names);
+  for(const name of ['酸化チタン ハトムギ(薎苡仁)発酵エキスはサッカロミセス/ハトムギ種子発酵液','グリセリン※1','アロエエキス*2'])
+    assert.throws(()=>parseCatalog(input(name)),/成分名に注釈・説明文/);
+});
+
 test('CSV rejects duplicate JANs, orphaned prices, and invalid scores', () => {
   assert.throws(() => parseCatalog({
     ...data, productsCsv: csv('products', [product, product]),
@@ -149,6 +157,8 @@ test('the quoted amount for both eyes takes precedence over a whole-face serum a
 test('catalog uses the manufacturer-verified active ingredients for corrected products', async () => {
   const {products} = await loadCatalog(url => readFile(url, 'utf8'));
   const byJan = new Map(products.map(item => [item.jan, item]));
+  assert(byJan.get('4971710262131').keyIngredients.includes('酸化チタン'));
+  assert(!byJan.get('4971710262131').keyIngredients.some(name=>name.includes('エキスは')));
   assert.deepEqual(byJan.get('4901301269348').evidence.activeIngredients, ['グリチルリチン酸ジカリウム']);
   assert.deepEqual(byJan.get('4901301236210').evidence.activeIngredients, ['アラントイン']);
   const gel = byJan.get('4901301281715');
