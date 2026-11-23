@@ -15,6 +15,10 @@ const extracts=ref('植物原料の名称・用途（原料メーカー 丸善�
 const make=entry=>({...entry,names:entry.names.split('|')});
 
 export const guides=[
+  make({id:'tea-tree-oil',title:'ティーツリーオイル',section:'肌を整える成分',names:'ティーツリーオイル',purpose:'肌を整える',
+    summary:'メンズアクネバリアでは、肌を整える成分として配合されています。',
+    choice:'この製品の薬用有効成分は別に表示されています。精油の配合から殺菌の有効成分だと判断しません。',
+    refs:[ref('成分の配合目的（石澤研究所）','https://www.ishizawa-lab.co.jp/seibun/mens_acne.html')]}),
   make({id:'titanium-dioxide',title:'酸化チタン',section:'処方を支える成分',names:'酸化チタン',purpose:'着色・製品の見た目の調整',
     summary:'白色の粉体で、化粧品の色や不透明さを調整するためなどに使われます。',
     choice:'登録製品ではメーカーの成分表示を確認し、その製品の用途に従って扱います。',

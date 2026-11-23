@@ -11,11 +11,11 @@ test('male catalog is separate, JAN-valid and contains priced cleanser/moisturiz
   const female = await loadCatalog(read);
   const male = await loadCatalog(read, '../catalog-men/');
   const jans = new Set(female.products.map(p => p.jan));
-  assert.equal(male.products.length, 103);
+  assert.equal(male.products.length, 106);
   assert.ok(male.products.every(p => !jans.has(p.jan)));
   assert.equal(new Set(male.products.map(p=>p.jan)).size, male.products.length);
   for (const p of male.products) {
-    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード','メラノCC Men','KNOWLEDGE','メンズオードムーゲ','メンズケシミン','毛穴撫子 男の子用','matsukiyo','オルビス ミスター','テックスメックス','ちのしお','SHISEIDO メン','プラウドメン','バルクオム','アウスレーゼ','柑橘王子'].includes(p.brand));
+    assert.ok(['メンズビオレ','ニベアメン','オキシー','uno','ギャツビー','ルシード','メラノCC Men','KNOWLEDGE','メンズオードムーゲ','メンズケシミン','毛穴撫子 男の子用','matsukiyo','オルビス ミスター','テックスメックス','ちのしお','SHISEIDO メン','プラウドメン','バルクオム','アウスレーゼ','柑橘王子','メンズソフティモ','メンズアクネバリア'].includes(p.brand));
     assert.equal(male.pricing.prices[p.jan]?.jan, p.jan);
     assert.ok(p.sourceUrl.startsWith('https://'));
   }
