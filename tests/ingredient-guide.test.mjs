@@ -2,12 +2,15 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFile} from 'node:fs/promises';
 import {guides} from '../data/ingredient-guide.mjs';
-import {dictionaryEntries,dictionaryKanaRow} from '../data/ingredient-dictionary.mjs';
+import {dictionaryEntries,dictionaryForCatalog,dictionaryKanaRow} from '../data/ingredient-dictionary.mjs';
 import {INGREDIENT_GUIDE_GROUPS,ingredientGuideId} from '../dist/ingredient-guide-index.js';
 import {INGREDIENT_ALIASES,ingredientChoices,compareIngredients} from '../dist/ingredient-options.js';
 import {loadCatalog} from '../dist/catalog-csv.js';
 
 test('all selectable ingredients and their aliases lead to an existing, sourced guide card',async()=>{
+  const catalog=[];
+  for(const folder of ['../catalog/','../catalog-men/'])catalog.push(...(await loadCatalog(url=>readFile(url,'utf8'),folder)).products);
+  const dictionaryEntries=dictionaryForCatalog(catalog);
   const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
   const ids=[...html.matchAll(/<article class="panel ingredient-card" id="([^"]+)"/g)].map(m=>m[1]);
   assert.equal(new Set(ids).size,dictionaryEntries.length);
@@ -38,6 +41,13 @@ test('all selectable ingredients and their aliases lead to an existing, sourced 
   assert.match(html,/aria-label="五十音の目次"/);
   for(const entry of dictionaryEntries){assert(entry.use&&entry.summary);assert.match(html,new RegExp(`主な用途：`));}
   assert.equal(dictionaryKanaRow('ヒアルロン酸'),'ha');assert.equal(dictionaryKanaRow('グリセリン'),'ka');
+});
+
+test('new complete-label ingredients stay selectable even before their purpose is explained',()=>{
+  const entries=dictionaryForCatalog([{ingredients:['未解説成分XYZ'],sourceUrl:'https://example.com/product/'}]);
+  const entry=entries.find(item=>item.name==='未解説成分XYZ');
+  assert(entry);assert.equal(entry.use,'用途の確認中');
+  assert.deepEqual(entry.refs,[{label:'配合成分の表示を確認する',url:'https://example.com/product/'}]);
 });
 
 test('merged salts retain previous guide bookmarks, source labels and differences in formulation',async()=>{

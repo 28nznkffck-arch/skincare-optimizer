@@ -8,7 +8,7 @@
       "volume": 200,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301474407/",
-      "keyIngredients": [
+      "ingredients": [
         "ヒアルロン酸Na",
         "グリセリン",
         "ココイルグリシンK"
@@ -33,7 +33,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301269348/",
-      "keyIngredients": [
+      "ingredients": [
         "グリチルリチン酸2K",
         "グリセリン"
       ],
@@ -59,7 +59,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301264336/",
-      "keyIngredients": [
+      "ingredients": [
         "グリチルリチン酸2K"
       ],
       "explanation": "皮脂の多さが気になる方向けの薬用泡洗顔料。",
@@ -92,7 +92,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236197/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分",
         "グリセリン"
@@ -126,7 +126,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236180/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分"
       ],
@@ -159,7 +159,7 @@
       "volume": 160,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301422941/",
-      "keyIngredients": [
+      "ingredients": [
         "アミジノプロリン",
         "ヒアルロン酸Na",
         "セチルPGヒドロキシエチルパルミタミド"
@@ -185,7 +185,7 @@
       "volume": 160,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301472762/",
-      "keyIngredients": [
+      "ingredients": [
         "ナイアシンアミド",
         "グリセリン",
         "セラミド機能成分"
@@ -217,7 +217,7 @@
       "volume": 30,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301460264/",
-      "keyIngredients": [
+      "ingredients": [
         "ナイアシンアミド",
         "グリチルリチン酸2K"
       ],
@@ -250,7 +250,7 @@
       "volume": 90,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301412829/",
-      "keyIngredients": [
+      "ingredients": [
         "炭酸ガス",
         "オタネニンジン根エキス"
       ],
@@ -274,7 +274,7 @@
       "volume": 50,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301043764/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "ホホバ種子油",
         "酢酸トコフェロール"
@@ -300,7 +300,7 @@
       "volume": 120,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236173/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分",
         "グリセリン"
@@ -334,7 +334,7 @@
       "volume": 40,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236210/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分",
         "グリセリン"
@@ -362,7 +362,7 @@
       "volume": 170,
       "unit": "mL",
       "sourceUrl": "https://jp.rohto.com/hadalabo/gokujun-lotion/",
-      "keyIngredients": [
+      "ingredients": [
         "ヒアルロン酸Na",
         "アセチルヒアルロン酸Na",
         "加水分解ヒアルロン酸",
@@ -391,7 +391,7 @@
       "volume": 170,
       "unit": "mL",
       "sourceUrl": "https://jp.rohto.com/hadalabo/shirojun-lotion",
-      "keyIngredients": [
+      "ingredients": [
         "トラネキサム酸",
         "アラントイン",
         "ヒアルロン酸Na",
@@ -428,7 +428,7 @@
       "volume": 170,
       "unit": "mL",
       "sourceUrl": "https://jp.rohto.com/hadalabo/aging-lotion/",
-      "keyIngredients": [
+      "ingredients": [
         "ナイアシンアミド",
         "ヒアルロン酸Na",
         "アセチルヒアルロン酸Na"
@@ -464,7 +464,7 @@
       "volume": 140,
       "unit": "mL",
       "sourceUrl": "https://jp.rohto.com/hadalabo/gokujun-milk/",
-      "keyIngredients": [
+      "ingredients": [
         "ヒアルロン酸Na",
         "アセチルヒアルロン酸Na",
         "加水分解ヒアルロン酸"
@@ -492,7 +492,7 @@
       "volume": 140,
       "unit": "mL",
       "sourceUrl": "https://jp.rohto.com/hadalabo/aging-milk/",
-      "keyIngredients": [
+      "ingredients": [
         "ナイアシンアミド",
         "ヒアルロン酸Na"
       ],
@@ -527,7 +527,7 @@
       "volume": 170,
       "unit": "mL",
       "sourceUrl": "https://jp.rohto.com/melanocc/lotion",
-      "keyIngredients": [
+      "ingredients": [
         "L-アスコルビン酸2-グルコシド",
         "グリチルリチン酸ジカリウム",
         "D-パントテニルアルコール"
@@ -565,7 +565,7 @@
       "volume": 20,
       "unit": "mL",
       "sourceUrl": "https://jp.rohto.com/melanocc/essence/",
-      "keyIngredients": [
+      "ingredients": [
         "アスコルビン酸",
         "イソプロピルメチルフェノール",
         "グリチルリチン酸ジカリウム"
@@ -600,7 +600,7 @@
       "volume": 20,
       "unit": "mL",
       "sourceUrl": "https://jp.rohto.com/melanocc/premium-essence/",
-      "keyIngredients": [
+      "ingredients": [
         "アスコルビン酸",
         "ピリドキシン塩酸塩",
         "イソプロピルメチルフェノール",
@@ -639,7 +639,7 @@
       "volume": 180,
       "unit": "mL",
       "sourceUrl": "https://www.shiseido.co.jp/sw/onlinestore/products/H91202.html?brnd_cd=71&online_shohin_ctlg_kbn=1&shohin_pl_c_cd=H91202",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "グリチルリチン酸ジカリウム",
         "ワセリン"
@@ -674,7 +674,7 @@
       "volume": 135,
       "unit": "mL",
       "sourceUrl": "https://www.shiseido.co.jp/sw/onlinestore/products/H91302.html",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "グリチルリチン酸ジカリウム",
         "ワセリン"
@@ -709,7 +709,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://online.daiichisankyo-hc.co.jp/shop/g/g670236/",
-      "keyIngredients": [
+      "ingredients": [
         "アミノ酸系洗浄成分",
         "グリセリン"
       ],
@@ -737,7 +737,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://online.daiichisankyo-hc.co.jp/shop/g/g670335/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "アミノ酸",
         "ポリクオタニウム-61",
@@ -767,7 +767,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://online.daiichisankyo-hc.co.jp/shop/g/g670397/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "アミノ酸",
         "ポリクオタニウム-61",
@@ -797,7 +797,7 @@
       "volume": 100,
       "unit": "g",
       "sourceUrl": "https://online.daiichisankyo-hc.co.jp/shop/g/g670465/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "アミノ酸",
         "ポリクオタニウム-61",
@@ -827,7 +827,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236043/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "ユーカリエキス",
         "グリセリン"
@@ -860,7 +860,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301264343/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "ユーカリエキス",
         "10-ヒドロキシウンデカン酸"
@@ -896,7 +896,7 @@
       "volume": 120,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301264350/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分",
         "ユーカリエキス"
@@ -932,7 +932,7 @@
       "volume": 140,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301240309/",
-      "keyIngredients": [
+      "ingredients": [
         "L-アスコルビン酸2-グルコシド",
         "ユーカリエキス",
         "グリセリン"
@@ -967,7 +967,7 @@
       "volume": 140,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301238801/",
-      "keyIngredients": [
+      "ingredients": [
         "L-アスコルビン酸2-グルコシド",
         "ユーカリエキス",
         "グリセリン"
@@ -1002,7 +1002,7 @@
       "volume": 110,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301238795/",
-      "keyIngredients": [
+      "ingredients": [
         "カモミラET",
         "セラミド機能成分",
         "ユーカリエキス"
@@ -1036,7 +1036,7 @@
       "volume": 30,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301238825/",
-      "keyIngredients": [
+      "ingredients": [
         "カモミラET",
         "ユーカリエキス"
       ],
@@ -1068,7 +1068,7 @@
       "volume": 40,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301238818/",
-      "keyIngredients": [
+      "ingredients": [
         "カモミラET",
         "セラミド機能成分",
         "ユーカリエキス"
@@ -1102,7 +1102,7 @@
       "volume": 140,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301334510/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分",
         "アスナロエキス"
@@ -1137,7 +1137,7 @@
       "volume": 40,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301334527/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分",
         "ショウキョウエキス"
@@ -1172,7 +1172,7 @@
       "volume": 40,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301334534/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分",
         "ショウキョウエキス"
@@ -1207,7 +1207,7 @@
       "volume": 200,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408389/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "ラウリン酸"
       ],
@@ -1235,7 +1235,7 @@
       "volume": 180,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301463890/",
-      "keyIngredients": [
+      "ingredients": [
         "トロメタミン",
         "ソルビトール"
       ],
@@ -1264,7 +1264,7 @@
       "volume": 180,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301463906/",
-      "keyIngredients": [
+      "ingredients": [
         "トロメタミン",
         "ソルビトール",
         "ヒアルロン酸"
@@ -1293,7 +1293,7 @@
       "volume": 180,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301464057/",
-      "keyIngredients": [
+      "ingredients": [
         "トロメタミン",
         "カオリン",
         "ソルビトール"
@@ -1322,7 +1322,7 @@
       "volume": 160,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301463968/",
-      "keyIngredients": [
+      "ingredients": [
         "炭酸ガス",
         "アミジノプロリン",
         "セラミド機能成分"
@@ -1351,7 +1351,7 @@
       "volume": 90,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301416483/",
-      "keyIngredients": [
+      "ingredients": [
         "ナイアシンアミド",
         "炭酸ガス"
       ],
@@ -1382,7 +1382,7 @@
       "volume": 40,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301422750/",
-      "keyIngredients": [
+      "ingredients": [
         "ローズマリーエキス",
         "ワレモコウエキス",
         "ショウガ根エキス"
@@ -1412,7 +1412,7 @@
       "volume": 80,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/sofina-ip/4901301472793/",
-      "keyIngredients": [
+      "ingredients": [
         "ナイアシンアミド",
         "グリセリン",
         "セラミド機能成分"
@@ -1446,7 +1446,7 @@
       "volume": 200,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408372/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "ヒアルロン酸Na"
       ],
@@ -1473,7 +1473,7 @@
       "volume": 200,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408402/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "ラウリン酸"
       ],
@@ -1502,7 +1502,7 @@
       "volume": 200,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301414380/",
-      "keyIngredients": [
+      "ingredients": [
         "トロメタミン",
         "グリセリン"
       ],
@@ -1531,7 +1531,7 @@
       "volume": 200,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301408396/",
-      "keyIngredients": [
+      "ingredients": [
         "イソプロピルメチルフェノール",
         "グリチルリチン酸ジカリウム"
       ],
@@ -1563,7 +1563,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301250162/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン"
       ],
       "explanation": "もっちり濃密な泡でうるおいを守って洗う洗顔料。",
@@ -1589,7 +1589,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301275080/",
-      "keyIngredients": [
+      "ingredients": [
         "イソプロピルメチルフェノール",
         "グリチルリチン酸ジカリウム"
       ],
@@ -1621,7 +1621,7 @@
       "volume": 130,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301265678/",
-      "keyIngredients": [
+      "ingredients": [
         "イソプロピルメチルフェノール",
         "グリチルリチン酸ジカリウム"
       ],
@@ -1653,7 +1653,7 @@
       "volume": 180,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301287656/",
-      "keyIngredients": [
+      "ingredients": [
         "ヒアルロン酸Na",
         "水溶性コラーゲン",
         "アルギニン"
@@ -1682,7 +1682,7 @@
       "volume": 180,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301287663/",
-      "keyIngredients": [
+      "ingredients": [
         "ヒアルロン酸Na",
         "水溶性コラーゲン",
         "アルギニン"
@@ -1711,7 +1711,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301394996/",
-      "keyIngredients": [
+      "ingredients": [
         "ココイルグルタミン酸Na",
         "ホホバ種子油",
         "スクワラン",
@@ -1740,7 +1740,7 @@
       "volume": 130,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301335456/",
-      "keyIngredients": [
+      "ingredients": [
         "ココイルグルタミン酸Na",
         "ホホバ種子油",
         "スクワラン",
@@ -1769,7 +1769,7 @@
       "volume": 130,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301348616/",
-      "keyIngredients": [
+      "ingredients": [
         "ココイルグルタミン酸Na",
         "ホホバ種子油",
         "スクワラン"
@@ -1799,7 +1799,7 @@
       "volume": 120,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301430205/",
-      "keyIngredients": [
+      "ingredients": [
         "タナクラクレイ",
         "カオリン",
         "ホホバ種子油"
@@ -1829,7 +1829,7 @@
       "volume": 120,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301451132/",
-      "keyIngredients": [
+      "ingredients": [
         "タナクラクレイ",
         "カオリン",
         "炭",
@@ -1861,7 +1861,7 @@
       "volume": 56,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301008497/",
-      "keyIngredients": [
+      "ingredients": [
         "スクワラン",
         "ホホバ種子油"
       ],
@@ -1888,7 +1888,7 @@
       "volume": 190,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301417008/",
-      "keyIngredients": [
+      "ingredients": [
         "イソノナン酸イソノニル",
         "ミリスチン酸イソプロピル"
       ],
@@ -1915,7 +1915,7 @@
       "volume": 190,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301440365/",
-      "keyIngredients": [
+      "ingredients": [
         "ヒアルロン酸Na",
         "水溶性コラーゲン"
       ],
@@ -1944,7 +1944,7 @@
       "volume": 230,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301263049/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "BG",
         "PPG-9ジグリセリル"
@@ -1974,7 +1974,7 @@
       "volume": 210,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301246769/",
-      "keyIngredients": [
+      "ingredients": [
         "ソルビトール",
         "ヒアルロン酸Na",
         "ローヤルゼリーエキス"
@@ -2004,7 +2004,7 @@
       "volume": 195,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301388902/",
-      "keyIngredients": [
+      "ingredients": [
         "ミネラルオイル",
         "スクワラン",
         "ホホバ種子油"
@@ -2034,7 +2034,7 @@
       "volume": 200,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458964/",
-      "keyIngredients": [
+      "ingredients": [
         "グリチルリチン酸ジカリウム",
         "グリセリン",
         "炭酸ガス"
@@ -2070,7 +2070,7 @@
       "volume": 130,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301236203/",
-      "keyIngredients": [
+      "ingredients": [
         "グリチルリチン酸ジカリウム",
         "グリセリン",
         "ソルビット液"
@@ -2106,7 +2106,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301346995/",
-      "keyIngredients": [
+      "ingredients": [
         "グリチルリチン酸ジカリウム",
         "流動イソパラフィン",
         "セラミド機能成分"
@@ -2142,7 +2142,7 @@
       "volume": 200,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301422095/",
-      "keyIngredients": [
+      "ingredients": [
         "グリチルリチン酸ジカリウム",
         "セラミド機能成分",
         "ユーカリエキス"
@@ -2178,7 +2178,7 @@
       "volume": 250,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301379924/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分",
         "ユーカリエキス"
@@ -2212,7 +2212,7 @@
       "volume": 40,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301281715/",
-      "keyIngredients": [
+      "ingredients": [
         "グリチルリチン酸ジカリウム",
         "ショウキョウエキス",
         "セラミド機能成分"
@@ -2248,7 +2248,7 @@
       "volume": 120,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301458957/",
-      "keyIngredients": [
+      "ingredients": [
         "グリチルリチン酸ジカリウム",
         "セラミド機能成分",
         "ユーカリエキス",
@@ -2284,7 +2284,7 @@
       "volume": 30,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301463937/",
-      "keyIngredients": [
+      "ingredients": [
         "GABOB",
         "セラミド機能成分",
         "ユーカリエキス",
@@ -2319,7 +2319,7 @@
       "volume": 30,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301471338/",
-      "keyIngredients": [
+      "ingredients": [
         "カモミラET",
         "グリチルレチン酸ステアリル",
         "シュガースクワラン",
@@ -2356,7 +2356,7 @@
       "volume": 230,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301761385/",
-      "keyIngredients": [
+      "ingredients": [
         "ミネラルオイル",
         "ラウリン酸PEG-12",
         "イソドデカン"
@@ -2385,7 +2385,7 @@
       "volume": 210,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301388063/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "炭酸水素Na",
         "PPG-9ジグリセリル"
@@ -2416,7 +2416,7 @@
       "volume": 130,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/nivea/4901301443182/",
-      "keyIngredients": [
+      "ingredients": [
         "セラミドNG",
         "スクワラン",
         "ヒアルロン酸Na",
@@ -2450,7 +2450,7 @@
       "volume": 200,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/khg/biore/4901301416919/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "炭",
         "イソノナン酸イソノニル"
@@ -2482,7 +2482,7 @@
       "volume": 25,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/curel/4901301382528/",
-      "keyIngredients": [
+      "ingredients": [
         "アラントイン",
         "セラミド機能成分",
         "ユーカリエキス",
@@ -2519,7 +2519,7 @@
       "volume": 160,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-basic/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "セリン",
         "スクロース",
@@ -2550,7 +2550,7 @@
       "volume": 120,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/official/sofina-basic/products/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "セリン",
         "スクロース",
@@ -2584,7 +2584,7 @@
       "volume": 12.8,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167823859/",
-      "keyIngredients": [
+      "ingredients": [
         "プロテアーゼ",
         "リパーゼ",
         "ヒアルロン酸Na"
@@ -2616,7 +2616,7 @@
       "volume": 12.8,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167030141/",
-      "keyIngredients": [
+      "ingredients": [
         "プロテアーゼ",
         "リパーゼ",
         "炭",
@@ -2651,7 +2651,7 @@
       "volume": 12.8,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167593905/",
-      "keyIngredients": [
+      "ingredients": [
         "プロテアーゼ",
         "リパーゼ",
         "モモ果汁",
@@ -2686,7 +2686,7 @@
       "volume": 12.8,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167593868/",
-      "keyIngredients": [
+      "ingredients": [
         "プロテアーゼ",
         "リパーゼ",
         "ツボクサ葉／茎エキス"
@@ -2719,7 +2719,7 @@
       "volume": 12.8,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167079836/",
-      "keyIngredients": [
+      "ingredients": [
         "プロテアーゼ",
         "リパーゼ",
         "ヒマワリ種子油",
@@ -2754,7 +2754,7 @@
       "volume": 120,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167018156/",
-      "keyIngredients": [
+      "ingredients": [
         "プロテアーゼ",
         "リパーゼ",
         "カオリン",
@@ -2788,7 +2788,7 @@
       "volume": 32,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167535622/",
-      "keyIngredients": [
+      "ingredients": [
         "プロテアーゼ",
         "リパーゼ",
         "炭酸水素Na",
@@ -2822,7 +2822,7 @@
       "volume": 170,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167074305/",
-      "keyIngredients": [
+      "ingredients": [
         "ヒアルロン酸Na",
         "アセチルグルコサミン",
         "メチルセリン",
@@ -2854,7 +2854,7 @@
       "volume": 170,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553046/",
-      "keyIngredients": [
+      "ingredients": [
         "L-アスコルビン酸 2-グルコシド",
         "グリチルリチン酸ジカリウム",
         "加水分解ヒアルロン酸"
@@ -2892,7 +2892,7 @@
       "volume": 80,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167019108/",
-      "keyIngredients": [
+      "ingredients": [
         "カモミラET",
         "グリチルレチン酸ステアリル",
         "ヒアルロン酸",
@@ -2931,7 +2931,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251911/",
-      "keyIngredients": [
+      "ingredients": [
         "ヒアルロン酸Na",
         "グリセリン",
         "アセチルグルコサミン",
@@ -2963,7 +2963,7 @@
       "volume": 100,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252512/",
-      "keyIngredients": [
+      "ingredients": [
         "スクワラン",
         "マカデミアナッツ油",
         "ヒアルロン酸Na",
@@ -2996,7 +2996,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383551/",
-      "keyIngredients": [
+      "ingredients": [
         "L-アスコルビン酸 2-グルコシド",
         "ヒアルロン酸Na",
         "アセチルグルコサミン"
@@ -3032,7 +3032,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383575/",
-      "keyIngredients": [
+      "ingredients": [
         "L-アスコルビン酸 2-グルコシド",
         "ヒアルロン酸Na",
         "アセチルグルコサミン"
@@ -3068,7 +3068,7 @@
       "volume": 100,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383452/",
-      "keyIngredients": [
+      "ingredients": [
         "カモミラET",
         "ヒアルロン酸Na",
         "スクワラン"
@@ -3104,7 +3104,7 @@
       "volume": 100,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383476/",
-      "keyIngredients": [
+      "ingredients": [
         "カモミラET",
         "ヒアルロン酸Na",
         "スクワラン"
@@ -3140,7 +3140,7 @@
       "volume": 130,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167531198/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "モロッコ溶岩クレイ",
         "セルロース",
@@ -3176,7 +3176,7 @@
       "volume": 200,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167024485/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "ヒアルロン酸Na",
         "アンズ果汁"
@@ -3210,7 +3210,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251607/",
-      "keyIngredients": [
+      "ingredients": [
         "ミネラルオイル",
         "イソノナン酸イソノニル",
         "ヒアルロン酸Na"
@@ -3241,7 +3241,7 @@
       "volume": 125,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251584/",
-      "keyIngredients": [
+      "ingredients": [
         "ミネラルオイル",
         "イソノナン酸イソノニル",
         "ヒアルロン酸Na"
@@ -3274,7 +3274,7 @@
       "volume": 125,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251614/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "スクワラン",
         "ヒアルロン酸Na"
@@ -3305,7 +3305,7 @@
       "volume": 30,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251720/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "ヒアルロン酸Na",
         "アセチルグルコサミン",
@@ -3339,7 +3339,7 @@
       "volume": 30,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167376164/",
-      "keyIngredients": [
+      "ingredients": [
         "カモミラET",
         "ヒアルロン酸Na-2",
         "アセチルグルコサミン"
@@ -3378,7 +3378,7 @@
       "volume": 55,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167040980/",
-      "keyIngredients": [
+      "ingredients": [
         "ナイアシンアミド",
         "ヒアルロン酸Na-2",
         "アセチルグルコサミン"
@@ -3416,7 +3416,7 @@
       "volume": 80,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167550601/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "ヒアルロン酸Na",
         "メチルセリン",
@@ -3450,7 +3450,7 @@
       "volume": 55,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167022726/",
-      "keyIngredients": [
+      "ingredients": [
         "ヒアルロン酸Na",
         "メチルセリン",
         "ブクリョウタケエキス"
@@ -3482,7 +3482,7 @@
       "volume": 20,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167864920/",
-      "keyIngredients": [
+      "ingredients": [
         "ナイアシンアミド",
         "ヒアルロン酸Na-2",
         "ワレモコウエキス"
@@ -3519,7 +3519,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251645/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "アセチルグルコサミン",
         "メチルセリン",
@@ -3552,7 +3552,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251935/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "アセチルグルコサミン",
         "メチルセリン",
@@ -3585,7 +3585,7 @@
       "volume": 100,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167251683/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "マカデミアナッツ油",
         "ヒアルロン酸Na",
@@ -3620,7 +3620,7 @@
       "volume": 100,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167252529/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "マカデミアナッツ油",
         "ヒアルロン酸Na",
@@ -3655,7 +3655,7 @@
       "volume": 150,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167382264/",
-      "keyIngredients": [
+      "ingredients": [
         "L-アスコルビン酸 2-グルコシド",
         "グリチルリチン酸ジカリウム",
         "濃グリセリン",
@@ -3695,7 +3695,7 @@
       "volume": 100,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167383438/",
-      "keyIngredients": [
+      "ingredients": [
         "カモミラET",
         "濃グリセリン",
         "マカデミアナッツ油",
@@ -3733,7 +3733,7 @@
       "volume": 90,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/suisai/4973167552995/",
-      "keyIngredients": [
+      "ingredients": [
         "シア脂",
         "ヒマワリ種子油",
         "アボカド油",
@@ -3769,7 +3769,7 @@
       "volume": 180,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167503461/",
-      "keyIngredients": [
+      "ingredients": [
         "トリエチルヘキサノイン",
         "ミネラルオイル",
         "グリセリン",
@@ -3805,7 +3805,7 @@
       "volume": 180,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167553022/",
-      "keyIngredients": [
+      "ingredients": [
         "オリーブ果実油",
         "グリセリン",
         "ヒアルロン酸Na",
@@ -3842,7 +3842,7 @@
       "volume": 125,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167511411/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "ヒアルロン酸Na",
         "アセチルグルコサミン",
@@ -3874,7 +3874,7 @@
       "volume": 40,
       "unit": "mL",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167854143/",
-      "keyIngredients": [
+      "ingredients": [
         "グリセリン",
         "スクワラン",
         "ヒアルロン酸Na",
@@ -3908,7 +3908,7 @@
       "volume": 45,
       "unit": "g",
       "sourceUrl": "https://www.kao-kirei.com/ja/item/kbb/dew/4973167323939/",
-      "keyIngredients": [
+      "ingredients": [
         "ジメチコン",
         "グリセリン",
         "マカデミア種子油",

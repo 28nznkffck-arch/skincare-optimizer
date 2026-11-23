@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.9.27';
+import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.9.28';
 
 const RETAILERS = ['マツキヨココカラオンライン', 'ツルハグループe-shop', 'ウエルシア'];
 
@@ -60,8 +60,10 @@ function dateString(value) {
 function ingredients(value) {
   const parts = value.split('|').map(part => part.trim());
   if (!parts.every(Boolean)) throw new Error('成分名を | で区切って入力してください');
+  if (parts.some(part => !/[A-Za-zぁ-んァ-ヶ一-龯]/u.test(part.normalize('NFKC'))))
+    throw new Error('成分名に数字や記号だけの断片が含まれています');
   // 原料規格の(1)/(2)や構造名の括弧は残す。注釈・説明文の混入は入力時に検出する。
-  if (parts.some(part => /[※＊*†‡。\r\n]|(?:エキス|成分)は/.test(part)))
+  if (parts.some(part => /[※＊*†‡☆★。\r\n]|(?:エキス|成分)は/.test(part)))
     throw new Error('成分名に注釈・説明文が含まれています。成分名のみを入力してください');
   return parts;
 }
@@ -94,7 +96,12 @@ const PRODUCT_FIELDS = {
   製品区分: ['productType', choice({化粧品: 'cosmetic', 医薬部外品: 'quasiDrug'})],
   企業グループ: ['makerGroup'], 内容量: ['volume', positive], 単位: ['unit', choice({mL: 'mL', g: 'g'})],
   使用感の分類: ['feel', feel], 使用感メモ: ['tone'], 公式URL: ['sourceUrl', httpsUrl],
-  主要成分: ['keyIngredients', ingredients], 商品説明: ['explanation'], 敏感肌向け: ['sensitiveSkin', boolean],
+  配合成分: ['ingredients', ingredients],
+  配合成分の原文: ['ingredientLabel'],
+  配合成分の確認状況: ['ingredientStatus', choice({全成分確認済み:'full',一部確認:'partial',未確認:'unverified'})],
+  配合成分の出典URL: ['ingredientSourceUrl', httpsUrl], 配合成分の確認日: ['ingredientVerifiedAt', dateString],
+  配合成分の出典種別: ['ingredientSourceKind', choice({メーカー:'manufacturer',販売店:'retailer','メーカー提供・承認情報':'manufacturerProvided'})],
+  商品説明: ['explanation'], 敏感肌向け: ['sensitiveSkin', boolean],
   オールインワン: ['allInOne', boolean], ふき取り: ['wipeOff', boolean],
   落ちにくいメイク対応: ['waterproof', boolean], 洗顔料なしで提案: ['doubleCleanseNotNeeded', boolean],
   メーカーが洗顔を案内: ['manufacturerAdvisesCleanser', boolean],
@@ -192,7 +199,8 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv},onProgress) {
   const products = new Map(), usages = {}, retired = new Set();
   const columns = ['JAN', '掲載状態', ...Object.keys(PRODUCT_FIELDS), ...Object.keys(USAGE_FIELDS), ...Object.keys(EVIDENCE_FIELDS)];
   const required = ['brand', 'name', 'category', 'volume', 'unit', 'sourceUrl', 'dailyUses'];
-  const optional = ['製品区分', 'メーカーが洗顔を案内', '使用順の指定', '使用時間の指定', '1回量（数値・容量と同単位）'];
+  const optional = ['製品区分', 'メーカーが洗顔を案内', '使用順の指定', '使用時間の指定', '1回量（数値・容量と同単位）',
+    '配合成分の原文','配合成分の確認状況','配合成分の出典URL','配合成分の確認日','配合成分の出典種別'];
   for (const {jan, row, location} of table(productsCsv, 'products.csv', columns, optional)) {
     if (products.has(jan)) throw new Error(`${location}: JAN ${jan} が商品マスター内で重複しています`);
     const status = row.掲載状態 || '掲載中';
@@ -200,7 +208,7 @@ export function parseCatalog({productsCsv, pricesCsv, scoresCsv},onProgress) {
       throw new Error(`${location}: 掲載状態は「掲載中」か「掲載終了」です`);
     if (status === '掲載終了') retired.add(jan);
 
-    const product = {jan, keyIngredients: [], ...readFields(row, PRODUCT_FIELDS, location, required)};
+    const product = {jan, ingredients: [], ...readFields(row, PRODUCT_FIELDS, location, required)};
     const evidence = readFields(row, EVIDENCE_FIELDS, location);
     if (Object.keys(evidence).length) product.evidence = evidence;
     products.set(jan, product);

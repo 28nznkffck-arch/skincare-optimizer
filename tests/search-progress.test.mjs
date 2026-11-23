@@ -6,7 +6,7 @@ import {renderProgress} from '../dist/progress-view.js';
 
 function product(category,index,extra={}){
   return {jan:`${category}-${index}`,brand:'試験',name:'通常品',category,referencePrice:100,referenceUses:30,dailyUses:1,
-    keyIngredients:['保湿成分'],scores:{dryness:1,eyeDryness:1},evidence:{},...extra};
+    ingredients:['保湿成分'],scores:{dryness:1,eyeDryness:1},evidence:{},...extra};
 }
 const catalog=[product('makeupRemover',0,{doubleCleanseNotNeeded:true}),product('makeupRemover',1),
   product('cleanser',0),product('cleanser',1),product('toner',0),product('toner',1),product('serum',0),
@@ -47,7 +47,7 @@ test('single-item budget filtering credits all combinations containing the remov
 
 test('mixed constraints and overrides preserve accounting and the exact result',()=>{
   for(let seed=0;seed<24;seed++){
-    const items=catalog.map((item,index)=>({...item,referencePrice:100*((index+seed)%7+1),scores:{dryness:(index+seed)%4,eyeDryness:(index*seed)%4},keyIngredients:[`成分${index%3}`]}));
+    const items=catalog.map((item,index)=>({...item,referencePrice:100*((index+seed)%7+1),scores:{dryness:(index+seed)%4,eyeDryness:(index*seed)%4},ingredients:[`成分${index%3}`]}));
     const options={budget:[0,300,1000,5000][seed%4],concerns:seed%2?['dryness','eyeDryness']:['dryness'],
       useMakeupRemover:seed%3===0,priority:['simple','any','thorough'][seed%3],
       resultLimit:seed%2?1:undefined,objective:seed%5===0?'minimumMonthly':undefined,

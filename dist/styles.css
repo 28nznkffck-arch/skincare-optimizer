@@ -75,6 +75,7 @@
 .variant-link{display:inline-flex;align-items:center;min-height:36px;padding:7px 10px;border:1px solid #cbdcd0;border-radius:999px;color:#426450;text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap}
 .variant-link:hover{background:#e8f1e8;text-decoration:none}
 .ingredient-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px;margin-bottom:9px}
+.product-ingredients{margin:10px 0;color:#526b5b;font-size:11px;line-height:1.8}.product-ingredients>summary{font-weight:700}.product-ingredients .ingredient-row{margin-top:8px}.ingredient-original{margin-top:7px}.ingredient-original p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px}
 .ingredient-heading .field-title{margin:0}
 .ingredient-help{font-size:11px;line-height:1.8;padding:7px 0;text-underline-offset:3px;white-space:nowrap}
 .ingredient-help:focus-visible{outline:2px solid #426c58;outline-offset:4px}

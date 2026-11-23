@@ -1,7 +1,7 @@
-import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.9.27';
-import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.9.27';
-import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.27';
-import {loadCatalog} from './catalog-csv.js?v=0.9.27';
+import {CATEGORY_LABELS, monthlyCost, priceOf, usesOf, optimize} from './optimizer.js?v=0.9.28';
+import {renderContext,renderEvidence,renderRawScores,renderProductAnalysis} from './debug-analysis.js?v=0.9.28';
+import {clampBudget, getBudgetRange, mergeCatalogData, reconcileCatalogState, unitPerUse} from './catalog-data.js?v=0.9.28';
+import {loadCatalog} from './catalog-csv.js?v=0.9.28';
 
 const IS_MEN=/(?:^|\/)men\/debug\.html$/.test(window.location?.pathname||'');
 const STORE_KEY=IS_MEN?'skincare-lab-men-settings-jan':'skincare-lab-settings-jan';
@@ -56,7 +56,7 @@ function renderRows(){
   const q=search.value.trim().toLocaleLowerCase('ja-JP');
   const selected=category.value;
   const matching=catalog.filter(p=>(selected==='all'||p.category===selected) &&
-    (!q||[p.brand,p.name,p.jan,...(p.keyIngredients||[]),...(p.evidence?.activeIngredients||[])].join(' ').toLocaleLowerCase('ja-JP').includes(q)));
+    (!q||[p.brand,p.name,p.jan,...(p.ingredients||[]),...(p.evidence?.activeIngredients||[])].join(' ').toLocaleLowerCase('ja-JP').includes(q)));
   const pages=Math.max(1,Math.ceil(matching.length/PAGE_SIZE));
   page=Math.min(page,pages-1);
   const visible=matching.slice(page*PAGE_SIZE,(page+1)*PAGE_SIZE);
@@ -83,7 +83,7 @@ function renderRows(){
       dose:'メーカーの使用量目安から逆算。',
       demo:'同品目・同単位で参考例が2商品未満のため、従来の試算用仮回数を使用。',
     }[kind] || `同品目・同単位の出典付き${p.usageEstimate.sampleCount}商品の1回量平均 ${p.usageEstimate.amountPerUse.toFixed(2)}${escape(p.unit)}/回を仮適用。個別商品の実測値ではありません。`;
-    return `<article class="debug-item"><div class="debug-item-head"><div><small>${escape(p.brand)}・${escape(CATEGORY_LABELS[p.category])} / JAN ${escape(p.jan||'未確認')}</small><h2>${escape(p.name)}</h2><p>${escape(p.keyIngredients.join('・'))}</p></div><a href="${escape(p.sourceUrl)}" class="source" target="_blank" rel="noopener noreferrer">メーカー公式 ↗</a></div>
+    return `<article class="debug-item"><div class="debug-item-head"><div><small>${escape(p.brand)}・${escape(CATEGORY_LABELS[p.category])} / JAN ${escape(p.jan||'未確認')}</small><h2>${escape(p.name)}</h2><p>配合成分：${escape(p.ingredients.join('・'))}</p><p>${p.ingredientStatus==='full'?'全成分確認済み':'全成分は確認中'}${p.ingredientVerifiedAt?`・${escape(p.ingredientVerifiedAt)}`:''}</p></div><a href="${escape(p.sourceUrl)}" class="source" target="_blank" rel="noopener noreferrer">メーカー公式 ↗</a></div>
       ${renderEvidence(p)}
       <div class="debug-provenance"><span>${priceSource}</span><span>${useSource}</span><small>${estimate}${p.usageReference?.referenceBasis?` ${escape(p.usageReference.referenceBasis)}。`:''} 数値は仮推定や逆算を含みます。</small></div>
       <dl class="debug-estimates">

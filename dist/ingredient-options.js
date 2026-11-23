@@ -89,20 +89,27 @@ const letters=['えー','びー','しー','でぃー','いー','えふ','じー'
 const numbers={'2':'に','3':'さん','4':'よん','10':'じゅう'};
 const collator=new Intl.Collator('ja',{numeric:true});
 export function ingredientReading(name){
+  const common={'水':'みず','精製水':'せいせいすい','常水':'じょうすい','香料':'こうりょう','黄酸化鉄':'おうさんかてつ','黒酸化鉄':'くろさんかてつ'};
+  if(common[name])return common[name];
   let value=name.normalize('NFKC');
+  for(const [word,reading] of [['水酸化','すいさんか'],['塩化','えんか'],['硫酸','りゅうさん'],['リン酸','りんさん'],['酸化鉄','さんかてつ']])if(value.startsWith(word)){value=reading+value.slice(word.length);break;}
   const prefix=prefixes.find(([text])=>value.startsWith(text));
   if(prefix)value=prefix[1]+value.slice(prefix[0].length);
   return value.replace(/^\d+/,number=>numbers[number]||number)
     .replace(/^[A-Za-z]+/,word=>[...word.toUpperCase()].map(char=>letters[char.charCodeAt(0)-65]).join(''))
     .replace(/[ァ-ヶ]/g,char=>String.fromCharCode(char.charCodeAt(0)-0x60));
 }
-export const compareIngredients=(a,b)=>collator.compare(ingredientReading(a),ingredientReading(b))||collator.compare(a,b);
+export const compareIngredients=(a,b)=>{
+  const ar=ingredientReading(a),br=ingredientReading(b);
+  const kana=value=>/^[ぁ-ん]/u.test(value);
+  return Number(!kana(ar))-Number(!kana(br))||collator.compare(ar,br)||collator.compare(a,b);
+};
 
 export function ingredientChoices(catalog){
   const names=new Set();
   for(const product of catalog){
     if(product.archived)continue;
-    for(const value of product.keyIngredients||[]){
+    for(const value of product.ingredients||[]){
       const name=ingredientSelection(value);
       // 数値だけの断片や、説明文が混ざった欄を選択肢として表示しない。
       if(typeof name!=='string' || !/[A-Za-zぁ-んァ-ヶ一-龯]/u.test(name) || /[。\r\n]|(?:エキス|成分)は/.test(name))continue;

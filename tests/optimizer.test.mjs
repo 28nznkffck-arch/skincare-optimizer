@@ -168,7 +168,7 @@ test('one-item replacement may return nothing when no actual improvement exists'
 
 test('extra budget lifts the original budget ceiling, even when cost delta is larger than the extra',()=>{
   const mk=(id,category,price,score)=>({jan:id,brand:'TEST',name:id,category,demoPrice:price,demoUses:30,dailyUses:1,
-    keyIngredients:[],sourceUrl:'https://example.test/'+id,scores:{pores:score}});
+    ingredients:[],sourceUrl:'https://example.test/'+id,scores:{pores:score}});
   const fixture=[mk('wash','cleanser',300,1),mk('basic','moisturizer',300,1),mk('upgrade','moisturizer',1900,3)];
   const opts={budget:1200,concerns:['pores'],priority:'any'};
   const best=optimize(fixture,{...opts,resultLimit:1})[0];
@@ -298,7 +298,7 @@ test('fast one-result optimization exactly matches exhaustive ranking across con
 });
 
 test('optional products are tried in descending net score and seed the strongest routine first',()=>{
-  const item=(category,jan,points)=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,keyIngredients:[],scores:{dryness:points},evidence:{}});
+  const item=(category,jan,points)=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,ingredients:[],scores:{dryness:points},evidence:{}});
   const items=[item('cleanser','wash',2),item('moisturizer','cream',2),
     ...Array.from({length:80},(_,i)=>item('toner',`toner-${i+1}`,i+1)),
     ...Array.from({length:80},(_,i)=>item('serum',`serum-${i+1}`,i+1))];
@@ -310,7 +310,7 @@ test('optional products are tried in descending net score and seed the strongest
 });
 
 test('extra-step penalties prune weak optional combinations while stronger additions remain eligible',()=>{
-  const item=(category,jan,points)=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,keyIngredients:[],scores:{dryness:points},evidence:{}});
+  const item=(category,jan,points)=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,ingredients:[],scores:{dryness:points},evidence:{}});
   const base=[item('cleanser','wash',5),item('moisturizer','cream',5)];
   const items=[...base,...Array.from({length:80},(_,i)=>item('toner',`weak-toner-${i}`,0.1)),
     ...Array.from({length:80},(_,i)=>item('serum',`weak-serum-${i}`,0.1))];
@@ -328,7 +328,7 @@ test('extra-step penalties prune weak optional combinations while stronger addit
 });
 
 test('nullable cleanser and eye-care choices also try the highest net score first',()=>{
-  const item=(category,jan,scores)=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,keyIngredients:[],scores,evidence:{}});
+  const item=(category,jan,scores)=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,ingredients:[],scores,evidence:{}});
   const items=[item('makeupRemover','remover',{}),item('moisturizer','cream',{}),
     item('cleanser','weak-wash',{dryness:1}),item('cleanser','strong-wash',{dryness:3}),
     item('eyeCare','weak-eye',{eyeDryness:1}),item('eyeCare','strong-eye',{eyeDryness:3})];
@@ -341,7 +341,7 @@ test('nullable cleanser and eye-care choices also try the highest net score firs
 });
 
 test('remaining-budget score ceilings preserve the exact optimum at price boundaries and after overrides',()=>{
-  const item=(category,jan,cost,scores)=>({category,jan,brand:'検証',name:jan,referencePrice:cost,referenceUses:30,dailyUses:1,keyIngredients:[],scores,evidence:{}});
+  const item=(category,jan,cost,scores)=>({category,jan,brand:'検証',name:jan,referencePrice:cost,referenceUses:30,dailyUses:1,ingredients:[],scores,evidence:{}});
   const items=[...Array.from({length:4},(_,i)=>item('cleanser',`wash-${i}`,80+i*30,{dryness:1})),
     ...Array.from({length:4},(_,i)=>item('moisturizer',`cream-${i}`,100+i*50,{dryness:3})),
     ...Array.from({length:4},(_,i)=>item('toner',`toner-${i}`,100+i*40,{dryness:3})),
@@ -363,14 +363,14 @@ test('remaining-budget score ceilings preserve the exact optimum at price bounda
 });
 
 test('bound-only summaries retain products whose ingredients or disclosure win the actual routine',()=>{
-  const item=(category,jan,scores,extra={})=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,keyIngredients:[],scores,evidence:{},...extra});
+  const item=(category,jan,scores,extra={})=>({category,jan,brand:'検証',name:jan,referencePrice:100,referenceUses:30,dailyUses:1,ingredients:[],scores,evidence:{},...extra});
   const base=[item('cleanser','wash',{dryness:3}),item('moisturizer','cream',{dryness:3}),item('toner','toner',{dryness:3})];
   const disclosed={concentrations:[{name:'公開成分',value:1,unit:'%',sourceUrl:'https://example.test/concentration'}]};
   const cases=[
-    {products:[item('serum','higher',{dryness:3}),item('serum','ingredient',{dryness:2},{keyIngredients:['指定成分']})],
+    {products:[item('serum','higher',{dryness:3}),item('serum','ingredient',{dryness:2},{ingredients:['指定成分']})],
       settings:{ingredient:'指定成分',ingredientMode:'required'},expected:'ingredient'},
     {products:[item('serum','higher',{dryness:3}),item('serum','disclosed',{dryness:2},{evidence:disclosed})],settings:{},expected:'disclosed'},
-    {products:[item('serum','earlier',{dryness:2},{keyIngredients:['指定成分']}),item('serum','higher',{dryness:3},{keyIngredients:['指定成分']})],
+    {products:[item('serum','earlier',{dryness:2},{ingredients:['指定成分']}),item('serum','higher',{dryness:3},{ingredients:['指定成分']})],
       settings:{ingredient:'指定成分',ingredientMode:'required'},expected:'earlier'},
   ];
   for(const setting of cases){
@@ -399,9 +399,9 @@ test('pruned search preserves makeup rules, ingredient preferences and ties',()=
       concernWeights:{dryness:'high',pores:'low'},...setting};
     assert.deepEqual(optimize(sample,{...options,resultLimit:1}),optimize(sample,options).slice(0,1));
   }
-  const wash={...cleanser,scores:{dryness:1},keyIngredients:[],evidence:{},sourceUrl:'',referencePrice:100};
+  const wash={...cleanser,scores:{dryness:1},ingredients:[],evidence:{},sourceUrl:'',referencePrice:100};
   const washWithHigherSingleScore={...wash,jan:'higher',scores:{dryness:2}};
-  const cream={...moisturizer,scores:{dryness:3},keyIngredients:[],evidence:{},sourceUrl:'',
+  const cream={...moisturizer,scores:{dryness:3},ingredients:[],evidence:{},sourceUrl:'',
     referencePrice:100,referenceUses:30,dailyUses:1};
   // 単体点の順位と、別の品目を足した後の同点時の順位を照合する。
   const tied=[
@@ -433,8 +433,8 @@ test('care style controls optional steps without rewarding price alone',()=>{
 });
 
 test('optional products enter the routine through a concern, ingredient preference, or lock',()=>{
-  const item=(jan,category,scores,keyIngredients=[])=>({
-    jan,category,scores,keyIngredients,demoPrice:100,demoUses:30,dailyUses:1,
+  const item=(jan,category,scores,ingredients=[])=>({
+    jan,category,scores,ingredients,demoPrice:100,demoUses:30,dailyUses:1,
   });
   const wash=item('wash','cleanser',{blackheads:3});
   const milk=item('milk','moisturizer',{blackheads:1});
@@ -524,7 +524,7 @@ test('official active ingredients are verified; unknown concentration is not zer
 });
 
 test('information transparency rewards sourced concentration disclosures independently of fit',()=>{
-  const product={brand:'A',name:'B',category:'toner',scores:{},keyIngredients:[],sourceUrl:'https://maker.example'};
+  const product={brand:'A',name:'B',category:'toner',scores:{},ingredients:[],sourceUrl:'https://maker.example'};
   const verified={...product,evidence:{officialSource:true,activeIngredients:['成分X']}};
   const disclosed={...verified,evidence:{...verified.evidence,
     concentrations:[{name:'成分X',value:1.5,unit:'%',sourceUrl:'https://maker.example/disclosure'}]}};
@@ -547,7 +547,7 @@ test('recommendations and swaps require a selected concern',()=>{
   assert.deepEqual(optimize(catalog,{...options,budget:30000,objective:'minimumMonthly'}),[]);
   const [routine]=optimize(catalog,{...options,concerns:['dryness']});
   assert.ok(routine.products.some(p=>p.category==='makeupRemover'));
-  assert.ok(routine.products.some(p=>p.keyIngredients.includes('ナイアシンアミド')));
+  assert.ok(routine.products.some(p=>p.ingredients.includes('ナイアシンアミド')));
   assert.equal(diagnoseProduct(catalog,options,routine.products[0].jan,routine).status,'no_concerns');
   assert.deepEqual(swaps(routine,catalog,'moisturizer',options,5000),[]);
 });
@@ -593,7 +593,7 @@ test('diagnostic distinguishes a budget failure from an ingredient incompatibili
 
 test('even when there is no budget-compliant routine, diagnostic can display a scored reference',()=>{
   const mk=(id,category)=>({jan:id,brand:'TEST',name:id,category,demoPrice:300,demoUses:30,dailyUses:1,
-    keyIngredients:[],sourceUrl:'https://example.test/'+id,scores:{pores:2}});
+    ingredients:[],sourceUrl:'https://example.test/'+id,scores:{pores:2}});
   const items=[mk('wash','cleanser'),mk('milk','moisturizer')];
   const options={budget:500,concerns:['pores']};
   assert.deepEqual(optimize(items,{...options,resultLimit:1}),[]);

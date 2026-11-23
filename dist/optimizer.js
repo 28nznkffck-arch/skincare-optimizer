@@ -1,5 +1,5 @@
-import {prepareConcernBound} from './concern-bound.js?v=0.9.27';
-import {matchesIngredientSelection} from './ingredient-options.js?v=0.9.27';
+import {prepareConcernBound} from './concern-bound.js?v=0.9.28';
+import {matchesIngredientSelection} from './ingredient-options.js?v=0.9.28';
 
 export const CATEGORIES = ["makeupRemover", "cleanser", "toner", "serum", "moisturizer", "eyeCare"];
 export const CATEGORY_LABELS = {
@@ -74,7 +74,7 @@ const isExtraStep = category => ["toner", "serum", "eyeCare"].includes(category)
 const matchesFinish = (product, options) => options.finish && options.finish !== "any"
   && ["toner", "moisturizer"].includes(product.category) && product.feel === options.finish;
 const matchesIngredient = (product, options) => Boolean(options.ingredient && options.ingredient !== "none"
-  && product.keyIngredients?.some(name => matchesIngredientSelection(name,options.ingredient)));
+  && product.ingredients?.some(name => matchesIngredientSelection(name,options.ingredient)));
 const hasSelectedConcerns = options => Array.isArray(options.concerns) && options.concerns.length > 0;
 
 export function canIncludeRoutineProduct(product, options) {
@@ -122,8 +122,8 @@ export function explainRoutineScore(products, options={}) {
   // 予算は optimize() 側の上限制約。費用を適合スコアに混ぜず、
   // 同点の候補だけ安いほうを先に並べる。
   if (concerns.length) {
-    const distinct = new Set(products.flatMap(p=>p.keyIngredients||[]));
-    push('diversity','成分の種類',Math.min(distinct.size,12) * 0.25,`登録された主要成分 ${distinct.size}種類`);
+    const distinct = new Set(products.flatMap(p=>p.ingredients||[]));
+    push('diversity','成分の種類',Math.min(distinct.size,12) * 0.25,`登録された配合成分 ${distinct.size}種類`);
   }
   const meanTransparency=products.length?products.reduce((sum,p)=>sum+Number(hasDisclosedConcentration(p)),0)/products.length:0;
   // 個数の多い組み合わせを有利にしないため「1品あたり平均」で小さく加点。
@@ -284,7 +284,7 @@ function findBestRoutine(grouped, budget, options,progress) {
       points: concerns.map(concern => Math.max(0, product?.scores?.[concern] || 0)),
       dryness: product?.scores?.dryness || 0,
       oiliness: product?.scores?.oiliness || 0,
-      ingredients: product?.keyIngredients?.length || 0,
+      ingredients: product?.ingredients?.length || 0,
       match: product ? matchesIngredient(product, options) : false,
       sensitive: Number(Boolean(options.sensitiveSkin && product?.sensitiveSkin)),
       finish: Number(Boolean(product && matchesFinish(product, options))),

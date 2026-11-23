@@ -84,7 +84,7 @@ test('female and male ingredient selectors follow their own catalogs and retain 
 });
 
 test('saved ingredient spellings migrate to a family while product chips retain manufacturer names',async()=>{
-  const moisturizer=catalog.find(p=>p.category==='moisturizer'&&p.keyIngredients.includes('ヒアルロン酸Na-2'));
+  const moisturizer=catalog.find(p=>p.category==='moisturizer'&&p.ingredients.includes('ヒアルロン酸Na-2'));
   assert(moisturizer);
   const {app,saved}=await openApp('canonical-ingredient-display',{[settingsKey]:{
     budget:20000,concerns:['dryness'],ingredient:'ヒアルロン酸ナトリウム（2）',ingredientMode:'required',locked:{moisturizer:moisturizer.jan},

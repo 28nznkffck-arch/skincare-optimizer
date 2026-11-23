@@ -181,3 +181,25 @@ export function dictionaryKanaRow(name){
   const initial=ingredientReading(name).normalize('NFD').replace(/[\u3099\u309a]/g,'')[0];
   return kanaRows.find(([, ,letters])=>letters.includes(initial))?.[0]||'other';
 }
+
+// Registration does not depend on this dictionary. Newly recorded ingredient
+// names remain selectable and get their actual label source without inventing a use.
+export function dictionaryForCatalog(catalog){
+  const entries=new Map(dictionaryEntries.map(entry=>[entry.name,entry]));
+  const groups=new Map();
+  for(const product of catalog)for(const value of product.ingredients||[]){
+    const name=ingredientSelection(value);
+    if(!name||!/[A-Za-zぁ-んァ-ヶ一-龯]/u.test(name))continue;
+    if(!groups.has(name))groups.set(name,{members:new Set(),urls:new Set()});
+    groups.get(name).members.add(canonicalIngredient(value));
+    const url=product.ingredientSourceUrl||product.sourceUrl;if(url)groups.get(name).urls.add(url);
+  }
+  for(const [name,{members,urls:allUrls}] of groups){
+    if(entries.has(name))continue;
+    const urls=[...allUrls].slice(0,2);
+    entries.set(name,{name,title:name,id:ingredientId(name),reading:ingredientReading(name),members:[...members],sourceIds:[],
+      use:'用途の確認中',summary:'商品に表示されている配合成分です。配合目的の解説は確認できしだい追加します。',note:'',research:[],
+      refs:urls.map(url=>({label:'配合成分の表示を確認する',url})),legacyIds:[],fromCatalog:true});
+  }
+  return [...entries.values()].sort((a,b)=>compareIngredients(a.name,b.name));
+}

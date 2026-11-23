@@ -16,7 +16,7 @@ for(let index=0;index<cases;index++){
     jan:`${category}-${i}`,category,brand:'検証',name:`${category}-${i}`,referencePrice:choose([0,100,200,350,900]),
     referenceUses:choose([30,60]),dailyUses:choose([0.5,1,2]),doubleCleanseNotNeeded:random()<0.5,
     sensitiveSkin:random()<0.5,feel:choose(['light','moist','rich']),
-    keyIngredients:Array.from({length:Math.floor(random()*8)},()=>`成分${Math.floor(random()*16)}`),
+    ingredients:Array.from({length:Math.floor(random()*8)},()=>`成分${Math.floor(random()*16)}`),
     scores:Object.fromEntries(concerns.map(c=>[c,choose([0,0.1,0.5,1,1.25,2,2.5,3])])),
     evidence:random()<0.3?{concentrations:[{name:'成分',value:1,unit:'%',sourceUrl:'https://example.test/'}]}:{},
   })));

@@ -5,6 +5,7 @@ import {loadCatalog, parseCatalog} from '../dist/catalog-csv.js';
 import {DIPOTASSIUM_GLYCYRRHIZATE, mergeCatalogData, reconcileCatalogState} from '../dist/catalog-data.js';
 import {renderEvidence} from '../dist/debug-analysis.js';
 import {CONCERNS, monthlyCost, optimize, priceOf, usesOf} from '../dist/optimizer.js';
+import {canonicalIngredient} from '../dist/ingredient-options.js';
 
 const headers = {};
 for (const name of ['products', 'prices', 'scores']) {
@@ -110,11 +111,12 @@ test('CSV keeps archived products available to saved routines', () => {
 });
 
 test('ingredient fields retain regulatory numbers and structural brackets but reject imported footnotes', () => {
-  const names=['アロエエキス(2)','油溶性甘草エキス（2）','POE(26)グリセリン','水溶性コラーゲン(F)','トリ（カプリル酸／カプリン酸）グリセリル'];
-  const input=主要成分=>({...data,productsCsv:csv('products',[{...product,主要成分}])});
-  assert.deepEqual(parseCatalog(input(names.join(' | '))).products[0].keyIngredients,names);
-  for(const name of ['酸化チタン ハトムギ(薎苡仁)発酵エキスはサッカロミセス/ハトムギ種子発酵液','グリセリン※1','アロエエキス*2'])
+  const names=['アロエエキス(2)','油溶性甘草エキス（2）','POE(26)グリセリン','水溶性コラーゲン(F)','トリ（カプリル酸／カプリン酸）グリセリル','ＢＧ'];
+  const input=配合成分=>({...data,productsCsv:csv('products',[{...product,配合成分}])});
+  assert.deepEqual(parseCatalog(input(names.join(' | '))).products[0].ingredients,names);
+  for(const name of ['酸化チタン ハトムギ(薎苡仁)発酵エキスはサッカロミセス/ハトムギ種子発酵液','グリセリン※1','アロエエキス*2','グリセリン★1'])
     assert.throws(()=>parseCatalog(input(name)),/成分名に注釈・説明文/);
+  assert.throws(()=>parseCatalog(input('グリセリン | 1')),/数字や記号だけの断片/);
 });
 
 test('CSV rejects duplicate JANs, orphaned prices, and invalid scores', () => {
@@ -157,13 +159,13 @@ test('the quoted amount for both eyes takes precedence over a whole-face serum a
 test('catalog uses the manufacturer-verified active ingredients for corrected products', async () => {
   const {products} = await loadCatalog(url => readFile(url, 'utf8'));
   const byJan = new Map(products.map(item => [item.jan, item]));
-  assert(byJan.get('4971710262131').keyIngredients.includes('酸化チタン'));
-  assert(!byJan.get('4971710262131').keyIngredients.some(name=>name.includes('エキスは')));
+  assert(byJan.get('4971710262131').ingredients.includes('酸化チタン'));
+  assert(!byJan.get('4971710262131').ingredients.some(name=>name.includes('エキスは')));
   assert.deepEqual(byJan.get('4901301269348').evidence.activeIngredients, ['グリチルリチン酸ジカリウム']);
   assert.deepEqual(byJan.get('4901301236210').evidence.activeIngredients, ['アラントイン']);
   const gel = byJan.get('4901301281715');
   assert.deepEqual(gel.evidence.activeIngredients, ['アラントイン']);
-  assert.ok(!gel.keyIngredients.includes('グリチルリチン酸ジカリウム'));
+  assert.ok(!gel.ingredients.includes('グリチルリチン酸ジカリウム'));
   assert.deepEqual(byJan.get('4973167383551').evidence.activeIngredients,
     ['L-アスコルビン酸 2-グルコシド', 'グリチルリチン酸ジカリウム']);
   assert.deepEqual(byJan.get('4973167383575').evidence.activeIngredients,
@@ -177,7 +179,7 @@ test('debug shows a cosmetic as outside the medicinal ingredient field only when
   const showEvidence = row => renderEvidence(parseCatalog({
     ...data, productsCsv: csv('products', [row]),
   }).products[0]);
-  const cosmetic = showEvidence({...verifiedProduct, 製品区分: '化粧品', 主要成分: 'グリセリン'});
+  const cosmetic = showEvidence({...verifiedProduct, 製品区分: '化粧品', 配合成分: 'グリセリン'});
   assert.match(cosmetic, /確認済み有効成分：対象外（化粧品）/);
   assert.match(cosmetic, /公式製品情報の確認日 2026-11-14/);
   assert.match(showEvidence(verifiedProduct), /確認済み有効成分：未調査・未登録/);
@@ -195,11 +197,11 @@ test('the saved ingredient preference matches both former spellings in the catal
     budget: 500, concerns: ['dryness'], ingredient: 'グリチルリチン酸2K', ingredientMode: 'required'
   }, catalog);
   assert.equal(settings.ingredient, DIPOTASSIUM_GLYCYRRHIZATE);
-  assert.ok(catalog.find(p => p.jan === '4901301269348').keyIngredients.includes(settings.ingredient));
-  assert.ok(catalog.find(p => p.jan === '4901301265678').keyIngredients.includes(settings.ingredient));
+  assert.ok(catalog.find(p => p.jan === '4901301269348').ingredients.some(name=>canonicalIngredient(name)===settings.ingredient));
+  assert.ok(catalog.find(p => p.jan === '4901301265678').ingredients.some(name=>canonicalIngredient(name)===settings.ingredient));
   const [routine] = optimize(catalog, {...settings, excluded: [], resultLimit: 1});
   assert.ok(routine?.monthly <= settings.budget);
-  assert.ok(routine.products.some(p => p.keyIngredients.includes(settings.ingredient)));
+  assert.ok(routine.products.some(p => p.ingredients.some(name=>canonicalIngredient(name)===settings.ingredient)));
 });
 
 test('revised concern scores distinguish medicinal action, formula action and indirect evidence', async () => {
