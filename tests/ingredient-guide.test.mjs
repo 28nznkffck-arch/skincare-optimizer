@@ -120,3 +120,14 @@ test('guide groups point artichoke, vitamins, and three-part premix to separate 
   for(const id of ids)assert(html.includes('id="'+id+'"'));
   assert(html.includes('id="retinol"'),'old retinol bookmark stays valid');
 });
+
+test('retinol name and glycyrrhizinate source typo retain source-based guide routes',async()=>{
+  const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
+  for(const n of ['レチノール','酢酸レチノール','パルミチン酸レチノール','ビタミンA'])
+    assert.equal(ingredientGuideId(n),ingredientGuideId('レチノール(ビタミンA)'),n);
+  assert.equal(ingredientGuideId('グリチルリチリン酸ジカリウム'),ingredientGuideId('グリチルリチン酸ジカリウム'));
+  assert.notEqual(ingredientGuideId('グリチルリチン酸アンモニウム'),ingredientGuideId('グリチルリチン酸ジカリウム'));
+  for(const [a,b] of [['オリーブ果実油','オリーブ油'],['ツバキ葉エキス','ツバキエキス'],['アロエエキス-2','アロエエキス'],['PEG60水添ヒマシ油','PEG水添ヒマシ油']])
+    assert.equal(ingredientGuideId(a),ingredientGuideId(b),a);
+  assert(html.includes('id="retinol"'));
+});

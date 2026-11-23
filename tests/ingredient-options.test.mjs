@@ -107,7 +107,7 @@ test('all selectable names have a matching active product in their own catalog',
     assert.equal(choices.filter(name=>name===DIPOTASSIUM_GLYCYRRHIZATE).length,1);
     assert(!choices.includes('グリチルリチン酸2K'));assert(!choices.includes('1'));
   }
-  assert(lists[0].includes('ビタミンA'));assert(!lists[1].includes('ビタミンA'));
+  assert(lists[0].includes('レチノール(ビタミンA)'));assert(!lists[1].includes('レチノール(ビタミンA)'));
   assert(lists[1].includes('グリシルグリシン'));assert(lists[0].includes('グリシルグリシン'));
 });
 
@@ -135,7 +135,7 @@ test('glycerin roots are not all interchangeable; verified synonyms are',()=>{fo
 test('plant extract labels and vitamin names are grouped only for selection',()=>{
   for(const name of ['アーチチョーク葉エキス','アーティチョーク葉エキス','アーティチョークエキス'])assert.equal(ingredientSelection(name),'アーティチョークエキス');
   const examples={
-    'ビタミンA':['ビタミンA油','レチノール','酢酸レチノール','パルミチン酸レチノール'],
+    'レチノール(ビタミンA)':['ビタミンA','ビタミンA油','レチノール','酢酸レチノール','パルミチン酸レチノール'],
     'ビタミンB6':['ピリドキシンHCl','ピリドキシン塩酸塩','ピリドキシン塩酸塩（ビタミンB6）','塩酸ピリドキシン'],
     'ビタミンC':['アスコルビン酸（活性型ビタミンC）','アスコルビン酸硫酸2Na','ビタミンCリン酸Mg（ビタミンC誘導体）','リン酸L-アスコルビルマグネシウム'],
     'ビタミンE':['天然ビタミンE','トコフェリルグルコシド','酢酸トコフェロール'],
@@ -181,4 +181,32 @@ test('registered products with the specified mixed polymer raw label remain sear
     }
   }
   assert(seen>=10,'registered mixed raw labels must not silently disappear');
+});
+
+test('retinol is the friendly vitamin A label and legacy selections migrate',()=>{
+  for(const n of ['ビタミンA','レチノール','レチノール(ビタミンA)','酢酸レチノール','パルミチン酸レチノール','ビタミンA油'])assert.equal(ingredientSelection(n),'レチノール(ビタミンA)');
+  assert.equal(ingredientChoices([{ingredients:['レチノール','ビタミンA油']}]).join('|'),'none|レチノール(ビタミンA)');
+  assert.notEqual(canonicalIngredient('ビタミンA油'),canonicalIngredient('レチノール'));
+  const product={jan:'retinol',category:'serum',ingredients:['レチノール'],scores:{}};
+  for(const term of ['ビタミンA','レチノール(ビタミンA)'])assert(meetsIngredientRequirement([product],{ingredient:term,ingredientMode:'required'}));
+});
+
+test('source typo and alternate sodium spellings resolve without matching chemically distinct salts',()=>{
+  for(const n of ['グリチルリチリン酸ジカリウム','グリチルリチン酸2K','グリチルリチン酸２Ｋ','グリチルリチン酸ジカリウム'])
+    assert.equal(ingredientSelection(n),DIPOTASSIUM_GLYCYRRHIZATE,n);
+  for(const n of ['グリチルリチン酸アンモニウム','グリチルレチン酸ステアリル'])assert.notEqual(ingredientSelection(n),DIPOTASSIUM_GLYCYRRHIZATE,n);
+  const p={jan:'typo',category:'serum',ingredients:['グリチルリチリン酸ジカリウム'],scores:{}};
+  assert(meetsIngredientRequirement([p],{ingredient:DIPOTASSIUM_GLYCYRRHIZATE,ingredientMode:'required'}));
+});
+
+test('other label variations are grouped but different chemistry remains distinct',()=>{
+  for(const [base,variants] of Object.entries({
+    'PEG水添ヒマシ油':['PEG-20水添ヒマシ油','PEG-60水添ヒマシ油','PEG60水添ヒマシ油','POE硬化ヒマシ油'],
+    'オリーブ油':['オリブ油','オリーブ果実油'],
+    'ツバキエキス':['ツバキ花エキス','ツバキ葉エキス'],
+    'ステアリン酸ソルビタン':['ステアリン酸ソルビタン','モノステアリン酸ソルビタン'],
+    'アロエエキス':['アロエエキス-2','アロエエキス(2)'],
+  }))for(const n of variants)assert.equal(ingredientSelection(n),base,n);
+  for(const [a,b] of [['グリチルリチン酸ジカリウム','グリチルリチン酸アンモニウム'],['ステアリン酸ソルビタン','ジステアリン酸ソルビタン'],['オリーブ油','オリーブ葉エキス'],['ローズマリー油','ローズマリーエキス'],['PEG水添ヒマシ油','ヒマシ油']])
+    assert.notEqual(ingredientSelection(a),ingredientSelection(b),a+' vs '+b);
 });
