@@ -44,8 +44,8 @@ export const INGREDIENT_FAMILIES=[
   ['コラーゲン',['コラーゲン','コラーゲン・トリペプチドF','加水分解コラーゲン','加水分解コラーゲン末','水溶性コラーゲン','水溶性コラーゲン(F)','水溶性コラーゲン液','サクシニルアテロコラーゲン液']],
   ['セラミド',['セラミド','セラミド機能成分','セラミド2','セラミド6II','セラミドAP','セラミドNG','セラミドNP','N-ステアロイルジヒドロスフィンゴシン','セラミド1','セラミド3','セラミドEOS','グルコシルセラミド(セラミド)']],
   ['グリセリン',['グリセリン','濃グリセリン']],
-  ['ビタミンC',['ビタミンC','ビタミンC誘導体','アスコルビン酸','アスコルビルグルコシド','リン酸アスコルビルMg','アスコルビン酸リン酸エステルナトリウム','3-O-エチルアスコルビン酸','3-グリセリルアスコルビン酸','パルミチン酸アスコルビルリン酸3Na','ビタミンCテトライソパルミテート','L-アスコルビン酸2-グルコシド(ビタミンC誘導体)','L-アスコルビン酸2-グルコシド(持続型ビタミンC誘導体)','2-O-エチル-L-アスコルビン酸','ヘキシル3-グリセリルアスコルビン酸','L-アスコルビン酸硫酸エステル二ナトリウム','アスコルビン酸リン酸エステルナトリウム(アクティブビタミンC誘導体)']],
-  ['ビタミンE',['ビタミンE','トコフェロール','酢酸トコフェロール','d-δ-トコフェロール','d-δ-トコフェロール(ビタミンE)','dl-α-トコフェロール','酢酸DL-α-トコフェロール(ビタミンE誘導体)','トコフェロール酢酸エステル(ビタミンE誘導体)']],
+  ['ビタミンC',['ビタミンC','ビタミンC誘導体','アスコルビン酸','アスコルビルグルコシド','リン酸アスコルビルMg','アスコルビン酸リン酸エステルナトリウム','3-O-エチルアスコルビン酸','3-グリセリルアスコルビン酸','パルミチン酸アスコルビルリン酸3Na','ビタミンCテトライソパルミテート','L-アスコルビン酸2-グルコシド(ビタミンC誘導体)','L-アスコルビン酸2-グルコシド(持続型ビタミンC誘導体)','2-O-エチル-L-アスコルビン酸','ヘキシル3-グリセリルアスコルビン酸','L-アスコルビン酸硫酸エステル二ナトリウム','アスコルビン酸リン酸エステルナトリウム(アクティブビタミンC誘導体)','アスコルビン酸(ビタミンC)','アスコルビン酸(活性型ビタミンC)','アスコルビン酸硫酸2Na','ビタミンCリン酸Mg(ビタミンC誘導体)','リン酸L-アスコルビルマグネシウム']],
+  ['ビタミンE',['ビタミンE','トコフェロール','酢酸トコフェロール','d-δ-トコフェロール','d-δ-トコフェロール(ビタミンE)','dl-α-トコフェロール','酢酸DL-α-トコフェロール(ビタミンE誘導体)','トコフェロール酢酸エステル(ビタミンE誘導体)','天然ビタミンE','トコフェリルグルコシド']],
   ['コエンザイムQ10',['ユビキノン','ユビデカレノン']],
   // (2)は脚注ではなく原料規格の区分。選択用の名前だけを簡潔にする。
   ['アロエエキス',['アロエエキス(2)']],
@@ -142,14 +142,34 @@ export const INGREDIENT_FAMILIES=[
   ['ジメチコン',['ジメチコン','メチルポリシロキサン']],
   ['水',['水','精製水','常水']],
   ['エタノール',['エタノール','無水エタノール']],
+  ['アーティチョークエキス',['アーティチョークエキス','アーチチョーク葉エキス','アーティチョーク葉エキス']],
+  ['ビタミンA',['ビタミンA','ビタミンA油','レチノール','酢酸レチノール','パルミチン酸レチノール']],
+  ['ビタミンB6',['ビタミンB6','ピリドキシンHCl','ピリドキシン塩酸塩','ピリドキシン塩酸塩(ビタミンB6)','塩酸ピリドキシン']],
 ];
 const families=new Map(INGREDIENT_FAMILIES.flatMap(([name,members])=>members.map(member=>[canonicalIngredient(member),name])));
+
+/**
+ * 原料メーカーが一体の原料名として販売・表示している複合原料。
+ * メーカー原文では1項目として保持し、選択検索だけを構成成分に展開する。
+ * スラッシュがある名前を一般的に分割しない（高分子の構造名も含むため）。
+ */
+export const INGREDIENT_COMPOSITES=[
+  ['アクリル酸ナトリウム・アクリロイルジメチルタウリン酸ナトリウム共重合体/イソヘキサデカン/ポリソルベート80',
+    ['アクリル酸ナトリウム・アクリロイルジメチルタウリン酸ナトリウム共重合体','イソヘキサデカン','ポリソルベート80']],
+];
+const ingredientComposites=new Map(INGREDIENT_COMPOSITES.map(([name,parts])=>[normalizeName(name),parts]));
+const ingredientFamily=value=>{const name=canonicalIngredient(value);return families.get(name)||name;};
+export function ingredientSelections(value){
+  if(typeof value!=='string'||!value.trim())return [];
+  const parts=ingredientComposites.get(normalizeName(value))||[value];
+  return [...new Set(parts.map(ingredientFamily))];
+}
+// 旧バージョンの保存値や単一名を返すAPIでは、複合原料の最初の構成成分に対応させる。
 export function ingredientSelection(value){
-  const name=canonicalIngredient(value);
-  return families.get(name)||name;
+  return ingredientSelections(value)[0]??canonicalIngredient(value);
 }
 export function matchesIngredientSelection(value,selection){
-  return Boolean(selection&&selection!=='none'&&ingredientSelection(value)===ingredientSelection(selection));
+  return Boolean(selection&&selection!=='none'&&ingredientSelections(value).includes(ingredientSelection(selection)));
 }
 
 const prefixes=[
@@ -185,10 +205,11 @@ export function ingredientChoices(catalog){
   for(const product of catalog){
     if(product.archived)continue;
     for(const value of product.ingredients||[]){
-      const name=ingredientSelection(value);
-      // 数値だけの断片や、説明文が混ざった欄を選択肢として表示しない。
-      if(typeof name!=='string' || !/[A-Za-zぁ-んァ-ヶ一-龯]/u.test(name) || /[。\r\n]|(?:エキス|成分)は/.test(name))continue;
-      names.add(name);
+      for(const name of ingredientSelections(value)){
+        // 数値だけの断片や、説明文が混ざった欄を選択肢として表示しない。
+        if(typeof name!=='string' || !/[A-Za-zぁ-んァ-ヶ一-龯]/u.test(name) || /[。\r\n]|(?:エキス|成分)は/.test(name))continue;
+        names.add(name);
+      }
     }
   }
   return ['none',...[...names].sort(compareIngredients)];
