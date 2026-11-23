@@ -57,6 +57,14 @@ const uses={
 
 // 共通の原料群の説明だけでは分かりにくいものは、成分ごとに用途を書く。
 const specific={
+  'ココイルグリシン':{use:'洗浄',summary:'ヤシ油由来の脂肪酸とグリシンをもとにつくられる洗浄成分です。Na塩・K塩をひとつの項目で選べます。',note:'同じ洗浄成分の骨格をもつ塩類としてまとめています。対イオンや製品のpH・濃度によって、溶解性や泡立ちなどは異なります。',refs:[{label:'Na塩・K塩の名称と用途（原料メーカー 味の素）',url:'https://www.ahs.ajinomoto.com/products/cosme/cosme_list.html'}]},
+  'ココイルグルタミン酸':{use:'洗浄',summary:'ヤシ油由来の脂肪酸とグルタミン酸をもとにつくられる洗浄成分です。Na塩・2Na塩・TEA塩をまとめて選べます。',note:'Na・2Naは中和度、TEAは対イオンの違いです。TEAはトリエタノールアミンを表します。製品のpHや処方によって溶解性・泡立ちは変わり、同じ使用感とは限りません。',refs:[{label:'各塩類の名称と用途（原料メーカー 味の素）',url:'https://www.ahs.ajinomoto.com/products/cosme/cosme_list.html'}]},
+  'ラウロイルグルタミン酸':{use:'洗浄',summary:'ラウリン酸とグルタミン酸をもとにつくられる洗浄成分です。Na塩・K塩をひとつの項目にまとめています。',note:'ラウロイルは脂肪酸側の構造を示します。ココイル・ミリストイルなどとは分け、NaとKの違いをまとめています。塩の種類や処方によって性質は異なります。',refs:[{label:'アミノ酸系洗浄成分の用途（原料メーカー 味の素）',url:'https://www.ahs.ajinomoto.com/products/cosme/cosme_list.html'},{label:'ラウロイルグルタミン酸とそのK塩の原料名（厚生労働省）',url:'https://www.mhlw.go.jp/web/t_doc?dataId=00tc5773&dataType=1&pageNo=2'}]},
+  'パーム核脂肪酸':{use:'洗浄（石けん成分）',summary:'パームの核から得る脂肪酸をもとにした石けん成分です。Na塩・K塩を同じ項目で選べます。',note:'同じ脂肪酸由来でも、Na塩とK塩は水への溶けやすさなどが異なります。原料の脂肪酸組成や製品の処方によって、泡や使用感も変わります。',refs:[{label:'脂肪酸のNa塩・K塩と溶解性（日本石鹸洗剤工業会）',url:'https://jsda.org/w/06_clage/4clean_199-4.html'}]},
+  'ミリスチン酸':{use:'質感調整／塩類は洗浄',summary:'脂肪酸の一種で、クリームの質感調整や石けん系洗顔料などに使われます。Na塩のミリスチン酸Naも同じ項目で選べます。',note:'脂肪酸そのものと、洗浄を担う石けんの塩では性質が異なります。洗顔料ではアルカリで中和して使う場合もあり、働きは製品のpH・中和度・処方によって決まります。油性成分のミリスチン酸イソプロピルは別項目です。',refs:[{label:'脂肪酸の中和・石けんと酸の影響（原料メーカー 三洋化成）',url:'https://solutions.sanyo-chemical.co.jp/technology/2024/03/102510/'}]},
+  'シリカ':{use:'吸着・感触調整',summary:'二酸化ケイ素を主成分とする粉体です。シリカ・含水シリカ・無水ケイ酸をひとつにまとめ、皮脂の吸着やさらっとした感触の調整などの用途を紹介します。',note:'含水量や粒子の大きさ・形・多孔性によって、吸着や感触は変わります。同じ粒子・同じ性能を意味する分類ではありません。',refs:[{label:'シリカの形状・粒径と化粧品用途（原料メーカー 富士シリシア化学）',url:'https://www.fuji-silysia.co.jp/products/p484/'},{label:'含水二酸化ケイ素と無水ケイ酸の規格（原料メーカー 水澤化学工業）',url:'https://www.mizusawa-chem.co.jp/product/mizukasil.html'}]},
+  'セルロース':{use:'粉体による感触・質感の調整',summary:'植物由来のセルロースをもとにした粉体です。結晶セルロースも含め、製品の質感や使用感を整える目的などで使われます。',note:'結晶セルロースは、セルロースの結晶領域を取り出して精製した原料です。粒子の形や大きさで性質が変わり、ヒドロキシエチルセルロースなどの誘導体はこの分類に含めません。',refs:[{label:'結晶セルロースの構造・粉体の特性（原料メーカー 旭化成）',url:'https://www.ceolus.com/ja/industry/products/ceolus_outline/'}]},
+  'マカデミア種子油':{use:'油分を補う・肌をやわらかくする',summary:'マカデミアの種子から得られる油で、肌をやわらかくなめらかに保つために使われます。マカデミアナッツ油という表示名も同じ項目にまとめています。',note:'原料の精製度や製品の処方によって性質は異なります。油を加工したマカデミアナッツ脂肪酸フィトステリルは別項目です。',refs:[{label:'化粧品名と医薬部外品原料名の対応（原料供給元 スタンダードケミックス）',url:'https://www.ssoh.jp/mobil/baseoil/animalvegitable_oil/macadaia-nut-oil/'}]},
   'ヒアルロン酸':{use:'保湿',summary:uses.hyaluronate[1],note:'ヒアルロン酸Na、加水分解ヒアルロン酸、アセチルヒアルロン酸Naなどの種類があります。同じヒアルロン酸の仲間でも、分子量や処方によって使用感は異なります。'},
   'コラーゲン':{use:'保湿・皮膜形成',summary:'肌表面のうるおいとなめらかさを保つために配合されます。水溶性や加水分解などの種類があります。',note:'塗るコラーゲンは、真皮のコラーゲンをそのまま補充するものではありません。'},
   'セラミド':{use:uses.ceramide[0],summary:uses.ceramide[1],note:'セラミドNP・NG・APなどに加え、セラミドの働きに似せた「セラミド機能成分」もあります。種類や製品ごとの処方で性質は異なります。'},
@@ -123,6 +131,7 @@ const stableIds=new Map([
   ['スクワラン','squalane'],['ワセリン','petrolatum'],['ビタミンE','vitamin-e'],['ユビキノン','coenzyme-q10'],
 ]);
 const byName=new Map();
+const ingredientId=name=>stableIds.get(name)||`ingredient-${createHash('sha256').update(name).digest('hex').slice(0,12)}`;
 for(const source of guides){
   if(!uses[source.id])throw Error(`配合目的を登録してください: ${source.id}`);
   for(const value of source.names){
@@ -135,20 +144,27 @@ export const dictionaryEntries=[...byName.values()].sort((a,b)=>compareIngredien
   const sources=[...item.sources.values()],primary=sources[0],override=specific[item.name]||{};
   const [use,summary]=uses[primary.id];
   const research=sources.filter(source=>source.evidence&&!(item.name==='酢酸レチノール'&&source.id==='retinol'));
-  const refs=sources.flatMap(source=>source.refs).filter(source=>!(item.name==='酢酸レチノール'&&(source.pmid||source.label.includes('原著論文'))));
+  const refs=[...sources.flatMap(source=>source.refs),...(override.refs||[])].filter(source=>!(item.name==='酢酸レチノール'&&(source.pmid||source.label.includes('原著論文'))));
   const seen=new Set();
   return {
-    name:item.name,title:item.name,id:stableIds.get(item.name)||`ingredient-${createHash('sha256').update(item.name).digest('hex').slice(0,12)}`,
+    name:item.name,title:item.name,id:ingredientId(item.name),
     reading:ingredientReading(item.name),members:[...item.members],sourceIds:sources.map(source=>source.id),
     use:override.use||use,summary:override.summary||summary,note:override.note||'',
     research,refs:refs.filter(source=>{const key=source.url||source.pmid;if(seen.has(key))return false;seen.add(key);return true;}),legacyIds:[],
   };
 });
+// 細分化されていた成分名のブックマークも、統合後の解説へ到達させる。
+// メーカー記録は変えず、旧名から生成した見出しIDだけを互換用に残す。
+const usedIds=new Set(dictionaryEntries.map(entry=>entry.id));
+for(const entry of dictionaryEntries)for(const name of entry.members){
+  const id=ingredientId(name);
+  if(!usedIds.has(id)){entry.legacyIds.push(id);usedIds.add(id);}
+}
 // 旧URLからも近い成分へ到達できるようにする。新しい一覧の分類には使わない。
 for(const source of guides){
-  if(dictionaryEntries.some(entry=>entry.id===source.id))continue;
+  if(usedIds.has(source.id))continue;
   const entry=dictionaryEntries.find(entry=>entry.sourceIds.includes(source.id));
-  if(entry)entry.legacyIds.push(source.id);
+  if(entry){entry.legacyIds.push(source.id);usedIds.add(source.id);}
 }
 
 export const kanaRows=[

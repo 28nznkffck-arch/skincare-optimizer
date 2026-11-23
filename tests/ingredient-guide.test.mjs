@@ -40,6 +40,29 @@ test('all selectable ingredients and their aliases lead to an existing, sourced 
   assert.equal(dictionaryKanaRow('ヒアルロン酸'),'ha');assert.equal(dictionaryKanaRow('グリセリン'),'ka');
 });
 
+test('merged salts retain previous guide bookmarks, source labels and differences in formulation',async()=>{
+  const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
+  const bookmarks=[
+    ['ココイルグリシンNa','ingredient-f13f899fcf49','ココイルグリシン'],
+    ['ココイルグルタミン酸2Na','ingredient-604fdba1a815','ココイルグルタミン酸'],
+    ['ラウロイルグルタミン酸K','ingredient-ee5ee4087a2e','ラウロイルグルタミン酸'],
+    ['ミリスチン酸Na','ingredient-a632aa109c09','ミリスチン酸'],
+    ['含水シリカ','ingredient-ae32e928bc7d','シリカ'],
+    ['結晶セルロース','ingredient-a0907addc672','セルロース'],
+    ['マカデミアナッツ油','ingredient-bad250c2afdf','マカデミア種子油'],
+  ];
+  for(const [name,oldId,family] of bookmarks){
+    const entry=dictionaryEntries.find(entry=>entry.name===family);
+    assert(entry.legacyIds.includes(oldId),name);
+    assert.equal(ingredientGuideId(name),entry.id,name);
+    const card=html.slice(html.indexOf(`<article class="panel ingredient-card" id="${entry.id}"`)).split('</article>')[0];
+    assert(card.includes(`id="${oldId}"`),name);
+    assert(card.includes(name),'retain manufacturer names for search and reading');
+    assert(entry.note,'explain the differences within the merged group');
+  }
+  assert(dictionaryEntries.find(entry=>entry.name==='ココイルグルタミン酸').refs.some(ref=>ref.url==='https://www.ahs.ajinomoto.com/products/cosme/cosme_list.html'));
+});
+
 test('ingredient dictionary search handles kana, source names, empty results and alphabetical navigation',async()=>{
   const oldDocument=globalThis.document,oldWindow=globalThis.window;
   const element=(extra={})=>({hidden:false,value:'',events:{},addEventListener(name,fn){this.events[name]=fn;},focus(){this.focused=true;},scrollIntoView(){this.scrolled=true;},...extra});

@@ -42,6 +42,14 @@ test('different selection families do not match merely by containing part of the
     ['ヒアルロン酸','水溶性コラーゲン'],['ビタミンC','酢酸トコフェロール'],
     ['カモミラET','カモミラエキス(1)'],['ユーカリエキス','ユーカリ葉油'],
     ['ライスパワーNo.11(米エキスNo.11)','ライスパワーNo.11+'],
+    ['ミリスチン酸','ミリスチン酸イソプロピル'],
+    ['ココイルグルタミン酸Na','ラウロイルグルタミン酸Na'],
+    ['ラウロイルグルタミン酸K','ラウロイルグルタミン酸ジオクチルドデシル'],
+    ['ココイルメチルタウリンNa','ココイルメチルタウリンタウリンNa'],
+    ['マカデミア種子油','マカデミアナッツ脂肪酸フィトステリル'],
+    ['セルロース','ヒドロキシエチルセルロース'],
+    ['サリチル酸','4-メトキシサリチル酸カリウム塩'],
+    ['PCA-Na','PCA亜鉛'],
   ]){
     assert.notEqual(canonicalIngredient(selected),canonicalIngredient(other));
     const product={jan:'other-product',category:'serum',keyIngredients:[other],scores:{}};
@@ -80,7 +88,8 @@ test('grouped ingredient preferences and requirements preserve the exact best co
     item('toner','toner-1',120,1,'加水分解ヒアルロン酸'),item('toner','toner-2',200,2,'ビタミンCリン酸Mg'),
     item('serum','serum-1',230,3,'アセチル化ヒアルロン酸ナトリウム'),item('serum','serum-2',300,3,'アスコルビルグルコシド'),
   ];
-  for(const ingredient of ['ヒアルロン酸','ビタミンC','セラミド','コラーゲン'])for(const ingredientMode of ['prefer','required'])for(const budget of [300,500,1000]){
+  for(const [index,name] of ['ココイルグリシンK','ココイルグルタミン酸2Na','ミリスチン酸','マカデミアナッツ油','シリカ','含水シリカ','ミリスチン酸Na','マカデミア種子油'].entries())catalog[index].keyIngredients.push(name);
+  for(const ingredient of ['ヒアルロン酸','ビタミンC','セラミド','コラーゲン','ココイルグリシンNa','ココイルグルタミン酸TEA','ミリスチン酸Na','マカデミア種子油','含水シリカ'])for(const ingredientMode of ['prefer','required'])for(const budget of [300,500,1000]){
     const options={ingredient,ingredientMode,budget,concerns:['dryness'],priority:'any'};
     assert.deepEqual(optimize(catalog,{...options,resultLimit:1}),optimize(catalog,options).slice(0,1));
   }
