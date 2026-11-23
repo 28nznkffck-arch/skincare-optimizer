@@ -1,5 +1,5 @@
-import {prepareConcernBound} from './concern-bound.js?v=0.9.24';
-import {matchesIngredientSelection} from './ingredient-options.js?v=0.9.24';
+import {prepareConcernBound} from './concern-bound.js?v=0.9.25';
+import {matchesIngredientSelection} from './ingredient-options.js?v=0.9.25';
 
 export const CATEGORIES = ["makeupRemover", "cleanser", "toner", "serum", "moisturizer", "eyeCare"];
 export const CATEGORY_LABELS = {

@@ -57,6 +57,7 @@ const uses={
 
 // 共通の原料群の説明だけでは分かりにくいものは、成分ごとに用途を書く。
 const specific={
+  'コエンザイムQ10':{use:'整肌',summary:'コエンザイムQ10として知られる成分です。メーカーの成分表示では「ユビキノン」「ユビデカレノン」と記載され、肌を整える目的などで配合されます。'},
   'ココイルグリシン':{use:'洗浄',summary:'ヤシ油由来の脂肪酸とグリシンをもとにつくられる洗浄成分です。Na塩・K塩をひとつの項目で選べます。',note:'同じ洗浄成分の骨格をもつ塩類としてまとめています。対イオンや製品のpH・濃度によって、溶解性や泡立ちなどは異なります。',refs:[{label:'Na塩・K塩の名称と用途（原料メーカー 味の素）',url:'https://www.ahs.ajinomoto.com/products/cosme/cosme_list.html'}]},
   'ココイルグルタミン酸':{use:'洗浄',summary:'ヤシ油由来の脂肪酸とグルタミン酸をもとにつくられる洗浄成分です。Na塩・2Na塩・TEA塩をまとめて選べます。',note:'Na・2Naは中和度、TEAは対イオンの違いです。TEAはトリエタノールアミンを表します。製品のpHや処方によって溶解性・泡立ちは変わり、同じ使用感とは限りません。',refs:[{label:'各塩類の名称と用途（原料メーカー 味の素）',url:'https://www.ahs.ajinomoto.com/products/cosme/cosme_list.html'}]},
   'ラウロイルグルタミン酸':{use:'洗浄',summary:'ラウリン酸とグルタミン酸をもとにつくられる洗浄成分です。Na塩・K塩をひとつの項目にまとめています。',note:'ラウロイルは脂肪酸側の構造を示します。ココイル・ミリストイルなどとは分け、NaとKの違いをまとめています。塩の種類や処方によって性質は異なります。',refs:[{label:'アミノ酸系洗浄成分の用途（原料メーカー 味の素）',url:'https://www.ahs.ajinomoto.com/products/cosme/cosme_list.html'},{label:'ラウロイルグルタミン酸とそのK塩の原料名（厚生労働省）',url:'https://www.mhlw.go.jp/web/t_doc?dataId=00tc5773&dataType=1&pageNo=2'}]},
@@ -128,7 +129,7 @@ const stableIds=new Map([
   ['ビタミンC','vitamin-c'],['アルブチン','arbutin'],['コウジ酸','kojic-acid'],['4-メトキシサリチル酸カリウム塩','four-msk'],
   ['カモミラET','chamomila'],['プラセンタエキス-1','placenta'],['セラミド','ceramide'],['ヒアルロン酸','hyaluronate'],
   ['ヘパリン類似物質','heparinoid'],['グリセリン','glycerin'],['コラーゲン','collagen'],['グリシルグリシン','glycylglycine'],
-  ['スクワラン','squalane'],['ワセリン','petrolatum'],['ビタミンE','vitamin-e'],['ユビキノン','coenzyme-q10'],
+  ['スクワラン','squalane'],['ワセリン','petrolatum'],['ビタミンE','vitamin-e'],['ユビキノン','coenzyme-q10'],['コエンザイムQ10','coenzyme-q10'],
 ]);
 const byName=new Map();
 const ingredientId=name=>stableIds.get(name)||`ingredient-${createHash('sha256').update(name).digest('hex').slice(0,12)}`;
