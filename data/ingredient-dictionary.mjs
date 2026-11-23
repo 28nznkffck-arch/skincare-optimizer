@@ -119,6 +119,24 @@ const specific={
   '二酸化炭素':{use:'泡・製品の処方を支える',summary:'炭酸ガスの別名です。泡をつくるなど、製品の処方に使われます。炭酸があるだけで製品の効能は決まりません。'},
   '窒素':{use:'スプレーの噴射など',summary:'スプレー容器から内容物を噴射するガスなどとして使われます。保湿成分そのものではありません。'},
 };
+const groupUsage=(names,use,summary,note)=>{for(const name of names){const prior=specific[name]||{};specific[name]={use,summary:summary.replaceAll('{name}',name),note:note+(prior.note?' '+prior.note:''),...prior};}};
+groupUsage(["クエン酸","乳酸","グリコール酸","コハク酸","リン酸","安息香酸","ソルビン酸","エチドロン酸"],'pH調整・緩衝など','{name}とナトリウム塩・カリウム塩などを、選択用にまとめています。製品のpHや品質を整える目的などで使われます。','酸と塩ではpH・溶解性・用途が異なります。中和度と処方による違いを同一視せず、エステル類は含めません。');
+groupUsage(["ステアリン酸","ラウリン酸","パルミチン酸","オレイン酸","イソステアリン酸","パーム脂肪酸","ヤシ脂肪酸"],'油性成分・洗浄・質感調整','{name}を元にした脂肪酸と、石けんなどに使うNa・K塩をまとめています。','遊離酸と塩では溶解性・泡立ち・pHが異なります。脂肪酸エステルやステアリン酸Mgなどは別項目です。');
+groupUsage(["ステアロイルグルタミン酸","POEラウリルエーテル酢酸","ラウレス-4カルボン酸"],'洗浄・乳化','{name}とその塩類をひとつの選択項目にまとめています。水と油をなじませる、洗浄を助ける目的などに使います。','対イオン・中和度・処方によって性質が変わり、同一の使用感ではありません。');
+groupUsage(["シャクヤクエキス","ダイズエキス","ローズマリーエキス","ローマカミツレエキス","アマチャヅルエキス","イチョウエキス","ウコンエキス","オウゴンエキス","オウレンエキス","カワラヨモギエキス","グレープフルーツエキス","ジオウエキス","シカクマメエキス","セイヨウサンザシエキス","セイヨウハッカエキス","セージエキス","トウキンセンカエキス","トルメンチラエキス","ニンジンエキス","ハマメリスエキス","マヨラナエキス","ムクロジエキス","メロスリアエキス","ヤグルマギクエキス","ヨモギエキス","リンゴエキス","レモンエキス"],'保湿・整肌','{name}と同じ植物に由来する葉・根・花・果実などのエキスを選択用にまとめています。','同じ植物でも抽出部位・製法・含有物は異なります。精油・種子油・培養細胞由来の原料は別です。');
+groupUsage(["ソルビトール","マルチトール","フィチン酸","エチルグルコシド","グリセリルグルコシド"],'保湿・処方調整','{name}と液状原料の表示名をまとめています。','液状原料は基剤などを含む場合があり、配合濃度を意味しません。');
+groupUsage(["塩化ナトリウム","塩化マグネシウム","塩化カルシウム"],'電解質・処方調整','{name}の化学式による表示と日本語名をまとめています。','Na・Mg・Caは別の金属イオンであり、塩化物すべてを統合したものではありません。');
+Object.assign(specific,{
+ 'EDTA':{use:'金属イオンの捕捉・品質保持',summary:'EDTAと2Na・3Na・4Na塩を一つの項目にまとめています。',note:'Na塩の数で中和度や溶解性が異なります。化学的に同一ではありません。'},
+ '水酸化ナトリウム・カリウム':{use:'pH調整',summary:'水酸化Naと水酸化KをpH調整用のアルカリとしてまとめています。',note:'水中では水酸化物イオンを供給しますが、NaとKは異なる対イオンで、配合量も同一とは限りません。'},
+ 'カルボマー':{use:'ゲル形成・とろみ調整',summary:'カルボマーとカルボキシビニルポリマー、Na塩をひとつにまとめています。',note:'中和状態や高分子グレードで粘度や感触は変わります。'},
+ 'グルタミン酸':{use:'保湿・pH調整',summary:'グルタミン酸とL-グルタミン酸、ナトリウム塩をまとめています。',note:'D-グルタミン酸とアシル化誘導体は別です。'},
+ 'パンテノール':{use:'保湿・整肌',summary:'ビタミンB5に関連するパンテノールの表示です。D-パントテニルアルコールも含めます。',note:'パントテン酸Caは別の物質です。'},
+ 'ポリエチレングリコール':{use:'保湿・溶剤・質感調整',summary:'PEGとポリエチレングリコールの鎖長や分子量が異なる種類をまとめています。',note:'PEG-4とPEG4000などは分子量や用途が異なります。PEG誘導体の界面活性剤などは含めません。'},
+ 'シルク':{use:'保湿・皮膜形成',summary:'シルクと加水分解シルクをひとつの選択項目にまとめています。',note:'加水分解によって分子量と性質が変わります。'},
+ 'ゴマ油':{use:'エモリエント',summary:'ゴマ油とゴマ種子油の表示をまとめています。'},
+ 'サフラワー油':{use:'エモリエント',summary:'サフラワー油と原料規格番号付きの表示をまとめています。',note:'(2)は原料区分であり配合率ではありません。'},
+});
 const rice={
   'ライスパワーNo.11(米エキスNo.11)':['皮膚水分保持能の改善（薬用）','肌が水分を保つ力を改善する薬用有効成分として使われる米由来の発酵原料です。'],
   'ライスパワーNo.11+':['シワ改善・皮膚水分保持能の改善（薬用）','皮膚水分保持能の改善に加え、シワ改善の効能で使われる薬用有効成分です。'],
@@ -185,21 +203,31 @@ export function dictionaryKanaRow(name){
 // Registration does not depend on this dictionary. Newly recorded ingredient
 // names remain selectable and get their actual label source without inventing a use.
 export function dictionaryForCatalog(catalog){
-  const entries=new Map(dictionaryEntries.map(entry=>[entry.name,entry]));
+  const entries=new Map(dictionaryEntries.map(entry=>[entry.name,{...entry,members:[...entry.members],legacyIds:[...entry.legacyIds]}]));
+  const occupiedIds=new Set([...entries.values()].flatMap(e=>[e.id,...e.legacyIds]));
   const groups=new Map();
   for(const product of catalog)for(const value of product.ingredients||[]){
     const name=ingredientSelection(value);
     if(!name||!/[A-Za-zぁ-んァ-ヶ一-龯]/u.test(name))continue;
-    if(!groups.has(name))groups.set(name,{members:new Set(),urls:new Set()});
+    if(!groups.has(name))groups.set(name,{members:new Set(),rawNames:new Set(),urls:new Set()});
     groups.get(name).members.add(canonicalIngredient(value));
+    groups.get(name).rawNames.add(value.normalize('NFKC').trim());
     const url=product.ingredientSourceUrl||product.sourceUrl;if(url)groups.get(name).urls.add(url);
   }
-  for(const [name,{members,urls:allUrls}] of groups){
-    if(entries.has(name))continue;
-    const urls=[...allUrls].slice(0,2);
-    entries.set(name,{name,title:name,id:ingredientId(name),reading:ingredientReading(name),members:[...members],sourceIds:[],
-      use:'用途の確認中',summary:'商品に表示されている配合成分です。配合目的の解説は確認できしだい追加します。',note:'',research:[],
-      refs:urls.map(url=>({label:'配合成分の表示を確認する',url})),legacyIds:[],fromCatalog:true});
+
+  // 個別の旧アンカーを残す前に、全カードの主IDを予約する。
+  for(const name of groups.keys())occupiedIds.add(ingredientId(name));
+  for(const [name,{members,rawNames,urls:allUrls}] of groups){
+    const prior=entries.get(name),legacyIds=[...(prior?.legacyIds||[])],merged=[...new Set([...(prior?.members||[]),...members])];
+    for(const member of [...rawNames,...members]){
+      const id=ingredientId(member);
+      if(!occupiedIds.has(id)){legacyIds.push(id);occupiedIds.add(id);}
+    }
+    if(prior){entries.set(name,{...prior,members:merged,legacyIds});continue;}
+    const urls=[...allUrls].slice(0,2),info=specific[name]||{};
+    entries.set(name,{name,title:name,id:ingredientId(name),reading:ingredientReading(name),members:merged,sourceIds:[],
+      use:info.use||'用途の確認中',summary:info.summary||'商品に表示されている配合成分です。配合目的の解説は確認できしだい追加します。',note:info.note||'',research:[],
+      refs:[...(info.refs||[]),...urls.map(url=>({label:'配合成分の表示を確認する',url}))],legacyIds,fromCatalog:true});
   }
   return [...entries.values()].sort((a,b)=>compareIngredients(a.name,b.name));
 }

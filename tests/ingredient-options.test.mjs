@@ -126,3 +126,5 @@ test('identical glycyrrhizate names match preferences and requirements without m
   assert(!meetsIngredientRequirement([item('other','serum',['グリチルレチン酸ステアリル'])],{ingredient:DIPOTASSIUM_GLYCYRRHIZATE,ingredientMode:'required'}));
   assert.equal(reconcileCatalogState({ingredient:'掲載終了成分'},[cream]).ingredient,'none');
 });
+
+test('new ingredient groupings do not equate unrelated chemicals',()=>{for(const [a,b] of [['ステアリン酸','ステアリン酸Mg'],['塩化ナトリウム','塩化Mg'],['クエン酸','クエン酸トリエチル'],['グルタミン酸','D-グルタミン酸'],['ローズマリーエキス','ローズマリー葉油']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));for(const item of ['EDTA-2Na','EDTA-3Na','EDTA-4Na'])assert.equal(ingredientSelection(item),'EDTA');});

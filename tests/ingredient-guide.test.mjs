@@ -103,3 +103,5 @@ test('ingredient dictionary search handles kana, source names, empty results and
     if(oldWindow===undefined)delete globalThis.window;else globalThis.window=oldWindow;
   }
 });
+
+test('old standalone guide links point to grouped cards',async()=>{const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');for(const name of ['EDTA-2Na','PEG-4','ステアリン酸Na','シャクヤク根エキス'])assert(html.includes('id="'+ingredientGuideId(name)+'"'));});
