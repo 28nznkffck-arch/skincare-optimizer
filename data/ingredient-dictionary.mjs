@@ -1,6 +1,6 @@
 import {createHash} from 'node:crypto';
 import {guides} from './ingredient-guide.mjs';
-import {canonicalIngredient,ingredientSelection,ingredientSelections,compareIngredients,ingredientReading} from '../dist/ingredient-options.js';
+import {canonicalIngredient,ingredientSelection,ingredientSelections,compareIngredients,ingredientReading,INGREDIENT_DISPLAY_NAMES} from '../dist/ingredient-options.js';
 
 // ページは肌悩みや原料の機能群で分けず、選択欄と同じ成分名を見出しにする。
 // 既存の研究・一次資料は、その研究が対象とする種類を明示して引き継ぐ。
@@ -243,6 +243,15 @@ const rice={
 };
 for(const [name,[use,summary]] of Object.entries(rice))specific[name]={use,summary};
 
+// 旧表示名に付いていた解説・一次資料を新見出しにも引き継ぐ。
+for(const [oldName,newName] of INGREDIENT_DISPLAY_NAMES){if(specific[oldName])specific[newName]={...specific[oldName],...specific[newName],refs:[...(specific[oldName].refs||[]),...(specific[newName]?.refs||[])]};}
+Object.assign(specific,{
+ 'ヒスチジン':{use:'保湿・整肌',summary:'アミノ酸のヒスチジンとその塩酸塩を選択用にまとめています。',note:'遊離アミノ酸と塩酸塩は同一化合物ではありません。',refs:[{label:'不二化成・アミノ酸原料の表示名',url:'https://fuji-kasei-database.com/materials/1109/'}]},
+ 'アルギニン':{...specific['アルギニン'],use:'保湿・整肌',summary:'アミノ酸のアルギニンと塩酸塩を選択用にまとめています。',note:'遊離アミノ酸と塩酸塩はpHや溶解性が異なります。'},
+ 'アラニン':{...specific['アラニン'],note:'DL-アラニンも選択上まとめています。立体異性体の組成には違いがあります。'},
+ 'メチオニン':{...specific['メチオニン'],note:'DL-メチオニンも選択上まとめています。立体異性体の組成には違いがあります。'},
+ 'ポリエチレングリコール':{...specific['ポリエチレングリコール'],note:'PEG、分子量違い、高重合PEGを選択用にまとめています。分子量や粘度、用途は異なります。'},
+});
 const stableIds=new Map([
   ['アラントイン','allantoin'],['グリチルリチン酸ジカリウム','glycyrrhizate'],['グリチルレチン酸ステアリル','glycyrrhetinate'],
   ['ナイアシンアミド','niacinamide'],['レチノール','retinol'],['トラネキサム酸','tranexamic'],
@@ -316,6 +325,7 @@ export function dictionaryForCatalog(catalog){
   // 選択カテゴリ名を変更した場合、旧カテゴリ名のハッシュリンクも維持する。
   // 旧名が元のメーカー成分欄に存在しない場合は、通常のrawNamesから生成されない。
   const previousLabels=new Map([['レチノール(ビタミンA)',['ビタミンA']]]);
+  for(const [oldName,newName] of INGREDIENT_DISPLAY_NAMES){if(!previousLabels.has(newName))previousLabels.set(newName,[]);previousLabels.get(newName).push(oldName);}
   for(const [current,names] of previousLabels){
     const group=groups.get(current);
     if(group)for(const name of names)group.rawNames.add(name);

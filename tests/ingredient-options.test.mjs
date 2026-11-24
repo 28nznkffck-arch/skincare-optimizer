@@ -3,7 +3,7 @@ import test from 'node:test';
 import {readFile} from 'node:fs/promises';
 import {loadCatalog} from '../dist/catalog-csv.js';
 import {reconcileCatalogState} from '../dist/catalog-data.js';
-import {ingredientChoices,canonicalIngredient,ingredientSelection,displayIngredients,INGREDIENT_ALIASES,INGREDIENT_FAMILIES,INGREDIENT_COMPOSITES,ingredientSelections,matchesIngredientSelection,DIPOTASSIUM_GLYCYRRHIZATE} from '../dist/ingredient-options.js';
+import {ingredientChoices,canonicalIngredient,ingredientSelection,displayIngredients,INGREDIENT_ALIASES,INGREDIENT_FAMILIES,INGREDIENT_COMPOSITES,INGREDIENT_DISPLAY_NAMES,ingredientSelections,matchesIngredientSelection,DIPOTASSIUM_GLYCYRRHIZATE} from '../dist/ingredient-options.js';
 import {canIncludeRoutineProduct,meetsIngredientRequirement,optimize,scoreRoutine} from '../dist/optimizer.js';
 
 test('choices include each catalog ingredient independently of guide coverage and exclude invalid fragments',()=>{
@@ -66,12 +66,12 @@ test('ingredient families group selection and matching while keeping all manufac
   for(const [family,members] of INGREDIENT_FAMILIES){
     const products=members.map((name,i)=>({jan:`family-${i}`,category:'serum',ingredients:[name],scores:{}}));
     const original=structuredClone(products),settings={ingredient:family,ingredientMode:'required',concerns:['dryness']};
-    assert.deepEqual(ingredientChoices(products),['none',family]);
+    assert.deepEqual(ingredientChoices(products),['none',ingredientSelection(family)]);
     for(const product of products){
       assert(meetsIngredientRequirement([product],settings),product.ingredients[0]);
       assert(canIncludeRoutineProduct(product,settings));
       assert.equal(scoreRoutine([product],settings)-scoreRoutine([product],{...settings,ingredient:'none'}),10);
-      assert.equal(reconcileCatalogState({ingredient:product.ingredients[0]},[product]).ingredient,family);
+      assert.equal(reconcileCatalogState({ingredient:product.ingredients[0]},[product]).ingredient,ingredientSelection(family));
     }
     assert.deepEqual(products,original,'selection grouping must not rewrite source names');
   }
@@ -127,7 +127,7 @@ test('identical glycyrrhizate names match preferences and requirements without m
   assert.equal(reconcileCatalogState({ingredient:'掲載終了成分'},[cream]).ingredient,'none');
 });
 
-test('new ingredient groupings do not equate unrelated chemicals',()=>{for(const [a,b] of [['ステアリン酸','ステアリン酸Mg'],['塩化ナトリウム','塩化Mg'],['クエン酸','クエン酸トリエチル'],['グルタミン酸','D-グルタミン酸'],['ローズマリーエキス','ローズマリー葉油']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));for(const item of ['EDTA-2Na','EDTA-3Na','EDTA-4Na'])assert.equal(ingredientSelection(item),'EDTA');});
+test('new ingredient groupings do not equate unrelated chemicals',()=>{for(const [a,b] of [['ステアリン酸','ステアリン酸Mg'],['塩化ナトリウム','塩化Mg'],['クエン酸','クエン酸トリエチル'],['グルタミン酸','D-グルタミン酸'],['ローズマリーエキス','ローズマリー葉油']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));for(const item of ['EDTA-2Na','EDTA-3Na','EDTA-4Na'])assert.equal(ingredientSelection(item),'エデト酸');});
 
 test('glycerin roots are not all interchangeable; verified synonyms are',()=>{for(const [a,b] of [['グリセリン','ステアリン酸グリセリル'],['グリセリン','グリセリルグルコシド'],['グリセリン','エチルヘキシルグリセリン'],['ステアリン酸グリセリル','ステアリン酸グリセリル(SE)'],['BG','PG'],['ジメチコン','ジメチコンクロスポリマー']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));for(const n of ['オクトキシグリセリン','グリセリンモノ2-エチルヘキシルエーテル','グリセリルエチルヘキシルエーテル'])assert.equal(ingredientSelection(n),'エチルヘキシルグリセリン');for(const n of ['トリメチルグリシン','ベタイン'])assert.equal(ingredientSelection(n),'ベタイン');});
 
@@ -201,7 +201,7 @@ test('source typo and alternate sodium spellings resolve without matching chemic
 
 test('other label variations are grouped but different chemistry remains distinct',()=>{
   for(const [base,variants] of Object.entries({
-    'PEG水添ヒマシ油':['PEG-20水添ヒマシ油','PEG-60水添ヒマシ油','PEG60水添ヒマシ油','POE硬化ヒマシ油'],
+    'ポリオキシエチレン水添ヒマシ油':['PEG-20水添ヒマシ油','PEG-60水添ヒマシ油','PEG60水添ヒマシ油','POE硬化ヒマシ油'],
     'オリーブ油':['オリブ油','オリーブ果実油'],
     'ツバキエキス':['ツバキ花エキス','ツバキ葉エキス'],
     'ステアリン酸ソルビタン':['ステアリン酸ソルビタン','モノステアリン酸ソルビタン'],
@@ -234,10 +234,10 @@ test('distinct cosmetic and quasi-drug names map to the same chemical without ch
 test('remaining source forms map to their families, not all superficially similar compounds',()=>{
   for(const [want,names] of Object.entries({
     'ヒアルロン酸':['アセチルヒアルロン酸Na(スーパーヒアルロン酸)','アセチル化ヒアルロン酸ナトリウム(スーパーヒアルロン酸)','ヒアルロン酸クロスポリマーNa(3Dヒアルロン酸)','ヒアルロン酸ヒドロキシプロピルトリモニウム(肌吸着型ヒアルロン酸)'],
-    'PCA-Na':['PCA-Na','DL-PCA・Na液','DL-ピロリドンカルボン酸ナトリウム液'],
-    'PPG-9ジグリセリル':['PPG-9ジグリセリル','ポリオキシプロピレンジグリセリルエーテル'],
+    'ピロリドンカルボン酸ナトリウム':['PCA-Na','DL-PCA・Na液','DL-ピロリドンカルボン酸ナトリウム液'],
+    'ポリオキシプロピレン(9)ジグリセリルエーテル':['PPG-9ジグリセリル','ポリオキシプロピレンジグリセリルエーテル'],
     'トウキエキス(1)':['トウキエキス-1','トウキエキス(1)'],
-    'イソステアリン酸POEグリセリル':['イソステアリン酸ポリオキシエチレングリセリル','イソステアリン酸PEG-8グリセリル','イソステアリン酸PEG-20グリセリル','イソステアリン酸PEG-60グリセリル'],
+    'イソステアリン酸ポリオキシエチレングリセリル':['イソステアリン酸ポリオキシエチレングリセリル','イソステアリン酸PEG-8グリセリル','イソステアリン酸PEG-20グリセリル','イソステアリン酸PEG-60グリセリル'],
   }))for(const name of names)assert.equal(ingredientSelection(name),want,name);
   for(const [a,b] of [['PCA-Na','PCA'],['PPG-9ジグリセリル','PPG-14ジグリセリル'],['イソステアリン酸POEグリセリル','ステアリン酸PEG-60グリセリル'],['トウキエキス(1)','トウキ葉エキス']])
     assert.notEqual(ingredientSelection(a),ingredientSelection(b));
@@ -268,3 +268,9 @@ test('lysine variants and conchiolin source names stay within their own families
     assert.equal(ingredientSelection(name),'加水分解コンキオリン');
   assert.notEqual(ingredientSelection('リシン'),ingredientSelection('グリシン'));
 });
+
+ test('friendly display names retain saved names and separate distinct ingredients',()=>{
+ for(const [a,b] of INGREDIENT_DISPLAY_NAMES){assert.equal(ingredientSelection(a),ingredientSelection(b),a);assert(matchesIngredientSelection(a,b),a);assert(matchesIngredientSelection(b,a),b);}
+ for(const [a,b] of [['ヒスチジン','アルギニン'],['BG','DPG'],['PG','PPG-7'],['PCA','PCA-Na'],['PPG-9ジグリセリル','PPG-14ジグリセリル']])assert.notEqual(ingredientSelection(a),ingredientSelection(b));
+ assert.notEqual(canonicalIngredient('ヒスチジン'),canonicalIngredient('ヒスチジンHCl'));
+ });
