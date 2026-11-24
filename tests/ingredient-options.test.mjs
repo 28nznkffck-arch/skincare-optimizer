@@ -242,3 +242,29 @@ test('remaining source forms map to their families, not all superficially simila
   for(const [a,b] of [['PCA-Na','PCA'],['PPG-9ジグリセリル','PPG-14ジグリセリル'],['イソステアリン酸POEグリセリル','ステアリン酸PEG-60グリセリル'],['トウキエキス(1)','トウキ葉エキス']])
     assert.notEqual(ingredientSelection(a),ingredientSelection(b));
 });
+
+test('polysorbate chemical names and PVP are reconciled with source spellings',()=>{
+  const aliases=[
+    ['ポリソルベート20','ラウリン酸POE(20)ソルビタン','モノラウリン酸ポリオキシエチレンソルビタン(20E.O.)'],
+    ['ポリソルベート60','モノステアリン酸ポリオキシエチレンソルビタン'],
+    ['ポリソルベート80','オレイン酸POE(20)ソルビタン','モノオレイン酸ポリオキシエチレンソルビタン(20E.O.)'],
+    ['ポリソルベート85','トリオレイン酸POE(20)ソルビタン'],
+    ['PVP','ポリビニルピロリドン'],
+    ['ビスジグリセリルポリアシルアジペート-2','アジピン酸ジグリセリル混合脂肪酸エステル'],
+  ];
+  for(const [canonical,...labels] of aliases)for(const label of labels){
+    assert.equal(canonicalIngredient(label),canonical,label);
+    const p={jan:'poly',category:'serum',ingredients:[label],scores:{}};
+    assert(meetsIngredientRequirement([p],{ingredient:canonical,ingredientMode:'required'}));
+  }
+  for(const [a,b] of [['ポリソルベート20','ポリソルベート80'],['ポリソルベート80','ポリソルベート85'],['ポリソルベート80','オレイン酸POE(6)ソルビタン'],['ポリソルベート60','ステアリン酸ソルビタン']])
+    assert.notEqual(ingredientSelection(a),ingredientSelection(b));
+});
+
+test('lysine variants and conchiolin source names stay within their own families',()=>{
+  for(const name of ['リシン','リシンHCl','リシンHCI','塩酸リジン'])assert.equal(ingredientSelection(name),'リシン');
+  assert.equal(canonicalIngredient('塩酸リジン'),'リシンHCl');
+  for(const name of ['加水分解コンキオリン','加水分解コンキオリン液','加水分解コンキオリンタンパク'])
+    assert.equal(ingredientSelection(name),'加水分解コンキオリン');
+  assert.notEqual(ingredientSelection('リシン'),ingredientSelection('グリシン'));
+});

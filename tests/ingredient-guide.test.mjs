@@ -139,3 +139,20 @@ test('identity audit links aliases and annotated ingredients into their known gu
   assert(html.includes('id="niacinamide"'));
   assert(html.includes('id="hyaluronate"'));
 });
+
+test('all newly confirmed polysorbate, PVP and conchiolin names lead to existing guide cards',async()=>{
+  const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
+  for(const [oldLabel,head] of [
+    ['ラウリン酸POE(20)ソルビタン','ポリソルベート20'],
+    ['モノステアリン酸ポリオキシエチレンソルビタン','ポリソルベート60'],
+    ['モノオレイン酸ポリオキシエチレンソルビタン(20E.O.)','ポリソルベート80'],
+    ['トリオレイン酸POE(20)ソルビタン','ポリソルベート85'],
+    ['ポリビニルピロリドン','PVP'],
+    ['アジピン酸ジグリセリル混合脂肪酸エステル','ビスジグリセリルポリアシルアジペート-2'],
+    ['塩酸リジン','リシン'],
+    ['加水分解コンキオリンタンパク','加水分解コンキオリン'],
+  ]){
+    assert.equal(ingredientGuideId(oldLabel),ingredientGuideId(head),oldLabel);
+    assert(html.includes('id="'+ingredientGuideId(head)+'"'));
+  }
+});
