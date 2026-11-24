@@ -131,3 +131,11 @@ test('retinol name and glycyrrhizinate source typo retain source-based guide rou
     assert.equal(ingredientGuideId(a),ingredientGuideId(b),a);
   assert(html.includes('id="retinol"'));
 });
+
+test('identity audit links aliases and annotated ingredients into their known guide',async()=>{
+  const html=await readFile(new URL('../dist/ingredients.html',import.meta.url),'utf8');
+  for(const [a,b] of [['ニコチン酸アミド','ナイアシンアミド'],['デカメチルシクロペンタシロキサン','シクロペンタシロキサン'],['トリエチルヘキサノイン','トリエチルヘキサン酸グリセリル'],['マカデミアナッツ油脂肪酸フィトステリル','マカデミアナッツ脂肪酸フィトステリル'],['DL-PCA・Na液','PCA-Na'],['ヒアルロン酸クロスポリマーNa(3Dヒアルロン酸)','ヒアルロン酸']])
+    assert.equal(ingredientGuideId(a),ingredientGuideId(b),a);
+  assert(html.includes('id="niacinamide"'));
+  assert(html.includes('id="hyaluronate"'));
+});

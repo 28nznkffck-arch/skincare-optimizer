@@ -210,3 +210,35 @@ test('other label variations are grouped but different chemistry remains distinc
   for(const [a,b] of [['グリチルリチン酸ジカリウム','グリチルリチン酸アンモニウム'],['ステアリン酸ソルビタン','ジステアリン酸ソルビタン'],['オリーブ油','オリーブ葉エキス'],['ローズマリー油','ローズマリーエキス'],['PEG水添ヒマシ油','ヒマシ油']])
     assert.notEqual(ingredientSelection(a),ingredientSelection(b),a+' vs '+b);
 });
+
+test('distinct cosmetic and quasi-drug names map to the same chemical without changing source labels',()=>{
+  const pairs=[
+    ['ニコチン酸アミド','ナイアシンアミド'],
+    ['トリエチルヘキサノイン','トリエチルヘキサン酸グリセリル'],
+    ['デカメチルシクロペンタシロキサン','シクロペンタシロキサン'],
+    ['マカデミアナッツ油脂肪酸フィトステリル','マカデミアナッツ脂肪酸フィトステリル'],
+    ['ジラウラミドグルタミドリシンNa','ジラウロイルグルタミン酸リシンNa'],
+    ['ポリオキシプロピレン(9)ジグリセリルエーテル','PPG-9ジグリセリル'],
+    ['トリ(カプリル・カプリン・ミリスチン・ステアリン酸)グリセリル','トリ(カプリル酸/カプリン酸/ミリスチン酸/ステアリン酸)グリセリル'],
+  ];
+  for(const [a,b] of pairs){
+    assert.equal(canonicalIngredient(a),b);
+    assert.equal(ingredientSelection(a),ingredientSelection(b));
+    const item={jan:'alias',category:'serum',ingredients:[a],scores:{}};
+    assert(meetsIngredientRequirement([item],{ingredient:b,ingredientMode:'required'}));
+  }
+  for(const [a,b] of [['ニコチン酸','ナイアシンアミド'],['PCA','PCA-Na'],['シクロペンタシロキサン','ジメチコン'],['トリエチルヘキサノイン','トリオクタン酸グリセリル'],['ヒアルロン酸','グリセリン']])
+    assert.notEqual(ingredientSelection(a),ingredientSelection(b));
+});
+
+test('remaining source forms map to their families, not all superficially similar compounds',()=>{
+  for(const [want,names] of Object.entries({
+    'ヒアルロン酸':['アセチルヒアルロン酸Na(スーパーヒアルロン酸)','アセチル化ヒアルロン酸ナトリウム(スーパーヒアルロン酸)','ヒアルロン酸クロスポリマーNa(3Dヒアルロン酸)','ヒアルロン酸ヒドロキシプロピルトリモニウム(肌吸着型ヒアルロン酸)'],
+    'PCA-Na':['PCA-Na','DL-PCA・Na液','DL-ピロリドンカルボン酸ナトリウム液'],
+    'PPG-9ジグリセリル':['PPG-9ジグリセリル','ポリオキシプロピレンジグリセリルエーテル'],
+    'トウキエキス(1)':['トウキエキス-1','トウキエキス(1)'],
+    'イソステアリン酸POEグリセリル':['イソステアリン酸ポリオキシエチレングリセリル','イソステアリン酸PEG-8グリセリル','イソステアリン酸PEG-20グリセリル','イソステアリン酸PEG-60グリセリル'],
+  }))for(const name of names)assert.equal(ingredientSelection(name),want,name);
+  for(const [a,b] of [['PCA-Na','PCA'],['PPG-9ジグリセリル','PPG-14ジグリセリル'],['イソステアリン酸POEグリセリル','ステアリン酸PEG-60グリセリル'],['トウキエキス(1)','トウキ葉エキス']])
+    assert.notEqual(ingredientSelection(a),ingredientSelection(b));
+});
