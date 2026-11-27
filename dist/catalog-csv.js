@@ -1,4 +1,4 @@
-import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.9.36';
+import {CATEGORY_LABELS, CONCERNS} from './optimizer.js?v=0.9.37';
 
 const RETAILERS = ['マツキヨココカラオンライン', 'ツルハグループe-shop', 'ウエルシア'];
 
